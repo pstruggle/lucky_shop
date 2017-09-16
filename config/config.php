@@ -298,4 +298,24 @@ return [
         // 是否添加杂点
         'useNoise'    => false
     ],
+    // 短信发送配置
+    'sms' =>[
+        'terrace'    => 'aliyun',
+        // 发送短信平台 可选值 aliyun | alidayu
+        'seKey'    => 'ThinkPHP.CN',
+        // 验证码加密密钥
+        'codeSet'  => '0123456789',
+        // 验证码字符集合
+        'expire'   => 1800,
+        // 验证码过期时间（s）
+        'length'   => 5,
+        // 验证码位数
+        'reset'    => true,
+        // 验证成功后是否重置
+        'accessKeyId' => 'LTAI3zVfvEg9cdBW',
+        // 短信验证key
+        'secret' => 'uNDDVOZX0lF6jAjnn9pk24gtsoD9M6',
+        // 短信验证key对应secret
+
+    ],
 ];
