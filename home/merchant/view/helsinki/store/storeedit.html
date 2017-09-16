@@ -1,0 +1,121 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-columns" aria-hidden="true"></i><a href="#">商城管理</a></li>
+                <li><a>商户管理</a></li>
+                <li><a>商户添加（修改）</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="inline-validation" class="form-horizontal form-stripe" action="{:url('Store/storeedit')}" id="form" method="post">
+                                <input type="hidden" name="act" value="{$act??'add'}">
+                                <input type="hidden" name="sid" value="{$sid??''}">
+                                <div class="form-group">
+                                    <label for="store" class="col-sm-3 control-label">店铺名称<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="store" name="store" placeholder="请输入店铺名称" class="form-control" required value="{$store.store ?? ''}" />
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phones" class="col-sm-3 control-label">联系电话<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="phones" name="phones" placeholder="请输入联系电话" class="form-control" required value="{$store.phones ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="wechat" class="col-sm-3 control-label">微信号</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="wechat" name="wechat" placeholder="请输入微信号" class="form-control" value="{$store.wechat ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="qq" class="col-sm-3 control-label">QQ</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="qq" name="qq" placeholder="请输入QQ号" class="form-control" value="{$store.qq ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="highlights" class="col-sm-3 control-label">店铺亮点</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="highlights" name="highlights" placeholder="请输入店铺亮点" class="form-control" value="{$store.highlights ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="desc" class="col-sm-3 control-label">店铺描述</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="desc" name="desc" placeholder="请输入店铺描述" class="form-control" value="{$store.desc ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="jingwei" class="col-sm-3 control-label">所在经纬度<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="jingwei" name="jingwei" placeholder="请选择经纬度" class="form-control" required value="{$store.jingwei ?? ''}" /><span><a href="javascript:void (0);" _href="{:url('Store/map')}" class="artlog">请选择经纬度</a></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">所在区域<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" required name="province" id="province"></select>
+                                        <select class="form-control" required name="city" id="city"></select>
+                                        <select class="form-control" required name="county" id="county"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="col-sm-3 control-label">详细地址</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="address" name="address" placeholder="请输入详细地址" class="form-control" required value="{$store.address ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="traffic"  class="col-sm-3 control-label">交通线路</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="traffic" name="traffic" placeholder="请输入交通线路" class="form-control init" value="{$store.traffic ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight"  class="col-sm-3 control-label">排序</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="weight" name="weight" placeholder="数字越大越在前" class="form-control init" value="{$store.weight ?? '0'}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+<script>
+
+    $(function() {
+        new PCAS('province','city','county', "{$store.province ?? ''}","{$store.city ?? ''}","{$store.county ?? ''}"); //地址
+        $("#formq").validate(); //表单验证
+        $('.sannav>ul>li>a').click(function () {
+            var href = $(this).attr('href');
+            $(this).parent().addClass('on').siblings().removeClass('on');
+            $(href).css('display', '').siblings('.grouping').css('display', 'none');
+        });
+//        var up = new Upload('navpic', {}, "{$goods.navpic ?? ''}");
+        $('select[name="status"]').val("{$goods.status ?? '1'}");
+        $('select[name="malltype"]').val("{$goods.malltype ?? ''}");
+        $('input[name="freightway"][value="{$goods.freightway ?? '1'}"]').prop('checked',true);
+    });
+
+
+</script>

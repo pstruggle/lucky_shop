@@ -1,0 +1,76 @@
+{include file="base/artlog_header"}
+<div class="wrap">
+    <div class="page-body" style="padding: 0">
+        <div class="content" style="margin: 0;">
+            <div class="row animated fadeInUp">
+                <div class="col-sm-12">
+                    <!--<h4 class="section-subtitle"><b>Inline validation</b></h4>-->
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form action="{:url('Adver/operate',['fid'=>input('fid')])}" id="inline-validation" class="form-horizontal form-stripe">
+                                        <input type="hidden" name="act" value="{$act}">
+                                        <input type="hidden" name="id" value="{$id}">
+                                        <input type="hidden" name="cid" value="{:input('cid')}">
+                                        <div class="form-group">
+                                            <label for="title" class="col-sm-3 control-label">广告标题<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="title" name="title" required value="{$ad.title ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subtitle" class="col-sm-3 control-label">辅助标题<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="subtitle" name="subtitle" required value="{$ad.subtitle ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pic" class="col-sm-3 control-label">广告图片</label>
+                                            <div class="col-sm-6">
+                                                <input type="file" id="pic" name="pic"  />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="url" class="col-sm-3 control-label">广告链接</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="url" name="url" value="{$ad.url ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">是否显示<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <select name="status" id="status"  class="form-control">
+                                                    <option value="1">显示</option>
+                                                    <option value="0">不显示</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="weight" class="col-sm-3 control-label">排序<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="weight" name="weight" required value="{$ad.weight ?? '0'}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9">
+                                                <button type="submit" class="btn btn-primary">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/artlog_footer"}
+<script>
+    $(function(){
+        var up = new Upload('pic', {}, "{$ad.pic ?? ''}");
+        $('#status').val("{$ad.status ?? '1'}");
+    });
+</script>

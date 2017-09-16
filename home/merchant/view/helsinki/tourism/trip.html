@@ -1,0 +1,152 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>行程列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('tourism/trip')}">行程列表</a>
+                <a href="{:url('tourism/trip_edit')}">行程编辑</a>
+                <!--<a href="javascript:void(0);">待审核行程</a>-->
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <form action="?">
+                                            <label>
+                                                行程名:<input type="search" class="form-control input-sm" placeholder="行程名搜索" name="title" aria-controls="basic-table" value="{:input('title')}">
+                                            </label>
+                                            <label>
+                                                内嵌供应商:<input type="search" class="form-control input-sm" placeholder="供应商名称搜索" name="m_name" aria-controls="basic-table" value="{:input('m_name')}">
+                                            </label>
+
+                                            <label>
+                                                有效查询:
+                                                <select aria-controls="basic-table" name="valid" class="form-control input-sm">
+                                                    <option value="">选择条件</option>
+                                                    <option value="1">有效</option>
+                                                    <option value="2">过期</option>
+                                                </select>
+                                            </label>
+                                            <label>
+                                                目的地:
+                                                <select aria-controls="basic-table" name="destination" class="form-control input-sm">
+                                                    <option value="">选择目的地</option>
+                                                    {:dests($destinations,3)}
+                                                </select>
+                                            </label>
+                                            <label>
+                                                出发地:
+                                                <select aria-controls="basic-table" name="setout" class="form-control input-sm">
+                                                    <option value="">选择出发地</option>
+                                                    {volist name="setouts" id="setout"}
+                                                    <option value="{$setout.id}">{$setout.setout}</option>
+                                                    {/volist}
+                                                </select>
+                                            </label>
+                                            <label>
+                                                审核状态:
+                                                <select aria-controls="basic-table" name="status" class="form-control input-sm">
+                                                    <option value="">审核状态</option>
+                                                    <option value="0">不通过</option>
+                                                    <option value="1">待审核</option>
+                                                    <option value="2">通过</option>
+                                                </select>
+                                            </label>
+
+                                            <label for="sub">
+                                                <input type="submit" id="sub" value="搜索" class="btn btn-primary" style="margin-bottom: 0;">
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>编号</th>
+                                            <th>行程标题</th>
+                                            <th>出发地</th>
+                                            <th>目的地</th>
+                                            <th>产品类型</th>
+                                            <th>价格</th>
+                                            <th>状态</th>
+                                            <th>添加时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="trips" id="trip"}
+                                        <tr>
+                                            <td>{$key+1}</td>
+                                            <td>{$trip.id}</td>
+                                            <td>{$trip.title}</td>
+                                            <td>{$trip.setout}</td>
+                                            <td>{$trip.destination}</td>
+                                            <td>{:trip_style($trip['style'])}</td>
+                                            <td>{$trip.minprice}~{$trip.maxprice}</td>
+                                            <td>{:land_status($trip.status)}</td>
+                                            <td>{$trip.addtime | date="Y-m-d H:i:s" , ###}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class='btn btn-transparent'>
+                                                        <a href="/index.php/index/details.html?act=admin&pid={$trip.id}"   title="查看" target="_blank">
+                                                            <i class='fa fa-eye'></i>
+                                                        </a>
+                                                    </button>
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Tourism/trip_edit',['trip'=>$trip.id])}" title="编辑行程"><i class="fa fa-pencil"></i></a>
+                                                    </button>
+                                                    <!--<button class="btn btn-transparent">
+                                                        <a href="javascript:void (0)" _href="{:url('Tourism/flick',['trip'=>$trip.id])}" class="artlog"  title="申请甩尾"><i class="fa fa-skyatlas"></i></a>
+                                                    </button>-->
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Tourism/tripdel',['trip'=>$trip.id])}" title="删除行程"><i class="fa fa-times"></i></a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+        $('[name="status"]').val("{:input('status')}")
+        $('[name="setout"]').val("{:input('setout')}")
+        $('[name="destination"]').val("{:input('destination')}")
+        $('[name="valid"]').val("{:input('valid')}")
+    });
+</script>

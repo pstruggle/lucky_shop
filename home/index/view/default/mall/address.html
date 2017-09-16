@@ -1,0 +1,72 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>我的地址</h1>
+</header>
+<div style="height:1rem;"></div>
+<form action="{:url('Mall/add_address')}" method="post" name="address" id="address">
+    <input type="hidden" name="act" value="{$act}">
+    <input type="hidden" name="id" value="{:input('id')}">
+    <ul class="userForm">
+        <li>
+            <input type="text" name="consignee" id="consignee" value="{$address.consignee ?? ''}" placeholder="请输入收货人姓名"/>
+        </li>
+        <li>
+            <input type="text" name="phone" id="phone" value="{$address.phone ?? ''}" placeholder="请输入收货人电话号码"/>
+        </li>
+        <li>
+            <select id="province" name="province"></select>
+        </li>
+        <li>
+            <select id="city" name="city"></select>
+        </li>
+        <li>
+            <select id="county" name="county"></select>
+        </li>
+        <li>
+            <textarea name="address" id="addre" placeholder="请输入详细地址">{$address.address ?? ''}</textarea>
+        </li>
+        <li>
+            <lable><input type="checkbox" {$address.default == 1 ? 'checked' :''} value="1" name="default" />默认</lable>
+        </li>
+        <li>
+            <input type="button" value="修改地址" class="formLastBtn"/>
+        </li>
+    </ul>
+</form>
+{include file="base/footer" /}
+{load file="__PCAS__PCASClass.js"}
+<script>
+    $(document).ready(function(){
+        new PCAS('province','city','county',"{$address.province ?? ''}","{$address.city ?? ''}","{$address.county ?? ''}");
+        //测试返回页面，程序对接删除即可
+        $(".userForm input[type='button']").click(function(){
+            if($('#consignee').val() == ''){
+                alert('请输入姓名');
+                return false;
+            }
+            if($('#phone').val() == ''){
+                alert('请输入联系人');
+                return false;
+            }
+            if($('#province').val() == ''){
+                alert('请输入选择城市');
+                return false;
+            }
+            if($('#city').val() == ''){
+                alert('请输入选择城市');
+                return false;
+            }
+            if($('#county').val() == ''){
+                alert('请输入选择城市');
+                return false;
+            }
+            if($('#addre').val() == ''){
+                alert('请输入详细地址');
+                return false;
+            }
+            $("#address").submit();
+        });
+    });
+</script>

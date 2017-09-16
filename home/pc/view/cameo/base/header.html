@@ -1,0 +1,24 @@
+<header class="header header-fixed navbar">
+    <div class="brand">
+        <a href="javascript:;" class="fa fa-bars off-left visible-xs" data-toggle="off-canvas" data-move="ltr"></a>
+        <a href="index.html" class="navbar-brand">
+            <i class="fa fa-stop mg-r-sm"></i>
+            <span class="heading-font">门店业务系统</span>
+        </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right off-right">
+
+        <li class="quickmenu">
+            <a href="javascript:;" data-toggle="dropdown">
+                {$userinfo.nickname??''}
+                <i class="caret mg-l-xs hidden-xs no-margin"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right mg-r-xs">
+                <li class="divider"></li>
+                <li>
+                    <a href="{:url('Restrict/signin')}">退出登录</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</header>

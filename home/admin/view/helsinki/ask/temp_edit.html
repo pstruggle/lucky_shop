@@ -1,0 +1,109 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-columns" aria-hidden="true"></i><a href="#">商城管理</a></li>
+                <li><a>商户管理</a></li>
+                <li><a>商户添加（修改）</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form  class="form-horizontal form-stripe" action="{:url('Ask/tempEdit')}" id="formq" method="post">
+                                <input type="hidden" name="act" value="{$act??'add'}">
+                                <input type="hidden" name="atid" value="{:input('atid')}">
+                                <input type="hidden" name="tid" value="{$tid ?? ''}">
+                                <div class="form-group">
+                                    <label for="temp" class="col-sm-3 control-label">模板内容<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <textarea type="text" id="temp" name="temp"  placeholder="请输入 问价模板，例如：我有_位游客要去_旅游，_出发，出发时间：_。欢迎各大供应商联系我！{下划线_为一个提供用户填写的空格。}" class="form-control" >{$ask_temp.temp ?? ''}</textarea>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-3 control-label">显示状态</label>
+                                    <div class="col-sm-6">
+                                        <select name="status" id="status" class="form-control" >
+                                            <option value="1">显示</option>
+                                            <option value="0">不显示</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-3 control-label">排序</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="weight" class="form-control" name="weight" value="{$ask_temp.weight ?? '0'}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-horizontal form-stripe" id="input_type">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="base/form_footer" /}
+<script>
+    $(function(){
+        $('input[name="status"]').val('{$ask_temp.status ?? "1"}');
+        var datas = "{:addslashes(empty($ask_temp['input'])?'':$ask_temp['input'])}";
+        if(datas != ''){
+            datas = eval('('+datas+')');
+            var html = '';
+            for (var i in datas){
+                html += input_type(i,datas[i]);
+            }
+            $('#input_type').html(html);
+        }
+
+        //更改模板文本时
+        $('#temp').on('change',function () {
+            var temp = $(this).val();
+            var count = temp.split('_').length - 1,
+            input_types = '';
+            for (var i = 0; i < count; i++){
+                input_types += input_type(i);
+            }
+            $('#input_type').html(input_types);
+        });
+        //html字符串
+        function input_type(i,input) {
+            input = input || {};
+            var html = '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">第'+(parseInt(i)+1)+'个下划线表单</label>'+
+                '<div class="col-sm-6">'+
+                '<input type="text" class="form-control" name="ask['+i+'][desc]" value="'+(input.desc?input.desc:'')+'" placeholder="表单描述" />'+
+                '<input type="text" class="form-control" name="ask['+i+'][explain]" value="'+(input.explain?input.explain:'')+'" placeholder="表单说明" />'+
+                '<select name="ask['+i+'][type]" class="form-control">'+
+                '<option value="">表单类型</option>'+
+                '<option value="text" '+(input.type == 'text'?'selected':'')+'>文本</option>'+
+                '<option value="number" '+(input.type == 'number'?'selected':'')+'>数字</option>'+
+                '<option value="date" '+(input.type == 'date'?'selected':'')+'>日期</option>'+
+                '</select>'+
+                '</div>'+
+                '</div>';
+            return html;
+        }
+
+    });
+</script>

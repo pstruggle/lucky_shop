@@ -1,0 +1,106 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">商城管理</a></li>
+                <li><a>评论列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <label>
+                                            搜索:<input type="search" class="form-control input-sm" placeholder="" aria-controls="basic-table">
+                                        </label>
+                                        <label>
+                                            选择:
+                                            <select name="basic-table_length" aria-controls="basic-table" class="form-control input-sm">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>商户名</th>
+                                            <th>店铺名</th>
+                                            <th>用户名</th>
+                                            <th>用户电话</th>
+                                            <th>评论类型</th>
+                                            <th>评论时间</th>
+                                            <th>评分</th>
+                                            <th>评论内容</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="comments" id="comment"}
+                                        <tr>
+                                            <td>{$comment.id}</td>
+                                            <td>{$comment.mid}</td>
+                                            <td>{$comment.sid}</td>
+                                            <td>{$comment.uid}</td>
+                                            <td>{$comment.uname}</td>
+                                            <td>{$comment.type}</td>
+                                            <td>{$comment.addtime|date='Y-m-d H:i:s',###}</td>
+                                            <td>{$comment.star}</td>
+                                            <td>{$comment.content}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent"><i class="fa fa-eye"></i></button>
+                                                    <button class="btn btn-transparent">
+
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-transparent"><i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file="base/footer" /}
+<script>
+    $(function () {
+
+    });
+</script>

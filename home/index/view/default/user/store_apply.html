@@ -1,0 +1,59 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>申请门店</h1>
+</header>
+<div style="height:1rem;"></div>
+{$text??''}
+<form action="{:url('User/storeedit')}" method="post" id="mod_info">
+    <ul class="userForm">
+        <input type="hidden" name="act" value="{$act??'update'}">
+        <li>
+            <input type="text" value="{$apply.name??''}" name="name" id="name" placeholder="真实姓名"/>
+        </li>
+        <li>
+            <input type="text" value="{$apply.phone??''}" name="phone" id="phone" placeholder="联系电话"/>
+        </li>
+        <li>
+            <input type="text" value="{$apply.store??''}" name="store" id="store" placeholder="门店名称"/>
+        </li>
+        <li>
+            <select type="text"  name="province" id="province"></select>
+        </li>
+        <li>
+            <select type="text" name="city" id="city"></select>
+        </li>
+        <li>
+            <select type="text" name="county" id="county"></select>
+        </li>
+        <li>
+            <input type="text" value="{$apply.address??''}" name="address" id="address" placeholder="详细地址"/>
+        </li>
+        <li>
+            <input type="file" data-val="上传营业执照" id="licence" name="licence">
+        </li>
+        <li>
+            <input type="file" data-val="上传名片" id="business" name="business">
+        </li>
+        <li><input type="button" value="更新保存" class="formLastBtn"/></li>
+    </ul>
+</form>
+{include file="base/footer" /}
+{load file="__UPLOADER__Uploader.js"}
+{load file="__UPLOADER__uploader.css"}
+{load file="__PCAS__PCASClass.js"}
+<script>
+    $(function(){
+        $('.formLastBtn').click(function(){
+            $("#mod_info").submit();
+        });
+        var positive = new Upload('licence',{},"{$apply.licence??''}"),
+            negative = new Upload('business',{},"{$apply.business??''}");
+        new PCAS('province','city','county',"{$apply.province??''}","{$apply.city??''}","{$apply.county??''}");
+        var status = "{$status??''}";
+        if(status == '2'){
+            $('.formLastBtn').hide();
+        }
+    });
+</script>

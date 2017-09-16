@@ -1,0 +1,70 @@
+{volist name="orders" id="order"}
+{php}
+$data = user_show($order['pay_status'],$order['confirm'],$order['id']);
+
+{/php}
+<li>
+    <dl>
+        <dt>
+            <span>订单：{$order.onumber}</span>
+            <span>{$data.info}</span>
+        </dt>
+        <dd>
+            <h2>{$order.title}</h2>
+            <strong>
+                <i>出发日：{$order.dates | date="Y-m-d",###}</i>
+            </strong>
+        </dd>
+        <dd>
+            <span>商品数量：<b>{$order.sum}</b></span>
+            <span>实付：<b>{$order.discount}</b></span>
+        </dd>
+        {$data.desc}
+    </dl>
+</li>
+{/volist}
+<style>
+    .orderList li dd strong i {
+        font-style: normal;
+        display: block;
+        color: #666;
+    }
+</style>
+{php}
+function user_show($pay_status,$confirm,$id){
+$data = ['info'=>'','desc'=>''];
+switch ($pay_status){
+case '0':
+$data['info'] = '未下单';
+break;
+case '1':
+$data['info'] = '未支付';
+$data['desc'] = '<dd> <a class="order_delBtn" data-id="'.$id.'">删除订单</a> <a class="order_payBtn" data-id="'.$id.'">付款</a> </dd>';
+break;
+case '2':
+switch ($confirm){
+case '0':
+$data['info'] = '未支付';
+$data['desc'] = '<dd> <a class="order_delBtn" data-id="'.$id.'">删除订单</a> <a class="order_payBtn" data-id="'.$id.'">付款</a> </dd>';
+break;
+case '1':
+$data['info'] = '待确认';
+$data['desc'] = '<dd><a class="order_details" data-id="'.$id.'">查看</a></dd>';
+break;
+case '2':
+$data['info'] = '已确认';
+$data['desc'] = '<dd>  <a class="order_details" data-id="'.$id.'">查看</a><a class="order_conBtn" data-id="'.$id.'">确认收货</a> </dd>';
+break;
+case '3':
+$data['info'] = '拒绝（退款）';
+$data['desc'] = '<dd>  <a class="order_details" data-id="'.$id.'">查看</a></dd>';
+break;
+default:
+$data['info'] = '异常';
+$data['desc'] = '<dd><a class="order_details" data-id="'.$id.'">查看</a></dd>';
+break;
+}
+}
+return $data;
+}
+{/php}

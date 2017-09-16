@@ -1,0 +1,246 @@
+{include file="base/header" /}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="ernav clearfix">
+            <ul>
+                <li><a href="{:url('Goods/goodslist')}">商品列表</a></li>
+                <li class="on"><a href="{:url('Goods/goodsedit')}">添加商品</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="sannav clearfix">
+                <ul>
+                    <li class="on"><a href="#tag_0">基本信息</a></li>
+                    <li><a href="#tag_1">商品详情</a></li>
+                    <li><a href="#tag_2">商品图片</a></li>
+                    <li><a href="#tag_3">商品规格</a></li>
+                    <li><a href="#tag_4">积分配置</a></li>
+                    <li><a href="#tag_5">商城属性</a></li>
+                </ul>
+            </div>
+            <form  action="{:url('Goods/goodsedit')}" id="formq" method="post">
+                <div class="hidden" id="hidden">
+                    <input type="hidden" name="act" value="{$act}" >
+                    <input type="hidden" name="gid" value="{$gid}" >
+                </div>
+                <table class="form-table grouping" id="tag_0" name="tag_0">
+                    <tbody>
+                    <tr>
+                        <th><label for="tradename">商品名：</label></th>
+                        <td>
+                            <input type="text" id="tradename" name="tradename" validate="required" placeholder="请输入商品名" class="form-control init" value="{$goods.tradename ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="tradecode">商品编码：</label></th>
+                        <td>
+                            <input type="text" id="tradecode" name="tradecode" placeholder="请输入商品编码" class="form-control init" value="{$goods.tradecode ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="unit">商品单位：</label></th>
+                        <td>
+                            <input type="text" id="unit" name="unit" placeholder="请输入商品单位" class="form-control init" value="{$goods.unit ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="storeid">商品所属门店：</label></th>
+                        <td>
+                            <select class="form-control init" validate="required" id="storeid" name="storeid">
+                                <option value="">请选择所属门店</option>
+                                {volist name="stores" id="store"}
+                                <option value="{$store.id}">{$store.store}</option>
+                                {/volist}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="types">商品分类：</label></th>
+                        <td>
+                            <select class="form-control init" validate="required" id="ftypes" name="ftypes">
+                                <option value="">请选择分类</option>
+
+                            </select>
+                            <select class="form-control init" validate="required" id="types" name="types">
+                                <option value="">请选择分类</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="bid">商品进价：</label></th>
+                        <td>
+                            <input type="text" id="bid" name="bid" placeholder="请输入商品进价" class="form-control init" value="{$goods.bid ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="oriprice">商品原价：</label></th>
+                        <td>
+                            <input type="text" id="oriprice" name="oriprice" placeholder="请输入商品原价" class="form-control init" value="{$goods.oriprice ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="ingprice">商品现价：</label></th>
+                        <td>
+                            <input type="text" id="ingprice" name="ingprice" placeholder="请输入商品现价" class="form-control init" value="{$goods.ingprice ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="stock">商品库存：</label></th>
+                        <td>
+                            <input type="text" id="stock" name="oriprice" placeholder="请输入商品库存" class="form-control init" value="{$goods.stock ?? '-1'}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="weight">商品排序：</label></th>
+                        <td>
+                            <input type="text" id="weight" name="weight" placeholder="请输入商品排序" class="form-control init" value="{$goods.weight ?? '0'}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="status">商品状态：</label></th>
+                        <td>
+                            <select class="form-control init" id="status" name="status">
+                                <option value="1">上架</option>
+                                <option value="0">下架</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="form-table grouping" style="display: none;" id="tag_1" name="tag_1">
+                    <tbody>
+                    <tr>
+                        <th><label for="details">商品详情：</label></th>
+                        <td>
+                            <textarea name="details" id="details">{$goods.details ?? ''}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="form-table grouping" style="display: none;" id="tag_2" name="tag_2">
+                    <tbody>
+                    <tr>
+                        <th><label for="navpic">商品导航图：</label></th>
+                        <td>
+                            <input type="file" id="navpic" name="navpic[]" validate="required" placeholder="上传多图" value="" multiple />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="spec-top grouping" id="tag_3" name="tag_3" style="display: none;">
+                    <div class="spec">
+                        <div class="spec-case case">
+
+
+                        </div>
+                        <div class="addspec"><span class="btn btn-default">添加规格</span></div>
+                        <div class="attr-case case">
+                        </div>
+                        <div class="addattr"><span class="btn btn-default">添加属性</span></div>
+                        <div class="generate"><span class="btn btn-default">生成规格关系</span></div>
+
+                    </div>
+                    <div class="nexus">
+                    </div>
+                </div>
+                <table class="form-table grouping" style="display: none;" id="tag_4" name="tag_4">
+                    <tbody>
+                    <tr>
+                        <th><label for="ratio">积分返利比例：</label></th>
+                        <td>
+                            <input type="text" id="ratio" name="ratio" validate="required" placeholder="请输积分返利比例" class="form-control init" value="{$goods.ratio ?? '0'}" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="form-table grouping" style="display: none;" id="tag_5" name="tag_5">
+                    <tbody>
+                    <tr>
+                        <th><label for="freight">运费：</label></th>
+                        <td>
+                            <input type="text" id="freight" name="freight" validate="required" placeholder="请输所需运费" class="form-control init" value="{$goods.freight ?? '0'}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>运费计算方式：</th>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="freightway" id="freightway1" value="1"> 按最大值算
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="freightway" id="freightway2" value="2"> 单独计算
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>商城分类：</th>
+                        <td>
+                            <select class="form-control init" id="malltype" name="malltype">
+                                <option value="">请选择分类</option>
+                                {volist name="malltypes" id="malltype"}
+                                <option value="{$malltype.id}">{$malltype.types}</option>
+                                {/volist}
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="subtn-c"><input type="submit" name="submit"  id="submit" class="btn btn-default" /></div>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+{load file="__MERCHANT__js/goods.js" /}
+<script>
+    $(function() {
+        $("#formq").validate(); //表单验证
+        $('.sannav>ul>li>a').click(function () {
+            var href = $(this).attr('href');
+            $(this).parent().addClass('on').siblings().removeClass('on');
+            $(href).css('display', '').siblings('.grouping').css('display', 'none');
+        });
+        var up = new Upload('navpic', {}, "{$goods.navpic ?? ''}");
+        var ue = UE.getEditor('details', {
+            toolbars: [
+                ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat'],
+                ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+            ],
+            initialFrameHeight: '500',
+            initialFrameWidth: '600'
+        });
+        $('#storeid').bind('change',function(){
+            var sid = $(this).val();
+            var data = {'store':sid, 'fid':0};
+            $.get('{:url("Types/ajax_store_types")}',data,function(msg){
+                var types = eval('('+msg+')')
+                var html = '<option value="">请选择分类</option>';
+                for(var i = 0;i < types.length; i++){
+                    html += '<option value="'+types[i][0]+'">'+types[i][1]+'</option>';
+                }
+                $('#ftypes').html(html);
+            });
+        });
+        $('#ftypes').bind('change',function(){
+            var sid = $('#storeid').val();
+            var fid = $(this).val() || '-1';
+            console.log(fid);
+            var data = {'store':sid,'fid':fid};
+            $.get('{:url("Types/ajax_store_types")}',data,function(msg){
+                var types = eval('('+msg+')')
+                var html = '<option value="">请选择分类</option>';
+                for(var i = 0;i < types.length; i++){
+                    html += '<option value="'+types[i][0]+'">'+types[i][1]+'</option>';
+                }
+                $('#types').html(html);
+            });
+        });
+        {$gid?'alert("修改商品时若要修改商品规格则需要重新操作，不修改则可不操作商品规格；所属门店和商品分类需要重新填写！");':''}
+        $('select[name="status"]').val("{$goods.status ?? '1'}");
+        $('select[name="malltype"]').val("{$goods.malltype ?? ''}");
+        $('input[name="freightway"][value="{$goods.freightway ?? '1'}"]').prop('checked',true);
+    });
+
+
+</script>

@@ -1,0 +1,179 @@
+{include file="base/header"}
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>支付确认</h1>
+</header>
+<div style="height:1rem;"></div>
+<ul class="orderList">
+    <li>
+        <dl>
+            <dt>
+                订单号：{$orders.onumber}
+            </dt>
+            {if condition="$attach eq 'ly'"}
+            <dd>
+                <h2 style="text-align: left;">{$goods.title}</h2>
+                {php}
+                /*
+                <strong> <em>{$goods.price}</em> <span>{$goods.sum}</span> </strong>
+                */
+                {/php}
+            </dd>
+            {elseif condition="$attach eq 'mp'"/}
+
+            {elseif condition="$attach eq 'qz'"/}
+
+            {else/}
+            {volist name="goods" id="good"}
+            <dd>
+                <h2 style="text-align: left;">{$good.gname}</h2>
+                <strong> <em>{$good.price}</em> <span>{$good.sum}</span> </strong>
+            </dd>
+            {/volist}
+            {/if}
+        </dl>
+    </li>
+</ul>
+
+<!--bottom nav-->
+<div style="height:1rem;"></div>
+<aside class="btmNav">
+    <a>合计：￥<span class="sumprice">{$price}</span></a>
+    <a href="javascript:void(0);" class="liji" style="background:#FE6714;color:white;text-shadow:none;" onclick="">立即支付</a>
+</aside>
+
+{include file="base/footer"}
+{switch name="type"}
+    {case value="1"}
+<script type="text/javascript">
+    function paySuccess() {
+        //支付成功
+        var data = {'oid':"{$orders.id}",'ment':'1'};
+        $.ajaxSetup({'async':false});
+        $.get("/index.php/mall/order_success.html",data,function(data){
+            var msg = eval('('+data+')');
+            alert(msg.info);
+        });
+//        alert("{:url('Mall/order_success')}");
+    }
+    //调用微信JS api 支付
+    function jsApiCall()
+    {
+        var status = 1;
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            {$jsApiParameters},
+            function(res){
+                WeixinJSBridge.log(res.err_msg);
+                if(res.err_code){
+                    alert(res.err_desc);
+                    history.go(-1);
+                    return false;
+                }
+                if(res.err_msg=='get_brand_wcpay_request:ok'){
+//                    alert('支付成功');
+                    status = 0;
+                }else if(res.err_msg=='get_brand_wcpay_request:cancel') {
+//                    alert('您已经取消支付');
+                    return false;
+                }else if(res.err_msg=='get_brand_wcpay_request:fail'){
+//                    alert('支付失败');
+                }else {
+//                    alert('支付失败');
+                }
+                location.href = '/index.php/mall/return_state.html?oid={$orders.id}&status='+status+'&type={$attach??""}';
+                return false;
+            }
+        );
+    }
+
+    function callpay()
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall();
+        }
+    }
+</script>
+<script type="text/javascript">
+    //获取共享地址
+    function editAddress()
+    {
+        WeixinJSBridge.invoke(
+            'editAddress',
+            {$editAddress},
+            function(res){
+                var value1 = res.proviceFirstStageName;
+                var value2 = res.addressCitySecondStageName;
+                var value3 = res.addressCountiesThirdStageName;
+                var value4 = res.addressDetailInfo;
+                var tel = res.telNumber;
+
+//                alert(value1 + value2 + value3 + value4 + ":" + tel);
+            }
+        );
+    }
+
+    window.onload = function(){
+        document.getElementsByClassName("liji").item(0).setAttribute('onclick',"callpay()");
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', editAddress);
+                document.attachEvent('onWeixinJSBridgeReady', editAddress);
+            }
+        }else{
+            editAddress();
+        }
+    };
+
+</script>
+    {/case}
+    {case value="2"}
+{load file="__ARTDIALOG4.1.7__skins/green.css"}
+{load file="__ARTDIALOG4.1.7__artDialog.js"}
+<script>
+    $(function(){
+        $('.liji').click(function () {
+            art.dialog({
+                button:[
+                    {
+                        name:'支付成功',
+                        callback:function () {
+                            var datas = {type:"{$attach??''}",oid:"{$orders.onumber}"};
+                            //支付成功，检验是否真的支付成功
+                            $.ajaxSetup({async:false});
+                            console.log(datas);
+                            $.get("{:url('Wepay/pay_success')}",datas,function (text) {
+                                console.log(text);
+                                if(text == '1'){
+                                    location.href = '/index.php/mall/return_state.html?oid={$orders.id}&status=0&type='+datas.type;
+                                }else{
+                                    alert('支付失败');
+                                }
+                            });
+                        }
+
+                    },
+                    {
+                        name:'支付失败'
+                    }
+
+                ],
+                lock:true,
+                title:'微信扫码支付！',
+                content: '<img src="{:url('Wepay/qrcode')}?data={$url}" /><br/>微信扫描二维码',
+            });
+        });
+
+    })
+</script>
+    {/case}
+{/switch}

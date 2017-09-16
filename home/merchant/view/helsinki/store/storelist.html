@@ -1,0 +1,114 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">商城管理</a></li>
+                <li><a>店铺管理</a></li>
+                <li><a>店铺列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4 class="section-subtitle">
+                <a href="{:url('Store/storelist')}">店铺列表</a>
+                <a href="{:url('Store/storeedit')}">店铺添加</a>
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <form action="?">
+                                            <label>
+                                                店铺名:<input type="search" name="store" class="form-control input-sm" placeholder="店铺名搜索" aria-controls="basic-table" value="{:input('store')}">
+                                            </label>
+                                            <label>
+                                                店铺编号:<input type="search" name="id" class="form-control input-sm" placeholder="店铺编号" aria-controls="basic-table" value="{:input('id')}">
+                                            </label>
+                                            <label for="sub">
+                                                <input type="submit" id="sub" value="搜索" class="btn btn-primary" style="margin-bottom: 0;">
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>排序</th>
+                                            <th>店铺名称</th>
+                                            <th>店铺电话</th>
+                                            <!--<th>查看二维码</th>-->
+                                            <th>完善店铺信息</th>
+                                            <th>查看店铺订单</th>
+                                            <th>商品分类</th>
+                                            <th>添加时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="stores" id="store"}
+                                        <tr>
+                                            <td>{$store.id}</td>
+                                            <td>{$store.weight}</td>
+                                            <td>{$store.store}</td>
+                                            <td>{$store.phones}</td>
+                                            {php}/*
+                                            <td><a href="javascript:void(0);" _href="{$store.id}">二维码</a></td>*/{/php}
+                                            <td>
+
+                                                <a href="{:url('Store/storeedit',['sid'=>$store.id])}">修改信息</a>
+                                            </td>
+                                            <td><a href="{:url('Orders/orderslist',['sid'=>$store.id])}">查看订单</a></td>
+                                            <td><a href="{:url('Store/types',['sid'=>$store.id])}">查看商品分类</a></td>
+                                            <td>{$store.addtime|date='Y-m-d H:i:s',###}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Store/storeedit',['sid'=>$store.id])}">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                    </button>
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Store/store_del',['id'=>$store.id])}">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">{$page}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="base/footer" /}
+<script>
+    $(function () {
+
+    });
+</script>

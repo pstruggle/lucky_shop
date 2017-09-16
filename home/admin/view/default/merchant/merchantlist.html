@@ -1,0 +1,55 @@
+{include file="base/header" /}
+<div class="container-fluid">
+    <div class="row">
+        <div class="ernav clearfix">
+            <ul>
+                <li class="on"><a href="{:url('Merchant/merchantlist')}">商户列表</a></li>
+                <li><a _href="{:url('Merchant/merchantedit')}" class="artlog">添加商户</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <table class="list-table" id="list_tag" name="list_tag">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>商户名称</th>
+                    <th>联系电话</th>
+                    <th>最后登录时间</th>
+                    <th>访问该商户后台</th>
+                    <th>微官网点击数量</th>
+                    <th>粉丝数量</th>
+                    <th>账户余额</th>
+                    <th>状态</th>
+                    <th>商家账单</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="merchants" id="merchant"}
+                <tr>
+                    <td>{$merchant.id}</td>
+                    <td>{$merchant.name}</td>
+                    <td>{$merchant.phone}</td>
+                    <td>{$merchant.logtime|date='Y-m-d H:i:s',###}</td>
+                    <td><a href="{:url('Merchant/visit',['id'=>$merchant.id])}" target="_blank">访问</a></td>
+                    <td>{$merchant.clicks}</td>
+                    <td>{$merchant.fans}</td>
+                    <td>{$merchant.balance}</td>
+                    <td>{$merchant.status}</td>
+                    <td><a href="{:url('Merchant/bill',['mid'=>$merchant.id])}">查看账单</a></td>
+                    <td><a _href="{:url('Merchant/merchantedit',['id'=>$merchant.id])}" class="artlog">修改</a>|<a href="/admin.php/index/del/page/11/field/id/value/1.html">删除</a>|</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="paginate">{$page}</div>
+
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+
+    });
+</script>

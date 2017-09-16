@@ -1,0 +1,488 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>线路添加(修改)</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#basicinfo" data-toggle="tab">基本信息</a></li>
+                                    <li><a href="#deta" data-toggle="tab">特色推荐</a></li>
+                                    <li><a href="#pic" data-toggle="tab">线路图片</a></li>
+                                    <li><a href="#spec" data-toggle="tab">行程安排</a></li>
+                                    <li><a href="#inte" data-toggle="tab">温馨提示</a></li>
+                                    <li><a href="#purchase" data-toggle="tab">购物自费</a></li>
+                                </ul>
+                                <form class="" action="{:url('Tourism/lineedit')}" id="lineedit" method="post">
+                                    <input type="hidden" name="act" value="{$act??''}" >
+                                    <input type="hidden" name="line" value="{$lineid??''}" >
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="basicinfo">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label for="line_name" class="col-sm-3 control-label">线路名称<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="line_name" name="line_name"  placeholder="请输入线路名" class="form-control" required value="{$line.name ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">线路方向</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="radio" name="exit_type" value="1" checked>国内线路
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="exit_type" value="2">境外线路
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">目的地<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-10 destshow">
+                                                                {notempty name="$dest"}
+                                                                <span class="destination">{$dest.destination}<input type="hidden" class="destina" name="destination[]" value="{$dest.id}"><input type="hidden" name="desttext[]" value="{$dest.destination}"><span class="fa fa-remove del"></span></span>
+
+                                                                {/notempty}
+                                                            </div>
+                                                            <div class="col-sm-2"><button type="button" class="change">更改</button></div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="deta">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label for="recommend" class="col-sm-3 control-label">线路推荐</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="recommend" id="recommend">{$line.recommend ?? ''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="feature" class="col-sm-3 control-label">线路特色</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="feature" id="feature">{$line.feature ?? ''}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pic">
+                                            <input type="file" id="src" name="src" validate="required" placeholder="上传多图" value="" />
+                                        </div>
+                                        <div class="tab-pane fade" id="spec">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程发布类型</label>
+                                                    <div class="col-sm-6">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="type" id="type1" checked value="0">按天行程
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="type" id="type2" value="1">简约行程
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="trip">
+                                                    <button type="button" id="add_trip" style="width: 100%">添加一天行程</button>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="inte">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label for="contain" class="col-sm-3 control-label">费用包含</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="contain" id="contain">{$line.contain??''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="notcontain" class="col-sm-3 control-label">费用不包含</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="notcontain" id="notcontain">{$line.notcontain??''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="notcontain" class="col-sm-3 control-label">签证/签注</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="visas" id="visas">{$line.visas??''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="notice" class="col-sm-3 control-label">预定须知</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="notice" id="notice">{$line.notice??''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="reminder" class="col-sm-3 control-label">温馨提示</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="reminder" id="reminder">{$line.reminder??''}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="purchase">
+                                            <table class="table table-striped table-hover table-bordered text-center">
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>项目名称</th>
+                                                    <th>简介</th>
+                                                    <th>停留时间</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <!--tr-->
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th colspan="4">
+                                                        <input type="button" class="btn" id="add_purchase" value="添加项目" style="width: 100%;">
+                                                    </th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" class="btn btn-primary" id="submit">下一步</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="base/form_footer" /}
+<script>
+    $(function() {
+        var validator = $("#lineedit").validate({
+            submitHandler:function(form){
+                var href = $('.nav-tabs li.active a').attr('href');
+                if(href == '#purchase'){
+                    form.submit();
+                }else {
+                    $("#submit").text('下一步');
+                }
+            },
+//            debug:true,
+            highlight: function(label) {
+                $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function(label) {
+                $(label).closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+            messages:{
+                line_name:'必须填写线路名称',
+            }
+        });
+        $('.nav-tabs li').on('click',function () {
+            var action = $(this).is('.active');
+            if(!action){
+                $("#lineedit").submit();
+
+                if(validator.errorList.length > 0){
+                    console.log(validator.errorList.length);
+                    return false;
+                }else {
+                    setTimeout(active_change,200);
+                    return true;
+                }
+            }
+        });
+        $('#lineedit').submit(function () {
+            var len = $('.destina').length;
+            if(len<=0){
+                validator.errorList.length = 1;
+                alert('请选择目的地');
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#pic' && $('.upfiles').length <= 0){
+                validator.errorList.length = 1;
+                alert('请上传图片');
+                return false;
+            }
+            if(href == '#spec' && $('.trip .form-group').length <= 0){
+                validator.errorList.length = 1;
+                alert('请添加行程');
+                return false;
+            }
+            if(validator.errorList.length > 0){
+                console.log(validator.errorList.length);
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active').next();
+            var href = active_next.find('a').attr('href');
+            var sibling = active_next.addClass('active').siblings().removeClass('active');
+            $(href).addClass('in active').siblings().removeClass('in active');
+            active_change();
+            return true;
+        });
+        function active_change() {
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#purchase'){
+                $("#submit").text('提交');
+            }else {
+                $("#submit").text('下一步');
+            }
+        }
+//        $("#lineedit").validate(); //表单验证
+        var up = new Upload('src', {}, "{$line.src ?? ''}");
+        $('input[name="type"][value="{$line.type??''}"]').prop('checked',true);
+        var toolbars = [
+            ['fullscreen', 'source', 'undo', 'redo', 'removeformat', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'fontfamily'],
+            ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'fontsize', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+        ];
+        var recommend = UE.getEditor('recommend', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var feature = UE.getEditor('feature', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var contain = UE.getEditor('contain', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var notcontain = UE.getEditor('notcontain', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var notice = UE.getEditor('notice', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var reminder = UE.getEditor('reminder', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var visas = UE.getEditor('visas', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var day = 0,id = 0,myDate = new Date();
+        var times = 'desc'+myDate.getTime();
+        $('.trip').on('click','#add_trip',tripadd);
+        $('.trip').on('click','.delete',tripdelete);
+        $('input[name="type"]').change(typechange);
+        //修改行程方式
+        function typechange() {
+            var type = $(this).val();
+            var myDate = new Date();
+            if(type == 1){
+                tripsimple('');
+            }else {
+                var simple = '<button type="button" id="add_trip" style="width: 100%">添加一天行程</button>';
+                $('.trip').html(simple);
+            }
+            day = 0;
+            id = 0;
+            times = 'desc'+myDate.getTime();
+        }
+        //简约行程
+        function tripsimple(data) {
+            var myDate = new Date();
+            var time = 'a'+myDate.getTime();
+            var simple = '<div class="form-group"><label for="name" class="col-sm-3 control-label">简约行程</label><div class="col-sm-6"><textarea name="simple" id="'+time+'">'+data+'</textarea></div></div>';
+            $('.trip').html(simple);
+            var simple = UE.getEditor(time, {
+                toolbars: toolbars,
+                initialFrameHeight: '200',
+                initialFrameWidth: '600'
+            });
+        }
+        //添加行程
+        function tripadd(data) {
+            var days = id+1;
+            var html = '<div class="form-group"> <label class="col-sm-3 control-label"><button type="button" class="delete"><i class="fa fa-close"></i></button>&nbsp;&nbsp;&nbsp;第<span class="days">'+days+'</span>天</label> <div class="col-sm-6">行程标题：<input type="text" id="trip-title-'+day+'" name="trip['+day+'][title]"  placeholder="请输入当日行程概述" class="form-control width-200"  value="'+ (data.title?data.title:'') +'" /> <br/>交通工具：<select name="trip['+day+'][traffic]" class="form-control width-200" id="trip-traffic-'+day+'"><option value="无">无</option><option value="飞机">飞机</option><option value="高铁">高铁</option><option value="动车">动车</option><option value="火车">火车</option><option value="汽车">汽车</option><option value="轮船">轮船</option> <option value="骑行">骑行</option> </select> <br/>餐点： <label class="radio-inline"> <input type="checkbox" name="trip['+day+'][meal][]" id="trip-meal-'+day+'-1" value="1">早餐 </label> <label class="radio-inline"> <input type="checkbox" name="trip['+day+'][meal][]" id="trip-meal-'+day+'-2" value="2">中餐 </label> <label class="radio-inline"> <input type="checkbox" name="trip['+day+'][meal][]" id="trip-meal-'+day+'-3" value="3">晚餐 </label> <br/>住宿：<input type="text" id="trip-live-'+day+'" name="trip['+day+'][live]"  placeholder="请输入当日住宿情况" class="form-control width-200"  value="'+(data.live?data.live:'')+'" /> <br/>交通说明：<input type="text" id="trip-duration-'+day+'" name="trip['+day+'][duration]"  placeholder="请输入当日交通时长" class="form-control width-200"  value="'+(data.duration?data.duration:'')+'" /> <br />当日行程概述 <textarea name="trip['+day+'][desc]" id="trip-'+times+'-'+day+'">'+(data.desc?data.desc:'')+'</textarea> </div> </div>';
+            $('#add_trip').before(html);
+
+            $('select[name="trip['+day+'][traffic]"]').val((data.traffic?data.traffic:'无'));
+            for(var i = 0; data.meal && i<data.meal.length; i++){
+                $('input[name="trip['+day+'][meal][]"][value='+data.meal[i]+']').prop('checked',true);
+
+            }
+            var trip_desc = UE.getEditor('trip-'+times+'-'+day, {
+                toolbars: toolbars,
+                initialFrameHeight: '200',
+                initialFrameWidth: '600'
+            });
+            day++;
+            id++;
+        }
+        //删除某天行程
+        function tripdelete() {
+            $(this).parents('.form-group').remove();
+            id--;
+            var days = 1;
+            $('.days').each(function () {
+                $(this).html(days ++)
+            })
+        }
+        // 修改时初始化
+        function modint() {
+            var type = "{$line.type??''}";
+            if(type == '0'){
+                var data = '{:addslashes(!empty($line.thread)?$line.thread:"")}';
+                var datas = {};
+
+                if(data != '' && data != 'null'){
+                    datas = eval('('+data+')');
+                }
+//                console.log(data);
+                for(var i = 0; i<datas.length;i++){
+                    tripadd(datas[i])
+                }
+//                tripsimple(data)
+            }else if(type=='1'){
+                var data = '{$line.simple??""}';
+                tripsimple(data)
+            }
+        }
+        modint();
+        $('.change').click(changedest);
+        // 更改目的地
+        function changedest() {
+            var destina = $('.destina');
+            var dids = new Array();
+            var i = 0;
+            destina.each(function () {
+                dids[i++] = $(this).val();
+            });
+            $.get('{:url("Tourism/ajax_dest")}',{exit:$('input[name="exit_type"]:checked').val()},function (dests) {
+                var data = eval('('+dests+')');
+                var html = ergodicdest(data,0);
+                art.dialog({
+                    lock:true,
+                    title:'选择目的地',
+                    content:html,
+                    width:"50%",
+                    ok:function(){
+                        var origin = artDialog.open.origin;
+                        var checkboxs = $('.dests:checked');
+                        var destshow = $('.destshow');
+                        var desthtml = '';
+                        checkboxs.each(function (check) {
+                            var value = $(this).val();
+                            var text = $(this).siblings('.destext').text();
+                            desthtml += showdest(text,value);
+                        });
+                        destshow.html(desthtml);
+                    }
+                });
+                for (var i in dids){
+                    $('#dest-'+dids[i]).prop('checked',true);
+                }
+            });
+        }
+        //遍历目的地
+        function ergodicdest(data,level){
+            var html = '';
+            var str = '';
+            for(var x = 0; x<level; x++){
+                str += '-'
+            }
+            for(var prop in data){
+
+                html += "<label class='destination' for='dest-"+data[prop].id+"'>"+str;
+                if(data[prop]['des'].length == 0){
+                    html += "<input type='checkbox' id='dest-"+data[prop].id+"' class='dests' value='"+data[prop].id+"'>";
+                }
+                html+="<span class='destext'>"+data[prop].destination+"</span></label>";
+                html += ergodicdest(data[prop]['des'] ,++level);
+            }
+            return html;
+        }
+        //显示出目的地
+        function showdest(text,value) {
+            var html = '<span class="destination">'+text+'<input type="hidden" class="destina" name="destination[]" value="'+value+'"><input type="hidden" name="desttext[]" value="'+text+'"><span class="fa fa-remove del"></span></span>';
+            return html;
+        }
+        // 修改线路时初始化目的地
+        (function initdest(){
+            var dids = "{$line.desid??''}";
+            var dtexts = "{$line.destination??''}";
+            var ids = new Array();
+            var desc = new Array();
+            if(dids != ''){
+                ids = dids.split(',');
+                desc = dtexts.split(',');
+                var html = '';
+                for (var i in ids){
+                    html += showdest(desc[i],ids[i])
+                }
+                $('.destshow').html(html);
+            }
+        })();
+        $('.destshow').on('click','.destination .del',function () {
+            $(this).parent().remove();
+        });
+
+        $('input[name="exit_type"][value="{$line.style??''}"]').prop('checked',true);
+        $('input[name="exit_type"]').on('change',function () {
+            $('.destshow').empty();
+        });
+        var pint = 0;
+        $('#add_purchase').on('click',purchase_add);
+        function purchase_add(purchase) {
+            var trs = '<tr>'+
+                '<td><button type="button" class="delete"><i class="fa fa-close"></i></button></td>'+
+                '<td><input type="text" name="purchase['+pint+'][project]" value="'+(purchase.project ?purchase.project:'')+'" class="form-control"></td>'+
+                '<td><input type="text" name="purchase['+pint+'][present]" value="'+(purchase.present ?purchase.present:'')+'" class="form-control"></td>'+
+                '<td><input type="text" name="purchase['+pint+'][duration]" value="'+(purchase.duration ?purchase.duration:'')+'" class="form-control"></td>'+
+                '</tr>';
+            pint ++ ;
+            $('#purchase table tbody').append(trs);
+        }
+        purchase_init();
+        function purchase_init() {
+            var data = '{:addslashes(!empty($line.purchase)?$line.purchase:"")}';
+            var datas = {};
+            if(data != ''){
+                datas = eval('('+data+')');
+            }
+            for (var x in datas){
+                purchase_add(datas[x]);
+            }
+        }
+        $('#purchase').on('click','.delete',function () {
+            $(this).parents('tr').remove();
+        });
+    });
+</script>

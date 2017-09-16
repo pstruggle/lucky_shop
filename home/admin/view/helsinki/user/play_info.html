@@ -1,0 +1,87 @@
+{include file="base/artlog_header"}
+<div class="wrap">
+    <div class="page-body" style="padding: 0">
+        <div class="content" style="margin: 0;">
+            <div class="row animated fadeInUp">
+                <div class="col-sm-12">
+                    <!--<h4 class="section-subtitle"><b>Inline validation</b></h4>-->
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div  class="form-horizontal form-stripe">
+                                        <input type="hidden" name="id" value="{$id??''}">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">汇款时间</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" value="{$play.remittime |date='Y-m-d',###}" placeholder="选择您的汇款时间" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">汇款金额</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" value="{$play.price}" placeholder="汇款金额">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">汇款人</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" value="{$play.name}" placeholder="汇款人">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">汇款银行</label>
+                                            <div class="col-sm-6">
+                                                <select name="bank" id="bank" class="form-control">
+                                                    <option value="">请选择汇款银行</option>
+                                                    <option value="1">小银行</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">汇款备注</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="remark" value="{$play.remark}" placeholder="汇款备注">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <form action="{:url('User/play_edit')}" id="inline-validation" class="form-horizontal form-stripe">
+                                        <div class="form-group">
+                                            <input type="hidden" name="id" value="{$play.id}" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">状态</label>
+                                            <div class="col-sm-6">
+                                                <select name="status" id="status" class="form-control" >
+                                                    <option value="1">等待确认</option>
+                                                    <option value="2">通过</option>
+                                                    <option value="3">不通过</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9">
+                                                <button type="submit" class="btn btn-primary">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/artlog_footer"}
+<script>
+    $(function(){
+        $('#bank').val("{$play.bid ?? ''}");
+        $('#status').val("{$play.status ?? ''}");
+    });
+</script>

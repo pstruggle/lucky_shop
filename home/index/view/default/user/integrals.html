@@ -1,0 +1,21 @@
+{include file="base/header" /}
+
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>积分记录</h1>
+</header>
+<div style="height:1rem;"></div>
+<ul class="integList">
+    {volist name="integras" id="integra"}
+    <li>
+        <div>
+            <span>订单：{$integra.onumber}</span>
+            <br />
+            <span>{$integra.addtime | date="Y-m-d H:i",###}</span>
+        </div>
+        <div>{if condition="$integra.integral > 0"}+{/if}{$integra.integral}</div>
+    </li>
+    {/volist}
+</ul>
+{include file="base/footer" /}

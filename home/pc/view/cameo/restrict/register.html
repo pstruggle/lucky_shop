@@ -1,0 +1,180 @@
+<!doctype html>
+<html class="signin no-js" lang="">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="description" content="Flat, Clean, Responsive, admin template built with bootstrap 3">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <script type="text/javascript">
+        //<![CDATA[
+        try {
+            if (!window.CloudFlare) {
+                var CloudFlare = [{
+                    verbose: 0,
+                    p: 0,
+                    byc: 0,
+                    owlid: "cf",
+                    bag2: 1,
+                    mirage2: 0,
+                    oracle: 0,
+                    paths: {
+                        cloudflare: "/cdn-cgi/nexp/dok2v=1613a3a185/"
+                    },
+                    atok: "1668c19642567e08c574f5d9458345a2",
+                    petok: "3285f1db20753df31d6fcdae6015a30e5a60a785-1419101748-1800",
+                    zone: "nyasha.me",
+                    rocket: "0",
+                    apps: {
+                        "ga_key": {
+                            "ua": "UA-50530436-1",
+                            "ga_bs": "2"
+                        }
+                    }
+                }];
+                CloudFlare.push({
+                    "apps": {
+                        "ape": "86d42e0b8c0027bb178361fce707fc15"
+                    }
+                });
+                ! function(a, b) {
+                    a = document.createElement("script"), b = document.getElementsByTagName("script")[0], a.async = !0, a.src = "__PC__js/cloudflare.min.js", b.parentNode.insertBefore(a, b)
+                }()
+            }
+        } catch (e) {};
+        //]]>
+    </script>
+    <link rel="stylesheet" href="__PC__vendor/offline/theme.css">
+    <link rel="stylesheet" href="__PC__vendor/pace/theme.css">
+    <link rel="stylesheet" href="__PC__vendor/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PC__vendor/bxslider/jquery.bxslider.css">
+
+
+    <link rel="stylesheet" href="__PC__bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PC__css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PC__css/animate.min.css">
+
+    <link rel="stylesheet" href="__PC__css/panel.css">
+
+    <link rel="stylesheet" href="__PC__css/skins/palette.1.css" id="skin">
+    <link rel="stylesheet" href="__PC__css/fonts/style.1.css" id="font">
+    <link rel="stylesheet" href="__PC__css/main.css">
+
+
+    <!--[if lt IE 9]>
+    <script src="__PC__js/html5shiv.js"></script>
+    <script src="__PC__js/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="__PC__vendor/modernizr.js"></script>
+    <script type="text/javascript">
+
+        (function(b) {
+            (function(a) {
+                "__CF" in b && "DJS" in b.__CF ? b.__CF.DJS.push(a) : "addEventListener" in b ? b.addEventListener("load", a, !1) : b.attachEvent("onload", a)
+            })(function() {
+                "FB" in b && "Event" in FB && "subscribe" in FB.Event && (FB.Event.subscribe("edge.create", function(a) {
+                    _gaq.push(["_trackSocial", "facebook", "like", a])
+                }), FB.Event.subscribe("edge.remove", function(a) {
+                    _gaq.push(["_trackSocial", "facebook", "unlike", a])
+                }), FB.Event.subscribe("message.send", function(a) {
+                    _gaq.push(["_trackSocial", "facebook", "send", a])
+                }));
+                "twttr" in b && "events" in twttr && "bind" in twttr.events && twttr.events.bind("tweet", function(a) {
+                    if (a) {
+                        var b;
+                        if (a.target && a.target.nodeName == "IFRAME") a: {
+                            if (a = a.target.src) {
+                                a = a.split("#")[0].match(/[^?=&]+=([^&]*)?/g);
+                                b = 0;
+                                for (var c; c = a[b]; ++b)
+                                    if (c.indexOf("url") === 0) {
+                                        b = unescape(c.split("=")[1]);
+                                        break a
+                                    }
+                            }
+                            b = void 0
+                        }
+                        _gaq.push(["_trackSocial", "twitter", "tweet", b])
+                    }
+                })
+            })
+        })(window);
+        /* ]]> */
+    </script>
+</head>
+
+<body class="bg-color center-wrapper">
+<div class="center-content">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <section class="panel panel-default">
+                <header class="panel-heading">注册</header>
+                <div class="bg-white pd-md">
+                    <h6>
+                        <strong>创建</strong>您的账户</h6>
+                    <form role="form" method="post" id="add_user" action="{:url('Restrict/add_user')}">
+                        <input type="text" class="form-control mg-b-sm" name="tel" id="tel" placeholder="手机号码" autofocus>
+                        <input type="password" class="form-control mg-b-sm" name="passwd1" id="passwd1" placeholder="请输入密码">
+                        <input type="password" class="form-control mg-b-sm" name="passwd2" id="passwd2" placeholder="确认密码">
+                        <input type="text" class="form-control mg-b-sm"  name="nickname" id="nickname" placeholder="昵称">
+                        <select name="province" id="province" class="form-control mg-b-sm" required></select>
+                        <select name="city" id="city" class="form-control mg-b-sm" required></select>
+
+                        <select name="county" id="county" class="form-control mg-b-sm" required></select>
+                        <!--<label class="checkbox pull-left ">
+                            <input type="checkbox" value="remember-me">I accept
+                            <a href="javascript:;">Cameo's</a>terms and conditions
+                        </label>-->
+                        <button class="btn btn-primary btn-block" type="submit">注册</button>
+                        <p class="center-block mg-t mg-b text-center">已经有账号？</p>
+                        <a class="btn btn-primary btn-block mg-b-sm" href="{:url('restrict/login')}">登录</a>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+{load file="__PCAS__PCASClass.js"}
+<script>
+    new PCAS('province','city','county');
+    $("#add_user").click(function(){
+        if( !isPhoneNo( $('#tel').val() ) ){
+            alert('手机号码的格式不正确！');
+            return false;
+        }
+        if( $('#passwd1').val().length < 8 ){
+            alert('密码长度8位以上！');
+            return false;
+        }
+        if( $('#passwd1').val() != $('#passwd2').val() ){
+            alert('输入的两次密码不一致');
+            return false;
+        }
+        if ($('#nickname').val() == ''){
+            alert('请输入昵称！');
+            return false;
+        }
+        if( $('#province').val() == '' ){
+            alert('请选择省份！');
+            return false;
+        }
+        if( $('#city').val() == '' ){
+            alert('请选择城市');
+            return false;
+        }
+        if ( $('#county').val() == '' ){
+            alert('请选择县区');
+            return false;
+        }
+        $('#add_user').submit();
+    });
+    function isPhoneNo(phone) {
+        var pattern = /^1[123456789]\d{9}$/;
+        return pattern.test(phone);
+    }
+</script>

@@ -1,0 +1,86 @@
+{volist name="trips" id="trip"}
+<li class="itemcontainer " data-pinfo="pid={$trip.id}" data-track="true">
+    <div class="tour_img">
+        <img class="img_animation" src="{:img_url($trip.pic,80,80)}">
+        <span class="tour_type type_team">{:trip_style($trip['style'])}</span>
+        <span class="tour_start">{$trip.setout}出发</span>
+    </div>
+    <div class="tour_content singleitem" pid="{$trip.id}" data-load="true">
+        <h3 class="">{$trip.title}</h3>
+        <div class="tour_icon"></div>
+        <div class="supplier_date">
+            <span class="supplier">{$trip.name}</span>
+            <!--<span class="date">班期：周一至周日</span>-->
+        </div>
+        <div class="tour_fbd" data-temp="0">
+            <span class="tour_price">
+                <dfn>￥</dfn><strong>{$trip.minprice}</strong>/人 起
+            </span>
+        </div>
+        <div class="tour_info">
+            <span class="tour_dealer">
+                <i class="green">商户</i>
+                <em>{$trip.name}</em>
+            </span>
+            <span class="tour_point">
+                <strong></strong>
+            </span>
+            <span class="tour_num hidden">人出游</span>
+        </div>
+        <div class="guess_money" style="display:none" data-ratio="" data-commission=""></div>
+        <i class="tour_pop notgo"></i>
+        <div class="tour_pop_box notgo" style="display: none">
+            <div class="tour_pop_type" style="height: 60px;" data-params="pid={$trip.id}">
+                近团期：<br/>
+                {$trip.offer | show_group=$trip.offer_type,$userinfo.type}
+
+            </div>
+            <!--<span class="tour_collect_container"><span class="tour_collect notgo">收藏</span></span>-->
+            <i class="tour_close notgo"></i>
+        </div>
+    </div>
+</li>
+{/volist}
+{php}
+/*
+<li class="itemcontainer " data-pinfo="pid={$trip.id}" data-track="true">
+    <div class="tour_img">
+        <img class="img_animation" src="{$trip.pic}">
+        <span class="tour_type type_team">跟团游</span>
+        <span class="tour_start">南昌出发</span>
+    </div>
+    <div class="tour_content singleitem" pid="{$trip.id}" data-load="true">
+        <h3 class="">法国+瑞士+意大利11日跟团游·A线一价全含雪山徒步火车+B线4人私家小团</h3>
+        <div class="tour_icon"></div>
+        <div class="supplier_date">
+            <span class="supplier">新景界</span>
+            <span class="date">班期：国庆、周一、二、三、四</span>
+        </div>
+        <div class="tour_fbd" data-temp="0">
+            <span class="tour_price">
+                <dfn>¥</dfn><strong>29900</strong>起
+            </span>
+        </div>
+        <div class="tour_info">
+            <span class="tour_dealer">
+                <i class="blue">供应商</i> <em>新景界</em>
+            </span>
+            <span class="tour_point">
+                <strong>5.0</strong>分
+            </span>
+            <span class="tour_comment">1条点评</span>
+            <span class="tour_num">8人出游</span>
+        </div>
+        <div class="guess_money" style="display:none" data-ratio="" data-commission=""></div>
+        <i class="tour_pop notgo"></i>
+        <div class="tour_pop_box notgo" style="display: none">
+            <div class="tour_pop_type" data-params=""></div>
+            <span class="tour_contrast notgo js_compare" data-compare="">对比</span>
+            <span class="tour_collect_container">
+                <span class="tour_collect notgo">收藏</span>
+            </span> <i class="tour_close notgo"></i>
+        </div>
+    </div>
+</li>
+*/
+{/php}

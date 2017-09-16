@@ -1,0 +1,94 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="javascript:void (0);">问价管理</a></li>
+                <li><a href="{:url('adver/index')}">问价模板分类</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4 class="section-subtitle">
+                <a href="javascript:void (0);" _href="{:url('Ask/temp_type_edit')}" class="artlog">添加分类</a>
+            </h4>
+
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>问价类型</th>
+                                            <th>查看</th>
+                                            <th>排序</th>
+                                            <th>添加时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="ask_types" id="ask_type"}
+                                        <tr>
+                                            <td>{$ask_type.id}</td>
+                                            <td>{$ask_type.temp_type}</td>
+                                            <td><a href="{:url('Ask/temp',['atid'=>$ask_type.id])}">查看模板</a></td>
+
+                                            <td>{$ask_type.weight}</td>
+                                            <td>{$ask_type.addtime|date='Y-m-d H:i:s',###}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a _href="{:url('Ask/temp_type_edit',['aid'=>$ask_type.id])}" class="artlog">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                    </button>
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Ask/temp_typeEdit',['act'=>'del','aid'=>$ask_type.id])}">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="base/footer" /}
+<script>
+    $(function () {
+
+    });
+</script>

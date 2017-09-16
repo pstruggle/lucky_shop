@@ -1,0 +1,140 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="{:url('Mall/location')}" class="location">{$location.location_county?$location.location_county:(!empty($location.location_city)?$location.location_city:(!empty($location.location_province)?$location.location_province:'自动定位...'))}</a>
+    <h1 class="logoIcon" style="font-size:.85rem;">
+        {php}/*
+        <a href="{:url('Mall/index')}">
+            <img src="{$cache_config.web_logo ??'/favicon.ico'}" alt="小惠猫商城" style="height: calc(100% - 10px) ; margin: 5px 0">
+        </a>
+        */{/php}
+    </h1>
+    <a href="{:url('Mall/search')}" class="rt_searchIcon">&#37;</a>
+</header>
+<div style="height:1rem;"></div>
+<!--slide-->
+<div id="slide">
+    <div class="swiper-wrapper">
+        {volist name="ads" id="ad"}
+        <div class="swiper-slide">
+            <a href="{$ad.url}">
+                <img src="{:img_url($ad.pic,414,160)}"/>
+            </a>
+        </div>
+
+        {/volist}
+    </div>
+    <div class="pagination"></div>
+</div>
+<!--categoryList-->
+<ul class="categoryLiIcon">
+    {volist name="types" id="type"}
+    <li>
+        <a href="{:url('Mall/category',['id'=>$type.id])}">
+            <img src="{$type.pic}"/>
+            <em>{$type.types}</em>
+        </a>
+    </li>
+    {/volist}
+</ul>
+<!--Tab:productList-->
+<dl class="tab_proList">
+    <dt>
+        <a>热销</a>
+        <a>新品</a>
+        <a>打折</a>
+    </dt>
+    <dd>
+        <ul>
+            {volist name="hots" id="hot"}
+            <li>
+                <a href="{:url('Mall/product',['id'=>$hot.id])}" class="goodsPic">
+                    <img src="{:img_url($hot.pic,100,100)}"/>
+                </a>
+                <div class="goodsInfor">
+                    <h2>
+                        <a href="{:url('Mall/product',['id'=>$hot.id])}">{$hot.tradename}</a>
+                    </h2>
+                    <p>
+                        <del>{$hot.oriprice}</del>
+                    </p>
+                    <p>
+                        <strong class="price">{$hot.ingprice}</strong>
+                    </p>
+                    <a class="addToCart" data-gid="{$hot.id}">&#126;</a>
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </dd>
+    <dd>
+        <ul>
+            {volist name="news" id="new"}
+            <li>
+                <a href="{:url('Mall/product',['id'=>$new.id])}" class="goodsPic">
+                    <img src="{:img_url($new.pic,100,100)}"/>
+                </a>
+                <div class="goodsInfor">
+                    <h2>
+                        <a href="{:url('Mall/product',['id'=>$new.id])}">{$new.tradename}</a>
+                    </h2>
+                    <p>
+                        <del>{$new.oriprice}</del>
+                    </p>
+                    <p>
+                        <strong class="price">{$new.ingprice}</strong>
+                    </p>
+                    <a class="addToCart" data-gid="{$new.id}">&#126;</a>
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </dd>
+    <dd>
+        <ul>
+            {volist name="sales" id="sale"}
+            <li>
+                <a href="{:url('Mall/product',['id'=>$sale.id])}" class="goodsPic">
+                    <img src="{:img_url($sale.pic,100,100)}"/>
+                </a>
+                <div class="goodsInfor">
+                    <h2>
+                        <a href="{:url('Mall/product',['id'=>$sale.id])}">{$sale.tradename}</a>
+                    </h2>
+                    <p>
+                        <del>{$sale.oriprice}</del>
+                    </p>
+                    <p>
+                        <strong class="price">{$sale.ingprice}</strong>
+                    </p>
+                    <a class="addToCart" data-gid="{$sale.id}">&#126;</a>
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </dd>
+
+</dl>
+<!--floatCart-->
+<div class="hoverCart">
+    <a href="{:url('Mall/cart')}">{$cartnum ?? 0}</a>
+</div>
+{include file="base/footer" /}
+<script>
+    $(document).ready(function(){
+        var mySwiper = new Swiper('#slide',{
+            autoplay:5000,
+            visibilityFullFit : true,
+            loop:true,
+            pagination : '.pagination',
+        });
+        //product list:Tab
+        $(".tab_proList dd").eq(0).show().siblings(".tab_proList dd").hide();
+        $(".tab_proList dt a").eq(0).addClass("currStyle");
+        $(".tab_proList dt a").click(function(){
+            var liindex = $(".tab_proList dt a").index(this);
+            $(this).addClass("currStyle").siblings().removeClass("currStyle");
+            $(".tab_proList dd").eq(liindex).fadeIn(150).siblings(".tab_proList dd").hide();
+        });
+    });
+</script>

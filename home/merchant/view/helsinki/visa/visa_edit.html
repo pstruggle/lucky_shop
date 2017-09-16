@@ -1,0 +1,587 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">签证管理</a></li>
+                <li><a>签证编辑</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('Visa/visa_list')}">签证列表</a>
+                <a href="{:url('Visa/visa_edit')}">签证编辑</a>
+            </h4>
+
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#basicinfo" data-toggle="tab">基本信息</a></li>
+                                    <li><a href="#deta" data-toggle="tab">资料选择</a></li>
+                                    <li><a href="#pic" data-toggle="tab">签证图片</a></li>
+                                    <li><a href="#spec" data-toggle="tab">预定须知</a></li>
+                                </ul>
+                                <form class="" action="{:url('Visa/visaedit')}" id="tripedit" method="post">
+                                    <input type="hidden" name="act" value="{$act??'add'}" >
+                                    <input type="hidden" name="visa" value="{$visa.id??''}" >
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="basicinfo">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label for="title" class="col-sm-3 control-label">签证标题<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="title" name="title"  placeholder="请输入签证标题" class="form-control" required value="{$visa.title ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">签证国家<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-10 destshow">
+                                                                {notempty name="$dest"}
+                                                                <span class="destination">{$dest.destination}<input type="hidden" class="destina" name="destination[]" value="{$dest.id}"><input type="hidden" name="desttext[]" value="{$dest.destination}"><span class="fa fa-remove del"></span></span>
+
+                                                                {/notempty}
+                                                            </div>
+                                                            <div class="col-sm-2"><button type="button" class="change">更改</button></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-sm-3 control-label">结算价<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="balance" name="balance"  placeholder="请输入结算价" class="form-control" required value="{$visa.balance ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="logistics" class="col-sm-3 control-label">物流费<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="logistics" name="logistics"  placeholder="请输入物流费" class="form-control" required value="{$visa.logistics ?? '0'}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-sm-3 control-label">出售价<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="sell" name="sell"  placeholder="请输入出售价" class="form-control" required value="{$visa.sell ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="type" class="col-sm-3 control-label">签证类型<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <select name="type" id="type" class="form-control" required >
+                                                            <option value="1">旅游签证</option>
+                                                            <option value="2">商务签证</option>
+                                                            <option value="3">探亲访友签证</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="enter" class="col-sm-3 control-label">入境次数<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="enter" name="enter"  placeholder="请输入入境次数" class="form-control" required value="{$visa.enter ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="expiry" class="col-sm-3 control-label">有效时间描述<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="expiry" name="expiry"  placeholder="请输入有效期 如：一个月" class="form-control" required value="{$visa.expiry ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="stop" class="col-sm-3 control-label">最长停留时间<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="stop" name="stop"  placeholder="请输入最长停留时间 如：15天" class="form-control" required value="{$visa.stop ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="handle" class="col-sm-3 control-label">办理周期<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="handle" name="handle"  placeholder="请输入办理周期 如：15个工作日" class="form-control" required value="{$visa.handle ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scope" class="col-sm-3 control-label">受理范围<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <textarea type="text" id="scope" name="scope"  placeholder="请输入受理范围" class="form-control" required >{$visa.scope ?? ''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="service" class="col-sm-3 control-label">服务内容<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <textarea type="text" id="service" name="service"  placeholder="请输入服务内容" class="form-control" required >{$visa.service ?? ''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="interview" class="col-sm-3 control-label">是否需要面试<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <select name="interview" id="interview" class="form-control" required >
+                                                            <option value="0">否</option>
+                                                            <option value="1">是</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fingerprint" class="col-sm-3 control-label">是否需要录指纹<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <select name="fingerprint" id="fingerprint" class="form-control" required >
+                                                            <option value="0">否</option>
+                                                            <option value="1">是</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="rem" class="col-sm-3 control-label">是否销签<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <select name="rem" id="rem" class="form-control" required >
+                                                            <option value="0">否</option>
+                                                            <option value="1">是</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="deposit" class="col-sm-3 control-label">是否需要担保金<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <select name="deposit" id="deposit" class="form-control" required >
+                                                            <option value="0">否</option>
+                                                            <option value="1">是</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="deta">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">在职材料</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-8" id="job">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <button type="button" class="choice" data-name="job" data-id="job">选择材料</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">无业材料</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-8" id="unjob">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <button type="button" class="choice" data-name="unjob" data-id="unjob">选择材料</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">退休材料</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-8" id="retire">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <button type="button" class="choice" data-name="retire" data-id="retire">选择材料</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">学生材料</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-8" id="student">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <button type="button" class="choice" data-name="student" data-id="student">选择材料</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">儿童材料</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-8" id="child">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <button type="button" class="choice" data-name="child" data-id="child">选择材料</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">通用材料</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-8" id="must">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <button type="button" class="choice" data-name="must" data-id="must">选择材料</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pic">
+                                            <input type="file" id="file" name="pics[]" validate="required" placeholder="上传" value="" multiple />
+                                        </div>
+                                        <div class="tab-pane fade" id="spec">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-horizontal form-stripe">
+                                                    <div class="form-group">
+                                                        <label for="notice" class="col-sm-3 control-label">预定须知<span class="required">*</span></label>
+                                                        <div class="col-sm-6">
+                                                            <textarea  id="notice" name="notice" >{$visa.notice ?? ''}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="attention" class="col-sm-3 control-label">注意事项<span class="required">*</span></label>
+                                                        <div class="col-sm-6">
+                                                            <textarea id="attention" name="attention" >{$visa.attention ?? ''}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" id="submit" class="btn btn-primary">下一步</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+{load file="__PUBLIC__jedate/jquery.jedate.js"}
+{load file="__PUBLIC__jedate/skin/jedate.css"}
+<style>
+    .aui_content{width: 100%}
+</style>
+<script  type="text/javascript">
+    $(function() {
+
+        var validator = $("#tripedit").validate({
+            submitHandler:function(form){
+                var href = $('.nav-tabs li.active a').attr('href');
+                if(href == '#spec'){
+                    form.submit();
+                }else {
+                    $("#submit").text('下一步');
+                }
+            },
+            highlight: function(label) {
+                $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function(label) {
+                $(label).closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+            messages:{
+                title:'必须填写签证标题',
+                balance:'必须填写结算价',
+                sell:'必须填写出售价',
+                enter:'必须填写入境次数',
+                expiry:'必须填有效时间',
+                stop:'必须填写停留时间',
+                handle:'必须填写办理周期',
+                interview:'选择面试要求',
+                fingerprint:'选择指纹要求',
+                rem:'选择销签要求',
+            }
+        });
+        $('.nav-tabs li').on('click',function () {
+            var action = $(this).is('.active');
+            console.log(action);
+            if(!action){
+                $("#tripedit").submit();
+                if(validator.errorList.length > 0){
+                    return false;
+                }else {
+                    setTimeout(active_change,200);
+                    return true;
+                }
+            }
+        });
+        $('#tripedit').submit(function () {
+            if(validator.errorList.length > 0){
+                return false;
+            }
+            if($('.destination').length <=0){
+                alert('添加签证国家');
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#pic' && $('.upfiles').length <= 0){
+                validator.errorList.length = 1;
+                alert('请上传图片');
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active').next();
+            var href = active_next.find('a').attr('href');
+            var sibling = active_next.addClass('active').siblings().removeClass('active');
+            $(href).addClass('in active').siblings().removeClass('in active');
+            active_change();
+            return true;
+        });
+        function active_change() {
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#spec'){
+                $("#submit").text('提交');
+            }else {
+                $("#submit").text('下一步');
+            }
+        }
+
+        var up = new Upload('file', {}, "{$visa.pics ?? ''}");
+
+
+        $('select[name="type"]').val("{$visa.type ?? '1'}");
+        $('select[name="interview"]').val("{$visa.interview ?? '0'}");
+        $('select[name="fingerprint"]').val("{$visa.fingerprint ?? '0'}");
+        $('select[name="rem"]').val("{$visa.rem ?? '0'}");
+        $('select[name="deposit"]').val("{$visa.deposit ?? '0'}");
+        var toolbars = [
+            ['fullscreen', 'source', 'undo', 'redo', 'removeformat', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'fontfamily'],
+            ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'fontsize', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+        ];
+        var desc = UE.getEditor('notice', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var attention = UE.getEditor('attention', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+//        var notice = UE.getEditor('notice', {
+//            toolbars: toolbars,
+//            initialFrameHeight: '200',
+//            initialFrameWidth: '600'
+//        });
+//        var traffic = UE.getEditor('traffic', {
+//            toolbars: toolbars,
+//            initialFrameHeight: '200',
+//            initialFrameWidth: '600'
+//        });
+        // 选择签证材料
+        $('.choice').click(choicedata);
+        function choicedata() {
+            var _this = $(this);
+            var datas = new Array();
+            var t_name = _this.data('name'),
+                t_id = _this.data('id'),
+                i = 0,elm = $('#'+t_id + ' .destina');
+            elm.each(function () {
+                datas[i++] = $(this).val();
+            });
+            $.get('{:url("Visa/ajax_visa_data")}',{exit:2},function (dests) {
+                var data = eval('('+dests+')');
+                var html = erdest(data,t_name,t_id);
+                art.dialog({
+                    lock:true,
+                    title:'选择目的地',
+                    content:html,
+                    width:"50%",
+                    ok:function(){
+                        var origin = artDialog.open.origin;
+                        var checkboxs = $('.dests:checked');
+                        var destshow = $('#'+t_id);
+                        var desthtml = '';
+                        checkboxs.each(function (check) {
+                            var value = $(this).val();
+                            var text = $(this).siblings('.destext').text();
+                            desthtml += showvisa(text,value,t_name);
+                        });
+                        destshow.html(desthtml);
+                    }
+                });
+                for (var i in datas){
+                    $('#dest-'+datas[i]).prop('checked',true);
+                }
+            });
+
+        }
+        function showvisa(text,value,name) {
+            var html = '<span class="destination">'+text+'<input type="hidden" class="destina" name="'+name+'[id][]" value="'+value+'"><input type="hidden" name="'+name+'[title][]" value="'+text+'"><span class="fa fa-remove del"></span></span>';
+            return html;
+        }
+        function erdest(data,name,id) {
+            var html = '';
+            var str = '';
+            for(var prop in data){
+                html += "<label class='destination' for='dest-"+data[prop].id+"'>"+str;
+                html += "<input type='checkbox' name='"+name+"' id='dest-"+data[prop].id+"' class='dests' value='"+data[prop].id+"'>";
+                html+="<span class='destext'>"+data[prop].title+"</span></label>";
+            }
+            return html;
+        }
+        // 目的地更改
+        $('.change').click(changedest);
+        // 更改目的地
+        function changedest() {
+            var destina = $('.destina');
+            var dids = new Array();
+            var i = 0;
+            destina.each(function () {
+                dids[i++] = $(this).val();
+            });
+            $.get('{:url("Tourism/ajax_dest")}',{exit:2},function (dests) {
+                var data = eval('('+dests+')');
+                var html = ergodicdest(data,0);
+                art.dialog({
+                    lock:true,
+                    title:'选择目的地',
+                    content:html,
+                    width:"50%",
+                    ok:function(){
+                        var origin = artDialog.open.origin;
+                        var checkboxs = $('.dests:checked');
+                        var destshow = $('.destshow');
+                        var desthtml = '';
+                        checkboxs.each(function (check) {
+                            var value = $(this).val();
+                            var text = $(this).siblings('.destext').text();
+                            desthtml += showdest(text,value);
+                        });
+                        destshow.html(desthtml);
+                    }
+                });
+                for (var i in dids){
+                    $('#dest-'+dids[i]).prop('checked',true);
+                }
+            });
+        }
+        //遍历目的地
+        function ergodicdest(data,level){
+            var html = '';
+            var str = '';
+            for(var x = 0; x<level; x++){
+                str += '-'
+            }
+
+            for(var prop in data){
+
+                html += "<label class='destination' for='dest-"+data[prop].id+"'>"+str;
+                if(data[prop]['des'].length == 0){
+                    html += "<input type='radio' name='dest' id='dest-"+data[prop].id+"' class='dests' value='"+data[prop].id+"'>";
+                }
+                html+="<span class='destext'>"+data[prop].destination+"</span></label>";
+                html += ergodicdest(data[prop]['des'] ,++level);
+            }
+            return html;
+        }
+        //显示出目的地
+        function showdest(text,value) {
+            var html = '<span class="destination">'+text+'<input type="hidden" class="destina" name="destination" value="'+value+'"><input type="hidden" name="desttext" value="'+text+'"><span class="fa fa-remove del"></span></span>';
+            return html;
+        }
+        // 删除
+        $('body').on('click','.destination .del',function () {
+            $(this).parent().remove();
+        });
+        // 修改线路时初始化目的地
+        (function initdest(){
+            var dids = "{$visa.dest_id??''}";
+            var dtexts = "{$visa.dest??''}";
+            var ids = new Array();
+            var desc = new Array();
+            if(dids != ''){
+                ids = dids.split(',');
+                desc = dtexts.split(',');
+                var html = '';
+                for (var i in ids){
+                    html += showdest(desc[i],ids[i])
+                }
+                $('.destshow').html(html);
+            }
+        })();
+        (function () {
+            var jobs = "{:addslashes(empty($visa.job)?'':$visa.job)}",
+                unjobs = "{:addslashes(empty($visa.unjob)?'':$visa.unjob)}",
+                retires = "{:addslashes(empty($visa.retire)?'':$visa.retire)}",
+                students = "{:addslashes(empty($visa.student)?'':$visa.student)}",
+                musts = "{:addslashes(empty($visa.must)?'':$visa.must)}",
+                childs = "{:addslashes(empty($visa.child)?'':$visa.child)}",
+                temp = {},
+                html = '';
+            if(jobs !=''){
+                temp = eval('(' + jobs + ')');
+            }
+
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'job')
+            }
+            $('#job').html(html);
+            html = '';
+            if(unjobs !=''){
+                temp = eval('(' + unjobs + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'unjob')
+            }
+            $('#unjob').html(html);
+            html = '';
+            if(retires !=''){
+                temp = eval('(' + retires + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'retire')
+            }
+            $('#retire').html(html);
+            html = '';
+            if(students !=''){
+                temp = eval('(' + students + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'student')
+            }
+            $('#student').html(html);
+            html = '';
+            if(childs !=''){
+                temp = eval('(' + childs + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'child')
+            }
+            $('#child').html(html);
+            html = '';
+            if(musts !=''){
+                temp = eval('(' + musts + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'must')
+            }
+            $('#must').html(html);
+
+        })()
+    });
+</script>

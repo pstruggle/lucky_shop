@@ -1,0 +1,463 @@
+{include file="base/artlog_header" /}
+<section class="main-content">
+    <div class="content-wrap">
+        <div class="row">
+            <form action="{:url('Product/sign')}" method="post" id="sign">
+
+                <div class="col-md-12">
+                    <section class="panel bg-none">
+                        <div class="text-center">
+                            {$trip.title??''}
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12">
+                    <section class="panel">
+                        <div class="panel-body demo" id="offer">
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12 hide" id="offer_details">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <input type="hidden" name="pid" value="{$trip.id??''}">
+                            <input type="text" name="start" id="start" class="form-control" readonly />
+                        </header>
+                        <div class="panel-body demo">
+
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12 hide" id="prices">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            订单信息
+                        </header>
+                        <div class="panel-body demo">
+                            总人数:0人  总价格:=￥0.00
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12 hide" id="contract">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            添加合同
+                        </header>
+                        <div class="panel-body demo">
+                            <div class="form-inline" role="form">
+                                <div class="form-group">
+                                    <label class="control-label">选择合同</label>
+                                    <select class="form-control" name="contract" id="contract_id" >
+                                        <option value="">选择合同</option>
+                                        {volist name="contracts" id="contract"}
+                                        <option value="{$contract.id}">{$contract.number}</option>
+                                        {/volist}
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">合同总额</label>
+                                    <input type="text" id="contract_price" name="contract_price" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12 hide" id="contact">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            联系人信息
+                        </header>
+                        <div class="panel-body demo">
+                            <div class="form-inline" role="form">
+                                <div class="form-group">
+                                    <label class="control-label">联系人姓名</label>
+                                    <input type="text" id="contact_name" name="contact_name" class="form-control" />
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">联系人电话</label>
+                                    <input type="text" id="contact_phone" name="contact_phone" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">备注</label>
+                                    <input type="text" id="remark" name="remark" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12 hide" id="name_list">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            客户名单
+                            <button type="button" class="btn btn-primary btn-rounded" id="single">单个录入</button>
+                            <button type="button" class="btn btn-success btn-rounded" id="paste">批量粘贴名单</button>
+                        </header>
+                        <div class="panel-body demo">
+                            <div class="form-horizontal bordered-group">
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12 hide" id="confirm">
+                    <section class="panel">
+
+                        <div class="panel-body demo">
+                            <div class="demo-button">
+                                <button type="submit" class="btn btn-success">提交</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="site-overlay">
+
+    </div>
+</section>
+{include file="base/foot" /}
+{load file="__PUBLIC__jedate/jquery.jedate.js"}
+{load file="__PUBLIC__jedate/skin/jedate.css"}
+<style>
+    .jedatebox{
+        width: 100%;
+    }
+</style>
+<script>
+    $(function () {
+        var data = eval('({$trip.offer})');
+        var offer_type = "{$trip.offer_type ??'1' }",
+            dateStr = '',peoples = [];
+        $.jeDate("#start",{
+            fixedCell: "offer",
+            format:"YYYY-MM-DD",
+            isClear:false,                               //是否显示清空
+            isToday:false,                               //是否显示今天或本月
+            isok:false,                                  //是否显示确定按钮
+            isTime:false,
+        {if condition="$trip.offer_type eq 2"}
+        mode2val: true,
+        {else /}
+        dataval : true,
+        {/if}
+            data:data,
+            minDate: $.nowDate({DD:0}),
+            choosefun:function(elem, val, date) {
+                $('#contract,#offer_details,#name_list,#confirm,#prices,#contact').removeClass('hide');
+                dateStr = datasng(Date.parse($('#start').val()),'yyyyMMdd');
+
+                if(offer_type == '2'){
+                    $('.set_date').siblings('.show_s').remove();
+
+                    mode2_show(data[dateStr]);
+//                    prices_mode2();
+                }else {
+                    $('.body .show_s').show();
+                    mode1_show(data[dateStr]);
+//                    prices();
+                }
+            }
+        });
+        $('#offer_details').on('keyup','.sum', function () {
+            var sum = $(this).val() ;
+            if(isNaN(sum)){
+                $(this).val('');
+                $('#prices section .panel-body').text('总人数:0人  总价格:=￥0.00');
+
+                return false;
+            }
+            console.log(sum);
+            var offer = data[dateStr];
+            var sum_e = $('.sum'),str = '',
+                price = 0;
+            if(offer_type == 2){
+                str += '总价格：';
+                for (var x = 0; x < sum_e.length; x++) {
+                    peoples[x] = sum_e.eq(x).val() || 0;
+                    if(peoples[x]){
+                        str += '￥'+offer[x].balance +'*' +  peoples[x] + '['+offer[x].kind+'] +';
+                        price += parseFloat(offer[x].balance) * parseFloat(peoples[x]);
+                    }
+                }
+                str = str.substring(0,str.length-1)
+                str += ' = ￥'+price;
+            }else {
+                var man = sum_e.eq(0).val() || 0,
+                    child = sum_e.eq(1).val() || 0;
+                str += '总人数：'+ (parseFloat(man)+parseFloat(child)) +'人 '
+                if(man != 0){
+                    str += '总价格：￥'+offer.adult_balance +'*' +  man + '[成人]';
+                    price += parseFloat(offer.adult_balance) * parseFloat(man);
+                }
+                if(man != 0 && child != 0){
+                    str += ' + ';
+                }
+                if(child != 0){
+                    str += '￥'+offer.children_balance +'*' +  child+'[儿童]';
+                    price += parseFloat(offer.children_balance) * parseFloat(child);
+                }
+                str += ' = ￥'+price;
+            }
+            $('#prices section .panel-body').text(str);
+            var index = $(this).index();
+            console.log(index);
+        });
+        $('#sign').on('submit',function () {
+            var sum = 0;
+            $('.sum').each(function (){
+                var num = $(this).val();
+                if(num != '' && !isNaN(num)){
+                    sum += parseInt(num);
+                }
+            });
+            if(sum <=0){
+                alert('请输入客户人数！');
+                return false;
+            }
+            var contract_id = $('#contract_id').val();
+            if(contract_id == ''){
+                alert('请选择绑定合同');
+                return false;
+            }
+            var contract_price = $('#contract_price').val();
+            if(contract_price == ''){
+                alert('请填入合同金额');
+                return false;
+            }
+            if($('#name_list section .panel-body .form-inline').length <= 0){
+                alert('请添加客户信息');
+                return false;
+            }
+
+            var client_stault = false;
+            $('.client').each(function () {
+                if($(this).val() == ''){
+                    client_stault = true ;
+                    return false;
+                }
+            });
+            if(client_stault){
+                alert('有客户姓名未填写');
+                return false;
+            }
+            var id_stault = false;
+            $('.cardid').each(function () {
+                if($(this).val() == ''){
+                    id_stault = true ;
+                    return false;
+                }
+            });
+            if(id_stault){
+                alert('有客户证件号未填写');
+                return false;
+            }
+            return true;
+        });
+        $('#single').on('click',function () {
+            var html = name_lists();
+            $('#name_list section .panel-body').html(html);
+            return false;
+        });
+        $('#paste').on('click',function () {
+            var html = paste();
+            $('#name_list section .panel-body').html(html);
+            return false;
+
+        });
+        $('#name_list').on('click','#keep_name',function () {
+            var name_list = $('#name_lists').val();
+            var s = /\s{2,}/,n = /\n{2,}/;
+            var s_result = s.test(name_list);
+            if(name_list == ''){
+                alert('请输入信息');
+                return false;
+            }
+            if(s_result){
+                alert('您输入的信息之间空格数大于1');
+                return false;
+            }
+            var n_result = n.test(name_list);
+            if(n_result){
+                alert('您输入的信息之间回车数大于1');
+                return false;
+            }
+            var lists = name_list.split('\n');
+            for (var x in lists){
+                lists[x] = lists[x].split(' ');
+            }
+            var html = name_lists(lists);
+            $('#name_list section .panel-body').html(html);
+
+            return false;
+        });
+        function mode2_show(offer){
+            var html = '';
+            for (var x in offer){
+                html += '<div class="form-inline" role="form">'+
+                    '<div class="form-group">'+
+                    '<label class="control-label">报价类型</label>'+
+                    '<input type="text" disabled class="form-control offer_type" value="'+offer[x].kind+'" />'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label class="control-label">结算价</label>'+
+                    '<input type="text" disabled class="form-control balance" value="'+offer[x].balance+'" />'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label class="control-label">报名人数</label>'+
+                    '<input type="text" class="form-control sum" name="sums[]" />'+
+                    '</div>'+
+                    '</div>';
+
+            }
+            $('#offer_details section .panel-body').html(html);
+        }
+        function mode1_show(offer) {
+            var html = '';
+            html += '<div class="form-inline" role="form">'+
+                '<div class="form-group">'+
+                '<label class="control-label">报价类型</label>'+
+                '<input type="text" readonly class="form-control offer_type"  value="成人" />'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="control-label">结算价</label>'+
+                '<input type="text" readonly class="form-control balance" value="'+offer.adult_balance+'" />'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="control-label">报名人数</label>'+
+                '<input type="text" class="form-control sum" name="sums[]" />'+
+                '</div>'+
+                '</div>'+
+                '<div class="form-inline" role="form">'+
+                '<div class="form-group">'+
+                '<label class="control-label">报价类型</label>'+
+                '<input type="text" readonly class="form-control offer_type" value="儿童" />'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="control-label">结算价</label>'+
+                '<input type="text" readonly class="form-control balance" value="'+offer.children_balance+'" />'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="control-label">报名人数</label>'+
+                '<input type="text" class="form-control sum" name="sums[]" />'+
+                '</div>'+
+                '</div>';
+            $('#offer_details section .panel-body').html(html);
+        }
+
+        // 客户名单列表
+        function name_lists(data) {
+            var html = '',sum=0,i = 0;
+            var e_sum = $('.sum');
+            e_sum.each(function () {
+                var tem = $(this).val() || 0;
+
+                if(!isNaN( tem )){
+                    sum += parseInt( tem );
+                }
+            });
+            if(sum == 0){
+                alert('请输入报名人数');
+                return false;
+            }
+            var data_len = (data && data.length) || 0;
+            while (i<sum){
+                var x = i+1;
+                var data_val_len = 0;
+                if(data_len > i){
+                    data_val_len = data[i].length;
+                }
+                html += '<div class="form-inline" role="form">'+
+                    '<div class="form-group">'+ x +
+                    '<label class="sr-only">姓名</label>'+
+                    '<input type="text" class="form-control client" name="list['+i+'][name]" value="'+(data_len>i && data_val_len>0?data[i][0] : '')+'" placeholder="姓名">'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label class="sr-only">年龄</label>'+
+                    '<select class="form-control" name="list['+i+'][old]">'+
+                    '<option value="1" '+((data_len>i && data_val_len>1?(data[i][1]==1?'selected ':'') : ''))+'>成人</option>'+
+                    '<option value="2" '+((data_len>i && data_val_len>1?(data[i][1]==2?'selected ':'') : ''))+'>儿童</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label class="sr-only">性别</label>'+
+                    '<select class="form-control" name="list['+i+'][sex]">'+
+                    '<option value="男" '+((data_len>i && data_val_len>2?(data[i][2]=='男'?'selected':'') : ''))+'>男</option>'+
+                    '<option value="女" '+((data_len>i && data_val_len>2?(data[i][2]=='女'?'selected':'') : ''))+'>女</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label class="sr-only">证件</label>'+
+                    '<select class="form-control" name="list['+i+'][paper]">'+
+                    '<option value="1" '+((data_len>i && data_val_len>3?(data[i][3]=='1'?'selected':'') : ''))+'>身份证</option>'+
+                    '<option value="2" '+((data_len>i && data_val_len>3?(data[i][3]=='2'?'selected':'') : ''))+'>护照</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label class="sr-only">证件号码</label>'+
+                    '<input type="text" class="form-control cardid" name="list['+i+'][code]" value="'+(data_len>i && data_val_len>4?data[i][4] : '')+'" placeholder="证件号码">'+
+                    '</div>'+
+                    '<div class="form-group">'+
+                    '<label class="sr-only">手机号码</label>'+
+                    '<input type="text" class="form-control phone" name="list['+i+'][phone]" value="'+(data_len>i && data_val_len>5?data[i][5] : '')+'" placeholder="手机号码（选填）">'+
+                    '</div>'+
+                    '</div>';
+                i++;
+            }
+
+            return html;
+
+        }
+        // 粘贴录入
+        function paste() {
+            var html = '<div class="form-horizontal bordered-group">'+
+                '<div class="form-group">'+
+                '<div class="col-sm-4 control-label">'+
+                '<textarea class="form-control" id="name_lists" placeholder="请粘贴客户信息"></textarea>'+
+                '</div>'+
+                '<div class="col-sm-8">'+
+                '以空格隔开【名字 类型 性别 证件类型 证件号码 手机】<br>'+
+                '小孩为2，成年人为1<br>'+
+                '身份证为1，护照为2<br>'+
+                '小孩身份证范例:刘小孩 2 男 1 265444**** 1256354<br>'+
+                '大人护照范例:刘大人 1 男 2 265444**** 13566<br>'+
+                '【电话号码可省略】<br>'+
+                '<button type="button" class="btn btn-primary btn-rounded" id="keep_name">保存粘贴名单</button>'+
+                '</div>'+
+                '</div>'+
+                '</div>';
+            return html;
+        }
+        function datasng(sng,fmat)
+        {
+            // (new Date(parseInt(sng) * 1000))  把时间戳转换成时间对象。
+            return  (new Date(parseInt(sng))).format(fmat);
+        }
+
+        Date.prototype.format = function(format) {
+            var date = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S+": this.getMilliseconds()
+            };
+            if (/(y+)/i.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+            }
+            for (var k in date) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                        ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+                }
+            }
+            return format;
+        };
+    });
+</script>

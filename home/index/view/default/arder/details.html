@@ -1,0 +1,285 @@
+{include file="base/header" /}
+{load file="__INDEX__/css/detail.css" /}
+{load file="__INDEX__/css/detail_merge.css" /}
+<div id="main">
+    <div class="main-frame" data-pid="{$arder.id}">
+        <div class="main-viewport">
+            <div id="client_id_viewport_1_1497690854706" page-url="" data-view-name="detail">
+                <div class="body trip_page">
+                    <div class="m_header" id="detail_header" style="display: block;">
+                        <a href="javascript:history.go(-1);"><span class="m_icon_back fl js_back"></span></a>
+                        <h1 style="display: none;">{$arder.tradename??''}</h1>
+                    </div>
+                    <div class="m_banner">
+                        <div class="js_pic_content" style="height: 210px; overflow: hidden;">
+                            <div class="cm-slide cm-slide--full-img" id="ui-view-6" style="height: 210px;">
+                                <ul class="cm-slide-list js_scroller " style="position: absolute;  transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(-1500px, 0px) translateZ(0px);">
+                                    {volist name="$arder.pics" id="pic" key="k"}
+                                    <li class="cm-slide-item" data-key="{$k}" style="">
+                                        <img src="{:img_url($pic,414,196)}" onerror="this.src='https://pic.c-ctrip.com/vacation_v2/h5/group_travel/pic_none.png'">
+                                    </li>
+                                    {/volist}
+                                </ul>
+                            </div>
+                        </div>
+                        <span class="m_gopic"></span>
+                        <div class="m_proinfo">
+                            <p class="m_pronum">编号：{$arder.id}</p>
+                            <p>{$arder.merchant.name}</p>
+                        </div>
+                    </div>
+                    <div class="m_profile">
+                        <div class="m_bigtitle">
+                            <h2>
+                                {$arder.tradename}<i class="m_diamond m_diamond_0"></i>
+                            </h2>
+                            <div class="m_bigprice">
+                                <span class="m_price">
+                                    <dfn>¥</dfn>{$arder.ingprice}<em>/{$arder.unit}</em>
+                                </span>
+                            </div>
+                        </div>
+                        <!--react-empty: 37-->
+                        {notempty name="$arder.sixscon"}
+                        <div class="m_sixslogo js_tag_list">
+                            <div class="m_sixscon">
+                                <em>成团保障</em>
+                            </div>
+                        </div>
+                        {/notempty}
+                    </div>
+                    <div class="m_cityset">
+                        <div class="m_city_bd">
+                            <div class="m_city_list_box">
+                                <div class="m_city_list">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m_agent2">
+                        <div class="m_agent2_hd">
+                            <h3 class="m_agent2name js_vendor_entry">{$arder.merchant.name}</h3>
+                        </div>
+                        <div class="m_agent2_bd">
+                            <p>本产品由具有此类产品经营资质的零售商提供。<br>服务时间：周一至周日：00:00至23:59</p>
+                        </div>
+                        <i class="m_agent2_phone js_vendor_phone" data-phone="{$arder.merchant.phone}"></i>
+                    </div>
+                    <div class="m_detail">
+                        <div id="product_feature_content">
+                            <div class="m_mod m_feature">
+                                {if condition="strip_tags($arder['details']) neq ''"}
+                                <div>
+                                    <div class="m_mod_hd">
+                                        <h3>简介</h3>
+                                    </div>
+                                    <div class="m_mod_bd m_recom_detail m_mod_open">
+                                        {$arder.details}
+                                    </div>
+                                    <!--<div class="m_close js_description_closer">点击收起</div>-->
+                                </div>
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                    {if condition="$userinfo.type eq '1'"}
+                    <footer class="m_toolbar" style="z-index: 99999">
+                        <div class="m_toolbar_con">
+                            <span class="js_collect cart">购物车</span>
+                            <!--react-empty: 63-->
+                            <!--react-empty: 64-->
+                            <!--react-empty: 65-->
+                            <!--react-empty: 66-->
+                            <span class="m_btn_orange js_booking addToCart" data-gid="{:input('pid')}" data-sk-eid="hy_ctr_buynow">加入购物车</span>
+                        </div>
+                    </footer>
+                    {/if}
+                </div>
+            </div>
+        </div>
+        <div class="main-state">
+        </div>
+    </div>
+</div>
+<style>
+    .jedatebox {
+        width: calc(100% - 2px)!important;
+        left: 0!important;
+    }
+    .cart{
+        width: 60px;
+        font-size: 10px;
+        color: #666;
+    }
+    .cart:before{
+        font-family: 'freshregular';
+        display: block;
+        margin: 4px auto 8px;
+        width: 22px;
+        height: 20px;
+        content: "G";
+        font-size: .5rem;
+    }
+</style>
+{include file="base/footer"}
+{load file="__PUBLIC__jedate/jquery.jedate.js" /}
+{load file="__PUBLIC__jedate/skin/jedate.css" /}
+{load file="__ARTDIALOG4.1.7__jquery.artDialog.js"}
+{load file="__ARTDIALOG4.1.7__skins/blue.css"}
+<script>
+    $(function () {
+        //m_hd_box m_fix_hd sticky
+        $('.cart').on('click',function () {
+            location.href = "{:url('Mall/cart')}";
+        })
+        $('.m_tab .m_tabitem').on('click',function () {
+            var idStr = $(this).attr('id');
+            var height = $('#'+idStr+'_content').offset().top ;
+            $("html,body").animate({scrollTop:height-77},1000);
+        });
+        var X = 0, x = 0, start_x = 0;
+        $('.m_city_bd .m_city_list_box .m_city_list').on('touchmove',function (event) {
+            start_x = event.originalEvent.targetTouches[0].clientX + document.body.scrollLeft - document.body.clientLeft;
+            x = -(X - start_x);
+            $(this).css({transform:'translate3d('+x+'px,0px,0px)'});
+            //            $(this).css('transform',"translate("+x+"px,0px)")
+        }).on('touchstart',function (event) {
+            start_x = event.originalEvent.targetTouches[0].clientX + document.body.scrollLeft - document.body.clientLeft;
+            X = start_x-x;
+        }).on('touchend',function (event) {
+            var _this_left = $(this).offset().left,
+                _this_width = $(this).width(),
+                _this_p_width = $(this).parent().width();
+            if(_this_left > 0){
+                x = 0;
+                $(this).css({transform:'translate3d(0px,0px,0px)'});
+            }else if(_this_p_width - x > _this_width){
+                x = _this_p_width-_this_width;
+                $(this).css({transform:'translate3d('+x+'px,0px,0px)'});
+            }
+        });
+        var body_width = $('body').width(),scro_ul = $('.js_scroller'),scro_li = scro_ul.find('li'),ul_width=0,i = 2,ul_pos;
+        scro_li.css({width:body_width+'px',height:"210px"});
+        var ul_a = setTimeout(ul_scro,1500);
+        var ul_b = 0,w=i * body_width,s_w=(i-1) * body_width;
+        scro_ul.prepend(scro_li.eq(scro_li.length-1).clone());
+        scro_ul.append(scro_li.eq(0).clone());
+        scro_li = scro_ul.find('li');
+        ul_width = body_width * scro_li.length;
+        ul_pos = -(i-1) * body_width;
+        scro_ul.css({width:ul_width + 'px',transform: "translate("+ul_pos+"px, 0px)"});
+        function ul_scro() {
+            w = i * body_width ;
+            s_w = (i-1) * body_width;
+            ul_b = setTimeout(ul_scroller,1) ;
+            function ul_scroller() {
+                if (w >= s_w){
+                    var temp = - s_w;
+                    scro_ul.css({transform: "translate("+temp+"px, 0px)"});
+                    s_w += 2;
+                    ul_b = setTimeout(ul_scroller,0.1)
+                }else {
+                    if(i == scro_li.length - 2){
+                        i = 0;
+                    }else if(i == scro_li.length - 1){
+                        i = 1;
+                    }
+                    i++;
+                    ul_a = setTimeout(ul_scro,1500);
+                }
+            }
+        }
+        var l_click = 0,end_x=0;
+        scro_ul.on('touchmove',function (event) {
+            clearTimeout(ul_a);
+            clearTimeout(ul_b);
+            end_x = event.originalEvent.targetTouches[0].clientX + document.body.scrollLeft - document.body.clientLeft;
+            var temp = -(s_w+l_click - end_x);
+            $(this).css({transform:'translate('+temp+'px,0px)'});
+        }).on('touchstart',function (event) {
+            end_x = event.originalEvent.targetTouches[0].clientX + document.body.scrollLeft - document.body.clientLeft;
+            l_click = end_x;
+        }).on('touchend',function (event) {
+            if((l_click - end_x) > 0){
+                if((l_click - end_x) > body_width/3){
+                    if(i == scro_li.length - 2){
+                        i = 0;
+                    }
+                    i++;
+                    var temp = -(i-1) * body_width;
+                    s_w = (i-1) * body_width;
+                    $(this).css({transform: "translate("+temp+"px, 0px)"});
+                }else {
+                    var temp = -(i-1) * body_width;
+                    s_w = (i-1) * body_width;
+                    $(this).css({transform: "translate("+temp+"px, 0px)"});
+                }
+            }else {
+                if((end_x - l_click) > body_width/3){
+                    if(i == 2){
+                        i = scro_li.length;
+                    }
+                    i--;
+                    var temp = -(i-1) * body_width;
+                    s_w = (i-1) * body_width;
+                    $(this).css({transform: "translate("+temp+"px, 0px)"});
+                }else {
+                    var temp = -(i-1) * body_width;
+                    s_w = (i-1) * body_width;
+                    $(this).css({transform: "translate("+temp+"px, 0px)"});
+                }
+            }
+            ul_a = setTimeout(ul_scro,1500);
+        });
+        //行程概要
+        $('.m_multi').on('click',function () {
+            var route = $('.m_fixed_route');
+            if(route.is('.hide')){
+                route.removeClass('hide');
+            }else {
+                route.addClass('hide');
+            }
+            route.on('click',function(){
+                route.addClass('hide');
+            })
+        });
+        var data = ''//eval('('+"{//:addslashes($arder.offer)}"+')');
+        $('#dates').jeDate({
+            format:"YYYY-MM-DD",
+            isTime:false,
+            isToday:false,
+            dataval : true,
+            data:data,
+            minDate: $.nowDate({DD:0})
+        });
+        // 开始预订
+//        $('.js_booking').on('click', function () {
+//            var pid = $('.main-frame').data('pid');
+//            var url = "{:url('arder/order')}" + '?pid=' + pid;
+//            location.href = url;
+//        });
+        $('.js_vendor_phone').on('click',function () {
+            {if condition="$userinfo.type eq '1'"}
+            var _this = $(this);
+            var phone=_this.data('phone'),
+                url = "tel:"+phone;
+            {else /}
+            var phone = '请联系您的旅游顾问',
+                url = 'javascript:void(0);';
+            {/if}
+            art.dialog({
+                content: '<h3>'+phone+'</h3>' ,
+                lock: true,
+                drag: false, //禁止弹出层拖动
+                resize: false, //禁止弹出层放大缩
+                title:'',
+                ok:function () {
+                    location.href=url;
+                },
+                okVal:'拨打'
+            });
+        })
+
+    });
+</script>

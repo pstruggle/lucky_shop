@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商户注册</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{$cache_config.favicon ??'/favicon.ico'}">
+    <link rel="stylesheet" href="__ADMIN__css/reset.css" />
+    <link rel="stylesheet" href="__ADMIN__css/login.css" />
+    <script type="text/javascript" src="__JQUERY__jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="__ADMIN__js/login.js"></script>
+</head>
+<body>
+<div class="page">
+    <div class="loginwarrp">
+        <div class="logo">商户注册</div>
+        <div class="login_form">
+            <form id="Login" name="register" method="post" onsubmit="" action="{:url('restrict/chackregister')}">
+                <input type="hidden" name="url" value="{$url??''}" />
+                <ul>
+                    <li class="login-item">
+                        <span>公司名称：</span>
+                        <input type="text" id="name" name="name" placeholder="商户公司名称" class="login_input" >
+                        <span id="name-msg" class="error"></span>
+                    </li>
+                    <li class="login-item">
+                        <span>账号：</span>
+                        <input type="text" id="username" name="username" placeholder="商户登录账号" class="login_input" >
+                        <span id="count-msg" class="error"></span>
+                    </li>
+                    <li class="login-item">
+                        <span>手机号码：</span>
+                        <input type="text" id="phone" name="phone" class="login_input" placeholder="手机号码" >
+                        <span id="phone-msg" class="error"></span>
+                    </li>
+                    <li class="login-item verify">
+                        <span>验证码：</span>
+                        <input type="text" id="CheckCode" name="CheckCode" placeholder="图形验证码" class="login_input verify_input">
+                        <span id="code-msg" class="error"></span>
+                    </li>
+                    <img src="{:captcha_src()}" border="0" class="verifyimg" />
+                    <div class="clearfix"></div>
+                    <li class="login-item verify">
+                        <span>手机验证码：</span>
+                        <input type="text" id="phone_code" name="phone_code" placeholder="手机验证码" class="login_input verify_input">
+                        <span id="phone_code-msg" class="error"></span>
+                    </li>
+                    <span class="verify_code send_code">获取验证码</span>
+                    <div class="clearfix"></div>
+
+                    <li class="login-item">
+                        <span>密　码：</span>
+                        <input type="password" id="password" name="password" class="login_input" >
+                        <span id="password-msg" class="error"></span>
+                    </li>
+                    <li class="login-item">
+                        <span>密码确认：</span>
+                        <input type="password" id="passwd" name="passwd" class="login_input" >
+                        <span id="passwd-msg" class="error"></span>
+                    </li>
+
+                    <li class="login-sub">
+                        <input type="submit" name="Submit" value="注册" />
+                        <input type="reset" name="Reset" value="重置" />
+                    </li>
+
+                </ul>
+            </form>
+        </div>
+        <div style="margin-top: 10px;"><a href="{:url('restrict/login')}"><<<<<< 商家登录</a></div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var chackCode = "{:url('restrict/checkCode')}";
+    var send_sms_url = "{:url('restrict/send_sms')}";
+    window.onload = function() {
+        var config = {
+            vx : 4,
+            vy : 4,
+            height : 2,
+            width : 2,
+            count : 100,
+            color : "121, 162, 185",
+            stroke : "100, 200, 180",
+            dist : 6000,
+            e_dist : 20000,
+            max_conn : 10
+        };
+        CanvasParticle(config);
+    }
+</script>
+<script type="text/javascript" src="__ADMIN__js/canvas-particle.js"></script>
+</body>
+</html>

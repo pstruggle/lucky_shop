@@ -1,0 +1,107 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">签证管理</a></li>
+                <li><a>签证列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('Visa/visa_data')}">签证资料列表</a>
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <form action="?">
+                                            <label>
+                                                签证名:<input type="search" class="form-control input-sm" placeholder="签证名搜索" name="title" aria-controls="basic-table" value="{:input('title')}">
+                                            </label>
+                                            <label>
+                                                审核状态:
+                                                <select aria-controls="basic-table" name="status" class="form-control input-sm">
+                                                    <option value="">审核状态</option>
+                                                    <option value="0">不通过</option>
+                                                    <option value="1">待审核</option>
+                                                    <option value="2">通过</option>
+                                                </select>
+                                            </label>
+                                            <label for="sub">
+                                                <input type="submit" id="sub" value="搜索" class="btn btn-primary" style="margin-bottom: 0;">
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>编号</th>
+                                            <th>商户信息</th>
+                                            <th>资料标题</th>
+                                            <th>资料类型</th>
+                                            <th>添加时间</th>
+                                            <!--<th>操作</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="visa_datas" id="visa_data"}
+                                        <tr>
+                                            <td>{$key+1}</td>
+                                            <td>{$visa_data.id}</td>
+                                            <td>
+                                                商户id：{$visa_data.mid}<br/>
+                                                商户名：{$visa_data.name}<br/>
+                                                联系方式：{$visa_data.phone}
+                                            </td>
+                                            <td>{$visa_data.title}</td>
+                                            <td>{$visa_data.type | visa_type}</td>
+                                            <td>{$visa_data.addtime | date="Y-m-d H:i:s" , ###}</td>
+                                            <!--<td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Visa/visa_data_edit',['data'=>$visa_data.id])}"><i class="fa fa-pencil"></i></a>
+                                                    </button>
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Visa/datadel',['data'=>$visa_data.id])}"><i class="fa fa-times"></i></a>
+                                                    </button>
+                                                </div>
+                                            </td>-->
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+        $('[name="status"]').val("{:input('status')}")
+    });
+</script>

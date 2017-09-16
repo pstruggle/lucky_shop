@@ -1,0 +1,325 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="{:url('Index/index')}">首页</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12 col-lg-12">
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <div class="panel widgetbox wbox-2 bg-scale-0">
+                        <a href="#">
+                            <div class="panel-content">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span class="icon fa fa-globe color-darker-1"></span>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h4 class="subtitle color-darker-1">总收益</h4>
+                                        <h1 class="title color-primary"> {$bill??0}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel widgetbox wbox-2 bg-scale-3">
+                        <a href="#">
+                            <div class="panel-content">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span class="icon fa fa-balance-scale color-darker-1"></span>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h4 class="subtitle color-darker-1">余额</h4>
+                                        <h1 class="title color-primary"> {$ye_bill??0}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel widgetbox wbox-2 bg-scale-4">
+                        <a href="#">
+                            <div class="panel-content">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span class="icon fa fa-blind color-darker-1"></span>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h4 class="subtitle color-darker-1">正在提款</h4>
+                                        <h1 class="title color-primary"> {$cl_price??0}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {php}
+                    if(in_array('2',$manage)){
+                    {/php}
+                    <div class="panel widgetbox wbox-2 bg-lighter-2 color-light">
+                        <a href="#">
+                            <div class="panel-content">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span class="icon fa fa-shopping-bag color-darker-2"></span>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h4 class="subtitle color-darker-2">商城收益</h4>
+                                        <h1 class="title color-w"> {$shop_bill??0}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {php}
+                    }
+                    if(in_array('1',$manage)){
+                    {/php}
+                    <div class="panel widgetbox wbox-2 bg-darker-2 color-light">
+                        <a href="#">
+                            <div class="panel-content">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span class="icon fa fa-street-view color-lighter-1"></span>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h4 class="subtitle color-lighter-1">旅游收益</h4>
+                                        <h1 class="title color-light"> {$ly_bill??0}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {php}
+                    }
+                    if(in_array('4',$manage)){
+                    {/php}
+                    <div class="panel widgetbox wbox-2 bg-darker-3 color-light">
+                        <a href="#">
+                            <div class="panel-content">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span class="icon fa fa-ticket color-lighter-1"></span>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h4 class="subtitle color-lighter-1">门票收益</h4>
+                                        <h1 class="title color-light"> {$mp_bill??0}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {php}
+                    }
+                    if(in_array('5',$manage)){
+                    {/php}
+                    <div class="panel widgetbox wbox-2 bg-darker-4 color-light">
+                        <a href="#">
+                            <div class="panel-content">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span class="icon fa fa-cc-visa color-lighter-1"></span>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h4 class="subtitle color-lighter-1">签证收益</h4>
+                                        <h1 class="title color-light"> {$qz_bill??0}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {php}
+                    }
+                    {/php}
+                </div>
+
+                <div class="col-sm-12 col-md-8">
+                    <div class="panel">
+                        <div class="panel-content">
+                            <h5><b>近一周</b> 的销售</h5>
+                            <canvas id="area-chart" width="400" height="160"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <div class="panel">
+                        <div class="panel-content">
+                            <form class="form-horizontal form-stripe" action="{:url('Index/drawing')}" method="post">
+                                <h6 class="mb-xlg text-center"><b>申请提款</b></h6>
+                                <div class="form-group">
+                                    <label for="price" class="col-sm-2 control-label">金额</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="price" id="price" placeholder="提款金额 可提款：{$ye_bill??0}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="button" id="whole">全部提取</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" id="sub" class="btn  disabled">申请提款</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script src="__HELSINKI__vendor/chart-js/chart.min.js"></script>
+<script>
+    bills = [{$weekBill | implode = ',' , ###}];
+    ly_price = [{$ly_price | implode = ',' , ###}];
+    shop_price = [{$shop_price | implode = ',' , ###}];
+    qz_price = [{$qz_price | implode = ',' , ###}];
+    mp_price = [{$mp_price | implode = ',' , ###}];
+//    k_price = [{$k_price | implode = ',' , ###}];
+    "use strict";
+
+    //TOASTR NOTIFICATION
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    toastr.options = {
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "timeOut": 3500,
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "slideDown",
+        "hideMethod": "fadeOut"
+    };
+
+    toastr.info('享受它!', '<h5 style="margin-top: 0px; margin-bottom: 5px;"><b>欢迎使用小惠猫商户平台</b></h5>');
+
+    //AREA CHART EXAMPLE
+    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    var area = document.getElementById("area-chart");
+
+    var options ={
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    };
+
+    var dataArea = {
+        labels: ["星期日","星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+        datasets: [
+            {php}
+        if(in_array('1',$manage)){
+        {/php}
+            {
+                label: "旅游收入",
+                fill: true,
+                backgroundColor: "rgba(55, 209, 119, 0.45)",
+                borderColor: "rgba(55, 209, 119, 0.45)",
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointHoverBackgroundColor: "#343d3e",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                data: ly_price
+            },
+        {php}
+    }
+        if(in_array('4',$manage)){
+        {/php}
+            {
+                label: "门票收入",
+                fill: true,
+                backgroundColor: "rgba(233, 100, 0, 0.26)",
+                borderColor: "rgba(233, 100, 0, 0.26)",
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointHoverBackgroundColor: "#343d3e",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                data: mp_price
+            },
+        {php}
+    }
+        if(in_array('5',$manage)){
+        {/php}
+            {
+                label: "签证收入",
+                fill: true,
+                backgroundColor: "rgba(100, 100, 0, 0.26)",
+                borderColor: "rgba(100, 100, 0, 0.26)",
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointHoverBackgroundColor: "#343d3e",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                data: qz_price
+            },
+        {php}
+    }
+    if(in_array('2',$manage)){
+        {/php}
+            {
+                label: "商城收入",
+                fill: true,
+                backgroundColor: "rgba(175, 175, 175, 0.26)",
+                borderColor: "rgba(175, 175, 175, 0.26)",
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointHoverBackgroundColor: "#343d3e",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                data: shop_price,
+            },
+        {php}
+    }
+    {/php}
+            {
+                label: "总收入",
+                fill: true,
+                backgroundColor: "rgba(255, 0, 0, 0.26)",
+                borderColor: "rgba(255, 0, 0, 0.26)",
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointHoverBackgroundColor: "#343d3e",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                data: bills,
+            },
+        ],
+        options: {
+            scales: {
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+    };
+    var areaChart = new Chart(area, {
+        type: 'line',
+        data: dataArea,
+        options: options
+
+    });
+    var price = parseFloat("{$ye_bill??0}");
+    $('#whole').on('click',function () {
+        $('#price').val(price);
+        if(price<=0 || price == ''){
+            $('#sub').removeClass('btn-primary').addClass('disabled');
+        }else {
+            $('#sub').removeClass('disabled').addClass('btn-primary');
+        }
+    });
+    $("#price").on('change',function () {
+        var u_price = parseFloat($(this).val());
+        if(isNaN(u_price) || u_price<=0 || u_price == '' || u_price > price){
+            $('#sub').removeClass('btn-primary').addClass('disabled');
+        }else {
+            $('#sub').removeClass('disabled').addClass('btn-primary');
+        }
+    });
+</script>

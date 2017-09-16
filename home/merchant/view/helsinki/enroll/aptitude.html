@@ -1,0 +1,581 @@
+{include file="base/artlog_header"}
+<div class="wrap">
+    <div class="page-header">
+        <div class="leftside-header">
+            <div class="logo">
+                <a href="{:url('Index/index')}" class="on-click">
+                    <img alt="logo" src="{$cache_config.web_logo ??'/favicon.ico'}" />
+                </a>
+            </div>
+            <div id="menu-toggle" class="visible-xs toggle-left-sidebar" data-toggle-class="left-sidebar-open" data-target="html">
+                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+            </div>
+        </div>
+        <div class="rightside-header">
+            <div class="header-middle"></div>
+            <!--<div class="header-section" id="search-headerbox">
+                <input type="text" name="search" id="search" placeholder="Search...">
+                <i class="fa fa-search search" id="search-icon" aria-hidden="true"></i>
+                <div class="header-separator"></div>
+            </div>-->
+            <div class="header-section hidden-xs" id="notice-headerbox">
+                <div class="notice" id="alerts-notice">
+                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                    <span>{$trip_num + $shop_num }</span>
+                    <div class="dropdown-box basic">
+                        <div class="drop-header">
+                            <h3><i class="fa fa-bell-o" aria-hidden="true"></i>消息</h3>
+                            <span class="number">{$trip_num + $shop_num }</span>
+                        </div>
+                        <div class="drop-content">
+                            <div class="widget-list list-left-element list-sm">
+                                <ul>
+                                    <li>
+                                        <a href="{:url('Tourism/trip')}?status=1">
+                                            <div class="left-element"><i class="fa fa-wheelchair-alt color-warning"></i></div>
+                                            <div class="text">
+                                                <span class="title">{$trip_num} 行程</span>
+                                                <span class="subtitle">待审核</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{:url('Tourism/orders')}?confirm=1">
+                                            <div class="left-element"><i class="fa fa-flag color-danger"></i></div>
+                                            <div class="text">
+                                                <span class="title">{$shop_num} 旅游订单</span>
+                                                <span class="subtitle">待处理</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <!--<div class="drop-footer">
+                            <a>查看所有通知</a>
+                        </div>-->
+                    </div>
+                </div>
+
+                <div class="header-separator"></div>
+            </div>
+            <div class="header-section" id="user-headerbox">
+                <div class="user-header-wrap">
+                    <div class="user-photo">
+                        <img src="{$merchant.logo}" alt="{$merchant.name}" />
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">{$merchant.name}</span>
+                        <span class="user-profile">{$merchant.account}</span>
+                    </div>
+                    <i class="fa fa-plus icon-open" aria-hidden="true"></i>
+                    <i class="fa fa-minus icon-close" aria-hidden="true"></i>
+                </div>
+                <div class="user-options dropdown-box">
+                    <div class="drop-content basic">
+                        <ul>
+                            <li> <a href="{:url('merchant/info')}"><i class="fa fa-user" aria-hidden="true"></i>个人资料</a></li>
+                            <!--<li> <a href="pages_lock-screen.html"><i class="fa fa-lock" aria-hidden="true"></i> Lock Screen</a></li>
+                            <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Configurations</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="header-separator"></div>
+            <div class="header-section">
+                <a href="{:url('restrict/login',['act'=>'sign_out'])}"><i class="fa fa-sign-out log-out" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="page-body">
+        <div class="content" style="margin: 0;">
+            <div class="row animated fadeInUp">
+                <div class="col-sm-12">
+                    <!--<h4 class="section-subtitle"><b>Inline validation</b></h4>-->
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="tabs">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="#basicinfo" data-toggle="tab">选择身份</a>
+                                            </li>
+                                            <li><a href="#deta" data-toggle="tab">填写公司信息</a></li>
+                                            <li><a href="#spec" data-toggle="tab">填写资质信息</a></li>
+                                            <li><a href="#inte" data-toggle="tab">填写账户信息</a></li>
+                                        </ul>
+                                        <form class="" action="{:url('Enroll/aptitudeedit')}" id="aptitude" method="post">
+                                            <input type="hidden" name="act" value="{$act??'add'}" >
+                                            <input type="hidden" name="mid" value="{$mid??''}" >
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade in active" id="basicinfo">
+                                                    <div class="form-horizontal form-stripe">
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">身份绑定<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" required name="identity" value="1" checked> 供应商
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">经营范围<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" id="manage" required name="manage[]" value="1"> 旅游线路
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" required name="manage[]" value="2"> 在线商城
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" required name="manage[]" value="3"> 旅游休闲卡
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" required name="manage[]" value="4"> 景点门票
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" required name="manage[]" value="5"> 签证
+                                                                </label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="deta">
+                                                    <div class="form-horizontal form-stripe">
+                                                        <div class="form-group">
+                                                            <label for="company_name" class="col-sm-3 control-label">公司名称<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="company_name" name="company_name" placeholder="请输入公司名称" class="form-control" required value="{$aptitude.company_name ?? ''}" />
+                                                                <span>提示：请填写执照上的企业全称，该名字将作为服务费的发票抬头！</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="company_product" class="col-sm-3 control-label">主营业务产品<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="company_product" name="company_product" placeholder="请输入业务名称 如：国内游" required class="form-control" value="{$aptitude.company_product ?? ''}" />
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">公司地址<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <select class="form-control" required id="company_province" name="company_province"></select>
+                                                                <select class="form-control" required id="company_city" name="company_city"></select>
+                                                                <select class="form-control" required id="company_county" name="company_county"></select>
+                                                                <input type="text" id="company_address" name="company_address" placeholder="请输入详细地址" class="form-control" required value="{$aptitude.company_address ?? ''}" />
+                                                                <span>提示：此地址将默认为您收取发票的地址，请谨慎填写！</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="company_tel" class="col-sm-3 control-label">总机/固定电话<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="company_tel" name="company_tel" placeholder="请输入包括区号的固定电话" class="form-control" required value="{$aptitude.company_tel ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="contacts_name" class="col-sm-3 control-label">联系人姓名<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="contacts_name" name="contacts_name" placeholder="请输入联系人姓名" class="form-control" required value="{$aptitude.contacts_name ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="contacts_phone" class="col-sm-3 control-label">联系人手机号码<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="contacts_phone" name="contacts_phone" placeholder="请输入联系人手机号码" class="form-control" required value="{$aptitude.contacts_phone ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="contacts_email" class="col-sm-3 control-label">联系人邮箱<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="contacts_email" name="contacts_email" placeholder="请输入联系人邮箱" class="form-control" required value="{$aptitude.contacts_email ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">联系人QQ</label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="contacts_qq" name="contacts_qq" placeholder="请输入联系人QQ" class="form-control" value="{$aptitude.contacts_qq ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="spec">
+                                                    <div class="form-horizontal form-stripe">
+                                                        <div class="form-group">
+                                                            <label for="company_name" class="col-sm-3 control-label">是否为分公司<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" name="isbranch" required value="1" checked> 是
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" name="isbranch" required value="0"> 否
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="company_product" class="col-sm-3 control-label">营业执照<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" required name="business_licence_type" value="1" checked> 旧版三证
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" required name="business_licence_type" value="2" > 新版三证合一
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" required name="business_licence_type" value="3" > 特殊合作
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="business_licence_no" class="col-sm-3 control-label">营业执照号<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="business_licence_no" name="business_licence_no" placeholder="请输入营业执照号" class="form-control" required value="{$aptitude.business_licence_no ?? ''}" />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="file" required id="business_licence_file" name="business_licence_file" data-val="上传证件">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">营业执照有效期<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" required id="business_licence_start" name="business_licence_start" placeholder="营业起始时间" class="form-control" value="{$aptitude.business_licence_start ? date('Y-m-d',$aptitude.business_licence_start) : ''}" />
+                                                                <input type="text" id="business_licence_end" name="business_licence_end" placeholder="营业有效时间" class="form-control" required value="{$aptitude.business_licence_end ? date('Y-m-d',$aptitude.business_licence_end) : ''}" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="business_certificate_no" class="col-sm-3 control-label">经营许可证<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="business_certificate_no" name="business_certificate_no" placeholder="请输入经营许可证号码" class="form-control" required value="{$aptitude.business_certificate_no ?? ''}" />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="file" id="business_certificate_file" name="business_certificate_file" data-val="上传证件">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tax_no" class="col-sm-3 control-label">税务登记证<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="tax_no" name="tax_no" placeholder="请输入税务登记证号" class="form-control" required value="{$aptitude.tax_no ?? ''}" />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="file" id="tax_file" name="tax_file" data-val="上传证件">
+                                                            </div>
+                                                        </div>
+                                                            <!--<div class="form-group">
+                                                                <label for="put_no" class="col-sm-3 control-label">备案登记证<span class="required">*</span></label>
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" id="put_no" name="put_no" placeholder="请输入备案登记证号" class="form-control" required value="{$aptitude.put_no ?? ''}" />
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <input type="file" id="put_file" name="put_file" data-val="上传证件">
+                                                                </div>
+                                                            </div>-->
+                                                        <div class="form-group">
+                                                            <label for="policy_no" class="col-sm-3 control-label">责任保险单<span class="required">*</span><span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="policy_no" name="policy_no" placeholder="请输入责任保险单号" class="form-control" required value="{$aptitude.policy_no ?? ''}" />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="file" id="policy_file" name="policy_file" data-val="上传证件">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">责任保险单有效期<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text"  id="policy_start" name="policy_start" placeholder="起始时间" required class="form-control" value="{$aptitude.policy_start ? date('Y-m-d',$aptitude.policy_start) : ''}" />
+                                                                <input type="text" id="policy_end" name="policy_end" placeholder="有效时间" class="form-control" required value="{$aptitude.policy_end ? date('Y-m-d',$aptitude.policy_end) : ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">运营人员证件号码<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="operator_no" name="operator_no" placeholder="请输入运营人员证件号码" class="form-control" required value="{$aptitude.operator_no ?? ''}" />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <span>
+                                                                    <input type="file" id="operator_just" name="operator_just" data-val="上传正面">
+                                                                </span>
+                                                                <span>
+                                                                    <input type="file" id="operator_back" name="operator_back" data-val="上传反面">
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">说明</label>
+                                                            <div class="col-sm-6">
+                                                                <textarea name="explain" required placeholder="说明内容" class="form-control" id="explain">{$aptitude.explain ?? ''}</textarea>
+                                                                <span>提示：若无法提供三证等资质信息，请详细填写贵公司资质情况</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="inte">
+                                                    <div class="form-horizontal form-stripe">
+
+                                                        <div class="form-group">
+                                                            <label for="open_bank" class="col-sm-3 control-label">开户银行<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="open_bank" name="open_bank"  placeholder="开户银行，精确到支行名称" class="form-control" required value="{$aptitude.open_bank ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="open_adderss" class="col-sm-3 control-label">开户地址<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="open_adderss" name="open_adderss"  placeholder="开户行地址，精确到支行XX路XX号" class="form-control" required value="{$aptitude.open_adderss ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <!--<div class="form-group">
+                                                            <label for="open_no" class="col-sm-3 control-label">开户行行号<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="open_no" name="open_no"  placeholder="12位数字的开户行号请拨打相应银行客服电话落实" class="form-control" required value="{$aptitude.open_no ?? ''}" />
+                                                            </div>
+                                                        </div>-->
+                                                        <div class="form-group">
+                                                            <label for="house_name" class="col-sm-3 control-label">户名<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="house_name" name="house_name"  placeholder="请输入户名" class="form-control" required value="{$aptitude.house_name ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="house_no" class="col-sm-3 control-label">账号<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="house_no" name="house_no"  placeholder="请输入账号" class="form-control" required value="{$aptitude.house_no ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <!--<div class="form-group">
+                                                            <label class="col-sm-3 control-label">税务信息<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" name="tax_type" value="1" checked> 一般纳税人
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="radio" name="tax_type" value="2" checked> 小规模纳税人
+                                                                </label>                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tax_register" class="col-sm-3 control-label">登记号<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="tax_register" name="tax_register"  placeholder="请输入登记号" class="form-control" required value="{$aptitude.tax_register ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tax_name" class="col-sm-3 control-label">纳税人名称<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="tax_name" name="tax_name"  placeholder="请输入纳税人名称" class="form-control" required value="{$aptitude.tax_register ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tax_address" class="col-sm-3 control-label">登记地址<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="tax_address" name="tax_address"  placeholder="请输入登记地址" class="form-control" required value="{$aptitude.tax_address ?? ''}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tax_tel" class="col-sm-3 control-label">登记电话<span class="required">*</span></label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="tax_tel" name="tax_tel"  placeholder="请输入登记电话" class="form-control" required value="{$aptitude.tax_tel ?? ''}" />
+                                                            </div>
+                                                        </div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-3 col-sm-9">
+                                                    <button type="button" class="btn btn-primary" id="submit">下一步</button>
+                                                    <button type="submit" class="btn btn-primary" id="baocun" style="display: none;">保存</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/artlog_footer"}
+{load file="__PCAS__PCASClass.js"/}
+{load file="__PUBLIC__jedate/skin/jedate.css" /}
+{load file="__PUBLIC__jedate/jquery.jedate.min.js" /}
+{load file="__PUBLIC__My97DatePicker/WdatePicker.js"}
+<script>
+    $(function () {
+        var business_licence_file = new Upload('business_licence_file', {}, "{$aptitude.business_licence_file ?? ''}"),
+            business_certificate_file = new Upload('business_certificate_file',{},"{$aptitude.business_certificate_file ?? ''}"),
+            tax_file = new Upload('tax_file',{},"{$aptitude.tax_file ?? ''}"),
+//            put_file = new Upload('put_file',{},"{$aptitude.put_file ?? ''}"),
+            policy_file = new Upload('policy_file',{},"{$aptitude.policy_file ?? ''}"),
+            operator_just = new Upload('operator_just',{},"{$aptitude.operator_just ?? ''}"),
+            operator_back = new Upload('operator_back',{},"{$aptitude.operator_back ?? ''}");
+        $('[name="business_licence_type"][value="{$aptitude.business_licence_type ?? '1'}"]').prop('checked',true);
+        $('[name="isbranch"][value="{$aptitude.isbranch ?? '1'}"]').prop('checked',true);
+        licence_type_change();
+        $('[name="tax_type"][value="{$aptitude.tax_type ?? '1'}"]').prop('checked',true);
+        tax_type();
+        var manage = "{$aptitude.manage??''}",temps =new Array();
+        temps = manage.split(',');
+        for (var i in temps){
+            $('[name="manage[]"][value="'+temps[i]+'"]').prop('checked',true);
+        }
+        // 地址
+        new PCAS('company_province','company_city','company_county',"{$aptitude.company_province ?? ''}","{$aptitude.company_city ?? ''}","{$aptitude.company_county ?? ''}");
+        $('#business_licence_start,#business_licence_end,#policy_start,#policy_end').on('focus',function () {
+            WdatePicker({isShowWeek:true});
+        });
+        var validator = $("#aptitude").validate({
+            submitHandler:function(form){
+                var href = $('.nav-tabs li.active a').attr('href');
+                if(href == '#inte'){
+                    $("#submit").hide();
+                    $('#baocun').show();
+                    form.submit();
+                }else {
+                    $("#submit").show();
+                    $('#baocun').hide();
+                }
+            },
+//            debug:true,
+            highlight: function(label) {
+                $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function(label) {
+                $(label).closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+            rules:{
+                contacts_phone:{
+                    required:true,
+                    maxlength:11,
+                    minlength:11,
+                },
+                contacts_email:{
+                    required:true,
+                    email:true
+                }
+            },
+            messages:{
+                'manage[]':'必须选择经营范围',
+                company_name:'请输入公司名称',
+                company_product:'请输入主营产品业务',
+                company_province:'请选择所在省份',
+                company_city:'请选择所在城市',
+                company_county:'请选择所在区',
+                company_address:'请输入详细地址',
+                company_tel:'请输入联系人电话',
+                contacts_name:'请输入联系人姓名',
+                contacts_phone:{
+                    required: '请输入联系人手机',
+                    maxlength: '手机号码格式不正确',
+                    minlength: '手机号码格式不正确',
+                },
+                contacts_email:{
+                    required:'请输入邮箱地址',
+                    email:'邮箱格式不正确'
+                },
+                business_licence_no:'请输入营业执照号',
+                business_licence_start:'请输入有效起始时间',
+                business_licence_end:'请输入有效结束时间',
+                business_certificate_no:'请输入经营许可证号码',
+                tax_no:"请输入税务登记证号码",
+                put_no:"请输入备案登记证号码",
+                policy_no:"请输入责任保险单号",
+                policy_start:"请输入责任保险单有效期",
+                policy_end:"请输入责任保险单有效期",
+                operator_no:"请输入运营人证件号码",
+                open_bank:"请输入开户银行",
+                open_adderss:"请输入开户地址",
+                open_no:"请输入开户行号",
+                house_name:"请输入户名",
+                house_no:"请输入账号",
+                tax_register:"请输入纳税登记号",
+                tax_name:"请输入纳税人名称",
+                tax_address:"请输入登记地址",
+                tax_tel:"请输入登记电话",
+                explain:"请输入说明",
+
+            }
+        });
+        $('.nav-tabs li').on('click',function () {
+            var action = $(this).is('.active');
+            if(!action){
+                $("#aptitude").submit();
+                if(validator.errorList.length > 0){
+                    return false;
+                }else {
+                    setTimeout(active_change,200);
+                    return true;
+                }
+            }
+        });
+        $('#submit').on('click',function () {
+            $("#aptitude").submit();
+            if(validator.errorList.length > 0){
+                return false;
+            }else {
+                var active_next = $('.nav-tabs li.active').next();
+                var href = active_next.find('a').attr('href');
+                var sibling = active_next.addClass('active').siblings().removeClass('active');
+                $(href).addClass('in active').siblings().removeClass('in active');
+                active_change();
+            }
+        });
+        function active_change() {
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#inte'){
+                $('#submit').hide();
+                $('#baocun').show();
+            }else {
+                $('#submit').show();
+                $('#baocun').hide();
+            }
+        }
+        $('[name="business_licence_type"]').on('change',licence_type_change);
+        $('[name="isbranch"]').on('change',isbranch_change);
+        $('[name="tax_type"]').on('change',tax_type);
+        function licence_type_change() {
+            var val = $('[name="business_licence_type"]:checked').val();
+            if(val == '1'){
+                $('#business_licence_no , #business_licence_start, #business_licence_end , #business_certificate_no, #put_no,#policy_no,#policy_start,#policy_end,#tax_no').parents('.form-group').show();
+                $('#explain').parents('.form-group').hide();
+                isbranch_change();
+            }else if(val == '2'){
+                $('#business_licence_no , #business_licence_start, #business_licence_end , #business_certificate_no, #put_no,#policy_no,#policy_start,#policy_end').parents('.form-group').show();
+                $('#tax_no , #explain').parents('.form-group').hide();
+                isbranch_change();
+            }else if(val == '3'){
+                $('#business_licence_no , #business_licence_start, #business_licence_end , #business_certificate_no, #put_no,#policy_no,#policy_start,#policy_end,#tax_no').parents('.form-group').hide();
+                $('#explain').parents('.form-group').show();
+            }
+        }
+        function isbranch_change() {
+            if($('[name="business_licence_type"]:checked').val() == '3'){
+                return ;
+            }
+            var val = $('[name="isbranch"]:checked').val();
+            if(val == '0'){
+                $('#put_no').parents('.form-group').hide();
+            }else if(val == '1'){
+                $('#put_no').parents('.form-group').show();
+            }
+        }
+        function tax_type() {
+            var val = $('[name="tax_type"]:checked').val();
+            if(val == '1'){
+                $('#tax_name,#tax_address,#tax_tel').parents('.form-group').show();
+            }else if(val == '2'){
+                $('#tax_name,#tax_address,#tax_tel').parents('.form-group').hide();
+            }
+        }
+
+    })
+</script>

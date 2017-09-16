@@ -1,0 +1,87 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>我的位置</h1>
+</header>
+<div style="height:1rem;"></div>
+<div class="location_auto">
+    定位城市：<span>自动定位...</span>
+    <a href="javascript:void(0);" class="true" style="float: right; padding: 0 10px;">确定</a>
+    <a href="javascript:void (0);" style="float: right;">
+        <img class="s" src="__INDEX__images/icon/shuaxin.png" alt="刷新" style="width: 19px;">
+    </a>
+</div>
+<dl class="cityLi">
+    <dt>省</dt>
+    <dd>
+        <select name="province" id="province" class="select_location">
+        </select>
+    </dd>
+</dl>
+<dl class="cityLi">
+    <dt>市</dt>
+    <dd>
+        <select name="city" id="city" class="select_location">
+        </select>
+    </dd>
+</dl>
+<dl class="cityLi">
+    <dt>县/区</dt>
+    <dd>
+        <select name="county" id="county" class="select_location">
+        </select>
+    </dd>
+</dl>
+{include file="base/footer" /}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RYG1aZ1F8hTG6nKSsgS5PuWf"></script>
+<script type="text/javascript" src="__PCAS__PCASClass.js"></script>
+<script type="text/javascript">
+    new PCAS('province','city','county');
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+            var new_point = new BMap.Point(r.point.lng,r.point.lat);
+            var gc = new BMap.Geocoder();
+            gc.getLocation(r.point, function(rs){
+                var addComp = rs.addressComponents;
+                $.cookie('location_province',addComp.province,{path:'/'});
+                $.cookie('location_city',addComp.city,{path:'/'});
+                $.cookie('location_county',addComp.district,{path:'/'});
+                new PCAS('province','city','county',addComp.province,addComp.city,addComp.district);
+                $('.location_auto span').text(addComp.province+','+ addComp.city +','+addComp.district);
+            });
+        }
+        else {
+            alert('failed'+this.getStatus());
+        }
+    },{enableHighAccuracy: true});
+    //关于状态码
+    //BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
+    //BMAP_STATUS_CITY_LIST	城市列表。对应数值“1”。
+    //BMAP_STATUS_UNKNOWN_LOCATION	位置结果未知。对应数值“2”。
+    //BMAP_STATUS_UNKNOWN_ROUTE	导航结果未知。对应数值“3”。
+    //BMAP_STATUS_INVALID_KEY	非法密钥。对应数值“4”。
+    //BMAP_STATUS_INVALID_REQUEST	非法请求。对应数值“5”。
+    //BMAP_STATUS_PERMISSION_DENIED	没有权限。对应数值“6”。(自 1.1 新增)
+    //BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
+    //BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
+    function setCookie() {
+        $.cookie('location_province',$('#province').val(),{path:'/'});
+        $.cookie('location_city',$('#city').val(),{path:'/'});
+        $.cookie('location_county',$('#county').val(),{path:'/'});
+        $('.location_auto span').text($('#province').val()+','+ $('#city').val() +','+$('#county').val());
+    }
+    $(function () {
+        $('#province').change(setCookie);
+        $('#city').change(setCookie);
+        $('#county').change(setCookie);
+        $('.s').click(setCookie)
+        $('.true').click(function(){
+            setCookie();
+            var url = '{:url("Mall/index")}';
+            location.href = url;
+        });
+    });
+</script>

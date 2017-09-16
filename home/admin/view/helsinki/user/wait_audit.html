@@ -1,0 +1,122 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">用户管理</a></li>
+                <li><a>用户列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <form action="?">
+                                            <label>
+                                                用户ID:<input type="search" name="uid" class="form-control input-sm" placeholder="输入用户ID搜索" aria-controls="basic-table" value="{:input('uid')}">
+                                            </label>
+                                            <label>
+                                                昵称:<input type="search" name="nickname" class="form-control input-sm" placeholder="输入昵称搜索" aria-controls="basic-table" value="{:input('nickname')}">
+                                            </label>
+                                            <label>
+                                                真实姓名:<input type="search" name="name" class="form-control input-sm" placeholder="输入用户真实姓名搜索" aria-controls="basic-table" value="{:input('name')}">
+                                            </label>
+                                            <label>
+                                                申请状态:
+                                                <select name="status" aria-controls="basic-table" class="form-control input-sm">
+                                                    <option value="">用户申请状态</option>
+                                                    <option value="1">未审核</option>
+                                                    <option value="2">通过</option>
+                                                    <option value="3">不通过</option>
+                                                </select>
+                                            </label>
+                                            <label for="sub">
+                                                <input type="submit" id="sub" value="搜索" class="btn btn-primary" style="margin-bottom: 0;">
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>编号</th>
+                                            <th>昵称</th>
+                                            <th>真实姓名</th>
+                                            <th>性别</th>
+                                            <th>手机号码</th>
+                                            <th>所在城市</th>
+                                            <th>用户类型</th>
+                                            <th>是否关注</th>
+                                            <th>申请状态</th>
+                                            <th>注册时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="users" id="user" key="k"}
+                                        <tr>
+                                            <td>{$k}</td>
+                                            <td>{$user.id}</td>
+                                            <td>{$user.nickname}</td>
+                                            <td>{$user.name}</td>
+                                            <td>{$user.sex=='1'?'男':'女'}</td>
+                                            <td>{$user.phone}</td>
+                                            <td>{$user.province}{$user.city}{$user.country}</td>
+                                            <td>{:usertype($user.type)}</td>
+                                            <td>{:follow($user.subscribe)}</td>
+                                            <td>{$user.status | merchant_status}</td>
+                                            <td>{$user.addtime|date="Y-m-d H:i:s",###}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a href="javascript:void (0);" _href="{:url('User/apply',['uid'=>$user.id])}" title="查看申请申请信息" class="artlog">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </button>
+                                                    {php}/*
+                                                    <button class="btn btn-transparent"><i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-transparent"><i class="fa fa-times"></i>
+                                                    </button>
+                                                    */{/php}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $('[name="status"]').val("{:input('status')}")
+</script>

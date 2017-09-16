@@ -1,0 +1,416 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">门票管理</a></li>
+                <li><a>门票编辑</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('Ticket/piao_list')}">门票列表</a>
+                <a href="{:url('Ticket/piao_edit')}">门票编辑</a>
+            </h4>
+
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#basicinfo" data-toggle="tab">基本信息</a></li>
+                                    <li><a href="#deta" data-toggle="tab">景点简介</a></li>
+                                    <li><a href="#pic" data-toggle="tab">景点图片</a></li>
+                                    <li><a href="#spec" data-toggle="tab">门票类型</a></li>
+                                </ul>
+                                <form class="" action="{:url('Ticket/piaoedit')}" id="tripedit" method="post">
+                                    <input type="hidden" name="act" value="{$act??'add'}" >
+                                    <input type="hidden" name="ticket" value="{$ticket.id??''}" >
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="basicinfo">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label for="title" class="col-sm-3 control-label">门票标题<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="title" name="title"  placeholder="请输入景点标题" class="form-control" required value="{$ticket.title ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="address" class="col-sm-3 control-label">景点地址<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="address" name="address"  placeholder="请输入景点地址" class="form-control" required value="{$ticket.address ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="open_time" class="col-sm-3 control-label">开放时间<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="open_time" name="open_time"  placeholder="请输入开放时间 如：08:00-19:00" class="form-control" required value="{$ticket.open_time ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="grade" class="col-sm-3 control-label">景点评级<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <select name="grade" id="grade" class="form-control" required >
+                                                            <option value="0">无</option>
+                                                            <option value="3">3A</option>
+                                                            <option value="4">4A</option>
+                                                            <option value="5">5A</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <!--<div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程标签</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="checkbox" name="tags[]" value="1">热卖
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="tags[]" value="2">新品
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="tags[]" value="3">打折
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程主题</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="checkbox" name="theme[]" value="1">风景
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="theme[]" value="2">吃喝
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="theme[]" value="3">玩乐
+                                                        </label>
+                                                    </div>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="deta">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label for="desc" class="col-sm-3 control-label">景点简介</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="desc" id="desc">{$ticket.desc ?? ''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="notice" class="col-sm-3 control-label">预定须知</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="notice" id="notice">{$ticket.notice ?? ''}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="traffic" class="col-sm-3 control-label">交通指南</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea name="traffic" id="traffic">{$ticket.traffic ?? ''}</textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pic">
+                                            <input type="file" id="file" name="pics[]" validate="required" placeholder="上传" value="" multiple />
+                                        </div>
+                                        <div class="tab-pane fade" id="spec">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="trip">
+                                                    <button type="button" id="add_trip" style="width: 100%">添加票种</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" id="submit" class="btn btn-primary">下一步</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+{load file="__PUBLIC__jedate/jquery.jedate.js"}
+{load file="__PUBLIC__jedate/skin/jedate.css"}
+<style>
+    .aui_content{width: 100%}
+</style>
+<script  type="text/javascript">
+    $(function() {
+
+//        $("#tripedit").validate(); //表单验证
+        var validator = $("#tripedit").validate({
+            submitHandler:function(form){
+                var href = $('.nav-tabs li.active a').attr('href');
+                if(href == '#spec'){
+                    if($('.trip .form-group').length <= 0 ){
+                        alert('请添加票种！');
+                        return false;
+                    }
+                    form.submit();
+                }else {
+                    $("#submit").text('下一步');
+                }
+            },
+//            debug:true,
+            highlight: function(label) {
+                $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function(label) {
+                $(label).closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+            messages:{
+                title:'必须填写行程标题',
+                address:'必须填写景点地址',
+                open_time:'必须填写开放时间',
+            }
+        });
+        $('.nav-tabs li').on('click',function () {
+            var action = $(this).is('.active');
+            console.log(action);
+            if(!action){
+                $("#tripedit").submit();
+                if(validator.errorList.length > 0){
+                    return false;
+                }else {
+                    setTimeout(active_change,200);
+                    return true;
+                }
+            }
+        });
+        $('#tripedit').submit(function () {
+            if(validator.errorList.length > 0){
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#pic' && $('.upfiles').length <= 0){
+                validator.errorList.length = 1;
+                alert('请上传图片');
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active').next();
+            var href = active_next.find('a').attr('href');
+            var sibling = active_next.addClass('active').siblings().removeClass('active');
+            $(href).addClass('in active').siblings().removeClass('in active');
+            active_change();
+            return true;
+        });
+        function active_change() {
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#spec'){
+                $("#submit").text('提交');
+            }else {
+                $("#submit").text('下一步');
+            }
+        }
+
+        var up = new Upload('file', {}, "{$ticket.pics ?? ''}");
+
+
+        $('select[name="grade"]').val("{$ticket.grade ?? '0'}");
+        var toolbars = [
+            ['fullscreen', 'source', 'undo', 'redo', 'removeformat', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'fontfamily'],
+            ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'fontsize', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+        ];
+        var desc = UE.getEditor('desc', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var notice = UE.getEditor('notice', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var traffic = UE.getEditor('traffic', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var day = 0,id = 0,myDate = new Date();
+        var times = 'desc'+myDate.getTime();
+
+        $('.trip').on('click','#add_trip',tripadd);
+        $('.trip').on('click','.delete',tripdelete);
+
+        //添加行程
+        function tripadd(data) {
+            var days = id+1;
+            var html = '<div class="form-group"><input type="hidden" name="piao['+day+'][id]" value="'+data.id+'"> <label class="col-sm-1 control-label"><button type="button" class="delete"><i class="fa fa-close"></i></button></label> <div class="col-sm-6">票务名称：<input type="text" id="piao-title-'+day+'" name="piao['+day+'][title]"  placeholder="请输入票务名称" class="form-control width-200"  value="'+ (data.title?data.title:'') +'" /> <br/>开始时间<input type="text" id="start_'+id+'"  placeholder="请输入选择开始时间" class="form-control width-200" ><br />结束时间<input type="text" id="end_'+id+'"  placeholder="请输入选择结束时间" class="form-control width-200" ><br />出售价：<input type="text" id="market-'+id+'"  placeholder="请输入出售价" class="form-control width-200"  value="" /> <br/>结算价： <input type="text" id="discount-'+id+'"  placeholder="请输入结算价" class="form-control width-200"  value="" /><br/>周末出售价：<input type="text" id="week_market-'+id+'"  placeholder="请输入周末出售价" class="form-control width-200"  value="" /> <br/>周末结算价： <input type="text" id="week_discount-'+id+'"  placeholder="请输入周末结算价" class="form-control width-200"  value="" /><br/>库存： <input type="text" id="stock-'+id+'"  placeholder="请输入库存" class="form-control width-200"  value="-1" /><br/><button type="button" class="generate" data-id="'+id+'">生成票务报价</button><br/>票务类型说明 <textarea name="piao['+day+'][desc]" id="piao-'+times+'-'+day+'">'+(data.desc?data.desc:'')+'</textarea></div><div class="col-sm-5" id="offer_'+id+'"><input type="hidden" name="piao['+day+'][offer]" id="piao_'+id+'_offer"><div id="offer_'+id+'_date"></div><input type="hidden" id="time_'+id+'" /><div id="offer_'+id+'_mod" style="display: none;"><div class="row"> <div class="col-sm-12 "> <div id="generate_'+id+'_mod" > <div class="form-horizontal form-stripe"> <div class="form-group"> <label class="col-sm-3 control-label">出售价：</label> <div class="col-sm-6"> <input type="text" class="form-control"  id="market_'+id+'_mod" value="" placeholder="修改的出售价" /> </div> </div> <div class="form-group"> <label class="col-sm-3 control-label">结算价</label> <div class="col-sm-6"> <input type="text" class="form-control" id="discount_'+id+'_mod" value="" placeholder="修改的结算价" /> </div> </div> <div class="form-group"> <label class="col-sm-3 control-label">库存</label> <div class="col-sm-6"> <input type="text" class="form-control"  id="stock_'+id+'_mod" value="" placeholder="修改的库存" /> </div> </div> <div class="form-group"> <label class="col-sm-3 control-label">操作</label> <div class="col-sm-6"> <button type="button" id="day_'+id+'_del">删除今天</button> <button type="button" id="day_'+id+'_mod">修改</button> </div> </div> </div> </div> </div> </div> </div></div> </div>';
+            $('#add_trip').before(html);
+            var trip_desc = UE.getEditor('piao-'+times+'-'+day, {
+                toolbars: toolbars,
+                initialFrameHeight: '200',
+                initialFrameWidth: '100%'
+            });
+            $.jeDate('#start_'+id+',#end_'+id,{
+                format:"YYYY-MM-DD",
+                isTime:false,
+                minDate: $.nowDate({DD:0}),
+            });
+
+            $("#piao_"+id+"_offer").val((data.offer?data.offer:''));
+            $('.generate')
+                .unbind('click')
+                .on('click',function () {
+                    var ids = $(this).data('id');
+                    generate(ids);
+                })
+            generate_date(id);
+            day++;
+            id++;
+        }
+        // 生成报价
+        function generate(ids) {
+            var start = $('#start_'+ids).val(), //报价开始时间
+                end = $('#end_'+ids).val(), //报价结束时间
+                market = $('#market-'+ids).val() || 0,
+                discount = $('#discount-'+ids).val() || 0,
+                week_market = $('#week_market-'+ids).val() || market || 0,
+                week_discount = $('#week_discount-'+ids).val() || discount || 0,
+                stock = $('#stock-'+ids).val() || 0,
+                data = {};
+            //datasng(Date.parse(start),'yyyy-MM-dd')
+            //86400000
+            if(!start || !end){
+                alert('起始时间与结束时间都要填写');
+                return false;
+            }
+            if(isNaN(market) || isNaN(discount)){
+                alert('请对价格输入数字');
+                return false;
+            }
+            var timestamp_start = Date.parse(start),
+                timestamp_end = Date.parse(end);
+
+            if(timestamp_start > timestamp_end){
+                alert('起始时间不能晚与结束时间');
+                return false;
+            }
+            var weeks = [0,6];
+            for(var time = timestamp_start; time <= timestamp_end; time += 86400000){
+                var is_true = $.inArray(new Date(time).getDay(),weeks);
+                if(is_true != -1){
+                    if(week_market == 0 && week_discount == 0){
+                        continue ;
+                    }
+                    data[datasng(time,'yyyyMMdd')] = {market:week_market,discount:week_discount,stock:stock};
+                    continue ;
+                }
+                data[datasng(time,'yyyyMMdd')] = {market:market,discount:discount,stock:stock};
+            }
+            //这里
+            $('#piao_'+ids+'_offer').val(JSON.stringify(data));
+            generate_date(ids);
+        }
+        function generate_date(id) {
+            $('#offer_'+id+'_mod').hide();
+            $('#offer_'+id+'_date').html('');
+            var offer = $('#offer_'+id);
+            offer.children('.offer_mod').hide();
+            var piao_offer = $('#piao_'+id+'_offer').val();
+            if(piao_offer ==''){
+                return false;
+            }
+            var data = eval('('+piao_offer+')');
+            var dateStr = '';
+            $("#generate_offer").html('');
+            $.jeDate('#time_'+id,{
+                fixedCell: 'offer_'+id+'_date',
+                format:"YYYY-MM-DD",
+                piaoval : true,
+                data:data,
+                isTime:false,
+                minDate: $.nowDate({DD:0}),
+                choosefun:function(elem, val, date) {
+                    dateStr = datasng(Date.parse($('#time_'+id).val()),'yyyyMMdd');
+                    if(data[dateStr]){
+                        $('#offer_'+id+'_mod').show();
+                    }
+                    $('#market_'+id+'_mod').val(data[dateStr].market);
+                    $('#discount_'+id+'_mod').val(data[dateStr].discount);
+                    $('#stock_'+id+'_mod').val(data[dateStr].stock);
+                },
+            });
+            $('#day_'+id+'_del,'+'#day_'+id+'_mod').unbind('click');
+
+            $('#day_'+id+'_del').on('click',function () {
+                delete data[dateStr];
+                $('#piao_'+id+'_offer').val(JSON.stringify(data));
+                generate_date(id);
+            });
+            $('#day_'+id+'_mod').on('click',function () {
+                var market = $('#market_'+id+'_mod').val() || 0,
+                    discount = $('#discount_'+id+'_mod').val() || 0,
+                    stock = $('#stock_'+id+'_mod').val() || 0;
+                data[dateStr] = {market:market,discount:discount,stock:stock};
+                $('#piao_'+id+'_offer').val(JSON.stringify(data));
+                generate_date(id);
+            });
+
+        }
+        //删除某天行程
+        function tripdelete() {
+            $(this).parents('.form-group').remove();
+            id--;
+            var days = 1;
+            $('.days').each(function () {
+                $(this).html(days ++)
+            })
+        }
+        //初始化
+        modint();
+        function modint() {
+            var data = '{:addslashes(!empty($ticket.ticket_type)?$ticket.ticket_type:"")}';
+            var datas = {};
+            if(data != '' && data != 'null'){
+                datas = eval('('+data+')');
+            }
+            for(var i = 0; i<datas.length;i++){
+                tripadd(datas[i])
+            }
+        }
+        // 时间戳转换字符串
+        function datasng(sng,fmat)
+        {
+            // (new Date(parseInt(sng) * 1000))  把时间戳转换成时间对象。
+            return  (new Date(parseInt(sng))).format(fmat);
+        }
+
+        Date.prototype.format = function(format) {
+            var date = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S+": this.getMilliseconds()
+            };
+            if (/(y+)/i.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+            }
+            for (var k in date) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                        ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+                }
+            }
+            return format;
+        };
+    });
+</script>

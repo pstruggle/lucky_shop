@@ -1,0 +1,148 @@
+{include file="base/header" /}
+{load file="__INDEX__/css/detail.css" /}
+{load file="__INDEX__/css/process.css" /}
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <a href="javascript:void (0);" class="rt_searchIcon" style="font-size: .3rem;">完成</a>
+    <h1>选择出行人</h1>
+</header>
+<div style="height:1rem;"></div>
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div id="client_id_viewport_2_1498033309698" page-url="" data-view-name="passengerselect" style="">
+                <div class="body nofoot js_body">
+                    <div class="mod_top_actions">
+                        <div class="mod_top_add" data-sk-eid="hcc_tra_tap_add">
+                            <i class="ico_add">
+                            </i>
+                            <span class="v_blue">新增旅客</span>
+                        </div>
+                        <!--<div class="mod_btn_search">-->
+                            <!--<a href="javascript:;" class="btn_search" data-sk-eid="hcc_tra_tap_search">-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="v_mod v_guest traveller_mod">
+                        <ul class="v_list traveller_list">
+                            {volist name="upeoples" id="upeople"}
+                            <li class="v_checkbox_select" data-id="{$upeople.id}" data-iscomplete="true">
+                                <i class="animate_select2">
+                                </i>
+                                <p class="guest_name">
+                                    <strong>{$upeople.name}    {notempty name="$upeople.last"}{$upeople.last??''}/{$upeople.first}{/notempty}</strong>
+                                    <span class="gender">{$upeople.sex}</span>
+                                </p>
+                                <p class="traveller_identity">&nbsp;</p>
+                                <i class="edit_icon" data-sk-eid="hcc_tra_tap_edit">
+                                </i>
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer"}
+{load file="__PUBLIC__jedate/jquery.jedate.js" /}
+{load file="__PUBLIC__jedate/skin/jedate.css" /}
+<script>
+    $(function(){
+        var peoples = "{$shop.people ?? ''}",offer_type = "{$shop.offer_type ?? '1'}";
+        var peos = new Array();
+        peos = peoples.split(',');
+        var sumren=0;
+        if(offer_type == '2'){
+            var po = "{$shop.peoples??''}";
+            if(po == ''){
+                sumren = 0;
+            }else {
+                var pos = po.split(',');
+                for(var x in pos){
+                    sumren += parseInt(pos[x]);
+                }
+            }
+
+        }else {
+            var man = 0,child=0;
+            man = "{$shop.man ??'0'}";
+            child="{$shop.child ?? '0'}";
+            sumren=parseInt(man)+parseInt(child);
+        }
+        for (var i in peos){
+            $('.v_checkbox_select[data-id="'+peos[i]+'"]').addClass('v_selected');
+            judge_paper(peos[i]);
+        }
+        $('.v_checkbox_select').on('click',function () {
+            if($(this).is('.v_selected')){
+                $(this).removeClass('v_selected');
+            }else {
+                $(this).addClass('v_selected');
+                if($('.v_checkbox_select.v_selected').length >sumren){
+                    alert("只能选择"+sumren+"人");
+                    $(this).removeClass('v_selected')
+                    return;
+                }else{
+                    var ids = $(this).data('id');
+                    judge_paper(ids);
+                }
+            }
+
+        });
+        $('.edit_icon').on('click',function () {
+            var passid = $(this).parent().data('id');
+            location.href = "{:url('Index/passengeredit')}?passid="+passid;
+        });
+        $(".mod_top_actions .mod_top_add").on('click',function () {
+            location.href = "{:url('Index/passengeredit')}";
+        });
+        $('.rt_searchIcon').on('click',function () {
+            var selected = $('.v_checkbox_select.v_selected');
+            var ids = '';
+            if(selected.length < sumren){
+                alert('请选择'+sumren+'人');
+                return;
+            }
+            var status = true;
+            selected.each(function () {
+                var id = $(this).data('id');
+                var infos = judge_paper(id);
+                if(infos.code == '1'){
+                    status = false ;
+                }
+                ids += id+',';
+            });
+            if(!status){
+                return ;
+            }
+            $.get("{:url('Index/ajax_shop')}",
+                {ids:ids,shopid:"{:input('shopid')}"},
+                function (datas) {
+                location.href = "{:url('Index/order')}?shopid={:input('shopid')}";
+            });
+        });
+        function judge_paper(pid) {
+            var tid = "{$shop.tid ?? ''}";
+            if(pid == ''){
+                return false;
+            }
+            var data = {tid:tid,pid:pid};
+            var infos = {};
+            $.ajaxSetup({async:false});
+            $.get("{:url('Index/judge_paper')}",
+            data,
+            function (datas) {
+                datas = eval('('+datas+')');
+                infos = datas;
+                if(datas.code == '1'){
+                    alert('请为该用户完善'+ datas.info +"信息");
+
+                    return false ;
+                }
+            });
+            return infos;
+        }
+    });
+</script>

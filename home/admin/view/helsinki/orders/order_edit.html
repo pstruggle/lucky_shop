@@ -1,0 +1,91 @@
+{include file="base/artlog_header"}
+<div class="wrap">
+    <div class="page-body" style="padding: 0">
+        <div class="content" style="margin: 0;">
+            <div class="row animated fadeInUp">
+                <div class="col-sm-12">
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="table-responsive">
+                                <form action="{:url('Orders/edit')}" name="edit" id="edit">
+                                    <input type="hidden" name="act" class="act" value="" />
+                                    <input type="hidden" name="id" value="{$order.id}" />
+                                </form>
+                                <table class="table table-striped table-hover table-condensed">
+                                    <tbody>
+                                    <tr>
+                                        <td>订单号：</td>
+                                        <td colspan="5">{$order.onumber}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>商品ID</td>
+                                        <td>商品名</td>
+                                        <td>商品价格</td>
+                                        <td>商品运费</td>
+                                        <td>商品数量</td>
+                                        <td>商品总金额</td>
+                                    </tr>
+                                    {volist name="goods" id="good"}
+                                    <tr>
+                                        <td>{$good.gid}</td>
+                                        <td>{$good.gname}</td>
+                                        <td>{$good.price}</td>
+                                        <td>{$good.freight}</td>
+                                        <td>{$good.sum}</td>
+                                        <td>{$good.price * $good.sum}</td>
+                                    </tr>
+                                    {/volist}
+                                    <tr>
+                                        <td>订单总金额：</td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm price" name="sumprice" id="sumprice" value="{$order.sumprice}"/>
+                                        </td>
+                                        <td  colspan="4">
+                                            <!--<input type="button" class="btn btn-primary" data-action="price" value="修改" />-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">物流方式</td>
+                                    </tr>
+                                    <tr>
+                                        <td>物流公司：</td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm send" name="logistics" id="logistics" value="{$order.logistics}" />
+                                        </td>
+                                        <td>快递单号：</td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm send" name="waybillnum" id="waybillnum" value="{$order.waybillnum}" />
+
+                                        </td>
+                                        <td colspan="2">
+                                            <!--<input type="button" class="btn btn-primary" data-action="send" value="发货" />-->
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/artlog_footer"}
+<script>
+    $(function () {
+        $('.btn').click(subform);
+        function subform() {
+            var action = $(this).data('action');
+            $('.'+action).attr('form','edit');
+            $('.act').val(action);
+            if(action == 'price' || action == 'send'){
+                $('#edit').submit();
+            }
+            $('.'+action).attr('form','');
+            $('.act').val('');
+            return false;
+        }
+    })
+</script>

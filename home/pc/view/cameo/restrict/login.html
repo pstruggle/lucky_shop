@@ -1,0 +1,187 @@
+<!doctype html>
+<html class="signin no-js" lang="">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="description" content="Flat, Clean, Responsive, admin template built with bootstrap 3">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <script type="text/javascript">
+        //<![CDATA[
+        try {
+            if (!window.CloudFlare) {
+                var CloudFlare = [{
+                    verbose: 0,
+                    p: 0,
+                    byc: 0,
+                    owlid: "cf",
+                    bag2: 1,
+                    mirage2: 0,
+                    oracle: 0,
+                    paths: {
+                        cloudflare: "/cdn-cgi/nexp/dok2v=1613a3a185/"
+                    },
+                    atok: "1668c19642567e08c574f5d9458345a2",
+                    petok: "3285f1db20753df31d6fcdae6015a30e5a60a785-1419101748-1800",
+                    zone: "nyasha.me",
+                    rocket: "0",
+                    apps: {
+                        "ga_key": {
+                            "ua": "UA-50530436-1",
+                            "ga_bs": "2"
+                        }
+                    }
+                }];
+                CloudFlare.push({
+                    "apps": {
+                        "ape": "86d42e0b8c0027bb178361fce707fc15"
+                    }
+                });
+                ! function(a, b) {
+                    a = document.createElement("script"), b = document.getElementsByTagName("script")[0], a.async = !0, a.src = "__PC__js/cloudflare.min.js", b.parentNode.insertBefore(a, b)
+                }()
+            }
+        } catch (e) {};
+        //]]>
+    </script>
+    <link rel="stylesheet" href="__PC__vendor/offline/theme.css">
+    <link rel="stylesheet" href="__PC__vendor/pace/theme.css">
+    <link rel="stylesheet" href="__PC__vendor/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="__PC__vendor/bxslider/jquery.bxslider.css">
+
+
+    <link rel="stylesheet" href="__PC__bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PC__css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PC__css/animate.min.css">
+
+    <link rel="stylesheet" href="__PC__css/panel.css">
+
+    <link rel="stylesheet" href="__PC__css/skins/palette.1.css" id="skin">
+    <link rel="stylesheet" href="__PC__css/fonts/style.1.css" id="font">
+    <link rel="stylesheet" href="__PC__css/main.css">
+
+
+    <!--[if lt IE 9]>
+    <script src="__PC__js/html5shiv.js"></script>
+    <script src="__PC__js/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="__PC__vendor/modernizr.js"></script>
+    <script type="text/javascript">
+
+        (function(b) {
+            (function(a) {
+                "__CF" in b && "DJS" in b.__CF ? b.__CF.DJS.push(a) : "addEventListener" in b ? b.addEventListener("load", a, !1) : b.attachEvent("onload", a)
+            })(function() {
+                "FB" in b && "Event" in FB && "subscribe" in FB.Event && (FB.Event.subscribe("edge.create", function(a) {
+                    _gaq.push(["_trackSocial", "facebook", "like", a])
+                }), FB.Event.subscribe("edge.remove", function(a) {
+                    _gaq.push(["_trackSocial", "facebook", "unlike", a])
+                }), FB.Event.subscribe("message.send", function(a) {
+                    _gaq.push(["_trackSocial", "facebook", "send", a])
+                }));
+                "twttr" in b && "events" in twttr && "bind" in twttr.events && twttr.events.bind("tweet", function(a) {
+                    if (a) {
+                        var b;
+                        if (a.target && a.target.nodeName == "IFRAME") a: {
+                            if (a = a.target.src) {
+                                a = a.split("#")[0].match(/[^?=&]+=([^&]*)?/g);
+                                b = 0;
+                                for (var c; c = a[b]; ++b)
+                                    if (c.indexOf("url") === 0) {
+                                        b = unescape(c.split("=")[1]);
+                                        break a
+                                    }
+                            }
+                            b = void 0
+                        }
+                        _gaq.push(["_trackSocial", "twitter", "tweet", b])
+                    }
+                })
+            })
+        })(window);
+        /* ]]> */
+    </script>
+</head>
+<body class="bg-color center-wrapper">
+<div class="center-content">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <section class="panel panel-default">
+                <header class="panel-heading">门店登录</header>
+                <div class="bg-white user pd-md">
+                    <h6><strong>欢迎</strong>登录门店系统</h6>
+                    <form role="form" action="{:url('Restrict/chacklogin')}" method="post">
+                        <input type="text" name="phone" id="phone" class="form-control mg-b-sm" placeholder="手机号码" autofocus />
+                        <input type="password" name="passwd" id="passwd" class="form-control mg-b-sm" placeholder="登录密码" />
+
+                        <input type="text" id="CheckCode" name="CheckCode" class="form-control" placeholder="下方验证码">
+                        <img src="{:captcha_src()}" border="0" class="verifyimg" />
+                        <label class="checkbox pull-left">
+                            <input type="checkbox" value="remember-me">记住我
+                        </label>
+                        <div class="text-right mg-b-sm mg-t-sm">
+                            <a href="javascript:;">忘记密码?</a>
+                        </div>
+                        <button class="btn btn-info btn-block" type="submit">登录</button>
+                    </form>
+                    <p class="center-block mg-t mg-b text-right">没有账号?
+                        <a href="{:url('restrict/register')}">注册账号</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="__PC__vendor/jquery-1.11.1.min.js"></script>
+<script>
+    window._src = $('.verifyimg').attr('src');
+    $(function () {
+        var chackUrl = "{:url('Restrict/checkcode')}";
+        var is = 1;
+        $('.sublog').click(function () {
+            if(is == 1){
+                $('#login').submit();
+            }
+        });
+        $('#CheckCode').blur(checkCode);
+
+        $('.verifyimg').click(switchCode);
+        //	验证验证码
+        function checkCode() {
+            var code = $('#CheckCode').val(),
+                msgs = '';
+            if(code == null || code == ""){
+                //提示错误
+                is = 0;
+                alert("验证码不能为空");
+                return false;
+            }else {
+                is = 1;
+            }
+            $.ajaxSetup({'async':false});
+            $.get(chackUrl,{'code':code},function(msg){
+                msgs = eval('('+msg+')');
+            });
+            if(msgs.code == '0'){
+                //提示错误
+                is = 0;
+                alert(msgs.info);
+                $('#CheckCode').val('');
+                switchCode();
+                return false;
+            }else {
+                is = 1;
+            }
+            return true;
+        }
+        //	刷新验证码
+        function switchCode() {
+            var ts = Date.parse(new Date())/1000;
+            $('.verifyimg').attr('src',_src+'?id='+ts);
+        }
+    });
+</script>

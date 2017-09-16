@@ -1,0 +1,197 @@
+{include file="base/head" /}
+<section class="main-content">
+    <div class="content-wrap">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">搜索条件</header>
+                    <div class="panel-body">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label class="control-label" for="pro_type">产品分类</label>
+                                <select name="pro_type" id="pro_type" class="form-control">
+                                    <option value="">选择产品分类</option>
+                                    <option value="periphery">省内游</option>
+                                    <option value="domestic">国内游</option>
+                                    <option value="exit">出境游</option>
+                                    <option value="island">海岛游</option>
+                                    <option value="cruise">游轮之旅</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="style">线路类型</label>
+                                <select name="style" id="style" class="form-control">
+                                    <option value="">选择线路类型</option>
+                                    <option value="1">跟团游</option>
+                                    <option value="2">半自助游</option>
+                                    <option value="3">私家团</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="day_min">行程天数区间</label>
+                                <select name="day_min" id="day_min" class="form-control">
+                                    <option value="">选择行程天数</option>
+                                    {php}
+                                    for($i=1; $i<=20; $i++){
+                                        echo '<option value="'.$i.'">'.$i.'天</option>';
+                                    }
+                                    {/php}
+                                </select>
+                                -
+                                <select name="day_max" id="day_max" class="form-control">
+                                    <option value="">选择行程天数</option>
+                                    {php}
+                                    for($i=1; $i<=20; $i++){
+                                        echo '<option value="'.$i.'">'.$i.'天</option>';
+                                    }
+                                    {/php}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="start">出发时间</label>
+                                <input name="start" id="start" class="form-control" placeholder="出发时间" value="{:input('start')}" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="balance">市场价</label>
+                                <select id="balance" class="form-control">
+                                    <option value="">选择结算价区间</option>
+                                    <option value="1">1000以下</option>
+                                    <option value="2">1000-3000</option>
+                                    <option value="3">3000-5000</option>
+                                    <option value="4">5000以上</option>
+                                </select>
+                                <input name="min" id="min" value="{:input('min')}" class="form-control" placeholder="最小金额" /> -
+                                <input name="max" id="max" value="{:input('max')}" class="form-control" placeholder="最大金额" />
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="keyword">产品名称</label>
+                                <input name="keyword" id="keyword" class="form-control" placeholder="产品名称或者产品编号" value="{:input('keyword')}" />
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="m_name">供应商名</label>
+                                <input name="m_name" id="m_name" class="form-control" placeholder="供应商名" value="{:input('m_name')}" />
+
+                            </div>
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                    </div>
+
+                    <div class="panel-body no-padding">
+                        <div class="table-responsive">
+                            <table class="table table-striped responsive" data-sortable>
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>编号</th>
+                                    <th width="200">供应商</th>
+                                    <th width="200">行程名称</th>
+                                    <th>分类</th>
+                                    <th>线路类型</th>
+                                    <th>天数</th>
+                                    <th>市场价</th>
+                                    <th>最早出团期</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="trips" id="trip" key="k"}
+                                <tr>
+                                    <td>{$k}</td>
+                                    <td>{$trip.id}</td>
+                                    <td>
+                                        商户号：{$trip.mid} <br />
+                                        商户名：{$trip.name}<br />
+                                        商户联系方式：{$trip.phone}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:;" _href="{:url('Product/trip_details',['pid'=>$trip['id']])}" class="artlog">
+                                            {$trip.title}
+                                        </a>
+                                    </td>
+                                    <td>{$trip.type=='1'?'境内游':'境外游'}</td>
+                                    <td>{:trip_style($trip['style'])}</td>
+                                    <td>{$trip.days}</td>
+                                    <td>{$trip.maxprice}</td>
+                                    <td>{$trip.offer | lately_group}</td>
+                                    <td>
+                                        <div class="btn btn-transparent">
+                                            <a href="{:url('Product/trip_details',['pid'=>$trip['id']])}" target="_blank" title="打印订单"><i class="fa fa-print"></i></a>
+                                        </div>
+                                        <div class="btn btn-transparent">
+                                            <a href="javascript:void (0);" _href="{:url('product/sign_up',['pid'=>$trip['id']])}" class="artlog" title="报名"><i class="fa fa-sign-in"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        {$page??''}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+</section>
+{include file="base/foot" /}
+<script src="__PC__vendor/table-sortable/sortable.min.js"></script>
+<script src="__PC__vendor/offline/offline.min.js"></script>
+<script src="__PC__vendor/pace/pace.min.js"></script>
+
+
+<script src="__PC__js/off-canvas.js"></script>
+<script src="__PC__js/main.js"></script>
+
+<script src="__PC__js/panel.js"></script>
+{load file="__ARTDIALOG4.1.7__skins/aero.css"}
+{load file="__ARTDIALOG4.1.7__artDialog.js"}
+{load file="__ARTDIALOG4.1.7__plugins/iframeTools.source.js"}
+{load file="__PUBLIC__jedate/jquery.jedate.js"}
+{load file="__PUBLIC__jedate/skin/jedate.css"}
+<script>
+    $(function () {
+        $('.artlog').click(function(){
+            var url = $(this).attr('_href'),
+                title = $(this).text();
+            var list = art.dialog.list;
+            for (var i in list) {
+                list[i].close();
+            };
+            console.log(url);
+            art.dialog.open(url,
+                {'title':title,
+                    'width':'60%',
+                    'height':'60%',
+                });
+        });
+        $('#pro_type').val('{:input("pro_type")}');
+        $('#style').val('{:input("style")}');
+        $('#day_min').val('{:input("day_min")}');
+        $('#day_max').val('{:input("day_max")}');
+        var prices = {1:['',1000],2:[1000,3000],3:[3000,5000],4:[5000,'']};
+        $('#balance').on('change',function (e) {
+            var val = $(this).val();
+            if(val == ''){
+                $('#min,#max').val('');
+            }else {
+                $('#min').val(prices[val][0]);
+                $('#max').val(prices[val][1]);
+            }
+        });
+        $.jeDate("#start",{
+            format:"YYYY-MM-DD",
+            isClear:false,                               //是否显示清空
+            isToday:false,                               //是否显示今天或本月
+            isok:false,                                  //是否显示确定按钮
+            isTime:false,
+            minDate: $.nowDate({DD:0}),
+            choosefun:function(elem, val, date) {
+            }
+        });
+    })
+</script>

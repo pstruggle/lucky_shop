@@ -1,0 +1,37 @@
+{include file="base/header" /}
+<div class="container-fluid">
+    <div class="row">
+        <div class="ernav clearfix">
+            <ul>
+
+                <li><a href="{:url('Line/linelist')}">线路列表</a></li>
+
+            </ul>
+        </div>
+        <div class="content">
+            <table class="list-table" id="list_tag" name="list_tag">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>线路标题</th>
+                    <th>线路特色</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="lines" id="line"}
+                <tr>
+                    <td>{$line.id}</td>
+                    <td>{$line.name}</td>
+                    <td>{$line.feature}</td>
+                    <td><a href="">修改</a>|<a href="">删除</a>|</td>
+                </tr>
+                {/volist}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}

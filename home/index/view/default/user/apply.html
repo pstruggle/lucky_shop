@@ -1,0 +1,51 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>申请业务员</h1>
+</header>
+<div style="height:1rem;"></div>
+{$text??''}
+<form action="{:url('User/applyedit')}" method="post" id="mod_info">
+    <ul class="userForm">
+        <input type="hidden" name="act" value="{$act??'update'}">
+        <li>
+            <input type="text" value="{$apply.name??''}" name="name" id="name" placeholder="真实姓名"/>
+        </li>
+        <li>
+            <input type="text" value="{$apply.phone??''}" name="phone" id="phone" placeholder="联系电话"/>
+        </li>
+        <li>
+            <input type="text" value="{$apply.industry??''}" name="industry" id="industry" placeholder="行业说明"/>
+        </li>
+        <li>
+            <input type="text" value="{$apply.unit??''}" name="unit" id="unit" placeholder="工作单位"/>
+        </li>
+        <li>
+            <input type="text" value="{$apply.idcard??''}" name="idcard" id="idcard" placeholder="身份证号"/>
+        </li>
+        <li>
+            <input type="file" data-val="上传正面" id="positive" name="positive">
+        </li>
+        <li>
+            <input type="file" data-val="上传反面" id="negative" name="negative">
+        </li>
+        <li><input type="button" value="更新保存" class="formLastBtn"/></li>
+    </ul>
+</form>
+{include file="base/footer" /}
+{load file="__UPLOADER__Uploader.js"}
+{load file="__UPLOADER__uploader.css"}
+<script>
+    $(function(){
+        $('.formLastBtn').click(function(){
+            $("#mod_info").submit();
+        });
+        var positive = new Upload('positive',{},"{$apply.positive??''}"),
+            negative = new Upload('negative',{},"{$apply.negative??''}");
+        var status = "{$status??''}";
+        if(status == '2'){
+            $('.formLastBtn').hide();
+        }
+    });
+</script>

@@ -1,0 +1,108 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">商户管理</a></li>
+                <li><a>商户列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <form action="?">
+                                            <label>
+                                                订单号查找:<input type="search" class="form-control input-sm" placeholder="订单号搜索" name="onumber" aria-controls="basic-table" value="{:input('onumber')}">
+                                            </label>
+                                            <label for="sub">
+                                                <input type="submit" id="sub" value="搜索" class="btn btn-primary" style="margin-bottom: 0;" />
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>店铺名</th>
+                                            <th>订单号</th>
+                                            <th>订单类型</th>
+                                            <th>订单详情</th>
+                                            <th>数量</th>
+                                            <th>商户所得</th>
+                                            <!--<th>入账金额</th>-->
+                                            <th>送出积分</th>
+                                            <th>用户消费积分</th>
+                                            <th>抽成比例</th>
+                                            <th>资金状态</th>
+                                            <th>支付时间</th>
+                                            <th>当前余额</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="bills" id="bill"}
+                                        <tr>
+                                            <td>{$bill.id}</td>
+                                            <td>{$bill.sname}</td>
+                                            <td>{$bill.onumber}</td>
+                                            <td>{$bill.otype | order_type}</td>
+                                            <td>{$bill.odetails}</td>
+                                            <td>{$bill.sum}</td>
+                                            <td>{$bill.mer_give}</td>
+                                            <!--<td>{$bill.recorded}</td>-->
+                                            <td>{$bill.integration}</td>
+                                            <td>{$bill.iconsume}</td>
+                                            <td>{$bill.take}%</td>
+                                            <td>{$bill.status | capital_status}</td>
+                                            <td>{$bill.paytime|date="Y-m-d H:i:s",###}</td>
+                                            <td>{$bill.nowbalance}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a href="javascript:void(0);" class="artlog" _href="{:url('Merchant/bill_desc',['bill'=>$bill.id])}">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </button>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+        $('select[name="mid"]').val("{:input('mid')}");
+    });
+</script>

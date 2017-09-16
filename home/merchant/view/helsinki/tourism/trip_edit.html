@@ -1,0 +1,976 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>行程编辑</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#basicinfo" data-toggle="tab">基本信息</a></li>
+                                    <li><a href="#flick" data-toggle="tab">特价甩尾</a></li>
+                                    <!--<li><a href="#deta" data-toggle="tab">行程描述</a></li>-->
+                                    <li><a href="#pic" data-toggle="tab">行程图片</a></li>
+                                    <li><a href="#spec" data-toggle="tab">报价</a></li>
+                                    <li><a href="#line" data-toggle="tab">线路选择</a></li>
+                                </ul>
+                                <form class="" action="{:url('Tourism/tripedit')}" id="tripedit" method="post">
+                                    <input type="hidden" name="act" value="{$act??''}" >
+                                    <input type="hidden" name="trip" value="{$tripid??''}" >
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="basicinfo">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label for="title" class="col-sm-3 control-label">行程标题<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="title" name="title"  placeholder="请输入行程标题" class="form-control" required value="{$trip.title ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="supplier" class="col-sm-3 control-label">提供方</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="supplier" name="supplier"  placeholder="请输入提供方名称（可不填）" class="form-control" value="{$trip.supplier ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="supplier_phone" class="col-sm-3 control-label">提供方电话</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" id="supplier_phone" name="supplier_phone"  placeholder="请输入提供方电话（可不填）" class="form-control" value="{$trip.supplier_phone ?? ''}" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title" class="col-sm-3 control-label">出发地<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <select name="setout" id="setout" required class="form-control">
+                                                            <option value="">请选择出发地</option>
+                                                            {volist name="setouts" id="setout"}
+                                                            <option value="{$setout.id}">{$setout.setout}</option>
+                                                            {/volist}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程特殊玩法</label>
+                                                    <div class="col-sm-6">
+                                                        <select name="play" id="play" class="form-control">
+                                                            <option value="0">请选择特殊玩法</option>
+                                                            <option value="1">海岛游</option>
+                                                            <option value="2">游轮之旅</option>
+                                                            <option value="3">亲子游</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <!--<div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程标签</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="checkbox" name="tags[]" value="1">热卖
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="tags[]" value="2">新品
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="tags[]" value="3">打折
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程主题</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="checkbox" name="theme[]" value="1">风景
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="theme[]" value="2">吃喝
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="theme[]" value="3">玩乐
+                                                        </label>
+                                                    </div>
+                                                </div>-->
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">产品类型</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="radio" checked name="style" value="1">跟团游
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="style" value="2">半自助游
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="style" value="3">私家团
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">所需要证件<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        {volist name="papers" id="paper"}
+                                                        <label>
+                                                            <input type="checkbox" required name="papers[]" value="{$paper.id}">{$paper.paper_name}
+                                                        </label>
+                                                        {/volist}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="flick">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">申请特价甩尾<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="radio" name="flick" value="0" checked>不申请
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="flick" value="1">申请
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pic">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程图片</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file" id="file" name="pics[]" placeholder="上传" multiple />
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">行程宣传海报</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="file" id="poster" name="poster" placeholder="上传" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="spec">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">全程单房差</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="single" value="{$trip.single ?? ''}" placeholder="请输入全程单房差价" />
+                                                    </div>
+                                                </div>
+
+                                                {php}
+                                                /*
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">定金</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="single" value="{$trip.earnest ?? ''}" placeholder="请输入定金" />
+                                                        <span>用户预定位置所需要的定金不需要定金时设置为0</span>
+                                                    </div>
+                                                </div>
+                                                */
+                                                {/php}
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">订单数</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="onum" value="{$trip.onum ?? ''}" placeholder="请输入行程的初始订单数" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">起始时间</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="starttime" id="starttime" value="" placeholder="请选择起始时间" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">结束时间</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="endtime" id="endtime" value="" placeholder="请选择结束时间" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">星期筛选</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="checkbox" name="week" value="0">星期天
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="week" value="1">星期一
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="week" value="2">星期二
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="week" value="3">星期三
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="week" value="4">星期四
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="week" value="5">星期五
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="week" value="6">星期六
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">报价方式<span class="required">*</span></label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="radio" name="mode" value="1" checked>经典
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="mode" value="2">自定义
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div id="mode2">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3"></label>
+                                                        <div class="col-sm-6">
+                                                            <button type="button" id="add_mode2" style="width: 100%">添加自定义</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">生成报价</label>
+                                                        <div class="col-sm-6">
+                                                            <button type="button" class="generate_mode2">生成报价</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"></label>
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <input type="hidden" name="offer_mode2" id="offer_mode2">
+                                                                <input type="hidden" name="dayspay_mode2" id="dayspay_mode2" value="">
+                                                                <div class="col-sm-12 ">
+                                                                    <div style="display: inline-block;" id="generate_offer_mode2"></div>
+                                                                    <div id="generate_mod_mode2" style="display: none;">
+                                                                        <div class="form-horizontal form-stripe">
+                                                                            <div id="mode2_mod">
+                                                                                <!--特定日期修改-->
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">操作</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <button type="button" class="day_mode2_del">删除今天</button>
+                                                                                    <button type="button" class="day_mode2_mod">修改</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div id="classic">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">成人价</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" class="form-control" name="adult" id="adult" value="" placeholder="请输入成人价" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">成人结算价</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" class="form-control" name="adult_balance" id="adult_balance" value="" placeholder="请输入成人结算价" />
+                                                            <span>同行可查看价格</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">儿童价</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" class="form-control" name="children" id="children" value="" placeholder="请输入儿童价" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">儿童结算价</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" class="form-control" name="children_balance" id="children_balance" value="" placeholder="请输入儿童结算价" />
+                                                            <span>同行可查看价格</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">库存</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" class="form-control" name="stock" id="stock" value="" placeholder="请输入库存" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">生成报价</label>
+                                                        <div class="col-sm-6">
+                                                            <button type="button" class="generate">生成报价</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"></label>
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <input type="hidden" name="offer" id="offer">
+                                                                <input type="hidden" name="dayspay" id="dayspay" value="">
+                                                                <div class="col-sm-12 ">
+                                                                    <div style="display: inline-block;" id="generate_offer"></div>
+                                                                    <div id="generate_mod" style="display: none;">
+                                                                        <div class="form-horizontal form-stripe">
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">成人价</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <input type="text" class="form-control" name="adult_mod" id="adult_mod" value="" placeholder="修改的成人价" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">成人结算价</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <input type="text" class="form-control" name="adult_balance_mod" id="adult_balance_mod" value="" placeholder="修改成人结算价" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">儿童价</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <input type="text" class="form-control" name="children_mod" id="children_mod" value="" placeholder="修改的儿童价" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">儿童结算价</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <input type="text" class="form-control" name="children_balance_mod" id="children_balance_mod" value="" placeholder="修改的儿童结算价" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">库存</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <input type="text" class="form-control" name="stock_mod" id="stock_mod" value="" placeholder="修改的库存" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="col-sm-3 control-label">操作</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <button type="button" class="day_del">删除今天</button>
+                                                                                    <button type="button" class="day_mod">修改</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="line">
+                                            <div class="form-horizontal form-stripe">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">线路方向</label>
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="radio" name="exit_type" value="1" checked>国内线路
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="exit_type" value="2">境外线路
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label"></label>
+                                                    <div class="col-sm-6">
+                                                        <button type="button" class="line_change">选择线路</button>
+                                                        <input type="hidden" name="page" id="page" value="1">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label"></label>
+                                                    <div class="col-sm-6" id="lineshow">
+                                                        {notempty  name="$line"}
+                                                        <input type="hidden" name="lines" id="lines" value="{$line.id}">
+                                                        <div class="row">
+                                                            <div class="line_show"><img src="{:img_url($line.src,100,75)}" alt="{$line.name}"><span>{$line.name}</span></div>
+                                                        </div>
+                                                        {/notempty}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" id="submit" class="btn btn-primary">下一步</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+{load file="__PUBLIC__jedate/jquery.jedate.js"}
+{load file="__PUBLIC__jedate/skin/jedate.css"}
+<style>
+    .aui_content{width: 100%}
+</style>
+<script  type="text/javascript">
+    $(function() {
+
+//        $("#tripedit").validate(); //表单验证
+        var validator = $("#tripedit").validate({
+            submitHandler:function(form){
+                var href = $('.nav-tabs li.active a').attr('href');
+                if(href == '#line'){
+                    if(!$('#lines').val()){
+                        alert('请选择线路');
+                        return false;
+                    }
+                    form.submit();
+                }else {
+                    $("#submit").text('下一步');
+                }
+            },
+//            debug:true,
+            highlight: function(label) {
+                $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function(label) {
+                $(label).closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+            messages:{
+                title:'必须填写行程标题',
+                setout:'必须选择出发地',
+                'papers[]':'必须选择证件',
+            }
+        });
+        $('.nav-tabs li').on('click',function () {
+            var action = $(this).is('.active');
+            if(!action){
+                $("#tripedit").submit();
+                if(validator.errorList.length > 0){
+                    return false;
+                }else {
+                    setTimeout(active_change,200);
+                    return true;
+                }
+            }
+        });
+        $('#tripedit').submit(function () {
+            if(validator.errorList.length > 0){
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#pic' && $('.upfiles').length <= 0){
+                validator.errorList.length = 1;
+                alert('请上传图片');
+                return false;
+            }
+            var type_mode = $('input[name="mode"]:checked').val();
+            if(href == '#spec' && type_mode == '1' && $('#dayspay').val() == ''){
+                validator.errorList.length = 1;
+                alert('请生成报价');
+                return false;
+            }
+            if(href == '#spec' && type_mode == '2' && $('#dayspay_mode2').val() == ''){
+                validator.errorList.length = 1;
+                alert('请生成报价');
+                return false;
+            }
+            var active_next = $('.nav-tabs li.active').next();
+            var href = active_next.find('a').attr('href');
+            var sibling = active_next.addClass('active').siblings().removeClass('active');
+            $(href).addClass('in active').siblings().removeClass('in active');
+            active_change();
+            return true;
+        });
+        function active_change() {
+            var active_next = $('.nav-tabs li.active');
+            var href = active_next.find('a').attr('href');
+            if(href == '#line'){
+                $("#submit").text('提交');
+            }else {
+                $("#submit").text('下一步');
+            }
+        }
+
+        var file = new Upload('file', {}, "{$trip.pics ?? ''}");
+        var poster = new Upload('poster', {}, "{$trip.poster ?? ''}");
+
+        var tags = "{$trip.tags ??''}",
+            theme = "{$trip.theme??''}",
+            safe = "{$trip.safe??''}",
+            papers = "{$trip.papers??''}",
+            temparray = new Array();
+        temparray = tags.split(',');
+        for (var t in temparray){
+            $('input[name="tags[]"][value="'+temparray[t]+'"]').prop('checked',true);
+        }
+        temparray = theme.split(',');
+        for (var t in temparray){
+            $('input[name="theme[]"][value="'+temparray[t]+'"]').prop('checked',true);
+        }
+        temparray = safe.split(',');
+        for (var t in temparray){
+            $('input[name="safe[]"][value="'+temparray[t]+'"]').prop('checked',true);
+        }
+        temparray = papers.split(',');
+        for (var t in temparray){
+            $('input[name="papers[]"][value="'+temparray[t]+'"]').prop('checked',true);
+        }
+        $('#setout').val("{$trip.set_id ?? ''}");
+        $('input[name="flick"][value="{$trip.apply_flick ??'0'}"]').prop('checked',true);
+        $('input[name="style"][value="{$trip.style ?? ''}"]').prop('checked',true);
+        $('input[name="exit_type"][value="{$trip.type ?? ''}"]').prop('checked',true);
+        $('input[name="mode"][value="{$trip.offer_type ?? ''}"]').prop('checked',true);
+        $('select[name="play"]').val("{$trip.play ?? '0'}");
+        $('select[name="contract"]').val("{$trip.contract ?? '0'}");
+//        var toolbars = [
+//            ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat'],
+//            ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc','simpleupload','insertimage']
+//        ];
+//        var recommend = UE.getEditor('desc', {
+//            toolbars: toolbars,
+//            initialFrameHeight: '200',
+//            initialFrameWidth: '600'
+//        });
+
+        $.jeDate("#starttime",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate: $.nowDate({DD:0}),
+        });
+        //Date.parse()
+        $.jeDate("#endtime",{
+            format:"YYYY-MM-DD",
+            isTime:false,
+            minDate: $.nowDate({DD:0}),
+
+        });
+        $('.line_change').click(lines_html); //线路修改
+        function lines_html() {
+            var page = $("#page").val();
+            var data = {page:page,exit:$('input[name="exit_type"]:checked').val()},host = document.domain;
+            $.get("{:url('Tourism/ajax_line')}",data,function (datas) {
+                var data = eval('('+datas+')');
+                var lines = data.data;
+                var html = '';
+                for(var l in lines){
+                    var line = lines[l];
+                    html += "<div class='line_show' style='float: left; width: 30%'><label><input type='radio' name='line' style='display: none;' value='"+ l +"' /><img src='//"+host+"/api.php/upload/handle.html?pic="+line.src+"&w=100&h=75' alt='"+line.name+"' style='float: left;'><span style='width:calc(100% - 100px);height: 75px;overflow: hidden;display: inline-block;'>"+line.name+"</span></label></div>";
+                }
+                art.dialog({
+                    title:'线路列表',
+                    content:html,
+                    width:"50%",
+                    height:"50%",
+                    ok:function () {
+                        var checkline = $('input[name="line"]:checked');
+                        if(checkline.length>0){
+                            var checkval = checkline.val();
+                            html = '<input type="hidden" name="lines" id="lines" value="'+lines[checkval].id+'"><div class="row"><div class="line_show"><img src="//'+ host + '/api.php/upload/handle.html?pic=' + lines[checkval].src +'&w=100&h=75" alt="'+ lines[checkval].name +'"><span>'+ lines[checkval].name +'</span></div></div>';
+                            $("#lineshow").html(html);
+                        }
+                    },
+                    close:function () {
+                        $("#page").val(1);
+                    },
+                    button:[
+                        {
+                            name:'上一页',
+                            callback:function () {
+                                $("#page").val(data.current_page -1);
+                                lines_html();
+                            }
+                        },
+                        {
+                            name:'下一页',
+                            callback:function () {
+                                $("#page").val(1 + parseInt(data.current_page));
+                                lines_html();
+                            }
+                        }
+                    ]
+                });
+            });
+        }
+        $('body').on('click','.line_show',function () {
+            $(this).css('border',"1px red solid").siblings().css('border','');
+        });
+        $('input[name="exit_type"]').on('change',function () {
+            $('#lineshow').html('');
+        });
+        $('input[name="mode"]').on('change',function () {
+            var mode = $(this).val();
+            if(mode == '2'){
+                $('#mode2').show();
+                $('#classic').hide();
+            }else {
+                $('#mode2').hide();
+                $('#classic').show();
+            }
+        });
+
+        $('.generate').click(generate); // 报价
+        function init_offer() {
+            var offer_mode = "{$trip.offer_type??'1'}";
+            var dayspay = "{:addslashes(!empty($trip.offer)? $trip.offer : '') }";
+            if(offer_mode == '2'){
+                $('#mode2').show();
+                $('#classic').hide();
+                $('#dayspay_mode2').val(dayspay);
+                generate_date_mode2();
+            }else {
+                $('#mode2').hide();
+                $('#classic').show();
+                $('#dayspay').val(dayspay);
+                generate_date();
+            }
+        }
+        init_offer();
+        // 设置每天报价
+        function generate() {
+            var start = $('#starttime').val(),
+                end = $('#endtime').val(),
+                adult = $('#adult').val() || 0,
+                adult_balance = $('#adult_balance').val() || 0,
+                children = $('#children').val() || 0,
+                children_balance = $('#children_balance').val() || 0,
+                stock = $('#stock').val() || 0,
+                data = {};
+            if(!start || !end){
+                alert('起始时间与结束时间都要填写');
+                return false;
+            }
+            if(isNaN(adult) || isNaN(children)){
+                alert('请对价格输入数字');
+                return false;
+            }
+            var timestamp_start = Date.parse(start),
+                timestamp_end = Date.parse(end);
+
+            if(timestamp_start > timestamp_end){
+                alert('起始时间不能晚与结束时间');
+                return false;
+            }
+            var checks = $('[name="week"]:checked'),weeks=new Array();
+            if(checks.length <=0){
+                weeks = [0,1,2,3,4,5,6];
+            }else {
+                for ( var c = 0; c< checks.length; c++ ){
+                    weeks[c] = parseInt( checks.eq(c).val() );
+                }
+            }
+            for(var time = timestamp_start; time <= timestamp_end; time += 86400000){
+
+                var is_true = $.inArray(new Date(time).getDay(),weeks);
+                if(is_true == -1){
+                    continue ;
+                }
+                data[datasng(time,'yyyyMMdd')] = {adult:adult,adult_balance:adult_balance,children:children,children_balance:children_balance,stock:stock};
+            }
+            $('#dayspay').val(JSON.stringify(data));
+            generate_date();
+        }
+        function generate_date() {
+            $("#generate_mod").hide();
+            var dayspay = $('#dayspay').val();
+            if(dayspay ==''){
+                return false;
+            }
+            var data = eval('('+dayspay+')');
+            var dateStr = '';
+            $("#generate_offer").html('');
+            $.jeDate("#offer",{
+                fixedCell: "generate_offer",
+                format:"YYYY-MM-DD",
+                isClear:false,                               //是否显示清空
+                isToday:false,                               //是否显示今天或本月
+                isok:false,                                  //是否显示确定按钮
+                dataval : true,
+                data:data,
+                isTime:false,
+                minDate: $.nowDate({DD:0}),
+                choosefun:function(elem, val, date) {
+                    dateStr = datasng(Date.parse($('#offer').val()),'yyyyMMdd');
+                    if(data[dateStr]){
+                        $("#generate_mod").show();
+                    }
+                    $('#adult_mod').val(data[dateStr].adult);
+                    $('#adult_balance_mod').val(data[dateStr].adult_balance);
+                    $('#children_mod').val(data[dateStr].children);
+                    $('#children_balance_mod').val(data[dateStr].children_balance);
+                    $('#stock_mod').val(data[dateStr].stock);
+                },
+            });
+            $('.day_del,.day_mod').unbind('click');
+            $('.day_del').on('click',function () {
+                delete data[dateStr];
+                $('#dayspay').val(JSON.stringify(data));
+                generate_date();
+            });
+            $('.day_mod').on('click',function () {
+                var adult = $('#adult_mod').val(),
+                    adult_balance = $('#adult_balance_mod').val(),
+                    children = $('#children_mod').val(),
+                    children_balance = $('#children_balance_mod').val(),
+                    stock = $('#stock_mod').val();
+                data[dateStr] = {adult:adult,adult_balance:adult_balance,children:children,children_balance:children_balance,stock:stock};
+                $('#dayspay').val(JSON.stringify(data));
+                generate_date();
+            });
+        }
+        $('.generate_mode2').click(generate_mode2); // 报价
+        // 报价模式二
+        function generate_mode2() {
+            var start = $('#starttime').val(),
+                end = $('#endtime').val(),
+                data = {};
+            //datasng(Date.parse(start),'yyyy-MM-dd')
+            //86400000
+            if(!start || !end){
+                alert('起始时间与结束时间都要填写');
+                return false;
+            }
+            var timestamp_start = Date.parse(start),
+                timestamp_end = Date.parse(end);
+
+            if(timestamp_start > timestamp_end){
+                alert('起始时间不能晚与结束时间');
+                return false;
+            }
+            var kind_ele = $('.kind'),
+                market_ele = $('.market'),
+                balance_ele = $('.balance'),
+                stock_ele = $('.stock'),
+                mode2 = {};
+            for(var i = 0; i < kind_ele.length; i++){
+                var kind = kind_ele.eq(i).val() || 0,
+                    market = market_ele.eq(i).val() || 0,
+                    balance = balance_ele.eq(i).val() || 0,
+                    stock = stock_ele.eq(i).val() || 0;
+                if(isNaN(market)){
+                    alert('市场价请输入数字');
+                    return false;
+                }
+                if(isNaN(balance)){
+                    alert('结算价请输入数字');
+                    return false;
+                }
+                if(isNaN(stock)){
+                    alert('库存请输入整数');
+                    return false;
+                }
+                mode2[i] = {kind:kind,market:market,balance:balance,stock:stock};
+            }
+            var html = generate_each(mode2);
+            $('#mode2_mod').html(html);// 添加修改编辑
+            var checks = $('[name="week"]:checked'),weeks=new Array();
+            if(checks.length <=0){
+                weeks = [0,1,2,3,4,5,6];
+            }else {
+                for ( var c = 0; c< checks.length; c++ ){
+                    weeks[c] = parseInt( checks.eq(c).val() );
+                }
+            }
+            for(var time = timestamp_start; time <= timestamp_end; time += 86400000){
+                var is_true = $.inArray(new Date(time).getDay(),weeks);
+                if(is_true == -1){
+                    continue ;
+                }
+                data[datasng(time,'yyyyMMdd')] = mode2;
+            }
+
+            $('#dayspay_mode2').val(JSON.stringify(data));
+            generate_date_mode2();
+        }
+        // 创建日期显示
+        function generate_date_mode2() {
+            $("#generate_mod_mode2").hide();
+            var dayspay = $('#dayspay_mode2').val();
+
+            if(dayspay ==''){
+                return false;
+            }
+            var data = eval('('+dayspay+')');
+            var dateStr = '';
+            $("#generate_offer_mode2").html('');
+            $.jeDate("#offer_mode2",{
+                fixedCell: "generate_offer_mode2",
+                format:"YYYY-MM-DD",
+                isClear:false,                               //是否显示清空
+                isToday:false,                               //是否显示今天或本月
+                isok:false,                                  //是否显示确定按钮
+                mode2val : true,
+                data:data,
+                isTime:false,
+                minDate: $.nowDate({DD:0}),
+                choosefun:function(elem, val, date) {
+                    dateStr = datasng(Date.parse($('#offer_mode2').val()),'yyyyMMdd');
+                    if(data[dateStr]){
+                        $("#generate_mod_mode2").show();
+                    }
+                    $('#mode2_mod').html(generate_each(data[dateStr]));
+                },
+            });
+            $('.day_mode2_del,.day_mode2_mod').unbind('click');
+            $('.day_mode2_del').on('click',function () {
+                delete data[dateStr];
+                $('#dayspay_mode2').val(JSON.stringify(data));
+                generate_date_mode2();
+            });
+            $('.day_mode2_mod').on('click',function () {
+                var market_ele = $('.mode2_market_mod'),
+                    balance_ele = $('.mode2_balance_mod'),
+                    stock_ele = $('.mode2_stock_mod'),
+                    mode2 = {};
+                for(var i = 0; i < market_ele.length; i++){
+                    var market = market_ele.eq(i).val() || 0,
+                        balance = balance_ele.eq(i).val() || 0,
+                        stock = stock_ele.eq(i).val() || 0;
+                    if(isNaN(market)){
+                        alert('市场价请输入数字');
+                        return false;
+                    }
+                    if(isNaN(balance)){
+                        alert('结算价请输入数字');
+                        return false;
+                    }
+                    if(isNaN(stock)){
+                        alert('库存请输入整数');
+                        return false;
+                    }
+                    mode2[i] = {kind:data[dateStr][i].kind,market:market,balance:balance,stock:stock};
+                }
+                data[dateStr] = mode2;
+                $('#dayspay_mode2').val(JSON.stringify(data));
+                generate_date_mode2();
+            });
+        }
+        // 添加每项报价的
+        function generate_each(mode2) {
+            var html = '';
+            for (var x in mode2){
+
+                html += generate_mod(mode2[x]);
+            }
+            return html;
+        }
+        // 添加日期时需要的修改项
+        function generate_mod(offer) {
+            var html = '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">'+offer.kind+'市场价</label>'+
+                '<div class="col-sm-6">'+
+                '<input type="text" class="form-control mode2_market_mod" value="'+offer.market+'" placeholder="修改'+offer.kind+'的市场价" />'+
+                '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">'+offer.kind+'结算价</label>'+
+                '<div class="col-sm-6">'+
+                '<input type="text" class="form-control mode2_balance_mod" value="'+offer.balance+'" placeholder="修改'+offer.kind+'的结算价" />'+
+                '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">'+offer.kind+'库存</label>'+
+                '<div class="col-sm-6">'+
+                '<input type="text" class="form-control mode2_stock_mod" value="'+offer.stock+'" placeholder="修改'+offer.kind+'的库存" />'+
+                '</div>'+
+                '</div>';
+            return html;
+        }
+        $('#add_mode2').on('click',function () {
+            $(this).parents('.form-group').before(add_mode2_type());
+        });
+        $('#mode2').on('click','.delete',function () {
+            $(this).parents('.form-group').remove();
+        });
+        // 添加票务种类方法
+        function add_mode2_type() {
+            var html = '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">'+
+                '<button type="button" class="delete">'+
+                '<i class="fa fa-close"></i>'+
+                '</button>'+
+                '</label>'+
+                '<div class="col-sm-6">'+
+                '<div class="row">'+
+                '<div class="col-sm-12">'+
+                '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">票务名称</label>'+
+                '<div class="col-sm-9">'+
+                '<input type="text" class="form-control kind" value="" placeholder="请输入票务名称 如：成人" />'+
+                '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">市场价</label>'+
+                '<div class="col-sm-9">'+
+                '<input type="text" class="form-control market" value="" placeholder="请输入市场价" />'+
+                '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">结算价</label>'+
+                '<div class="col-sm-9">'+
+                '<input type="text" class="form-control balance" value="" placeholder="请输入结算价" />'+
+                '<span>同行可查看价格</span>'+
+                '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label class="col-sm-3 control-label">库存</label>'+
+                '<div class="col-sm-9">'+
+                '<input type="text" class="form-control stock" value="" placeholder="请输入库存量" />'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>';
+            return html;
+        }
+        // 时间戳转换字符串
+        function datasng(sng,fmat)
+        {
+            // (new Date(parseInt(sng) * 1000))  把时间戳转换成时间对象。
+            return  (new Date(parseInt(sng))).format(fmat);
+        }
+
+        Date.prototype.format = function(format) {
+            var date = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S+": this.getMilliseconds()
+            };
+            if (/(y+)/i.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+            }
+            for (var k in date) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                        ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+                }
+            }
+            return format;
+        };
+        //补0函数
+        function digit(num) {
+            return num < 10 ? "0" + (num | 0) :num;
+        }
+    });
+</script>

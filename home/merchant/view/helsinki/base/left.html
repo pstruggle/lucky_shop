@@ -1,0 +1,96 @@
+<div class="left-sidebar">
+    <div class="left-sidebar-header">
+        <div class="left-sidebar-title">导航</div>
+        <div class="left-sidebar-toggle c-hamburger c-hamburger--htla hidden-xs" data-toggle-class="left-sidebar-collapsed" data-target="html">
+            <span></span>
+        </div>
+    </div>
+    <div id="left-nav" class="nano">
+        <div class="nano-content">
+            <nav>
+                <ul class="nav" id="main-nav">
+                    <li class="active-item sub-menu"><a href="{:url('Index/index')}"><i class="fa fa-home" aria-hidden="true"></i><span>首页</span></a></li>
+                    <li class="has-child-item close-item">
+                        <a><i class="fa fa-list" aria-hidden="true"></i><span>基本信息</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li><a href="{:url('Merchant/info')}">个人资料</a></li>
+                            <li><a href="{:url('Merchant/bill')}">账单</a></li>
+                        </ul>
+                    </li>
+                    {php}
+                    $manage = explode(',',empty($merchant['aptitude']['manage'])?'':$merchant['aptitude']['manage']);
+                    if(in_array('2',$manage)){
+                    {/php}
+                    <li class="has-child-item close-item">
+                        <a><i class="fa fa-shopping-bag" aria-hidden="true"></i><span>商城管理</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li><a href="{:url('Store/storelist')}">店铺管理</a></li>
+                            <li><a href="{:url('Goods/goodslist')}">商品管理</a></li>
+                            <li><a href="{:url('Orders/orderslist')}">订单管理</a></li>
+                            {php}/*<li><a href="{:url('Comment/commentlist')}">评论列表</a></li>*/{/php}
+                        </ul>
+                    </li>
+                    {php}
+                    }
+                    if(in_array('1',$manage)){
+                    {/php}
+                    <li class="has-child-item close-item">
+                        <a><i class="fa fa-street-view" aria-hidden="true"></i><span>旅游管理</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li><a href="{:url('Tourism/orders')}">订单列表</a></li>
+                            <li><a href="{:url('Tourism/destination')}">目的地</a></li>
+                            <li><a href="{:url('Tourism/setout')}">出发地</a></li>
+                            <li><a href="{:url('Tourism/line')}">线路</a></li>
+                            <li><a href="{:url('Tourism/trip')}">行程</a></li>
+                            <li><a href="{:url('Strategy/strategy_list')}">攻略列表</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-child-item close-item">
+                        <a><i class="fa fa-comments-o" aria-hidden="true"></i><span>问价</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li><a href="{:url('Ask/publish_list')}">发布列表</a></li>
+                        </ul>
+                    </li>
+                    {php}
+                    }
+                    if(in_array('3',$manage)){
+                    {/php}
+                    <li class="has-child-item close-item">
+                        <a><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span>旅游休闲卡</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li><a href="{:url('Arder/Arder_list')}">休闲卡列表</a></li>
+                            <li><a href="{:url('Arder/Arder_orders')}">休闲卡订单</a></li>
+                        </ul>
+                    </li>
+                    {php}
+                    }
+                    if(in_array('4',$manage)){
+                    {/php}
+                    <li class="has-child-item close-item">
+                        <a><i class="fa fa-ticket" aria-hidden="true"></i><span>门票管理</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li><a href="{:url('Ticket/piao_order')}">门票订单</a></li>
+                            <li><a href="{:url('Ticket/piao_list')}">景点门票</a></li>
+                        </ul>
+                    </li>
+                    {php}
+                    }
+                    if(in_array('5',$manage)){
+                    {/php}
+                    <li class="has-child-item close-item">
+                        <a><i class="fa fa-cc-visa" aria-hidden="true"></i><span>签证管理</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li><a href="{:url('Tourism/destination')}">目的地</a></li>
+                            <li><a href="{:url('Visa/visa_order')}">签证订单</a></li>
+                            <li><a href="{:url('Visa/visa_list')}">签证列表</a></li>
+                            <li><a href="{:url('Visa/visa_data')}">签证资料</a></li>
+                        </ul>
+                    </li>
+                    {php}
+                    }
+                    {/php}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

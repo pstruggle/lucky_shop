@@ -1,0 +1,92 @@
+{include file="base/artlog_header"}
+<div class="wrap">
+    <div class="page-body" style="padding: 0">
+        <div class="content" style="margin: 0;">
+            <div class="row animated fadeInUp">
+                <div class="col-sm-12">
+                    <!--<h4 class="section-subtitle"><b>Inline validation</b></h4>-->
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="inline-validation" class="form-horizontal form-stripe">
+                                        <div class="form-group">
+                                            <label for="store" class="col-sm-3 control-label">店铺名称<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="store" name="store" placeholder="请输入店铺名称" class="form-control" required value="{$store.store ?? ''}" />
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phones" class="col-sm-3 control-label">联系电话<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="phones" name="phones" placeholder="请输入联系电话" class="form-control" required value="{$store.phones ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="wechat" class="col-sm-3 control-label">微信号</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="wechat" name="wechat" placeholder="请输入微信号" class="form-control" value="{$store.wechat ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="qq" class="col-sm-3 control-label">QQ</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="qq" name="qq" placeholder="请输入QQ号" class="form-control" value="{$store.qq ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="highlights" class="col-sm-3 control-label">店铺亮点</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="highlights" name="highlights" placeholder="请输入店铺亮点" class="form-control" value="{$store.highlights ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="desc" class="col-sm-3 control-label">店铺描述</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="desc" name="desc" placeholder="请输入店铺描述" class="form-control" value="{$store.desc ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jingwei" class="col-sm-3 control-label">所在经纬度<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="jingwei" name="jingwei" placeholder="请选择经纬度" class="form-control" required value="{$store.jingwei ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">所在区域<span class="required">*</span></label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" required name="province" id="province"></select>
+                                                <select class="form-control" required name="city" id="city"></select>
+                                                <select class="form-control" required name="county" id="county"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address" class="col-sm-3 control-label">详细地址</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="address" name="address" placeholder="请输入详细地址" class="form-control" required value="{$store.address ?? ''}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="traffic"  class="col-sm-3 control-label">交通线路</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="traffic" name="traffic" placeholder="请输入交通线路" class="form-control init" value="{$store.traffic ?? ''}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/artlog_footer"}
+{load file="__PCAS__PCASClass.js"}
+<script>
+    $(function () {
+        new PCAS('province','city','county', "{$store.province ?? ''}","{$store.city ?? ''}","{$store.county ?? ''}"); //地址
+    })
+</script>

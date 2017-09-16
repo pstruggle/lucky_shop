@@ -1,0 +1,24 @@
+{include file="base/header" /}
+
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>手机号码</h1>
+</header>
+<div style="height:1rem;"></div>
+<form action="{:url('User/mod_info')}" id="mod_info">
+    <ul class="userForm">
+        <li>
+            <input type="text" value="{$userinfo.phone??''}" name="phone" id="phone" placeholder="修改手机号码"/>
+        </li>
+        <li><input type="button" value="更新保存" class="formLastBtn"/></li>
+    </ul>
+</form>
+{include file="base/footer" /}
+<script>
+    $(function(){
+        $('.formLastBtn').click(function(){
+            $("#mod_info").submit();
+        });
+    });
+</script>

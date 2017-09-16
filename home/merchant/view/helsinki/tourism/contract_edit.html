@@ -1,0 +1,65 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-columns" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>旅游合同编辑</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal form-stripe" action="{:url('Tourism/contractedit')}" id="form" method="post">
+                                <input type="hidden" name="act" value="{$act ?? 'add'}">
+                                <input type="hidden" name="id" value="{$contract.id ?? ''}">
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-3 control-label">合同名</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="title" name="title" placeholder="请输入合同名" class="form-control" required value="{$contract.title ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="key" class="col-sm-3 control-label">合同编号</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="key" name="key" placeholder="请输入编号" class="form-control" required value="{$contract.key ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content" class="col-sm-3 control-label">合同内容</label>
+                                    <div class="col-sm-6">
+                                        <textarea name="content" id="content">{$contract.content ?? ''}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+<script>
+    $(function() {
+        $("#form").validate(); //表单验证
+
+        var ue = UE.getEditor('content', {
+            toolbars: [
+                ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat'],
+                ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc','simpleupload','insertimage']
+            ],
+            initialFrameHeight: '500',
+            initialFrameWidth: '600'
+        });
+    });
+</script>

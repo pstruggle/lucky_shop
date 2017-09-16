@@ -1,0 +1,163 @@
+{include file="base/artlog_header" /}
+<aside class="sidebar canvas-left">
+    <nav class="main-navigation">
+        <ul>
+            <li>
+                <a href="javascript:;">
+                    <span>&nbsp;</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" id="print">
+                    <i class="fa fa-print"></i>
+                    <span>打印</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<section class="main-content">
+    <div class="content-wrap">
+        <div class="row">
+
+            <div class="col-md-12">
+                <section class="panel bg-none">
+                    <div class="text-center">
+                        {$trip.title??''}
+                    </div>
+                </section>
+            </div>
+            {if condition="strip_tags($trip.line.recommend) neq ''"}
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        产品经理推荐
+                    </header>
+                    <div class="panel-body demo">
+                        {:strip_tags($trip.line.recommend)}
+                    </div>
+                </section>
+            </div>
+            {/if}
+            {if condition="strip_tags($trip.line.feature) neq ''"}
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        行程特色
+                    </header>
+                    <div class="panel-body demo">
+                        {$trip.line.feature}
+                    </div>
+                </section>
+            </div>
+            {/if}
+            <div class="col-md-12">
+                <section class="panel panel-primary">
+                    <div class="panel-heading">行程安排</div>
+                    {if condition="$trip.line.type neq 1"}
+                    <ul class="list-group">
+                    {volist name="$trip.threads" id="thread" key="k"}
+                        <li class="list-group-item">
+                            <header class="panel-heading">
+                                <i class="m_day">D{$k}</i>
+                                <span>{$thread.title}</span>
+                            </header>
+                            <div class="show no-margin pd-t-xs">
+                                {$thread.desc}
+                            </div>
+                            <small class="text-muted">
+                                交通：{$thread.traffic ??''} | 就餐：{:meals(!empty($thread.meal)?$thread.meal:'')} | 住宿：{$thread.live??'无'} | 交通时长：{$thread.duration??'无'}
+                            </small>
+                        </li>
+                        {/volist}
+                    </ul>
+
+                    {else /}
+                    <div class="panel-body demo">
+                    {$trip.line.simple??''}
+                    </div>
+                    {/if}
+                </section>
+            </div>
+            {if condition="strip_tags($trip.line.contain) neq ''"}
+
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        费用包含
+                    </header>
+                    <div class="panel-body demo">
+                        {$trip.line.contain}
+                    </div>
+                </section>
+            </div>
+            {/if}
+            {if condition="strip_tags($trip.line.notcontain) neq ''"}
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        自理费用
+                    </header>
+                    <div class="panel-body demo">
+                        {$trip.line.notcontain}
+                    </div>
+                </section>
+            </div>
+            {/if}
+            {if condition="strip_tags($trip.line.visas) neq ''"}
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        签证/签注
+                    </header>
+                    <div class="panel-body demo">
+                        {$trip.line.visas}
+                    </div>
+                </section>
+            </div>
+            {/if}
+            {if condition="strip_tags($trip.line.notice) neq ''"}
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        预定须知
+                    </header>
+                    <div class="panel-body demo">
+                        {$trip.line.notice}
+                    </div>
+                </section>
+            </div>
+            {/if}
+            {if condition="strip_tags($trip.line.reminder) neq ''"}
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        温馨提示
+                    </header>
+                    <div class="panel-body demo">
+                        {$trip.line.reminder}
+                    </div>
+                </section>
+            </div>
+            {/if}
+        </div>
+    </div>
+
+    <div class="site-overlay">
+
+    </div>
+</section>
+{include file="base/foot" /}
+{load file="__PUBLIC__wordexport/FileSaver.js"}
+{load file="__PUBLIC__wordexport/jquery.wordexport.js"}
+<script>
+    $(function () {
+        $('#print').click(function (event) {
+            $('.main-navigation').hide();
+            window.print();
+            $('.main-navigation').show();
+
+        });
+    });
+</script>

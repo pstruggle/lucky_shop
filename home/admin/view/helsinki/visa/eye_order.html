@@ -1,0 +1,95 @@
+{include file="base/artlog_header"}
+<div class="wrap">
+    <div class="page-body" style="padding: 0">
+        <div class="content" style="margin: 0;">
+            <div class="row animated fadeInUp">
+                <div class="col-sm-12">
+                    <!--<h4 class="section-subtitle"><b>Inline validation</b></h4>-->
+                    <div class="panel">
+                        <div class="panel-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form action="{:url('Visa/editorder')}" id="inline-validation" class="form-horizontal form-stripe">
+                                        <input type="hidden" name="id" value="{$order.id??''}">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">订单号</label>
+                                            <div class="col-sm-6">
+                                                {$order.onumber ?? ''}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">签证信息</label>
+                                            <div class="col-sm-6">
+                                                <div class="form-control bg-success h">门票编号：{$order.vid}</div>
+                                                <div class="form-control bg-success h">行程标题：{$order.title}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">数量</label>
+                                            <div class="col-sm-6">
+                                                数量：{$order.num ?? '0'} | 单价：{$order.sell}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">支付状态</label>
+                                            <div class="col-sm-6">
+                                                {:pay_status($order.pay_status)}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">支付时间</label>
+                                            <div class="col-sm-6">
+                                                {$order.paytime | date="Y-m-d H:i:s",###}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">确认状态</label>
+                                            <div class="col-sm-6">
+                                                <select name="confirm" id="confirm" class="form-control">
+                                                    <option value="1">待确认</option>
+                                                    <option value="2">已确认</option>
+                                                    <option value="3">拒绝</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sumprice" class="col-sm-3 control-label">订单总金额</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="sumprice" name="sumprice" required value="{$order.sumprice ?? '0'}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">联系人信息</label>
+                                            <div class="col-sm-6">
+                                                <div class="form-control bg-success h">姓名：{$order.contact_name}</div>
+                                                <div class="form-control bg-success h">电话：{$order.contact_phone}</div>
+                                                <div class="form-control bg-success h">电子邮件：{$order.contact_email}</div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .h{
+        height: auto;
+    }
+</style>
+{include file="base/artlog_footer"}
+<script>
+    $(function(){
+        $('#confirm').val("{$order.confirm ?? '0'}");
+        var pay_status = '{$order.pay_status ?? ""}';
+        if(pay_status != '2'){
+            $('#confirm').attr('disabled','disabled');
+        }
+    });
+</script>

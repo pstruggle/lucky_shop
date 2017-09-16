@@ -1,0 +1,477 @@
+{include file="base/header" /}
+{load file="__INDEX__/css/detail.css" /}
+{load file="__INDEX__/css/flt_htl_h5.css" /}
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>选择日期和人数</h1>
+</header>
+<div style="height:1rem;"></div>
+
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div id="client_id_viewport_1_1497943629157">
+                <div data-node="pricecalendar">
+                    <div>
+                        <!--react-empty: undefined-->
+                        <div class="body for_bar">
+                            <div class="calendar_mod" id="calendar_mod">
+                            </div>
+                            <div class="set_date">
+                                <div class="hide set_date_time">
+                                    <input type="text" name="dates" id="dates" readonly>
+                                </div>
+                                <div class="set_date_dest">
+
+                                </div>
+                            </div>
+                            <!--react-empty: undefined-->
+                            <!--react-empty: undefined-->
+                            {if condition="$userinfo.type neq '0' and $trip.offer_type eq '1'"}
+                            <div class="show_s" style="display: none;">
+                                <div class="show_box">
+                                    {if condition="$userinfo.type eq 1 or $userinfo.type eq 2"}
+                                    <div class="set_price safe_b">
+                                        <div class="fl">
+                                            保险费单价：
+                                        </div>
+                                        <div class="fr">
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {if condition="$userinfo.type eq 3 or ( ($userinfo.type eq 1 or $userinfo.type eq 2) and $userinfo.clerk neq 1)"}
+                                    <div class="set_price audit_b">
+                                        <div class="fl">
+                                            成人结算价：
+                                        </div>
+                                        <div class="fr">
+                                            ￥{$trip.max_balance + sale_price($trip.maxprice,$trip.max_balance,getCache('take')['core_plus'])}元
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {if condition="$userinfo.type eq 2  or ($userinfo.type eq 1 and $userinfo.clerk eq 1)"}
+                                    <div class="set_price audit_o_b">
+                                        <div class="fl">
+                                            成人结算价：
+                                        </div>
+                                        <div class="fr">
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {if condition="$userinfo.type eq 3 or ( ($userinfo.type eq 1 or $userinfo.type eq 2 ) and $userinfo.clerk neq 1)"}
+                                    <div class="set_price child_b">
+                                        <div class="fl">
+                                            儿童结算价：
+                                        </div>
+                                        <div class="fr">
+                                            ￥{$trip.min_balance}元
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {if condition="$userinfo.type eq 2 or ($userinfo.type eq 1 and $userinfo.clerk eq 1)"}
+                                    <div class="set_price child_o_b">
+                                        <div class="fl">
+                                            儿童结算价：
+                                        </div>
+                                        <div class="fr">
+                                        </div>
+                                    </div>
+                                    {/if}
+                                </div>
+                            </div>
+                            {/if}
+                            <div class="set_num">
+                                <div class="select_num_box">
+                                    {if condition="$userinfo.type neq '0' and $trip.offer_type eq '1'"}
+                                    <div class="man_box">
+                                        <div class="fl">成人</div>
+                                        <div class="fr">
+                                            <div class="cm-num-adjust">
+                                                <span class="cm-adjust-minus js_num_minus ">
+                                                </span>
+                                                <span class="cm-adjust-view js_cur_num">1</span>
+                                                <span class="cm-adjust-plus js_num_plus ">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child_box">
+                                        <div class="fl">儿童</div>
+                                        <span class="age">
+                                        </span>
+                                        <div class="fr">
+                                            <div class="cm-num-adjust">
+                                                <span class="cm-adjust-minus js_num_minus">
+                                                </span>
+                                                <span class="cm-adjust-view js_cur_num">1</span>
+                                                <span class="cm-adjust-plus js_num_plus ">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                </div>
+                            </div>
+                            <footer class="detail_bottom" style="z-index: 99999; height:50px;">
+                                <div class="detail_bottom_box">
+                                    <span class="detail_calendar_price"> </span>
+                                    <span data-sk-eid="hy_ctr_tap_next" class="detail_btn_orange false">
+                                        继续预订<s>选择资源</s>
+                                    </span>
+                                </div>
+                            </footer>
+                        </div>
+                        <input type="hidden">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-state">
+        </div>
+    </div>
+</div>
+{include file="base/footer"}
+{load file="__PUBLIC__jedate/jquery.jedate.js" /}
+{load file="__PUBLIC__jedate/skin/jedate.css" /}
+<style>
+    .jedatebox{width: calc(100% - 2px);}
+    .jedateblue .jedatebot{ height:0;}
+    .set_date{background-color: #fff}
+</style>
+<script>
+    $(function(){
+        var data = eval('('+"{$trip.offer | addslashes}"+')');
+        var offer_type = "{$trip.offer_type ??'1' }",
+            dateStr = '',peoples = [];
+        $("#dates").jeDate({
+            isinitVal:false,
+            fixedCell: "calendar_mod",
+        {if condition="$trip.offer_type eq 2"}
+        mode2val: true,
+        {else /}
+        dataval : true,
+        {/if}
+            isok:false,
+            isClear:false,
+            isToday:false,
+            data : data,
+            minDate:  $.nowDate(0),
+            format:"YYYY-MM-DD",
+            zIndex:3000,
+            choosefun:function(elem, val, date) {
+                $('.set_date_time').removeClass('hide');
+                if(offer_type == '2'){
+                    $('.set_date').siblings('.show_s').remove();
+                    dateStr = datasng(Date.parse($('#dates').val()),'yyyyMMdd');
+                    mode2_show(data[dateStr]);
+                    prices_mode2();
+                }else {
+                    $('.body .show_s').show();
+                    prices();
+                }
+//                $('.set_date_dest').text('出发');
+            },
+        });
+        //继续下一步
+        $('.detail_btn_orange').on('click',function () {
+            var dates = $('#dates').val();
+            if(!dates){
+                alert('请选择您要出行的时间！');
+                return ;
+            }
+            if(offer_type == '2'){
+                var hrefStr = '';
+                for (var x = 0; x < peoples.length; x++){
+                    hrefStr += '&po[]='+peoples[x]
+                }
+                var url = "{:url('Index/confirm')}"+'?pid={$trip.id}&dates='+dates +hrefStr;
+                location.href = url;
+            }else {
+                var man = $('.man_box .js_cur_num').text(),
+                    child = $('.child_box .js_cur_num').text();
+                if(man <= '0' && child <= '0'){
+                    alert('出行人数必须有一个');
+                    return ;
+                }
+                var url = "{:url('Index/confirm')}"+'?pid={$trip.id}&dates='+dates +'&man='+man+'&child='+child;
+                location.href = url;
+            }
+
+        });
+        //数量的增加,金额的计算
+        $('.man_box .js_num_minus').on('click',function () {
+            var num = $('.man_box .js_cur_num').text();
+            num = parseInt(num);
+            if(isNaN(num)){
+                num = 0;
+            }
+            num -= 1;
+            if(num <= 0){
+                num = 0;
+                $(this).addClass('disabled');
+                $('.man_box .js_cur_num').text(0);
+            }
+            $('.man_box .js_cur_num').text(num);
+            prices();
+        });
+        $('.man_box .js_num_plus:not(".disabled")').on('click',function () {
+            var num = $('.man_box .js_cur_num').text();
+            num = parseInt(num);
+            if(isNaN(num)){
+                num = 0;
+            }
+            num += 1;
+
+            if(num > 0){
+                $('.man_box .js_num_minus').removeClass('disabled');
+            }
+            $('.man_box .js_cur_num').text(num);
+            prices();
+        })
+        $('.child_box .js_num_minus').on('click',function () {
+            var num = $('.child_box .js_cur_num').text();
+            num = parseInt(num);
+            if(isNaN(num)){
+                num = 0;
+            }
+            num -= 1;
+            if(num <= 0){
+                num = 0
+                $(this).addClass('disabled');
+                $('.child_box .js_cur_num').text(0);
+            }
+            $('.child_box .js_cur_num').text(num);
+            prices();
+        });
+        $('.child_box .js_num_plus:not(".disabled")').on('click',function () {
+            var num = $('.child_box .js_cur_num').text();
+            num = parseInt(num);
+            if(isNaN(num)){
+                num = 0;
+            }
+            num += 1;
+            if(num > 0){
+                $('.child_box .js_num_minus').removeClass('disabled');
+            }
+            $('.child_box .js_cur_num').text(num);
+            prices();
+        });
+        var days = "{$trip.line.days??'0'}",type="{$trip.type??'1'}";
+        var domestic_safe_price = [[1,1,1.5],[2,2,2],[3,3,2.5],[4,7,3.5],[8,15,6],[16,30,12]];
+        var exit_safe_price = [[4,7,12],[8,15,30],[16,30,50]];
+        var safe = 0;
+        if(type == '1'){
+            for (var x in domestic_safe_price){
+                if (domestic_safe_price[x][0] <= days && days <=domestic_safe_price[x][1]){
+                    safe = domestic_safe_price[x][2];
+                    break;
+                }
+            }
+        }else {
+            for (var x in exit_safe_price){
+                if (exit_safe_price[x][0] <= days && days <=exit_safe_price[x][1]){
+                    safe = exit_safe_price[x][2];
+                    break;
+                }
+            }
+        }
+        //经典模式的价格计算
+        function prices() {
+            if(!$('#dates').val()){
+                alert('请选择出行日期');
+                return ;
+            }
+            var dates = datasng(Date.parse($('#dates').val()),'yyyyMMdd');
+            var price = data[dates];
+            if(price['stock']<=0){
+                alert('今天行程没有库存啦！');
+                return;
+            }
+            var take = parseFloat("{$userinfo.type == '3'?'0':($userinfo.clerk == '1'?getCache('take')['core_take']:getCache('take')['salesman_take'])}"), //操作费用
+                core_plus = parseFloat("{:getCache('take')['core_plus']}"),//  结算价上调比例
+                adult_balance = plus_cost(price.adult_balance,core_plus),
+                child_balance = plus_cost(price.children_balance,core_plus),
+                op_audit = op_cost(adult_balance,take),
+                op_children = op_cost(child_balance,take);
+            $('.safe_b .fr').text("￥" + safe);
+            $('.op_audit_b .fr').text("￥" + op_audit);
+            $('.op_child_b .fr').text("￥" + op_children);
+            $('.audit_b .fr').text("￥" + price.adult_balance);
+            $('.child_b .fr').text("￥" + price.children_balance);
+            $('.audit_o_b .fr').text("￥" + price.adult_balance);
+            $('.child_o_b .fr').text("￥" + price.children_balance);
+            var mans = $('.man_box .js_cur_num').text(),
+                childs = $('.child_box .js_cur_num').text(),
+                man_price = toFixed2(price.adult_balance,mans),
+                child_price = toFixed2(price.children_balance,childs),
+                man_safe_price = toFixed2(safe,mans),
+                childs_safe_price = toFixed2(safe,childs),
+                sum = (man_price  + child_price + man_safe_price + childs_safe_price).toFixed(2);
+            $('.detail_calendar_price').text('总额：￥'+sum);
+        }
+        //自定义报价
+        function prices_mode2() {
+            if(!$('#dates').val()){
+                alert('请选择出行日期');
+                return ;
+            }
+            var dates = datasng(Date.parse($('#dates').val()),'yyyyMMdd');
+            var price = data[dates];
+
+            var take = parseFloat("{$userinfo.type == '3'?'0':($userinfo.clerk == '1'?getCache('take')['core_take']:getCache('take')['salesman_take'])}"),
+                core_plus = parseFloat("{:getCache('take')['core_plus']}");//  结算价上调比例
+            var sum = 0;
+            var js_cur_num = $('.js_cur_num');
+            for (var x = 0; x < js_cur_num.length; x++){
+                peoples[x] = js_cur_num.eq(x).text();
+                sum += toFixed2(price[x].balance,peoples[x]) + toFixed2(safe,peoples[x]);
+
+
+            }
+            $('.detail_calendar_price').text('总额：￥'+sum);
+        }
+        // 自定义报价显示
+        function mode2_show(offer){
+            var html = '<div class="show_s">'+
+                '<div class="show_box">'
+            {if condition="$userinfo.type eq 3 or ( ($userinfo.type eq 1 or $userinfo.type eq 2) and $userinfo.clerk neq 1)"}
+                    +'<div class="set_price">'+
+                    '<div class="fl">'+
+                    '保险费单价：'+
+                    '</div>'+
+                    '<div class="fr">'+
+                    '￥'+safe+'元'+
+                    '</div>'+
+                    '</div>'
+                {/if};
+            var select_box = '';
+            var take = parseFloat("{$userinfo.type == '3'?'0':($userinfo.clerk == '1'?getCache('take')['core_take']:getCache('take')['salesman_take'])}"),
+                core_plus = parseFloat("{:getCache('take')['core_plus']}");
+            for (var x in offer){
+                var balance = plus_cost(offer[x].balance,take),
+                    op = op_cost(balance,core_plus);
+                html +=
+                    {if condition="$userinfo.type eq 1 and $userinfo.clerk neq 1"}
+                    '<div class="set_price">'+
+                    '<div class="fl">'+
+                    offer[x].kind + '操作费：'+
+                    '</div>'+
+                    '<div class="fr">'+
+                    '￥'+op+'元'+
+                    '</div>'+
+                    '</div>' +'<div class="set_price">'+
+                    '<div class="fl">'+
+                    offer[x].kind + '结算价：'+
+                    '</div>'+
+                    '<div class="fr">'+
+                    '￥'+balance+'元'+
+                    '</div>'+
+                    '</div>'
+                {else /}
+                ''
+                {/if}
+                {if condition="$userinfo.type eq 3 or ( ($userinfo.type eq 1 or $userinfo.type eq 2) and $userinfo.clerk neq 1)"}
+                    +'<div class="set_price">'+
+                    '<div class="fl">'+
+                    offer[x].kind + '结算价：'+
+                    '</div>'+
+                    '<div class="fr">'+
+                    '￥'+offer[x].balance+'元'+
+                    '</div>'+
+                    '</div>'
+                {/if};
+                select_box += '<div class="man_box">'+
+                    '<div class="fl">'+offer[x].kind+'</div>'+
+                    '<div class="fr">'+
+                    '<div class="cm-num-adjust">'+
+                    '<span class="cm-adjust-minus js_mode2_minus ">'+
+                    '</span>'+
+                    '<span class="cm-adjust-view js_cur_num">1</span>'+
+                    '<span class="cm-adjust-plus js_mode2_plus ">'+
+                    '</span>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+            }
+            html += '</div>'+ '</div>';
+            $('.set_date').after(html);
+            $('.select_num_box').html(select_box);
+        }
+        // 增加
+        $('.select_num_box').on('click','.js_mode2_plus',function(){
+            var elm = $(this).siblings('.js_cur_num');
+            var num = parseInt(elm.text());
+            num ++;
+            if(num > 0){
+                $(this).siblings('.js_mode2_minus').removeClass('disabled');
+            }
+            elm.text(num);
+            prices_mode2()
+        });
+        // 减少
+        $('.select_num_box').on('click','.js_mode2_minus',function(){
+            var elm = $(this).siblings('.js_cur_num');
+            var num = parseInt(elm.text());
+            num --;
+            if(num <= 0){
+                num = 0;
+                $(this).addClass('disabled');
+            }
+            elm.text(num);
+            prices_mode2()
+        });
+        // 时间戳转换字符串
+        function datasng(sng,fmat)
+        {
+            // (new Date(parseInt(sng) * 1000))  把时间戳转换成时间对象。
+            return  (new Date(parseInt(sng))).format(fmat);
+        }
+
+        Date.prototype.format = function(format) {
+            var date = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S+": this.getMilliseconds()
+            };
+            if (/(y+)/i.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+            }
+            for (var k in date) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                        ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+                }
+            }
+            return format;
+        };
+        //抽成比例
+        function balance(balance) {
+//            var bl = parseFloat("{:getCache('take')['s_take']}");
+            var bl = 0;
+            return (parseFloat(balance) + parseFloat(balance * bl / 100)).toFixed(2);
+        }
+        // 抽成总数
+        function toFixed2(val,peo) {
+            return parseFloat((parseFloat(balance(val)) * parseFloat(peo)).toFixed(2));
+        }
+        //操作费
+//        function op_cost(market,balance,take) {
+//            return parseFloat ((( parseFloat(market) - parseFloat(balance) ) * parseFloat(take) / 100).toFixed(2));
+//        }
+        function op_cost(balance,take) {
+            return Math.ceil(parseFloat ((( parseFloat(balance) ) * parseFloat(take) / 100).toFixed(2)));
+        }
+        function plus_cost(balance,take){
+            return Math.ceil(parseFloat(balance) + op_cost(balance,take))
+        }
+        //总操作费
+        function op_sum_cost(cost,num) {
+            return cost * num;
+        }
+        // cur
+    });
+</script>

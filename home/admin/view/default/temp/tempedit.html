@@ -1,0 +1,83 @@
+{include file="base/header" /}
+<div class="container-fluid">
+    <div class="row">
+        <div class="ernav clearfix">
+            <ul>
+                <li class=""><a href="{:url('Temp/templist')}">模板列表</a></li>
+                <li class="on"><a href="{:url('Temp/tempedit')}">添加（修改）模板</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <form  action="{:url('Temp/tempedit')}" id="formq" method="post">
+                <div class="hidden" id="hidden">
+                    <input type="hidden" id="hiddentext"  name="hidden" >
+                </div>
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th><label for="type">模板类型：</label></th>
+                        <td>
+                            <input type="text" id="type" name="type" validate="required" placeholder="请输入模板类型" class="form-control init">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="content">模板内容：</label></th>
+                        <td>
+                            <textarea class="form-control init" rows="3" id="content" name="content"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>空1表单类型：</th>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="input['type'][0]" id="inputype1" value="time">时间类型
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="input['type'][0]" id="inputype2" value="number">数值类型
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="input['type'][0]" id="inputype3" value="text">文本类型
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="input['type'][0]" id="inputype4" value="select" validate="required">选择类型
+                            </label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="info1">空1表单信息：</label></th>
+                        <td>
+                            <input type="text" id="info1" name="input['info'][0]" validate="required" placeholder="请输入第1个空的表单提示" class="form-control init">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="desc1">空1表单描述：</label></th>
+                        <td>
+                            <input type="text" id="desc1" name="input['desc'][0]" validate="required" placeholder="请输入第1个空的表单描述" class="form-control init">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="weight">模板排序：</label></th>
+                        <td>
+                            <input type="text" id="weight" name="weight" validate="required" placeholder="模板排序" class="form-control init"><span>数字越大越在前</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <input type="submit" name="submit"  id="submit" />
+                            <!--<input type="file" name="upfile" multiple onchange="alert(this.value);" id="upfile" accept="image/*" />-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function(){
+        
+    });
+</script>

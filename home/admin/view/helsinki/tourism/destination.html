@@ -1,0 +1,122 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>目的列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('tourism/destination',['style'=>'1'])}">境内目的地</a>
+                <a href="{:url('tourism/destination',['style'=>'2'])}">境外目的地</a>
+                {php}/*
+                <a href="{:url('tourism/destination',['status'=>'1'])}">待审核目的地</a>
+                */{/php}
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>添加商户</th>
+                                            <th>目的地</th>
+                                            <th>目的地类型</th>
+                                            <th>状态</th>
+                                            <th>添加时间</th>
+                                            <th>排序</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {if condition="!isset($dests)"}
+                                        {:destinationShow($destinations)}
+                                        {else /}
+                                        {volist name="dests" id="dest"}
+                                        <tr>
+                                            <td>{$dest.id}</td>
+                                            <td>
+                                                商户号：{$dest.mid}<br />
+                                                商户名：{$dest.name}
+                                            </td>
+                                            <td>{$dest.destination}</td>
+                                            <td>{$dest.style=='1'?'境内目的地':'境外目的地'}</td>
+                                            <td>{$dest.status == '1'?'待审核':'已审核'}</td>
+                                            <td>{$dest.addtime | date="Y-m-d H:i:s",###}</td>
+                                            <td>{$dest.weight}</td>
+                                            <td>
+                                                <div class='btn-group btn-group-xs'>
+                                                    <button class='btn btn-transparent'>
+                                                        <a href="javascript:void (0);" _href="{:url('Tourism/eye_dest',['id'=>$dest['id']])}"  title="查看" class="artlog">
+                                                            <i class='fa fa-eye'></i>
+                                                        </a>
+                                                    </button>
+                                                    <button class='btn btn-transparent'>
+                                                        <a href="{:url('Tourism/editdest',['act'=>'adopt','id'=>$dest['id']])}" title="通过">
+                                                            <i class='fa fa-check-circle'></i>
+                                                        </a>
+                                                    </button>
+                                                    <button class='btn btn-transparent'>
+                                                        <a href="{:url('Tourism/editdest',['act'=>'notgo','id'=>$dest['id']])}" title="不通过">
+                                                            <i class='fa fa-ban'></i>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        {/if}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page??''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+        /*$('.dest').click(function () {
+            var id = $(this).data('id');
+            var level = $(this).data('level')+1;
+            $('.dest-'+id+'-'+level).toggle();
+        });*/
+        $('.dest').click(destToggle);
+        function destToggle() {
+            var id = $(this).data('id');
+            var level = $(this).data('level')+1;
+            $('.dest-'+id+'-'+level).toggle(100);
+            $('.dest-'+id+'-'+level).find('.dest').each(destToggle)
+        }
+    });
+</script>

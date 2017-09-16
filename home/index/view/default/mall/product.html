@@ -1,0 +1,69 @@
+{include file="base/header" /}
+
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>产品详情</h1>
+    <a href="{:url('Mall/cart')}" class="topCart"><em>{$cartnum ?? '0'}</em></a>
+</header>
+<div style="height:1rem;"></div>
+<div class="pro_bigImg">
+    <img src="{$good.pic}"/>
+</div>
+<!--base information-->
+<section class="pro_baseInfor">
+    <h2>{$good.tradename}</h2>
+    <p>
+        <strong>{$good.ingprice}</strong>
+        <del>{$good.oriprice}</del>
+    </p>
+</section>
+<!--product attr-->
+<!--<dl class="pro_attr">
+    <dt>产品属性信息</dt>
+    <dd>
+        <ul>
+            <li>
+                <span>上市时间</span>
+                <em>2015年09月</em>
+            </li>
+            <li>
+                <span>产品规格</span>
+                <em>1斤装</em>
+            </li>
+            <li>
+                <span>产品重量</span>
+                <em>0.5kg</em>
+            </li>
+            <li>
+                <span>包装方式</span>
+                <em>散装</em>
+            </li>
+            <li>
+                <span>保质期</span>
+                <em>6个月</em>
+            </li>
+            <li>
+                <span>所属品牌</span>
+                <em>三星</em>
+            </li>
+        </ul>
+    </dd>
+</dl>-->
+<div>
+    {$good.details}
+</div>
+<!--bottom nav-->
+<aside class="btmNav" style="margin-bottom: 50px;">
+    <a style="background:#64ab5b;color:white;text-shadow:none;" class="addToCart" data-gid="{$good.id}">加入购物车</a>
+    <a style="background:#87a983;color:white;text-shadow:none;">加入常购单</a>
+</aside>
+{include file="base/footer" /}
+<script>
+    $(document).ready(function(){
+        //效果测试，程序对接可将其删除
+        $(".btmNav a:first").click(function(){
+            $(".topCart em").html(parseInt($(".topCart em").html())+1);
+        });
+    });
+</script>

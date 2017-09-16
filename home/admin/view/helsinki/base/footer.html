@@ -1,0 +1,35 @@
+{include file="base/right" /}
+</div>
+</div>
+{load file="__JQUERY__jquery-2.0.0.min.js"}
+{load file="__BOOTSTRAP__bootstrap.min.js"}
+<script src="__HELSINKI__vendor/nano-scroller/nano-scroller.js"></script>
+<script src="__HELSINKI__javascripts/template-script.min.js"></script>
+<script src="__HELSINKI__javascripts/template-init.min.js"></script>
+<script src="__HELSINKI__vendor/toastr/toastr.min.js"></script>
+<script src="__HELSINKI__vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+{load file="__ARTDIALOG4.1.7__skins/aero.css"}
+{load file="__ARTDIALOG4.1.7__artDialog.js"}
+{load file="__ARTDIALOG4.1.7__plugins/iframeTools.source.js"}
+{load file="__JQUERY__jquery.cookie.js"}
+{load file="__HELSINKI__javascripts/left_nav.js"}
+<script>
+    $(function () {
+        $('.artlog').click(function(){
+            var url = $(this).attr('_href'),
+                title = $(this).text();
+            var list = art.dialog.list;
+            for (var i in list) {
+                list[i].close();
+            };
+            art.dialog.open(url,
+                {'title':title,
+                    'width':'60%',
+                    'height':'60%',
+                });
+        });
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{volist name="tickets" id="ticket"}
+<li class="itemcontainer " data-pinfo="pid={$ticket.id}" data-track="true">
+    <div class="tour_img">
+        <img class="img_animation" src="{:img_url($ticket.pic,80,80)}">
+        <span class="tour_type type_team">{$ticket.open_time}</span>
+        <span class="tour_start">景点门票</span>
+    </div>
+    <div class="tour_content singleitem" pid="{$ticket.id}" data-load="true">
+        <h3 class="">{$ticket.title}</h3>
+        <div class="tour_icon"></div>
+        <!--<div class="supplier_date">
+            <span class="supplier">{$ticket.name}</span>
+        </div>-->
+        <div class="tour_fbd" data-temp="0">
+            <span class="tour_price"><dfn>￥</dfn><strong>{$ticket.maxprice}</strong></span>
+        </div>
+        <div class="tour_info">
+            <!--<span class="tour_dealer">
+                <i class="green">商户</i>
+                <em>{$ticket.name}</em>
+            </span>-->
+            <span class="tour_point">
+                <strong></strong>
+            </span>
+            <span class="tour_num hidden">人出游</span>
+        </div>
+        <div class="guess_money" style="display:none" data-ratio="" data-commission=""></div>
+        <i class="tour_pop notgo"></i>
+        <div class="tour_pop_box notgo" style="display: none">
+            <div class="tour_pop_type" data-params="pid={$ticket.id}">
+            </div>
+            <span class="tour_collect_container"><span class="tour_collect notgo">收藏</span></span>
+            <i class="tour_close notgo"></i>
+        </div>
+    </div>
+</li>
+{/volist}

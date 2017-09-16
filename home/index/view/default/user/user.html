@@ -1,0 +1,59 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>个人中心</h1>
+    <a href="{:url('User/user_set')}" class="iconfont setIcon">&#42;</a>
+</header>
+<div style="height:1rem;"></div>
+<div class="userInfor">
+    <a class="userIcon"><img src="{$userinfo.headimg}"/></a>
+    <h2>{$userinfo.nickname}</h2>
+</div>
+<ul class="userList">
+    <li><a href="javascript:alert('查看订单请点订单管理！')" class="orderListIcon">等待添加</a></li>
+    <li><a href="{:url('Index/order_list')}" class="shopListIcon">订单管理</a></li>
+    <li><a href="{:url('Mall/cart')}" class="collectionIcon">购物车</a></li>
+    <li><a href="{:url('User/user_set')}" class="profileIcon">账户管理</a></li>
+</ul>
+<ul class="inforList">
+    <li>
+        <a href="{:url('Ask/message_list')}" class="isNext">
+            <span>消息</span>
+            <span>{$userinfo.integral??'0'}</span>
+        </a>
+    </li>
+    <li>
+        <a href="{:url('User/integrals')}" class="isNext">
+            <span>会员积分</span>
+            <span>{$userinfo.integral??'0'}</span>
+        </a>
+    </li>
+    {if condition="$userinfo.type neq 0"}
+    <!--<li>-->
+        <!--<a href="" class="isNext">-->
+            <!--我的推广-->
+        <!--</a>-->
+    <!--</li>-->
+    {else/}
+    <li>
+        <a href="{:url('User/apply')}" class="isNext">
+            旅游顾问申请
+        </a>
+    </li>
+    <li>
+        <a href="{:url('User/store_apply')}" class="isNext">
+            门店申请
+        </a>
+    </li>
+    {/if}
+    {if condition = "$userinfo.clerk == '9'"}
+    <li>
+        <a href="{:url('User/gets')}" class="isNext">
+            业务员收益
+        </a>
+    </li>
+
+    {/if}
+</ul>
+{include file="base/footer" /}

@@ -1,0 +1,68 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-columns" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>目的地添加</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal form-stripe" action="{:url('Tourism/destedit')}" id="form" method="post">
+                                <input type="hidden" name="act" value="{$act ?? 'add'}">
+                                <input type="hidden" name="did" value="{:input('did')}">
+
+                                <div class="form-group">
+                                    <label for="destination" class="col-sm-3 control-label">目的地<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="destination" name="destination" placeholder="请输入目的地" class="form-control" required value="{$dest.destination ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="style" class="col-sm-3 control-label">目的地类型<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" required name="style" id="style">
+                                            <option value="1">境内目的地</option>
+                                            <option value="2">境外目的地</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {php}/*
+                                <div class="form-group">
+                                    <label for="pid" class="col-sm-3 control-label">父目的地<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" required name="pid" id="pid">
+                                            <option value="0">顶级目的地</option>
+                                            {:dests($destinations)}
+                                        </select>
+                                    </div>
+                                </div>
+                                */{/php}
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+<script>
+    $(function() {
+        $('[name="style"]').val("{$dest.style ?? '1'}");
+        {php}/*
+        $('[name="pid"]').val("{$dest.pid ?? '0'}");
+        */{/php}
+    });
+</script>

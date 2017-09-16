@@ -1,0 +1,113 @@
+{include file="base/header" /}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="ernav clearfix">
+            <ul>
+                <li><a href="{:url('Store/storelist')}">门店列表</a></li>
+                <li class="on"><a href="{:url('Store/storeedit')}">添加门店</a></li>
+            </ul>
+        </div>
+        <div class="content">
+
+            <form  action="{:url('Store/storeedit')}" id="formq" method="post">
+                <div class="hidden" id="hidden">
+                    <input type="hidden" name="act" value="{$act}" >
+                    <input type="hidden" name="sid" value="{$sid}" >
+                </div>
+                <table class="form-table grouping" id="tag_0" name="tag_0">
+                    <tbody>
+                    <tr>
+                        <th><label for="store">店铺名称：</label></th>
+                        <td>
+                            <input type="text" id="store" name="store" validate="required" placeholder="请输入店铺名称" class="form-control init" value="{$store.store ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="phones">联系电话：</label></th>
+                        <td>
+                            <input type="text" id="phones" name="phones" placeholder="请输入联系电话" class="form-control init" value="{$store.phones ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="wechat">微信号：</label></th>
+                        <td>
+                            <input type="text" id="wechat" name="wechat" placeholder="请输入微信号" class="form-control init" value="{$store.wechat ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="qq">QQ：</label></th>
+                        <td>
+                            <input type="text" id="qq" name="qq" placeholder="请输入QQ号" class="form-control init" value="{$store.qq ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="highlights">店铺亮点：</label></th>
+                        <td>
+                            <input type="text" id="highlights" name="highlights" placeholder="请输入店铺亮点" class="form-control init" value="{$store.highlights ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="desc">店铺描述：</label></th>
+                        <td>
+                            <input type="text" id="desc" name="desc" placeholder="请输入店铺描述" class="form-control init" value="{$store.desc ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="jingwei">经纬度：</label></th>
+                        <td>
+                            <input type="text" id="jingwei" name="jingwei" validate="required" placeholder="请选择经纬度" class="form-control init" value="{$store.jingwei ?? ''}" /><span><a href="javascript:void (0);" _href="{:url('Store/map')}" class="artlog">请选择经纬度</a></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所在区域：</th>
+                        <td>
+                            <select class="form-control init" validate="required" id="province" name="province"></select>
+                            <select class="form-control init" validate="required" id="city" name="city"></select>
+                            <select class="form-control init" validate="required" id="county" name="county"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="address">详细地址：</label></th>
+                        <td>
+                            <input type="text" id="address" name="address" placeholder="请输入详细地址" class="form-control init" value="{$store.address ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="traffic">交通线路：</label></th>
+                        <td>
+                            <input type="text" id="traffic" name="traffic" placeholder="请输入交通线路" class="form-control init" value="{$store.traffic ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="weight">排序：</label></th>
+                        <td>
+                            <input type="text" id="weight" name="weight" placeholder="数字越大越在前" class="form-control init" value="{$store.weight ?? ''}" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="subtn-c"><input type="submit" name="submit"  id="submit" class="btn btn-default" /></div>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+
+    $(function() {
+        new PCAS('province','city','county', "{$store.province ?? ''}","{$store.city ?? ''}","{$store.county ?? ''}"); //地址
+        $("#formq").validate(); //表单验证
+        $('.sannav>ul>li>a').click(function () {
+            var href = $(this).attr('href');
+            $(this).parent().addClass('on').siblings().removeClass('on');
+            $(href).css('display', '').siblings('.grouping').css('display', 'none');
+        });
+//        var up = new Upload('navpic', {}, "{$goods.navpic ?? ''}");
+        $('select[name="status"]').val("{$goods.status ?? '1'}");
+        $('select[name="malltype"]').val("{$goods.malltype ?? ''}");
+        $('input[name="freightway"][value="{$goods.freightway ?? '1'}"]').prop('checked',true);
+    });
+
+
+</script>

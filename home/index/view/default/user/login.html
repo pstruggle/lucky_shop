@@ -1,0 +1,85 @@
+{include file="base/header" /}
+
+<section class="formLogo">
+    <a href="{:url('Index/index')}" style="display: block;">
+        <img src="{$cache_config.web_logo ??'/favicon.ico'}" alt="小惠猫旅游平台" style="width: 100px; margin: 40px auto;display: block;">
+    </a>
+</section>
+<form action="{:url('User/chacklogin')}" method="post" id="login">
+    <input type="hidden" name="url" value="{:input('url')}">
+    <ul class="formarea">
+        <li>
+            <label class="lit">账号：</label>
+            <input type="text" name="phone" id="phone" placeholder="手机号码" class="textbox"/>
+        </li>
+        <li>
+            <label class="lit">密码：</label>
+            <input type="password" name="passwd" id="passwd" placeholder="登陆密码" class="textbox"/>
+        </li>
+        <li>
+            <label class="lit">验证码：</label>
+            <input type="text" placeholder="验证码" id="CheckCode" name="CheckCode"  class="textbox"/>
+            <img src="{:captcha_src()}" border="0" class="verifyimg" />
+        </li>
+        <li class="liLink lg_liLink">
+            <!--<span><label><input type="checkbox"/>记住密码</label></span>-->
+            <span><a href="{:url('user/register')}">新用户注册</a></span>
+            <span><a href="{:url('user/find_pwd')}">忘记密码?</a></span>
+        </li>
+        <li>
+            <input type="button" class="sublog" value="立即登陆"/>
+        </li>
+    </ul>
+</form>
+
+{include file="base/footer" /}
+<script>
+    window._src = $('.verifyimg').attr('src');
+    $(function () {
+        var chackUrl = "{:url('User/checkcode')}";
+        var is = 1;
+        $('.sublog').click(function () {
+            if(is == 1){
+                $('#login').submit();
+            }
+        });
+        $('#CheckCode').blur(checkCode);
+
+        $('.verifyimg').click(switchCode);
+        //	验证验证码
+        function checkCode() {
+            var code = $('#CheckCode').val(),
+                msgs = '';
+            if(code == null || code == ""){
+                //提示错误
+                is = 0;
+                alert("验证码不能为空");
+                return false;
+            }else {
+                is = 1;
+            }
+            $.ajaxSetup({'async':false});
+            $.get(chackUrl,{'code':code},function(msg){
+                msgs = eval('('+msg+')');
+            });
+            if(msgs.code == '0'){
+                //提示错误
+                is = 0;
+                alert(msgs.info);
+                $('#CheckCode').val('');
+                switchCode();
+                return false;
+            }else {
+                is = 1;
+            }
+            return true;
+        }
+        //	刷新验证码
+        function switchCode() {
+            var ts = Date.parse(new Date())/1000;
+            $('.verifyimg').attr('src',_src+'?id='+ts);
+        }
+    });
+
+</script>
+

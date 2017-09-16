@@ -1,0 +1,130 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-columns" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>旅游休闲卡编辑</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <h4 class="section-subtitle">
+                <a href="{:url('Arder/arder_list')}">休闲卡列表</a>
+                <a href="{:url('Arder/arder_edit')}">休闲卡编辑</a>
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal form-stripe" action="{:url('Arder/arderedit')}" id="arder" method="post">
+                                <input type="hidden" name="act" value="{$act ?? 'add'}">
+                                <input type="hidden" name="id" value="{$id ?? ''}">
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-3 control-label">休闲卡标题<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="title" name="title" placeholder="请输入休闲卡标题" class="form-control" required value="{$arder.tradename ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-3 control-label">编号<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="tradecode" name="tradecode" placeholder="请输入休闲卡编号" class="form-control" required value="{$arder.tradecode ?? ''}" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-3 control-label">休闲卡图片<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="file" id="pics" name="pics[]" multiple placeholder="请上传图片" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-3 control-label">休闲卡原价<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="original_price" name="original_price" placeholder="请输入原价" class="form-control" required value="{$arder.oriprice ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-3 control-label">休闲卡现价<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="ruling_price" name="ruling_price" class="form-control" required placeholder="请输入现价" value="{$arder.ingprice ?? ''}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-3 control-label">库存<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="stock" name="stock" class="form-control" required placeholder="请输入库存" value="{$arder.stock ?? '-1'}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status" class="col-sm-3 control-label">状态<span class="required">*</span></label>
+                                    <div class="col-sm-6">
+                                        <select id="status" name="status" class="form-control" required>
+                                            <option value="1">上架</option>
+                                            <option value="0">下架</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="details" class="col-sm-3 control-label">休闲卡详情</label>
+                                    <div class="col-sm-6">
+                                        <textarea type="text" id="details" name="details" placeholder="请输入输入休闲卡详情">{$arder.details ?? ''}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+<script>
+
+    $(function() {
+
+        $("#arder").submit(function () {
+            var d_len = $('.upfiles').length;
+            if(d_len <= 0){
+                alert('请上传至少一张图片！');
+                return false;
+            }
+            return true;
+        }).validate({
+            highlight: function(label) {
+                $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function(label) {
+                $(label).closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+            messages:{
+                title:'必须填写标题',
+                original_price:'必须填写原价',
+                ruling_price:'必须填写现价',
+                stock:'必须填写库存',
+            }
+        }); //表单验证
+
+        var toolbars = [
+            ['fullscreen', 'source', 'undo', 'redo', 'removeformat', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'fontfamily'],
+            ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'fontsize', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+        ];
+        var recommend = UE.getEditor('details', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        var up = new Upload("pics", {}, "{$arder.navpic ?? ''}");
+    });
+
+
+</script>

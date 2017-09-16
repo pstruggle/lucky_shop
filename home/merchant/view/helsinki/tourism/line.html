@@ -1,0 +1,102 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">旅游管理</a></li>
+                <li><a>目的列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('tourism/line')}">线路列表</a>
+                <a href="{:url('tourism/line_edit')}">线路添加（修改）</a>
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <form action="?">
+                                            <label>
+                                                线路名:<input type="search" class="form-control input-sm" placeholder="线路名搜索" name="name" aria-controls="basic-table" value="{:input('name')}">
+                                            </label>
+                                            <label>
+                                                目的地:
+                                                <select aria-controls="basic-table" name="destination" class="form-control input-sm">
+                                                    <option value="">选择目的地</option>
+                                                    {:dests($destinations,3)}
+                                                </select>
+                                            </label>
+                                            <label for="sub">
+                                                <input type="submit" id="sub" value="搜索" class="btn btn-primary" style="margin-bottom: 0;">
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>线路名称</th>
+                                            <th>线路天数</th>
+                                            <th>修改时间</th>
+                                            <th>添加时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="lines" id="line"}
+                                        <tr>
+                                            <td>{$line.id}</td>
+                                            <td>{$line.name}</td>
+                                            <td>{$line.days}</td>
+                                            <td>{$line.addtime | date="Y-m-d H:i:s" , ###}</td>
+                                            <td>{$line.edittime | date="Y-m-d H:i:s" , ###}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Tourism/line_edit',['line'=>$line.id])}"><i class="fa fa-pencil"></i></a>
+                                                    </button>
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Tourism/linedel',['line'=>$line.id])}"><i class="fa fa-times"></i></a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+        $('[name="destination"]').val('{:input("destination")}');
+    });
+</script>

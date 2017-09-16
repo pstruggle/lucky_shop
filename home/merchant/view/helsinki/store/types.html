@@ -1,0 +1,86 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">商城管理</a></li>
+                <li><a>店铺管理</a></li>
+                <li><a>店铺列表</a></li>
+                <li><a>商品分类</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4 class="section-subtitle"><b _href="{:url('Store/typesedit',['sid'=>input('sid'),'fid'=>input('fid')])}" class="artlog">添加分类</b></h4>
+
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    <div class="dataTables_length" id="basic-table_length">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>分类名称</th>
+                                            <th>查看子分类</th>
+                                            <th>排序</th>
+                                            <th>添加时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="types" id="type"}
+                                        <tr>
+                                            <td>{$type.id}</td>
+                                            <td>{$type.types}</td>
+                                            <td>
+                                                {if condition="$type.fid eq '0'"}<a href="{:url('Store/types',['sid'=>input('sid'),'fid'=>$type.id])}">查看</a>{/if}</td>
+                                            <td>{$type.weight}</td>
+                                            <td>{$type.addtime|date='Y-m-d H:i:s',###}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a _href="{:url('Store/typesedit',['id'=>$type.id])}" class="artlog"><i class="fa fa-pencil" ></i></a>
+
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">{$page}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    $(function () {
+
+    });
+</script>

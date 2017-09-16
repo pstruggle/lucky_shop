@@ -1,0 +1,225 @@
+{include file="base/header" /}
+{load file="__INDEX__/css/detail.css" /}
+{load file="__INDEX__/css/process.css" /}
+
+<!--header-->
+<div id="headerview">
+    <div id="ui-view-5" class="">
+        <div class="search_destination_box">
+            <span class="go_back js_back"> <a href="javascript:history.go(-1);"><i class="goback_icon"></i></a></span>
+            <div class="search_destination_heard">
+                <div class="search_destination_col" style="color: white; font-size: 30px;">
+                    问价
+                </div>
+            </div>
+            <span class=" cm-header-icon fr  js_search" style="width: 50px;" >
+                <i class="icon-search" style="color: snow;font-size: 1.5em">发布</i>
+            </span>
+        </div>
+    </div>
+</div>
+<div style="height:1rem;"></div>
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div id="client_id_viewport_1_1497668711768"  data-view-name="list">
+                <div class="content_list">
+                    <!--<div class="top_search_tab_col">
+                        <div class="tpye_tab">
+                            <p class="singletab  on cur" data-type="64">出发地参团</p>
+                            <p class="singletab  " data-type="512">目的地参团</p>
+                            <p class="singletab  " data-type="1024">一日游</p>
+                        </div>
+                    </div>-->
+                    <div class="product_list_box " style="padding:0px 0 44px">
+                        <div class="product_list_col">
+
+                            <div class="flag_prod_container">
+                                <div class="error" style="display: none">
+                                    <i class="error_ico"></i>
+                                    <p>没有找到符合条件的结果，<br>请修改条件重新查询</p>
+                                </div>
+                                <div class="tour_allproduct  basic_list">
+                                    <ul class="tour_list">
+                                        <div class="tour_also_search" style="display: none"><p>搜“欧洲”的客人还搜过</p><div class="dest_search"></div></div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="no_more tour_no_more" style="display:none">没有更多结果了</div>
+                        <div class="base_loading" style="display:none">
+                            <i></i>加载中
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="p_popup_mod popup_anima popup_assist_reason hidden" id="radioControl">
+                        <i class="mask_mod"></i>
+                        <div class="anima" style="overflow-y: auto">
+                            <div class="popup_assist_item js_con_list">
+                                <ul class="popup_select_list" style="margin-bottom: 50px;">
+                                    {volist name="ask_types" id="ask_type"}
+                                    <li data-index="{$ask_type.id}">{$ask_type.temp_type}<i class="animate_select2"></i></li>
+                                    {/volist}
+                                    <li data-index="" class="selected">取消<i class="animate_select2"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p_popup_mod popup_anima popup_assist_reason hidden" id="radioControl_temp">
+                        <i class="mask_mod"></i>
+                        <div class="anima" style="overflow-y: auto">
+                            <div class="popup_assist_item js_con_list">
+                                <ul class="popup_select_list" style="margin-bottom: 50px;">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="main-state"></div>
+    </div>
+</div>
+{include file="base/footer"}
+<script>
+    $(function(){
+        //收藏显示
+        $('.tour_list').on('click','.tour_pop',function () {
+            $(this).siblings('.tour_pop_box').show();
+            return false;
+        })
+        // 收藏隐藏
+            .on('click','.tour_close',function () {
+                $(this).parents('.tour_pop_box').hide();
+                return false;
+            })
+            // 收藏操作
+            .on('click','.tour_collect',function () {
+                if($(this).is('.cur')){
+                    $(this).removeClass('cur').text('收藏');
+                }else {
+                    $(this).addClass('cur').text('已收藏');
+                }
+                return false;
+            })
+        var pop_index = 0,filter_pop=$('.filter_pop_wrap'),filters = $('#filtersSub>div');
+        $('#searchFilterTabs li:not(3)').on('click',function () {
+            filter_pop.show();
+            pop_index = $(this).index();
+            filters.eq(pop_index).show(200);
+        });
+//        初始值
+        $('.filter_option .filter_option_content li').on('click',function () {
+            if($(this).is('.selected')){
+                $(this).removeClass('selected');
+            }else {
+                $(this).addClass('selected')
+            }
+
+        });
+        $('#ctm_vacation_list_tab_all_go').on('click',search);
+        function search() {
+            var lines = $('.list_timedays .playgo_list li[class="selected"]').data('key'),
+                after = '';
+        }
+        $('#ctm_tour_grouptravel_deleteall').on('click',function () {
+            filter_pop.hide();
+            filters.eq(pop_index).hide(200);
+        });
+        // 跳转详情链接
+        $('.tour_list').on('click','li',function () {
+            var pinfo = $(this).data('pinfo');
+            var pinfoa = pinfos(pinfo);
+//            location.href = "{:url('Ask/details')}"+'?' + pinfo;
+//            console.log(pinfoa);
+        });
+        function pinfos(info) {
+            var temps = {},
+                obj = {};
+            temps = info.split('&');
+            for (var key in temps){
+                var temp = temps[key].split('=');
+                obj[temp[0]] = temp[1];
+            }
+            return obj;
+        }
+        // 异步分页获取行程
+        $(document).on('scroll',ajax_trips);
+        var body_height = $('body').height();
+        var win_height = window.screen.height,page = 1 ;
+        var datas = "{$where??'x'}";
+        function ajax_trips() {
+            var scroll = $(this).scrollTop();
+            body_height = $('body').height();
+
+            if(scroll >= body_height-win_height){
+                get_trip();
+            }
+        }
+        get_trip();
+        function get_trip() {
+            datas  += "&page="+page++;
+            $.ajax({
+                url:'{:url("Ask/ajax_publisn")}',
+                type:'GET',
+                async:false,
+                data:datas,
+                dataType:'text',
+                //请求前
+                beforeSend:function () {
+                    $('.base_loading').show();
+                },
+                //请求错误
+                error:function(){
+
+                },
+                //请求成功
+                success:function (html) {
+//                    console.log(html);
+
+                    $('.base_loading').hide();
+                    html = eval('('+html+')');
+                    if(!html){
+                        $('.tour_no_more').show();
+                        $(document).unbind('scroll');
+                    }
+                    $('.tour_list').append(html);
+                },
+            });
+        }
+        var ask_temps = '{$ask_temps}';
+        ask_temps = eval('('+ask_temps+')');
+        $('.icon-search').on('click',function () {
+            $('#radioControl').removeClass('hidden').click(function () {
+                $(this).addClass('hidden');
+            });
+        });
+        $('#radioControl_temp').on('click',function () {
+            $(this).addClass('hidden');
+        });
+        var type = 0;
+        $('#radioControl .popup_select_list').on('click','li',function () {
+            type = $(this).data('index');
+            if(type != ''){
+                var temps = ask_temps[type],html = '';
+                for (var x in temps){
+                    html += '<li data-index="'+temps[x].id+'">'+temps[x].temp+'<i class="animate_select2"></i></li>';
+                }
+                html += '<li data-index="" class="selected">取消<i class="animate_select2"></i></li>';
+                $('#radioControl_temp').removeClass('hidden');
+                $('#radioControl_temp .popup_select_list').html(html);
+            }
+        });
+        $('#radioControl_temp  .popup_select_list').on('click','li',function () {
+            var index = $(this).data('index');
+            if(index != '' && index != 'undefined'){
+                location.href = "{:url('Ask/publisn')}?temp="+index + '&type='+type;
+            }
+        })
+    })
+</script>

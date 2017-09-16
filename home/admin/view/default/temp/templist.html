@@ -1,0 +1,35 @@
+{include file="base/header" /}
+<div class="container-fluid">
+    <div class="row">
+        <div class="ernav clearfix">
+            <ul>
+                <li class="on"><a href="{:url('Temp/templist')}">模板列表</a></li>
+                <li class=""><a href="{:url('Temp/tempedit')}">添加（修改）模板</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <table class="list-table" id="list_tag" name="list_tag">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>模板类型</th>
+                    <th>模板内容</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="temps" id="temp"}
+                <tr>
+                    <td>{$temp.id}</td>
+                    <td>{$temp.type}</td>
+                    <td>{$temp.content}</td>
+                    <td><a href="{:url('Temp/tempedit',['id'=>$temp['id']])}">修改</a>|<a href="">删除</a>|</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}

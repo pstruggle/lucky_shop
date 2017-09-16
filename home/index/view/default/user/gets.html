@@ -1,0 +1,21 @@
+{include file="base/header" /}
+
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>业务员奖励</h1>
+</header>
+<div style="height:1rem;"></div>
+<ul class="integList">
+    {volist name="gets" id="get"}
+    <li>
+        <div>
+            <span>下级：{$get.nickname}</span>
+            <br />
+            <span>{$get.addtime | date="Y-m-d H:i",###}</span>
+        </div>
+        <div>{if condition="$get.price > 0"}+{/if}{$get.price}</div>
+    </li>
+    {/volist}
+</ul>
+{include file="base/footer" /}

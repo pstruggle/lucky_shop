@@ -1,0 +1,114 @@
+{include file="base/header" /}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="content">
+            <form  action="{:url('Merchant/merchantedit')}" id="formq" method="post">
+                <div class="hidden" id="hidden">
+                    <input type="hidden" name="act" value="{$act}" >
+                    <input type="hidden" name="id" value="{$id}" >
+                </div>
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th><label for="account">商户账号：</label></th>
+                        <td>
+                            <input type="text" id="account" name="account" validate="required" placeholder="请输入商户账号" class="form-control init" value="{$merchant.account ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="passwd">商户密码：</label></th>
+                        <td>
+                            <input type="password" id="passwd" name="passwd" placeholder="请输入商户密码" class="form-control init" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="name">商户名称：</label></th>
+                        <td>
+                            <input type="text" id="name" name="name" validate="required" placeholder="商户公司名" class="form-control init" value="{$merchant.name ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="phone">联系电话：</label></th>
+                        <td>
+                            <input type="text" id="phone" name="phone" validate="required" placeholder="商户联系电话" class="form-control init" value="{$merchant.phone ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="email">联系邮箱：</label></th>
+                        <td>
+                            <input type="text" id="email" name="email" validate="required email" placeholder="联系邮箱" class="form-control init" value="{$merchant.email ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所在区域：</th>
+                        <td>
+                            <select class="form-control init" validate="required" name="province"></select>
+                            <select class="form-control init" validate="required" name="city"></select>
+                            <select class="form-control init" validate="required" name="county"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="expire">到期时间：</label></th>
+                        <td>
+                            <input type="text" id="expire" name="expire" validate="required" placeholder="到期时间" class="form-control init" value="{$merchant.expire ? date('Y-m-d H:i:s',$merchant.expire) :''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>商户状态：</th>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="status" id="status1" checked value="0">关闭
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="status" id="status2" value="1">开启
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>认证商家：</th>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="auth" id="auth1" checked value="0">否
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="auth" id="auth2" value="1">是
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>签约商家：</th>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="sign" id="sign1" checked value="0">否
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sign" id="sign2" value="1">是
+                            </label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="subtn"><input type="submit" name="submit"  id="submit" class="btn btn-default" /></div>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="base/footer" /}
+<script>
+    location.reba
+    $(function(){
+
+        new PCAS('province','city','county', "{$merchant.province ?? ''}","{$merchant.city ?? ''}","{$merchant.county ?? ''}"); //地址
+        $('#expire').click(function () {
+            $(this).prop('readonly',true);
+            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})
+        }); //时间插件
+        $("#formq").validate(); //表单验证
+        $('input[name="status"][value="{$merchant.status ?? ''}"]').prop('checked',true);
+        $('input[name="auth"][value="{$merchant.auth ?? ''}"]').prop('checked',true);
+        $('input[name="sign"][value="{$merchant.sign ?? ''}"]').prop('checked',true);
+        {$code == '1' ? 'var win = art.dialog.open.origin;win.location.reload();':''}
+    });
+</script>

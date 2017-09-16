@@ -1,0 +1,30 @@
+{include file="base/header" /}
+{load file="__INDEX__/css/detail.css" /}
+{load file="__INDEX__/css/process.css" /}
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>旅游合同</h1>
+</header>
+<div style="height:1rem;"></div>
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div id="client_id_viewport_2_1498457627376" page-url="/webapp/vacations/tour/order_contract" data-view-name="order_contract" style="">
+                <div class="body nofoot">
+                    <div class="book_box demand_box">
+                        <style type="text/css"> .contract_excelhtml p{margin-bottom: 10px;} .contract_excelhtml h1{margin: 0 0 5px 0; border-bottom: 1px #ccc solid; text-align: center;} .contract_excelhtml h2{text-align: center;} .contract_excelhtml .textright{text-align: right; padding-right: 10px;} @media screen and (max-width: 500px) { .contract_excelhtml p span{display: block;} .contract_excelhtml h1{font-size: 16px;} .contract_excelhtml h2{font-size: 14px;} } </style>
+                        <div class="contract_excelhtml">
+                            {$contract.content}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-state">
+        </div>
+    </div>
+</div>
+{include file="base/footer"}
+<script>
+    $('nav').hide();
+</script>

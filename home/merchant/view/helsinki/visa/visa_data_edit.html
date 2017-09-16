@@ -1,0 +1,322 @@
+{include file="base/header" /}
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">签证管理</a></li>
+                <li><a>签证编辑</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('Visa/visa_data')}">签证资料列表</a>
+                <a href="{:url('Visa/visa_data_edit')}">签证资料编辑</a>
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="" action="{:url('Visa/visa_dataedit')}" id="tripedit" method="post">
+                                <input type="hidden" name="act" value="{$act??'add'}" >
+                                <input type="hidden" name="data" value="{$visa_data.id??''}" >
+                                <div class="form-horizontal form-stripe">
+                                    <div class="form-group">
+                                        <label for="title" class="col-sm-3 control-label">签证资料标题<span class="required">*</span></label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="title" name="title"  placeholder="请输入签证资料标题" class="form-control" required value="{$visa_data.title ?? ''}" />
+                                        </div>
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <label for="type" class="col-sm-3 control-label">签证资料<span class="required">*</span></label>
+                                        <div class="col-sm-6">
+                                            <select name="type" id="type" class="form-control" required >
+                                                <option value="1">复印件</option>
+                                                <option value="2">原件</option>
+                                                <option value="3">彩印</option>
+                                            </select>
+                                        </div>
+                                    </div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">样例</label>
+                                        <div class="col-sm-6">
+                                            <input type="file" id="case" name="case[]" placeholder="上传" value="" multiple  data-val="上传样例" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">资料描述</label>
+                                        <div class="col-sm-6">
+                                            <textarea name="desc" id="desc">{$visa_data.desc}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" id="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="base/form_footer" /}
+{load file="__PUBLIC__jedate/jquery.jedate.js"}
+{load file="__PUBLIC__jedate/skin/jedate.css"}
+<style>
+    .aui_content{width: 100%}
+</style>
+<script  type="text/javascript">
+    $(function() {
+        var validator = $("#tripedit").validate({
+            submitHandler:function(form){
+                form.submit();
+            },
+            highlight: function(label) {
+                $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function(label) {
+                $(label).closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+            messages:{
+                title:'必须填写签证资料标题',
+            }
+        });
+        $('.nav-tabs li').on('click',function () {
+            var action = $(this).is('.active');
+            if(!action){
+                $("#tripedit").submit();
+                if(validator.errorList.length > 0){
+                    return false;
+                }else {
+                    setTimeout(active_change,200);
+                    return true;
+                }
+            }
+        });
+        $('#tripedit').submit(function () {
+            if(validator.errorList.length > 0){
+                return false;
+            }
+            return true;
+        });
+        var up = new Upload('case', {}, "{$visa_data.case ?? ''}");
+        $('select[name="type"]').val("{$visa_data.type ?? '1'}");
+        var toolbars = [
+            ['fullscreen', 'source', 'undo', 'redo', 'removeformat', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'fontfamily'],
+            ['formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'fontsize', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+        ];
+        var desc = UE.getEditor('desc', {
+            toolbars: toolbars,
+            initialFrameHeight: '200',
+            initialFrameWidth: '600'
+        });
+        // 选择签证材料
+        $('.choice').click(choicedata);
+        function choicedata() {
+            var _this = $(this);
+            var datas = new Array();
+            var t_name = _this.data('name'),
+                t_id = _this.data('id'),
+                i = 0,elm = $('#'+t_id + ' .destina');
+            elm.each(function () {
+                datas[i++] = $(this).val();
+            });
+            $.get('{:url("Visa/ajax_visa_data")}',{exit:2},function (dests) {
+                var data = eval('('+dests+')');
+                var html = erdest(data,t_name,t_id);
+                art.dialog({
+                    lock:true,
+                    title:'选择目的地',
+                    content:html,
+                    width:"50%",
+                    ok:function(){
+                        var origin = artDialog.open.origin;
+                        var checkboxs = $('.dests:checked');
+                        var destshow = $('#'+t_id);
+                        var desthtml = '';
+                        checkboxs.each(function (check) {
+                            var value = $(this).val();
+                            var text = $(this).siblings('.destext').text();
+                            desthtml += showvisa(text,value,t_name);
+                        });
+                        destshow.html(desthtml);
+                    }
+                });
+                for (var i in datas){
+                    $('#dest-'+datas[i]).prop('checked',true);
+                }
+            });
+
+        }
+        function showvisa(text,value,name) {
+            var html = '<span class="destination">'+text+'<input type="hidden" class="destina" name="'+name+'[id][]" value="'+value+'"><input type="hidden" name="'+name+'[title][]" value="'+text+'"><span class="fa fa-remove del"></span></span>';
+            return html;
+        }
+        function erdest(data,name,id) {
+            var html = '';
+            var str = '';
+            for(var prop in data){
+                html += "<label class='destination' for='dest-"+data[prop].id+"'>"+str;
+                html += "<input type='checkbox' name='"+name+"' id='dest-"+data[prop].id+"' class='dests' value='"+data[prop].id+"'>";
+                html+="<span class='destext'>"+data[prop].title+"</span></label>";
+            }
+            return html;
+        }
+        // 目的地更改
+        $('.change').click(changedest);
+        // 更改目的地
+        function changedest() {
+            var destina = $('.destina');
+            var dids = new Array();
+            var i = 0;
+            destina.each(function () {
+                dids[i++] = $(this).val();
+            });
+            $.get('{:url("Tourism/ajax_dest")}',{exit:2},function (dests) {
+                var data = eval('('+dests+')');
+                var html = ergodicdest(data,0);
+                art.dialog({
+                    lock:true,
+                    title:'选择目的地',
+                    content:html,
+                    width:"50%",
+                    ok:function(){
+                        var origin = artDialog.open.origin;
+                        var checkboxs = $('.dests:checked');
+                        var destshow = $('.destshow');
+                        var desthtml = '';
+                        checkboxs.each(function (check) {
+                            var value = $(this).val();
+                            var text = $(this).siblings('.destext').text();
+                            desthtml += showdest(text,value);
+                        });
+                        destshow.html(desthtml);
+                    }
+                });
+                for (var i in dids){
+                    $('#dest-'+dids[i]).prop('checked',true);
+                }
+            });
+        }
+        //遍历目的地
+        function ergodicdest(data,level){
+            var html = '';
+            var str = '';
+            for(var x = 0; x<level; x++){
+                str += '-'
+            }
+
+            for(var prop in data){
+
+                html += "<label class='destination' for='dest-"+data[prop].id+"'>"+str;
+                if(data[prop]['des'].length == 0){
+                    html += "<input type='radio' name='dest' id='dest-"+data[prop].id+"' class='dests' value='"+data[prop].id+"'>";
+                }
+                html+="<span class='destext'>"+data[prop].destination+"</span></label>";
+                html += ergodicdest(data[prop]['des'] ,++level);
+            }
+            return html;
+        }
+        //显示出目的地
+        function showdest(text,value) {
+            var html = '<span class="destination">'+text+'<input type="hidden" class="destina" name="destination" value="'+value+'"><input type="hidden" name="desttext" value="'+text+'"><span class="fa fa-remove del"></span></span>';
+            return html;
+        }
+        // 删除
+        $('body').on('click','.destination .del',function () {
+            $(this).parent().remove();
+        });
+        // 修改线路时初始化目的地
+        (function initdest(){
+            var dids = "{$visa_data.dest_id??''}";
+            var dtexts = "{$visa_data.dest??''}";
+            var ids = new Array();
+            var desc = new Array();
+            if(dids != ''){
+                ids = dids.split(',');
+                desc = dtexts.split(',');
+                var html = '';
+                for (var i in ids){
+                    html += showdest(desc[i],ids[i])
+                }
+                $('.destshow').html(html);
+            }
+        })();
+        (function () {
+            var jobs = "{:addslashes(empty($visa_data.job)?'':$visa_data.job)}",
+                unjobs = "{:addslashes(empty($visa_data.unjob)?'':$visa_data.unjob)}",
+                retires = "{:addslashes(empty($visa_data.retire)?'':$visa_data.retire)}",
+                students = "{:addslashes(empty($visa_data.student)?'':$visa_data.student)}",
+                musts = "{:addslashes(empty($visa_data.must)?'':$visa_data.must)}",
+                childs = "{:addslashes(empty($visa_data.child)?'':$visa_data.child)}",
+                temp = {},
+                html = '';
+            if(jobs !=''){
+                temp = eval('(' + jobs + ')');
+            }
+
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'job')
+            }
+            $('#job').html(html);
+            html = '';
+            if(unjobs !=''){
+                temp = eval('(' + unjobs + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'unjob')
+            }
+            $('#unjob').html(html);
+            html = '';
+            if(retires !=''){
+                temp = eval('(' + retires + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'retire')
+            }
+            $('#retire').html(html);
+            html = '';
+            if(students !=''){
+                temp = eval('(' + students + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'student')
+            }
+            $('#student').html(html);
+            html = '';
+            if(childs !=''){
+                temp = eval('(' + childs + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'child')
+            }
+            $('#child').html(html);
+            html = '';
+            if(musts !=''){
+                temp = eval('(' + musts + ')');
+            }else {
+                temp = {};
+            }
+            for (var i in temp.id){
+                html += showvisa(temp.title[i],temp.id[i],'must')
+            }
+            $('#must').html(html);
+
+        })()
+    });
+</script>

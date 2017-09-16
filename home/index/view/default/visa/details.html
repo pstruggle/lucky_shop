@@ -1,0 +1,587 @@
+{include file="base/header" /}
+{load file="__INDEX__css/detail.css" /}
+{load file="__INDEX__css/visa.css" /}
+{load file="__INDEX__css/n_main.css" /}
+{load file="__INDEX__/css/detail_merge.css" /}
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div>
+                <div class="body">
+                    <div class="visa_detail_header ">
+                        <a class="cm-header-icon fl js_back" id="js_header_back" href="javascript:history.go(-1);">
+                            <i class="icon-back"></i>
+                        </a>
+                        <h1>
+                            <img src="{:img_url($visa.pic,35,20)}" class="flag_img">
+                            {$visa.dest}
+                        </h1>
+                    </div>
+                    <div class="visa_details">
+                        <div class="detail_top_info">
+                            <h2>{$visa.title}</h2>
+                            <p class="detail_top_price">
+                                <dfn>¥</dfn>
+                                <span class="price_nb">{$visa.sell??''}/</span>人
+                                <!--<a href="javascript:void(0);" class="detail_m js_handleDetail_btn" data-info="使馆价80元+签证中心费用200元+服务费20元" data-title="价格构成">明细</a>-->
+                            </p>
+                            <h3>
+                                <i></i> {$visa.merchant.name}
+                            </h3>
+                            <div class="visa_tag_box">
+                            </div>
+                        </div>
+                        <div class="m_drop no_m_drop js_redemption hidden">
+                            <div class="m_dropcon m_list_box">
+                            </div>
+                        </div>
+                        <ul class="sudoku_list sudoku_list1">
+                            <li>
+                                <p class="t1">入境次数</p>
+                                <p class="t2">{$visa.enter??'无'}</p>
+                                <span class="time_icon" style="display:none"></span>
+                            </li>
+                            <li>
+                                <p class="t1">停留天数</p>
+                                <p class="t2">{$visa.stop??'无'}</p>
+                                <p class="t3" style="position:absolute;top:0;visibility:hidden">30天（具体可停留天数以当地移民局签发为准）。</p>
+                                <span class="time_icon" style="display:none"></span>
+                            </li>
+                            <li >
+                                <p class="t1">有效期限</p>
+                                <p class="t2">{$visa.expiry??'无'}</p>
+                                <p class="t3" style="position:absolute;top:0;visibility:hidden">90天（以使馆签发为准）</p>
+                                <span class="time_icon" style="display:none"></span>
+                            </li>
+                            <li>
+                                <p class="t1">签证类型</p>
+                                <p class="t2">{$visa.type | visa_a_type}</p>
+                            </li>
+                            <li class="js_handleDetail_btn" >
+                                <p class="t1">办理时长</p>
+                                <p class="t2">{$visa.handle ?? '无'}
+                                    <!--<span class="time_icon"></span>-->
+                                </p>
+                            </li>
+                            <li class="">
+                                <p class="t1">其他</p>
+                                <p class="t2" id="js_earliest_bookingData">
+                                    {notempty name="$visa.interview"}面试{/notempty}
+                                    {notempty name="$visa.fingerprint"}录指纹{/notempty}
+                                    {notempty name="$visa.rem"}销签{/notempty}
+                                    {notempty name="$visa.deposit"}需要担保金{/notempty}
+
+                                </p>
+                            </li>
+
+                        </ul>
+                        <div class="m_agent2">
+                            <div class="m_agent2_hd">
+                                <h3 class="m_agent2name js_vendor_entry">{$visa.merchant.name}</h3>
+                            </div>
+                            <div class="m_agent2_bd">
+                                <p>本产品由具有此类产品经营资质的零售商提供。<br>服务时间：周一至周日：00:00至23:59</p>
+                            </div>
+                            <i class="m_agent2_phone js_vendor_phone" data-phone="{$op.phone ?? ''}"></i>
+                            <!--<i class="m_agent2_phone js_vendor_phone" data-phone="{:getCache('basic')['operator']}"></i>-->
+                        </div>
+                        <div class="tabs_hd" id="js_detail_tab">
+                            <div class="detail_slide_tab">
+                                <p class="current" id="ctm_visa_detail_tab_01">基本信息</p>
+                                <p id="ctm_visa_detail_tab_02" class="">所需材料</p>
+                                <p id="ctm_visa_detail_tab_03" class="">流程/须知</p>
+                                <b class="slide_border">
+                                </b>
+                            </div>
+                        </div>
+                        <div class="tabs_bd" id="js_summary_content">
+                            <div class="tabs_con">
+                                <ul class="visa_desc">
+                                    <li class="tabs_con_item">
+                                        <h4>受理范围</h4>
+                                        <p class="js_blueLink js_appLink js_fold_box" id="js_visaRangeBox" data-rangeheight="36" style="overflow:hidden;padding-bottom:0">{$visa.scope??'不限'}
+
+                                        </p>
+                                    </li>
+                                    <li class="tabs_con_item">
+                                        <h4>服务内容</h4>
+                                        <p>{$visa.service??'无'}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tabs_bd material_bd" id="js_material_content">
+                            <h3>所需材料</h3>
+                            <!--<div class="txt_sm">
+                            <span>
+                                <i class="must">★</i>为必须提供的材料
+                            </span>
+                                <span>
+                                <i class="opt">●</i>为根据个人情况酌情提供
+                            </span>
+                            </div>-->
+                            <div class="material_tab js_material_tab" id="js_tabslide_cont">
+                                <ul id="js_tabslide_cost" style="width: 125%; transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                                    <li class="cur" data-type="job">
+                                        <div class="top_ico">
+                                            <i class="m_ico3"></i>
+                                        </div>
+                                        <p>
+                                            <font>在职</font>
+                                        </p>
+                                    </li>
+                                    <li data-type="unjob">
+                                        <div class="top_ico">
+                                            <i class="m_ico4"></i>
+                                        </div>
+                                        <p>
+                                            <font>无业</font>
+                                        </p>
+                                    </li>
+                                    <li  data-type="student">
+                                        <div class="top_ico">
+                                            <i class="m_ico2"></i>
+                                        </div>
+                                        <p>
+                                            <font>在校学生</font>
+                                        </p>
+                                    </li>
+                                    <li data-type="retire">
+                                        <div class="top_ico">
+                                            <i class="m_ico5"></i>
+                                        </div>
+                                        <p>
+                                            <font>退休</font>
+                                        </p>
+                                    </li>
+                                    <li data-type="child">
+                                        <div class="top_ico">
+                                            <i class="m_ico1"></i>
+                                        </div>
+                                        <p>
+                                            <font>学龄前儿童</font>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--<div class="t_r_handle">
+                                <a href="javascript:;" id="js_sendinfo_btn">发送至邮箱</a>
+                                <a href="javascript:;" id="js_allshowhide">全部展开</a>
+                            </div>-->
+                            <div class="material_cont">
+                                <div class="new_visa_mustdetail" >
+                                    <h2>身份证明</h2>
+                                    <ul id="job">
+                                        {volist name="$visa.job" id="job"}
+                                        <li class="okclick detail_ma_inf js_appLink" data-stuffid="2527" data-stuffname="中国大陆因私护照">
+                                            <div class="top_tit">
+                                                <em>
+                                                    <i class="must">★</i>
+                                                    {$job.title}
+                                                    <!--<span class="original_visa">{$job.type | visa_type}</span>-->
+                                                </em>
+                                            </div>
+                                            <div class="visa_material_inf">
+                                                <div class="descSlider" style="display: none;">
+                                                    <ul class="img_material">
+                                                        <li data-index="0">
+                                                            <div class="img_inf">
+                                                                <img src="{:img_url($job.case,125,82)}">
+                                                                <p>样图</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="visa_material">
+                                                    <h4>材料要求</h4>
+                                                    {$job.desc}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {/volist}
+                                    </ul>
+                                    <ul id="unjob">
+                                        {volist name="$visa.unjob" id="job"}
+                                        <li class="okclick detail_ma_inf js_appLink" data-stuffid="2527" data-stuffname="中国大陆因私护照">
+                                            <div class="top_tit">
+                                                <em>
+                                                    <i class="must">★</i>
+                                                    {$job.title}
+                                                    <!--<span class="original_visa">{$job.type | visa_type}</span>-->
+                                                </em>
+                                            </div>
+                                            <div class="visa_material_inf">
+                                                <div class="descSlider" style="display: none;">
+                                                    <ul class="img_material">
+                                                        <li data-index="0">
+                                                            <div class="img_inf">
+                                                                <img src="{:img_url($job.case,125,82)}">
+                                                                <p>样图</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="visa_material">
+                                                    <h4>材料要求</h4>
+                                                    {$job.desc}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {/volist}
+                                    </ul>
+                                    <ul id="student">
+                                        {volist name="$visa.student" id="job"}
+                                        <li class="okclick detail_ma_inf js_appLink" data-stuffid="2527" data-stuffname="中国大陆因私护照">
+                                            <div class="top_tit">
+                                                <em>
+                                                    <i class="must">★</i>
+                                                    {$job.title}
+                                                    <!--<span class="original_visa">{$job.type | visa_type}</span>-->
+                                                </em>
+                                            </div>
+                                            <div class="visa_material_inf">
+                                                <div class="descSlider" style="display: none;">
+                                                    <ul class="img_material">
+                                                        <li data-index="0">
+                                                            <div class="img_inf">
+                                                                <img src="{:img_url($job.case,125,82)}">
+                                                                <p>样图</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="visa_material">
+                                                    <h4>材料要求</h4>
+                                                    {$job.desc}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {/volist}
+                                    </ul>
+                                    <ul id="retire">
+                                        {volist name="$visa.retire" id="job"}
+                                        <li class="okclick detail_ma_inf js_appLink" data-stuffid="2527" data-stuffname="中国大陆因私护照">
+                                            <div class="top_tit">
+                                                <em>
+                                                    <i class="must">★</i>
+                                                    {$job.title}
+                                                    <!--<span class="original_visa">{$job.type | visa_type}</span>-->
+                                                </em>
+                                            </div>
+                                            <div class="visa_material_inf">
+                                                <div class="descSlider" style="display: none;">
+                                                    <ul class="img_material">
+                                                        <li data-index="0">
+                                                            <div class="img_inf">
+                                                                <img src="{:img_url($job.case,125,82)}">
+                                                                <p>样图</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="visa_material">
+                                                    <h4>材料要求</h4>
+                                                    {$job.desc}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {/volist}
+                                    </ul>
+                                    <ul id="child">
+                                        {volist name="$visa.child" id="job"}
+                                        <li class="okclick detail_ma_inf js_appLink" data-stuffid="2527" data-stuffname="中国大陆因私护照">
+                                            <div class="top_tit">
+                                                <em>
+                                                    <i class="must">★</i>
+                                                    {$job.title}
+                                                    <!--<span class="original_visa">{$job.type | visa_type}</span>-->
+                                                </em>
+                                            </div>
+                                            <div class="visa_material_inf">
+                                                <div class="descSlider" style="display: none;">
+                                                    <ul class="img_material">
+                                                        <li data-index="0">
+                                                            <div class="img_inf">
+                                                                <img src="{:img_url($job.case,125,82)}">
+                                                                <p>样图</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="visa_material">
+                                                    <h4>材料要求</h4>
+                                                    {$job.desc}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {/volist}
+                                    </ul>
+                                    <ul id="must">
+                                        {volist name="$visa.must" id="must"}
+                                        <li class="okclick detail_ma_inf js_appLink">
+                                            <div class="top_tit">
+                                                <em>
+                                                    <i class="must">★</i>
+                                                    {$must.title ?? ''}
+                                                    <!--<span class="original_visa">{$must.type | visa_type}</span>-->
+                                                </em>
+                                            </div>
+                                            <div class="visa_material_inf">
+                                                <div class="descSlider" style="display: none;">
+                                                    <ul class="img_material">
+                                                        <li data-index="0">
+                                                            <div class="img_inf">
+                                                                <img src="{:img_url($must.case,125,82)}">
+                                                                <p>样图</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="visa_material">
+                                                    <h4>材料要求</h4>
+                                                    {$must.desc}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {/volist}
+                                    </ul>
+                                </div>
+                                <div class="detail_attention detail_over_hidden">
+                                    <h2>其他注意事项</h2>
+                                    <div class="txt_con js_appLink js_blueLink" id="js_visaRemarkBox" data-rangeheight="36" style="overflow:hidden;">
+                                        {$visa.attention ?? ''}
+                                    </div>
+                                    <div class="bt_c js_fold_btn hidden">详情
+                                        <span class="down_arr"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tabs_bd" id="js_process_content">
+                            <h3>办签流程</h3>
+                            <ul class="sign_instructions_two js_appLink">
+                                <li class="li_first">
+                                    <div class="sign_content_two">
+                                        <h4>下单并支付</h4>
+                                        <p>
+                                            请根据申请人长期生活/工作地选择相应领区办理；<br> 
+                                            <!--*不接收6个月内有马来西亚拒签记录的护照*<br>-->
+                                            下单后如遇任何问题可随时与小惠猫客服联系（工作日9点-18点）；
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="sign_content_two">
+                                        <h4>准备材料</h4>
+                                        <p>
+                                            下单后小惠猫会立即邮件发送您办理签证所需的材料清单；<br>
+                                            身份识别：在职/自由职业/在校学生/退休/学龄前儿童；
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="sign_content_two">
+                                        <h4>上传材料和预审</h4>
+                                        <p>
+                                            通过我携上传材料进行预审，再也不用担心资料准备出错；小惠猫提供照片自助拍摄和打印服务；<br>
+                                            通过我的小惠猫， 您可以：上传办签材料进行预审； 材料审核结果通知；在线自助拍照；签证办理进度查询；护照配送物流查询；
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="sign_content_two">
+                                        <h4>寄送材料</h4>
+                                        <p>
+                                            下单后小惠猫会短信通知您材料邮寄的具体地址及收件人；
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="sign_content_two">
+                                        <h4>材料整理</h4>
+                                        <p>
+                                            小惠猫会将您的材料整理并按要求制作；<br>
+                                            您可在我的小惠猫查询材料制作进度；<br>
+                                            *请保持手机畅通， 如需增补材料客服人员会及时与您联系；
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="sign_content_two">
+                                        <h4>小惠猫送签</h4>
+                                        <p>
+                                            小惠猫为您代为递交材料到领馆/签证中心；<br>
+                                            *使馆在审查资料过程中， 保留要求申请人前往使馆面试或补充材料的权利*</p>
+                                    </div>
+                                </li>
+                                <li class="li_last">
+                                    <div class="sign_content_two">
+                                        <h4>出签及配送</h4>
+                                        <p>
+                                            小惠猫代为领取护照；<br>
+                                            请您在我的小惠猫上填写并确认配送地址；<br>
+                                            您可在我的小惠猫上查询护照配送进度和快递员联系方式；<br>
+                                            请您收到出签页后仔细核对该国家签证页信息，以免影响您的行程；
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <footer class="detail_bottom" style="z-index: 10000">
+                    <div class="detail_bottom_box">
+                        <span class="detail_collect js_collect_icon">收藏</span>
+                        <span class="detail_phone js_online_btn" style="display:none">在线咨询</span>
+                        <span class="detail_btn_orange js_booking_btn">开始预订</span>
+                    </div>
+                </footer>
+                <div class="warp_z" style="display:none">
+                </div>
+                <div class="p_popup_mod" id="js_market_detail_pop" style="display:none;z-index:98">
+                    <i class="mask_mod">
+                    </i>
+                    <div class="popups p_popup_cost tag_popups" style="width:96%">
+                        <div class="popup_con">
+                            <ul class="tag_list">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <span class="closed_btn" id="js_popup_closeBtn" style="display:none">
+            </span>
+            </div>
+        </div>
+        <div class="main-state">
+        </div>
+    </div>
+</div>
+<style>
+    nav{display: box;  display: -webkit-box;}
+    body{
+        overflow: unset;
+        height: auto;
+    }
+    .sudoku_list p,.material_tab p,p.detail_top_price{
+        text-align: center;
+    }
+    .original_visa{
+        overflow: hidden;
+    }
+</style>
+{include file="base/footer"}
+{load file="__PUBLIC__jedate/jquery.jedate.js" /}
+{load file="__PUBLIC__jedate/skin/jedate.css" /}
+{load file="__ARTDIALOG4.1.7__jquery.artDialog.js"}
+{load file="__ARTDIALOG4.1.7__skins/blue.css"}<script>
+    $(function(){
+        $('nav').hide();
+        var visa_detail_header = $('.visa_detail_header'),
+            js_detail_tab = $('#js_detail_tab'),
+            js_summary_content = $('#js_summary_content'),
+            js_material_content = $('#js_material_content'),
+            js_process_content = $('#js_process_content');
+        var top_js_detail_tab = js_detail_tab.offset().top,
+            top_js_summary_content = js_summary_content.offset().top  - 88,
+            top_js_material_content = js_material_content.offset().top - 88,
+            top_js_process_content = js_process_content.offset().top - 88,
+            scroll = $('body').scrollTop();
+        scrolls(scroll);
+        if(top_js_detail_tab <= scroll){
+            js_detail_tab.addClass('detail_tab_fixed');
+            visa_detail_header.addClass('detail_header_top');
+        }else {
+            visa_detail_header.removeClass('detail_header_top');
+
+        }
+        $(document).on('scroll',function () {
+            scroll = $(this).scrollTop();
+            scrolls(scroll);
+        });
+        function scrolls(scroll) {
+            if(scroll>0){
+                //detail_header_scroll detail_header_top
+                visa_detail_header.addClass('detail_header_scroll');
+            }else {
+                visa_detail_header.removeClass('detail_header_scroll detail_header_top');
+            }
+            if(top_js_detail_tab <= scroll){
+                visa_detail_header.addClass('detail_header_top');
+            }else {
+                visa_detail_header.removeClass('detail_header_top');
+            }
+            if(top_js_process_content  <= scroll){
+                $('#ctm_visa_detail_tab_03').addClass('current').siblings().removeClass('current');
+                $('.slide_border').addClass('slide_border2');
+            }else if(top_js_material_content <= scroll){
+                $('#ctm_visa_detail_tab_02').addClass('current').siblings().removeClass('current');
+                $('.slide_border').addClass('slide_border1');
+            }else if(top_js_summary_content <= scroll){
+                $('#ctm_visa_detail_tab_01').addClass('current').siblings().removeClass('current');
+                $('.slide_border').addClass('slide_border0');
+            }
+            if(top_js_detail_tab <= scroll){
+                js_detail_tab.addClass('detail_tab_fixed');
+            }else{
+                js_detail_tab.removeClass('detail_tab_fixed');
+            }
+        }
+        $('#ctm_visa_detail_tab_03').on('click',function () {
+            $("html,body").animate({scrollTop:top_js_process_content},1000);
+        });
+        $('#ctm_visa_detail_tab_02').on('click',function () {
+            $("html,body").animate({scrollTop:top_js_material_content},1000);
+        });
+        $('#ctm_visa_detail_tab_01').on('click',function () {
+            $("html,body").animate({scrollTop:top_js_summary_content},1000);
+        });
+        $('#js_tabslide_cost li').on('click',function () {
+            var type = $(this).data('type');
+            type_cur(type,$(this));
+        });
+        $('.top_tit').on('click',function(){
+            $(this).siblings('.visa_material_inf').toggle();
+        });
+        type_cur('job',$('#js_tabslide_cost li:first'));
+        function type_cur(type,_this) {
+            _this.addClass('cur').siblings().removeClass('cur');
+            if(_this.index()>=2){
+                var width = - _this.width();
+
+                _this.parent().css('transform','translate('+width+'px, 0px) translateZ(0px)')
+            }else {
+                _this.parent().css('transform','translate('+0+'px, 0px) translateZ(0px)')
+
+            }
+            $('#'+type).show().siblings(':not("#must")').hide();
+        }
+        $('.js_booking_btn').on('click',function () {
+            location.href = "{:url('Visa/confirm')}?v={$visa.id}";
+        });
+        $('#js_header_back').on('click',function () {
+            history.go(-1);
+        });
+        $('.js_vendor_phone').on('click',function () {
+            var str = '';
+            {if condition="$userinfo.type == '1'"}
+            var _this = $(this);
+            var phone=_this.data('phone');
+            str = '<h3 class="aui_buttons">'+phone+' <button class="aui_state_highlight"><a href="tel:'+phone+'" style="color: white">拨打</a></button></h3>';
+            {elseif condition="$userinfo.type == 2 or $userinfo.type == 0" /}
+            var supplier = "{$visa.supplier !='' ??$visa.merchant.name}",
+                supplier_phone = "{$visa.supplier_phone != ''??$visa.merchant.phone}";
+            str = '<h3 class="aui_buttons">'+supplier+':'+supplier_phone+' <button class="aui_state_highlight"><a href="tel:'+supplier_phone+'" style="color: white">拨打</a></button></h3>';
+
+            {else /}
+            str = '请联系您的旅游顾问';
+            {/if}
+            art.dialog({
+                content: str ,
+                lock: true,
+                drag: false, //禁止弹出层拖动
+                resize: false, //禁止弹出层放大缩
+                title:'',
+            });
+        });
+    })
+</script>

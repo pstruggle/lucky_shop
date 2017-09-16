@@ -1,0 +1,51 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>聊天</h1>
+    <!--<a href="javascript:void (0);" class="iconfont setIcon">&#42;</a>-->
+</header>
+<div style="height:1rem;"></div>
+<ul class="chatList">
+    {volist name="messages" id="message"}
+    <li>
+        <a href="{:url('Ask/message',['mid'=>$message['mid']])}">
+            <span style="display: inline-block;float: left;">{$message.name??''}：</span>
+            <span class="message {$message.status_num > 0 ? 'unread' : ''}">{$message.message}</span>
+            <span>{$message.status_num??'0'}</span>
+        </a>
+    </li>
+    {/volist}
+
+
+</ul>
+<style>
+    .chatList{
+
+    }
+    .chatList li {
+        height: 1rem;
+        line-height: 1rem;
+        position: relative;
+        background: white;
+        padding: 0 3%;
+        margin: .02rem 0;
+    }
+    .chatList li a span:last-child {
+        float: right;
+        margin-right: 6%;
+    }
+    .message{
+        height: 1rem;
+        display: inline-block;
+        margin: 0 auto;
+        width: 50%;
+        overflow: hidden;
+        white-space:nowrap;
+        text-overflow : ellipsis;
+    }
+    .unread{
+        color: #00A000;
+    }
+</style>
+{include file="base/footer" /}

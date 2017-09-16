@@ -1,0 +1,130 @@
+{include file="base/header" /}
+
+<div class="content">
+    <div class="content-header">
+        <div class="leftside-content-header">
+            <ul class="breadcrumbs">
+                <li><i class="fa fa-table" aria-hidden="true"></i><a href="#">商城管理</a></li>
+                <li><a>商户管理</a></li>
+                <li><a>商户列表</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <h4>
+                <a href="{:url('Merchant/merchantlist')}">商户列表</a>
+                <a href="{:url('Merchant/merchantedit')}">商户添加</a>
+            </h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_length" id="basic-table_length">
+                                        <form action="?">
+                                            <label>
+                                                商户账号:<input type="search" class="form-control input-sm" placeholder="商户账号搜索" name="account" aria-controls="basic-table" value="{:input('account')}">
+                                            </label>
+                                            <label>
+                                                手机号码:<input type="search" class="form-control input-sm" placeholder="商户手机号码搜索" name="phone" aria-controls="basic-table" value="{:input('phone')}">
+                                            </label>
+                                            <label>
+                                                商户状态:
+                                                <select name="status" aria-controls="basic-table" class="form-control input-sm">
+                                                    <option value="">商户状态</option>
+                                                    <option value="0">注册未提交资料</option>
+                                                    <option value="1">未审核</option>
+                                                    <option value="2">通过</option>
+                                                    <option value="3">不通过</option>
+                                                </select>
+                                            </label>
+                                            <label for="sub">
+                                                <input type="submit" id="sub" value="搜索" class="btn btn-primary" style="margin-bottom: 0;" />
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-hover table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>编号</th>
+                                            <th>商户名称</th>
+                                            <th>联系电话</th>
+                                            <th>最后登录时间</th>
+                                            <th>访问该商户后台</th>
+                                            <th>微官网点击数量</th>
+                                            <th>粉丝数量</th>
+                                            <th>账户余额</th>
+                                            <th>状态</th>
+                                            <th>商家账单</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="merchants" id="merchant" key="k"}
+                                        <tr>
+                                            <td>{$k}</td>
+                                            <td>{$merchant.id}</td>
+                                            <td>{$merchant.name}</td>
+                                            <td>{$merchant.phone}</td>
+                                            <td>{$merchant.logtime|date='Y-m-d H:i:s',###}</td>
+                                            <td><a href="{:url('Merchant/visit',['id'=>$merchant.id])}" target="_blank">访问</a></td>
+                                            <td>{$merchant.clicks}</td>
+                                            <td>{$merchant.fans}</td>
+                                            <td>{$merchant.balance}</td>
+                                            <td>{$merchant.status | merchant_status}</td>
+                                            <td><a href="{:url('Merchant/bill')}?mid={$merchant.id}">查看账单</a></td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs">
+                                                    <button class="btn btn-transparent">
+                                                        <a href="javascript:void (0);" _href="{:url('Merchant/eye_merchant',['id'=>$merchant.id])}" class="artlog"><i class="fa fa-eye"></i></a>
+                                                    </button>
+                                                    <button class="btn btn-transparent">
+                                                        <a href="{:url('Merchant/merchantedit',['id'=>$merchant.id])}">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                    </button>
+                                                    {php}/*
+                                                    <button class="btn btn-transparent"><i class="fa fa-times"></i>
+                                                    </button>
+                                                    */{/php}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="basic-table_info" role="status" aria-live="polite"></div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="basic-table_paginate">
+                                        {$page}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="base/footer" /}
+<script>
+    $(function () {
+        $('[name="status"]').val('{:input("status")}');
+    });
+</script>

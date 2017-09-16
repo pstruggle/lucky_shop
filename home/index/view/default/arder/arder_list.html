@@ -1,0 +1,243 @@
+{include file="base/header" /}
+{load file="__INDEX__/css/detail.css" /}
+<!--header-->
+<div id="headerview">
+    <div id="ui-view-5" class="">
+        <div class="search_destination_box">
+            <span class="go_back js_back"> <a href="javascript:history.go(-1);"><i class="goback_icon"></i></a></span>
+            <div class="search_destination_heard">
+                <div class="search_destination_col">
+                    <div class="search_destination_starting js_depart"><span id="search_depart" data-id="0">{:substr($location.location_city,0,-3)}站</span></div>
+                    <div class="search_destination_mod js_dest" style="text-align: left;">
+                        <input class="search_destination_search" readonly="" style="width:100%; color: #999;" type="text" value="{:input('keyword')?input('keyword'):'关键字'}" >
+                    </div>
+                </div>
+            </div>
+            <span class=" cm-header-icon fr  js_search" style="visibility: hidden;">
+                <i class="icon-search"></i>
+            </span>
+        </div>
+    </div>
+</div>
+<div style="height:1rem;"></div>
+<div id="main">
+    <div class="main-frame">
+        <div class="main-viewport">
+            <div id="client_id_viewport_1_1497668711768"  data-view-name="list">
+                <div class="content_list">
+                    <div class="product_list_box " style="padding:0px 0 44px">
+                        <div class="product_list_col">
+                            <div class="flag_prod_container">
+                                <div class="vacation_diy_tip2" style="display:none">
+                                    <span class="pic"></span>
+                                    <span class="diy_dp">点击预订</span>
+                                    <div class="text">
+                                        <h2 class="h2_tit"></h2>
+                                        <p class="x_box"></p>
+                                        <p class="tag_s" id="tag1" style="display:none">
+                                            <span class="tab_red_b">赠</span>
+                                        </p>
+                                        <p class="tag_s" id="tag2" style="display:none">
+                                            <span class="tab_red_b">赠</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="error" style="display: none">
+                                    <i class="error_ico"></i>
+                                    <p>没有找到符合条件的结果，<br>请修改条件重新查询</p>
+                                </div>
+                                <div class="tour_allproduct  basic_list">
+                                    <ul class="tour_list">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="no_more tour_no_more" style="display:none">没有更多结果了</div>
+                        <div class="base_loading" style="display:none">
+                            <i></i>加载中
+                        </div>
+                    </div>
+                    <div class="look_else_box" style="display:none">
+                        <h4>看看其他热门目的地</h4>
+                    </div>
+                    <div class="warp_z" style="display:none"></div>
+                    <span class="list_index_tip" style="display:none">
+                        定位失败，可点击<br>页面左上角选择出发城市
+                    </span>
+
+                </div>
+            </div>
+        </div>
+        <div class="main-state"></div>
+    </div>
+</div>
+{include file="base/footer"}
+{load file="__PUBLIC__jedate/jquery.jedate.js" /}
+{load file="__PUBLIC__jedate/skin/jedate.css" /}
+<script>
+    $(function(){
+        //收藏显示
+        $('.tour_list').on('click','.tour_pop',function () {
+            $(this).siblings('.tour_pop_box').show();
+            return false;
+        })
+        // 收藏隐藏
+            .on('click','.tour_close',function () {
+                $(this).parents('.tour_pop_box').hide();
+                return false;
+            })
+            // 收藏操作
+            .on('click','.tour_collect',function () {
+                if($(this).is('.cur')){
+                    $(this).removeClass('cur').text('收藏');
+                }else {
+                    $(this).addClass('cur').text('已收藏');
+                }
+                return false;
+            })
+        var pop_index = 0,filter_pop=$('.filter_pop_wrap'),filters = $('#filtersSub>div');
+        $('#searchFilterTabs li:not(3)').on('click',function () {
+            filter_pop.show();
+            pop_index = $(this).index();
+            filters.eq(pop_index).show(200);
+        });
+//        初始值
+
+        filters.eq(0).find('.left_column li').on('click',fi0);
+        fi0();
+        function fi0() {
+            var f1_type = $(this).data('type') || '' || 'l';
+            filters.eq(0).find('.left_column li[data-type="'+f1_type+'"]')
+                .addClass('current').siblings().removeClass('current');
+            filters.eq(0).find('.right_column>div[data-type="'+f1_type+'"]')
+                .show().siblings().hide();
+        }
+        filters.eq(0).find('.right_column>div[data-type="l"]').on('click',function () {
+
+        })
+        $('.list_timedays .playgo_list li').on('click',fi1);
+        var days = 3,date='';
+        fi1();
+        function fi1() {
+            var type = $(this).data('type');
+            if(type == 'u'){
+                days = $(this).data('key');
+            }else if(type == 'dd'){
+                date = $(this).data('key');
+            }
+            $('.list_timedays .playgo_list li[data-type="u"][data-key="'+days+'"]')
+                .addClass('selected').siblings().removeClass('selected');
+            $('.list_timedays .playgo_list li[data-type="dd"][data-key="'+date+'"]')
+                .addClass('selected').siblings().removeClass('selected');
+        }
+
+        filters.eq(2).find('.left_column li').on('click',fi3);
+        fi3();
+        function fi3() {
+            var f1_type = $(this).data('type') || '' || 'l';
+            filters.eq(2).find('.left_column li[data-type="'+f1_type+'"]')
+                .addClass('current').siblings().removeClass('current');
+            filters.eq(2).find('.right_column>div[data-type="'+f1_type+'"]')
+                .show().siblings().hide();
+        }
+        filters.eq(2).find('.right_column>div ul li').on('click',function () {
+            if(!$(this).index()){
+                $(this).addClass('selected').siblings().removeClass('selected');
+            }else {
+                if($(this).is('.selected')){
+                    $(this).removeClass('selected');
+                    console.log($(this).siblings('.selected').length);
+                    if($(this).siblings('.selected').length == 0){
+                        $(this).siblings().eq(0).addClass('selected');
+                    }
+                }else {
+                    $(this).siblings().eq(0).removeClass('selected');
+                    $(this).addClass('selected')
+                }
+            }
+//            $(this).addClass('selected').siblings().removeClass('selected');
+        });
+        $('.filter_option .filter_option_content li').on('click',function () {
+            if($(this).is('.selected')){
+                $(this).removeClass('selected');
+            }else {
+                $(this).addClass('selected')
+            }
+
+        });
+        $('#ctm_vacation_list_tab_all_go').on('click',search);
+        function search() {
+            var lines = $('.list_timedays .playgo_list li[class="selected"]').data('key'),
+                after = '';
+        }
+        $('#ctm_tour_grouptravel_deleteall').on('click',function () {
+            filter_pop.hide();
+            filters.eq(pop_index).hide(200);
+        });
+        // 跳转详情链接
+        $('.tour_list').on('click','li',function () {
+            var pinfo = $(this).data('pinfo');
+            var pinfoa = pinfos(pinfo);
+            location.href = "{:url('Arder/details')}"+'?' + pinfo;
+            console.log(pinfoa);
+        });
+        function pinfos(info) {
+            var temps = {},
+                obj = {};
+            temps = info.split('&');
+            for (var key in temps){
+                var temp = temps[key].split('=');
+                obj[temp[0]] = temp[1];
+            }
+            return obj;
+        }
+        // 异步分页获取行程
+        $(document).on('scroll',ajax_trips);
+        var body_height = $('body').height();
+        var win_height = window.screen.height,page = 1 ;
+        var datas = "{$where??'x'}";
+        function ajax_trips() {
+            var scroll = $(this).scrollTop();
+            body_height = $('body').height();
+
+            if(scroll >= body_height-win_height){
+                get_trip();
+            }
+        }
+        get_trip();
+        function get_trip() {
+            datas  += "&page="+page++;
+            $.ajax({
+                url:'{:url("Arder/ajax_arder")}',
+                type:'GET',
+                async:false,
+                data:datas,
+                dataType:'text',
+                //请求前
+                beforeSend:function () {
+                    $('.base_loading').show();
+                },
+                //请求错误
+                error:function(){
+
+                },
+                //请求成功
+                success:function (html) {
+//                    console.log(html);
+
+                    $('.base_loading').hide();
+                    html = eval('('+html+')');
+                    if(!html){
+                        $('.tour_no_more').show();
+                        $(document).unbind('scroll');
+                    }
+                    $('.tour_list').append(html);
+                },
+            });
+        }
+        $('.search_destination_search').on('click',function () {
+            location.href = '{:url("Index/search")}';
+        })
+    })
+</script>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>首页</title>
+    <link rel="stylesheet" href="__BOOTSTRAP__bootstrap/normalize.css" />
+    <link rel="stylesheet" href="__BOOTSTRAP__bootstrap/bootstrap.min.css" />
+    {load file="__JQUERY__css/screen.css"}
+    <link rel="stylesheet" href="__ADMIN__css/style.css" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="ernav clearfix">
+            <ul>
+                {volist name="navs" id="nav"}
+                <li><a href="{:url('Index/form',['key'=>$nav['id']])}" id="navkey{$nav.id}">{$nav.nav}</a></li>
+                {/volist}
+            </ul>
+        </div>
+        <div class="content">
+            <div class="sannav clearfix">
+                <ul>
+                    <li><a href="javascript:void(0);">菜单一</a></li>
+                    <li class="on"><a href="javascript:void(0);">菜单二</a></li>
+                    <li><a href="javascript:void(0);">菜单二</a></li>
+                </ul>
+            </div>
+            <form  action="?" id="formq" method="post">
+                <div class="hidden" id="hidden">
+                    <input type="hidden" id="hiddentext"  name="hidden" >
+                </div>
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th><label for="text">文本框：</label></th>
+                        <td>
+                            <input type="text" id="text" name="text" validate="required" placeholder="请输入..." class="form-control init">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="password">密码框：</label></th>
+                        <td>
+                            <input type="password" id="password" name="password" placeholder="请输入..." class="form-control init">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="textarea">文本域：</label></th>
+                        <td><textarea class="form-control init" rows="3" id="textarea"></textarea></td>
+                    </tr>
+                    <tr>
+                        <th><label for="select">下拉框：</label></th>
+                        <td>
+                            <select class="form-control init" id="select" name="select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>多选：</th>
+                        <td>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="inlineCheckbox1" value="option1" checked> 开
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="inlineCheckbox2" value="option1"> 关
+                            </label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>单选：</th>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3
+                            </label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>详情：</th>
+                        <td>
+                            <textarea id="baidu" class="ue"></textarea>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>单图上传：</th>
+                        <td>
+                            <input type="file" name="upimage" id="upimage" data-val="单图上传" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>多图上传：</th>
+                        <td>
+                            <input type="file" name="upfile[]" multiple="multiple" id="upmultiplefile" accept="image/*" />
+                            <!--<input type="file" name="upfile" multiple onchange="alert(this.value);" id="upfile" accept="image/*" />-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <input type="submit" name="submit"  id="submit" />
+                            <!--<input type="file" name="upfile" multiple onchange="alert(this.value);" id="upfile" accept="image/*" />-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{load file="__JQUERY__jquery-2.0.0.min.js"}
+{load file="__BOOTSTRAP__bootstrap.min.js"}
+{load file="__UEDITOR__ueditor.config.js"}
+{load file="__UEDITOR__ueditor.all.min.js"}
+{load file="__JQUERY__jquery.validate.js"}
+{load file="__JQUERY__localization/messages_zh.min.js"}
+{load file="__JQUERY__additional-methods.min.js"}
+{load file="__UPLOADER__Uploader.js"}
+{load file="__UPLOADER__uploader.css"}
+
+<script>
+    $(function(){
+        $('#navkey{$navid}').parent().addClass('on'); //子导航选中操作
+        $("#formq").validate();
+    });
+    var ue = UE.getEditor('baidu',{
+    });
+    var up = new Upload('upimage');
+    var ups = new Upload('upmultiplefile');
+
+</script>
+</body>
+</html>

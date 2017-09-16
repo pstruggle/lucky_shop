@@ -1,0 +1,24 @@
+{include file="base/header" /}
+
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>个人资料</h1>
+</header>
+<div style="height:1rem;"></div>
+<ul class="inforList">
+    <li>
+        <a href="{:url('User/change',['param'=>'name'])}" class="isNext">
+            <span>用户昵称</span>
+            <span>{$userinfo.nickname??'未设置'}</span>
+        </a>
+    </li>
+    <li>
+        <a href="{:url('User/change',['param'=>'tel'])}" class="isNext">
+            <span>手机号码</span>
+            <span>{$userinfo.phone??'未设置'}</span>
+        </a>
+    </li>
+</ul>
+{include file="base/footer" /}
+

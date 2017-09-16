@@ -1,0 +1,25 @@
+{include file="base/header" /}
+<!--header-->
+<header>
+    <a href="javascript:history.go(-1);" class="iconfont backIcon">&#60;</a>
+    <h1>用户昵称</h1>
+</header>
+<div style="height:1rem;"></div>
+<form action="{:url('User/info_mod')}" id="mod_info">
+    <ul class="userForm">
+        <input type="hidden" name="act" value="{$infos.act}">
+        <li>
+            <input type="text" value="{$infos.value??''}" name="mod_val" id="mod_val" placeholder="{$infos.placeholder ?? ''}"/>
+        </li>
+        <li><input type="button" value="更新保存" class="formLastBtn"/></li>
+    </ul>
+</form>
+
+{include file="base/footer" /}
+<script>
+    $(function(){
+        $('.formLastBtn').click(function(){
+            $("#mod_info").submit();
+        });
+    });
+</script>
