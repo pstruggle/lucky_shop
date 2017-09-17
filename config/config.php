@@ -34,9 +34,9 @@ return [
         VENDOR_PATH . 'think-captcha/src/helper' . EXT ,
         VENDOR_PATH . 'think-captcha/src/CaptchaController' . EXT ,
         VENDOR_PATH . 'think-captcha/src/Captcha' . EXT,
-        VENDOR_PATH . 'think-sendsms/src/helper' . EXT ,
-        VENDOR_PATH . 'think-sendsms/src/SendsmsController' . EXT ,
-        VENDOR_PATH . 'think-sendsms/src/Sendsms' . EXT,
+        EXTEND_PATH . 'think-sendsms/src/helper' . EXT ,
+        EXTEND_PATH . 'think-sendsms/src/SendsmsController' . EXT ,
+        EXTEND_PATH . 'think-sendsms/src/Sendsms' . EXT,
         VENDOR_PATH . 'phpqrcode/phpqrcode' . EXT,
         VENDOR_PATH . 'Chinese/ChineseSpell' . EXT,
         VENDOR_PATH . 'WxpayAPI/lib/WxPay.Api' . EXT,
@@ -145,7 +145,7 @@ return [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
         // 模板路径
-        'view_path'    => '',
+        'view_path'    => '', //ROOT_PATH . 'template'. DS,
         // 模板后缀
         'view_suffix'  => 'html',
         // 模板文件名分隔符
@@ -174,10 +174,10 @@ return [
 
     ],
     // 默认跳转页面对应的模板文件
-//    'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
-//    'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
-    'dispatch_success_tmpl'  => ROOT_PATH . 'public/static/tpl/rewrite_jump.tpl',
-    'dispatch_error_tmpl'    => ROOT_PATH . 'public/static/tpl/rewrite_jump.tpl',
+    'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+//    'dispatch_success_tmpl'  => ROOT_PATH . 'public/static/tpl/rewrite_jump.tpl',
+//    'dispatch_error_tmpl'    => ROOT_PATH . 'public/static/tpl/rewrite_jump.tpl',
 
     // +----------------------------------------------------------------------
     // | 异常及错误设置
@@ -223,12 +223,8 @@ return [
         'type'   => 'File',
         // 缓存保存目录
         'path'   => CACHE_PATH,
-        //管理员的缓存前缀
-        'aprefix' => 'wwadmin_',
-        //商户的缓存前缀
-        'mprefix' => 'wwmerchant_',
         // 缓存前缀
-        'prefix' => 'wenwen_',
+        'prefix' => 'lucky_',
         // 缓存有效期 0表示永久缓存
         'expire' => 3600,
     ],

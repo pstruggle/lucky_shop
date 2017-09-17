@@ -11,7 +11,7 @@
 
 namespace think\sendsms;
 
-use aliyun\Aliyun;
+use think\Config;
 use think\Log;
 use think\Session;
 
@@ -42,9 +42,9 @@ class Sendsms
      * @access public
      * @param  array $config 配置参数
      */
-    public function __construct($config = [])
+    public function __construct()
     {
-        $this->config = array_merge($this->config, $config);
+        $this->config = array_merge($this->config, (array)Config::get('sms'));
         $this->getobj();
     }
     /**
@@ -135,15 +135,15 @@ class Sendsms
 //        $search = '/\$\{(.*?)\}/is';
 //        preg_match_all($search,$str,$r,PREG_SET_ORDER );
 //        dump($r);
-        $code = strtoupper(implode('', $code));
+        $temp_code = strtoupper(implode('', $code));
         // 保存验证码
         $key                   = $this->authcode($this->seKey);
-        $code                  = $this->authcode($code);
+        $code                  = $this->authcode($temp_code);
         $secode                = [];
         $secode['verify_code'] = $code; // 把校验码保存到session
         $secode['verify_time'] = time(); // 验证码创建时间
         Session::set($key . $id, $secode, '');
-        return $code;
+        return $temp_code;
     }
     /**
      * 确定发送短信对象
@@ -153,7 +153,7 @@ class Sendsms
         switch ($this->config['terrace']){
             case 'aliyun':default:
                 require_once (__DIR__.'/sms/aliyun/Aliyun.php');
-                $this->smsObj = \Aliyun($this->config);
+                $this->smsObj = new \aliyun\Aliyun($this->config);
                 break;
             case 'alidayu':
                 break;

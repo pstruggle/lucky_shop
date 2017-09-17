@@ -31,13 +31,7 @@ class Aliyun
         $profile = \DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret);
         \DefaultProfile::addEndpoint("cn-hangzhou", "cn-hangzhou", $product, $domain);
         $acsClient= new \DefaultAcsClient($profile);
-//        $send = [
-//            'recNum' => 15879221657,
-//            'signName' => '小惠猫',
-//            'temp' => 'SMS_73920020',
-//            'param' => '{"code":"123456","product":"123456"}',
-//            'outId' => ''
-//        ];
+
         $request = new api\Dysmsapi\SendSmsRequest;
         //必填-短信接收号码
         $request->setPhoneNumbers( $send['recNum'] );

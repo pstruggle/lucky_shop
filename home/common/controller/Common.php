@@ -5,7 +5,7 @@ use think\Controller;
 use think\Cookie;
 
 
-class Base extends Controller
+class Common extends Controller
 {
     protected $theme; // 主题控制
     protected $request; // 请求类初始化
@@ -70,6 +70,19 @@ class Base extends Controller
         }
         return $this->view->config('view_path',__DIR__.'/../view/'.$temp)->fetch($fetch);
     }
+    /**
+     * 获取跳转到当前页的地址
+     */
+    protected function last_url(){
+        return $_SERVER["HTTP_REFERER"];
+    }
+    /**
+     * 跳转到上一页
+     */
+    protected function last_redirect(){
+        return $this->redirect($this->last_url());
+    }
+
 
 
 }

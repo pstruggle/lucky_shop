@@ -1,0 +1,31 @@
+<!-- Forms Components Header -->
+<div class="content-header">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="header-section">
+                <h1>Form Components</h1>
+            </div>
+        </div>
+        <div class="col-sm-6 hidden-xs">
+            <div class="header-section">
+                <ul class="breadcrumb breadcrumb-top">
+                    <li>User Interface</li>
+                    <li>Forms</li>
+                    <li><a href="">Components</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-section">
+    <!--<h4 class="sub-header">Pills</h4>-->
+    <ul class="nav nav-pills">
+        <li><a>描述信息</a></li>
+        {volist name="config_groups" id="config_group"}
+        <li>
+            <a href="{:url('admin/System/index',['config'=>$config_group.action])}">{$config_group.title}</a>
+        </li>
+        {/volist}
+    </ul>
+</div>
+<!-- END Forms Components Header -->

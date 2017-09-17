@@ -1,16 +1,13 @@
-# think-captcha
-thinkphp5 验证码类库
-
-## 安装
-> composer require topthink/think-captcha
+# think-sendsms
+thinkphp5 发送短信
 
 
 ##使用
 
-###模板里输出验证码
+###异步发送验证码链接生成
 
 ~~~
-<div>{:captcha_img()}</div>
+<div>{:sendsms_img()}</div>
 ~~~
 或者
 ~~~
