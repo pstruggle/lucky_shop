@@ -14,7 +14,7 @@ class Config extends Base
     }
     //将配置缓存
     public function setCache(){
-        $name = strtolower($this->name);
+        $name = lcfirst($this->name);
         $groups = Db::name('config_group')
             ->order('weight asc')
             ->column('title','action');

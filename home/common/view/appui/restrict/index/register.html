@@ -43,7 +43,7 @@
             </div>
             <div class="form-group">
                 <div class="col-xs-8">
-                    <input type="password" id="check_code" name="check_code" class="form-control" placeholder="验证码">
+                    <input type="text" id="check_code" name="check_code" class="form-control" placeholder="验证码">
                 </div>
                 <div class="col-xs-4">
                     <img src="" border="0" class="verifyimg" title="看不清？" />
@@ -127,7 +127,8 @@
 <script>
     var checkCodeUrl = "{:url('restrict/Index/checkcode')}";
     var captcha_src = "{:captcha_src()}";
-    var send_sms_url = "{:url('restrict/Index/send_sms')}";
+    var send_sms_url = "{:url('restrict/sendsms/index')}";
+    var checkSmsUrl = "{:url('restrict/sendsms/check')}";
     $(function(){ ReadyRegister.init(); });
 </script>
 

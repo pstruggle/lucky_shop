@@ -13,26 +13,11 @@
 error_reporting(0 );
 use think\Request;
 /**
- * 获取当前链接URL
- * */
-function current_url()
-{
-    $current_url = 'http://';
-    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-        $current_url = 'https://';
-    }
-    if ($_SERVER['SERVER_PORT'] != '80') {
-        $current_url .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
-    } else {
-        $current_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-    }
-    return $current_url;
-}
-/**
  * 异步访问链接并返回结果
  * @param $url 访问链接地址
  * @param $datas post访问数据
  * @param $type 以get、post方式访问链接
+ * @return mixed
  */
 //异步访问链接
 function wwCurl($url,$datas='',$type = 'GET'){
@@ -50,31 +35,6 @@ function wwCurl($url,$datas='',$type = 'GET'){
     return $result;
 }
 /**
- * 获取客户端ip
- */
-function getIP() {
-    if (getenv('HTTP_CLIENT_IP')) {
-        $ip = getenv('HTTP_CLIENT_IP');
-    }
-    elseif (getenv('HTTP_X_FORWARDED_FOR')) {
-        $ip = getenv('HTTP_X_FORWARDED_FOR');
-    }
-    elseif (getenv('HTTP_X_FORWARDED')) {
-        $ip = getenv('HTTP_X_FORWARDED');
-    }
-    elseif (getenv('HTTP_FORWARDED_FOR')) {
-        $ip = getenv('HTTP_FORWARDED_FOR');
-
-    }
-    elseif (getenv('HTTP_FORWARDED')) {
-        $ip = getenv('HTTP_FORWARDED');
-    }
-    else {
-        $ip = $_SERVER['REMOTE_ADDR'];
-    }
-    return $ip;
-}
-/**
  * 判断是否在微信中打开
  */
 function is_wechat(){
@@ -83,25 +43,11 @@ function is_wechat(){
     }
     return false;
 }
-//生成订单号
-function serial(){
-    $num = mt_rand(10000,99999);
-    $time = time();
-    return $time.$num;
-}
-//获取缓存函数
-function getCache($name){
-    $value = cache($name);
-    if(empty($value)){
-        $config = model('config');
-        $config->config_cache();
-        $value = cache($name);
-    }
-    return $value;
-}
+
 /**
  * 获取中文字的首字母
- * @param $str 中文字符串
+ * @param string $str 中文字符串
+ * @return string
  */
 function getFirstCharter($str)
 {
@@ -195,7 +141,8 @@ function getFirstCharter($str)
 }
 /**
  * 随机字符串
- * @param $length 随机字符串长度
+ * @param int $length 随机字符串长度
+ * @return string
  */
 function make_password( $length = 8 )
 {

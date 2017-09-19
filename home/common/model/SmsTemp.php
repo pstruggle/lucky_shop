@@ -21,7 +21,7 @@ class SmsTemp extends Base
     }
     // 将短信模板缓存
     public function setCache(){
-        $name = strtolower($this->name);
+        $name = lcfirst($this->name);
         $temps = $this->_smsTemp->select();
         $datas = [];
         foreach ($temps as $temp){
