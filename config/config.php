@@ -31,6 +31,7 @@ return [
     // 扩展函数文件
     'extra_file_list'        => [
         THINK_PATH . 'helper' . EXT ,
+        APP_PATH . 'function' . EXT ,
         VENDOR_PATH . 'think-captcha/src/helper' . EXT ,
         VENDOR_PATH . 'think-captcha/src/CaptchaController' . EXT ,
         VENDOR_PATH . 'think-captcha/src/Captcha' . EXT,

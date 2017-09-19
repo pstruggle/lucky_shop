@@ -14,15 +14,16 @@ use think\Db;
 class System extends Base
 {
     /**
-     * 系统配置首页页面展示
+     * 系统配置首页视图
      */
     public function index(){
-        // 表-字段-值 = 缓存值
+        // 缓存类型.缓存key = 缓存值 所有类型
+        // 配置类型.配置分类 = 值
+        // 短信模板缓存.使用场景 = 具体值
         $fetch = input('config');
-        $config_groups = Db::name('config_group')->order('weight asc')->select();
-        $fetch = $fetch ?:$config_groups[0]['action'];
-        $_config = model('config');
-        $config = $_config->getConfig($fetch);
+        $config_groups = get_cache('config.config_group');
+        $fetch = $fetch ?:key($config_groups);
+        $config = get_cache('config.'.$fetch);
         $this->assign([
             'title' => '配置',
             'fetch' => $fetch,
@@ -31,6 +32,7 @@ class System extends Base
         ]);
         return $this->template($fetch);
     }
+
     /**
      * 编辑配置内容
      */
@@ -43,4 +45,32 @@ class System extends Base
         $result = $_config->edit($data);
         return $this->last_redirect();
     }
+
+    // 编辑短信模板的视图
+    public function sms_temp(){
+        $scene = input('scene');
+        $sms_temp = Db::name('sms_temp')->where('scene',$scene)->find();
+        $this->assign([
+            'title' => '配置',
+            'sms_temp' => $sms_temp,
+        ]);
+        return $this->template();
+    }
+
+    // 编辑配置内容操作
+    public function sms_temp_edit(){
+        if(!$this->request->isPost()){
+            return $this->error('请求出错');
+        }
+        $data = input('post.');
+        $data['param'] = sms_temp_re($data['temp']);
+        $_smsTemp = model('smsTemp');
+        $result = $_smsTemp->edit($data);
+        if($result){
+            return $this->last_redirect();
+        }else{
+            return $this->error('编辑失败');
+        }
+    }
+
 }

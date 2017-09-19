@@ -1,0 +1,89 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>短信模板</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>商城设置</li>
+                        <li><a href="{:url('admin/System/index',['config'=>sms])}">短信配置</a></li>
+                        <li><a href="">短信模板</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/System/sms_temp_edit')}" method="post" class="form-horizontal form-bordered">
+                    <div class="form-group hidden">
+                        <label class="col-md-3 control-label" for="scene">模板使用场景</label>
+                        <div class="col-md-6">
+                            <input type="text" id="scene" name="scene" class="form-control" value="{:input('scene')}" />
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="temp_code">短信模板code</label>
+                        <div class="col-md-6">
+                            <input type="text" id="temp_code" name="temp_code" class="form-control" value="{$sms_temp.temp_code ?? ''}" />
+                            <span class="help-block">该短信模板code应从短信平台内获取</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="sign_name">短信签名</label>
+                        <div class="col-md-6">
+                            <input type="text" id="sign_name" name="sign_name" class="form-control" value="{$sms_temp.sign_name ?? ''}" />
+                            <span class="help-block">该短信签名应从短信平台内对应</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="temp">短信内容</label>
+                        <div class="col-md-6">
+                            <input type="text" id="temp" name="temp" class="form-control" value="{$sms_temp.temp ?? ''}"  />
+                            <span class="help-block">该短信内容应和短信平台设置的模板一致</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="desc">短信模板描述</label>
+                        <div class="col-md-6">
+                            <input type="text" id="desc" name="desc" class="form-control" value="{$sms_temp.desc ?? ''}"  />
+                            <span class="help-block">对模板的简单描述</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+{/block}
+{block name="foot_js"}
+<script src="__APPUI__js/pages/system/smsTemp.js"></script>
+<script>
+    var send_mode = "{$config.send_mode??''}";
+    $(function(){ SmsTemp.init(); });
+</script>
+{/block}

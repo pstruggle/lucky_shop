@@ -23,7 +23,7 @@
         <li><a>描述信息</a></li>
         {volist name="config_groups" id="config_group"}
         <li>
-            <a href="{:url('admin/System/index',['config'=>$config_group.action])}">{$config_group.title}</a>
+            <a href="{:url('admin/System/index',['config'=>$key])}">{$config_group}</a>
         </li>
         {/volist}
     </ul>

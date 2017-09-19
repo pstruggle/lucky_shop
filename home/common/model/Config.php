@@ -13,19 +13,25 @@ class Config extends Base
         $this->_base = $this;
     }
     //将配置缓存
-    public function config_cache(){
-        $keys = $this->_configKey->getList([],[],0);
-        foreach ($keys as $key){
-            $configs = $this->_config->getList(['key'=>$key['id']],[],0);
-            $data = [];
-            foreach ($configs as $config){
-                $data[$config['name']] = $config['value'];
-            }
-            cache($key['key'],$data);
+    public function setCache(){
+        $name = strtolower($this->name);
+        $groups = Db::name('config_group')
+            ->order('weight asc')
+            ->column('title','action');
+
+        get_cache($name.'.config_group',$groups); // 配置分组缓存
+
+        foreach ($groups as $action => $group){
+            $configs = $this->getConfig($action);
+            get_cache($name.'.'.$action,$configs); // 配置具体缓存
         }
-        return true;
     }
-    //  编辑配置内容
+
+    /**
+     * 编辑配置内容
+     * @param array $datas 以数组形式传递数据
+     * @return bool
+     */
     public function edit($datas){
 
         foreach ($datas as $action=>$data){
@@ -33,18 +39,10 @@ class Config extends Base
                 ->where('action',$action)
                 ->setField('value', $data);
         }
-//        $this->_config->config_cache();
+        $this->setCache(); // 更新缓存
         return true;
     }
-    //  单个配置修改
-    public function onedit($array = []){
-        foreach ($array as $name=>$v){
-            $where['name'] = $name;
-            $value['value'] = $v;
-            $this->_config->save($value,$where);
-        }
-        $this->_config->config_cache();
-    }
+
     /**
      * 根据配置分组action获取需要配置的值
      * @param string $action 分组key
@@ -52,14 +50,15 @@ class Config extends Base
      */
     public function getConfig($action){
         $group_id = Db::name('config_group')->where(['action'=>$action])->value('id');
+        if(empty($group_id)){
+            return false ;
+        }
         $configs = $this->_config
             ->where(['group_id'=>$group_id])
-            ->select();
-        $data = [];
-        foreach ($configs as $config){
-            $data[$config['action']] = $config['value'];
-        }
-        return $data;
+            ->column('value','action');
+        return $configs;
     }
-
+    public function test(){
+        dump($this->class);
+    }
 }

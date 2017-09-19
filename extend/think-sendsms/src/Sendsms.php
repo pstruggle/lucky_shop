@@ -131,10 +131,6 @@ class Sendsms
         for ($i = 0; $i < $this->length; $i++) {
             $code[$i] = $this->codeSet[mt_rand(0, strlen($this->codeSet) - 1)];
         }
-//        $str = '验证码${code}，用户注册新账号${baidu}, 请勿告诉他人，感谢您的支持!';
-//        $search = '/\$\{(.*?)\}/is';
-//        preg_match_all($search,$str,$r,PREG_SET_ORDER );
-//        dump($r);
         $temp_code = strtoupper(implode('', $code));
         // 保存验证码
         $key                   = $this->authcode($this->seKey);
