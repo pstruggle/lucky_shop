@@ -307,12 +307,23 @@ return [
         // 验证码过期时间（s）
         'length'   => 5,
         // 验证码位数
-        'reset'    => true,
+        'reset'    => false,
         // 验证成功后是否重置
-        'accessKeyId' => 'LTAI3zVfvEg9cdBW',
+        'accessKeyId' => '',
         // 短信验证key
-        'secret' => 'uNDDVOZX0lF6jAjnn9pk24gtsoD9M6',
+        'secret' => '',
         // 短信验证key对应secret
 
     ],
+    // 邮件发送配置
+    'email' => [
+        'host'     => 'smtp.163.com',      // smtp服务器的名称
+        'smtpauth' => TRUE,                // 启用smtp认证
+        'username' => 'cjphp1018@163.com', // 你的邮箱名
+        'from'    => 'cjphp1018@163.com', // 发件人地址
+        'fromname' => '计算机协会',         // 发件人姓名
+        'password' => 'cjphp1018',      // 邮箱密码
+        'charset'  => 'utf-8',             // 设置邮件编码
+        'ishtml'   => TRUE,                // 是否HTML格式邮件
+    ]
 ];

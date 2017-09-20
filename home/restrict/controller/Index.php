@@ -46,7 +46,15 @@ class Index extends Common {
         return json_encode($error,JSON_UNESCAPED_UNICODE);
     }
     /**
-     * 验证手机验证码
+     * 测试功能
      */
-
+    public function test(){
+        $send = [
+            'to'=>'cjphp@qq.com',
+            'subject' => '测试邮件',
+            'body' => '邮件内容很隐秘哦'
+        ];
+        $result = send_mail($send);
+        dump($result);
+    }
 }

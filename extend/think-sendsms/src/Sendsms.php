@@ -12,6 +12,7 @@
 namespace think\sendsms;
 
 use think\Config;
+use think\Exception;
 use think\Log;
 use think\Session;
 
@@ -28,7 +29,7 @@ class Sendsms
         // 验证码过期时间（s）
         'length'   => 5,
         // 验证码位数
-        'reset'    => true,
+        'reset'    => false,
         // 验证成功后是否重置
         'accessKeyId' => 'LTAI3zVfvEg9cdBW',
         // 短信验证key
@@ -148,9 +149,9 @@ class Sendsms
     private function getobj(){
         switch ($this->config['terrace']){
             case 'aliyun':default:
-                require_once (__DIR__.'/sms/aliyun/Aliyun.php');
-                $this->smsObj = new \aliyun\Aliyun($this->config);
-                break;
+            require_once (__DIR__.'/sms/aliyun/Aliyun.php');
+            $this->smsObj = new \aliyun\Aliyun($this->config);
+            break;
             case 'alidayu':
                 break;
         }
@@ -177,8 +178,8 @@ class Sendsms
      *  ]
      */
     public function send($data){
-
         $result = $this->smsObj->send($data);
+        sms_log($data,$result);
         Log::write('短信发送日志:'.json_encode($result));
         return $result;
     }
