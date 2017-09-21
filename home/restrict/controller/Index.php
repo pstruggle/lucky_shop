@@ -2,6 +2,7 @@
 namespace app\restrict\controller;
 
 use app\common\controller\Common;
+use think\Exception;
 
 class Index extends Common {
     protected function _initialize()
@@ -46,15 +47,35 @@ class Index extends Common {
         return json_encode($error,JSON_UNESCAPED_UNICODE);
     }
     /**
+     * 创建用户
+     */
+    public function create(){
+        if(!$this->request->isPost()){
+            return $this->error('请求出错');
+        }
+        $data = input('post.');
+        $_users = model('users');
+        $data['regip'] = $this->request->ip();
+        $data['domain'] = $this->request->domain();
+        $result = $_users->register($data);
+        dump($result);
+        dump($data);
+    }
+    /**
      * 测试功能
      */
     public function test(){
         $send = [
-            'to'=>'cjphp@qq.com',
+            'to'=>'1767158841@qq.com',
             'subject' => '测试邮件',
-            'body' => '邮件内容很隐秘哦'
+            'body' => '邮件内容很隐秘哦',
+            'name' => '' // 称呼
         ];
-        $result = send_mail($send);
+        $to = '1767158841@qq.com';
+        $subject = '测试邮件';
+        $body = '邮件内容很隐秘哦';
+        $name = '';
+        $result = send_mail($to,$name,$subject,$body);
         dump($result);
     }
 }

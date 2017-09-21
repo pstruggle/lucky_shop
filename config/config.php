@@ -36,7 +36,6 @@ return [
         VENDOR_PATH . 'think-captcha/src/CaptchaController' . EXT ,
         VENDOR_PATH . 'think-captcha/src/Captcha' . EXT,
         EXTEND_PATH . 'think-sendsms/src/helper' . EXT ,
-        EXTEND_PATH . 'think-sendsms/src/SendsmsController' . EXT ,
         EXTEND_PATH . 'think-sendsms/src/Sendsms' . EXT,
         VENDOR_PATH . 'phpqrcode/phpqrcode' . EXT,
         VENDOR_PATH . 'Chinese/ChineseSpell' . EXT,
@@ -317,13 +316,13 @@ return [
     ],
     // 邮件发送配置
     'email' => [
-        'host'     => 'smtp.163.com',      // smtp服务器的名称
-        'smtpauth' => TRUE,                // 启用smtp认证
-        'username' => 'cjphp1018@163.com', // 你的邮箱名
-        'from'    => 'cjphp1018@163.com', // 发件人地址
-        'fromname' => '计算机协会',         // 发件人姓名
-        'password' => 'cjphp1018',      // 邮箱密码
+        'host'     => '',      // smtp服务器的名称
+        'smtpauth' => true,                // 启用smtp认证
+        'username' => '', // 你的邮箱名
+        'from'    => '', // 发件人地址
+        'fromname' => '',         // 发件人姓名
+        'password' => '',      // 邮箱密码
         'charset'  => 'utf-8',             // 设置邮件编码
-        'ishtml'   => TRUE,                // 是否HTML格式邮件
+        'ishtml'   => true,                // 是否HTML格式邮件
     ]
 ];

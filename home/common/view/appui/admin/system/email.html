@@ -1,0 +1,65 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    {include file="system/nav"}
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/System/edit')}" method="post" class="form-horizontal form-bordered" >
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="host">服务器</label>
+                        <div class="col-md-6">
+                            <input type="text" id="host" name="host" class="form-control" value="{$config.host}">
+                            <span class="help-block">服务器名称（如:smtp.163.com）</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="username">邮箱名称</label>
+                        <div class="col-md-6">
+                            <input type="text" id="username" name="username" class="form-control" value="{$config.username}">
+                            <span class="help-block">请输入您的邮箱名一般为邮箱</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="from">发件人</label>
+                        <div class="col-md-6">
+                            <input type="text" id="from" name="from" class="form-control" value="{$config.from}">
+                            <span class="help-block">发件人邮箱地址</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="password">邮箱密码</label>
+                        <div class="col-md-6">
+                            <input type="password" id="password" name="password" class="form-control" value="{$config.password}">
+                            <span class="help-block">请输入正确的邮箱密码（服务器授权码）</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="fromname">发件人名称</label>
+                        <div class="col-md-6">
+                            <input type="text" id="fromname" name="fromname" class="form-control" value="{$config.fromname}">
+                            <span class="help-block">请输入发件人名称（如：公司简称）</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+{/block}
+{block name="foot_js"}
+{include file="system/system"}
+{/block}
