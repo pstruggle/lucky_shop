@@ -2,6 +2,7 @@
 namespace app\restrict\controller;
 
 use app\common\controller\Common;
+use think\Db;
 use think\Exception;
 
 class Index extends Common {
@@ -60,6 +61,28 @@ class Index extends Common {
         $result = $_users->register($data);
         dump($result);
         dump($data);
+    }
+    /**
+     * 邮箱验证
+     */
+    public function mailprove(){
+        $checkcode= input('get.checkcode');
+        $checkcode = urldecode($checkcode);
+
+        $key = get_cache('config.basic')['encrypt_key'];
+        $decode = authcode($checkcode,$key,'D');
+        if (!$decode){
+            dump('验证错误');
+        }
+        $result = explode('!_!',$decode);
+        $user = Db::name('users')->where('email',$result[0])->find();
+        $passwd = md5($result[1]);
+        if(strcmp($user['passwd'],$passwd) === 0){
+            dump('验证成功');
+        }else{
+            dump('验证失败');
+        }
+        dump($result);
     }
     /**
      * 测试功能

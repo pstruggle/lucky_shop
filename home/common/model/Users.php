@@ -44,23 +44,29 @@ class Users extends Base
      * 邮箱注册
      */
     private function email($data){
-        $pattern = "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/";
         $error = ['code'=>1];
-        if(!preg_match($pattern,$data['email'])){
-            $error['info'] = '邮箱格式不对';
-            return $error;
-        }
         $user = $this->where('email',$data['email'])->find();
         if(!empty($user)){
             $error['info'] = '该邮箱已经注册';
             return $error;
         }
-        if(strcmp($data['password'],$data['password_verify']) !== 0){
+        if(strcmp($data['passwd'],$data['passwd_verify']) !== 0){
             $error['info'] = '您输入的密码不一致';
             return $error;
         }
-        if($this->validate(true)->save($data))
-        $result = $this->body($data['email'],$data['password'],$data['domain']);
+        $map=[
+            'email' => $data['email'],
+            'passwd' => $data['passwd'],
+            'regip' => $data['regip'],
+            'regdate' => $data['regdate'],
+            'status' => 1, // 状态为正常状态
+        ];
+        $save = $this->validate('Users.mail')->save($map);
+        if($save === false){
+            $error['info'] = $this->getError();
+            return $error;
+        }
+        $result = $this->body($data['email'],$data['passwd'],$data['domain']);
         if($result['errorCode']){
             $error['code'] = 0;
             $error['info']='邮箱注册成功,赶紧去邮箱验证吧...';
@@ -73,10 +79,12 @@ class Users extends Base
     }
     // 邮件内容字符串
     private function body($email,$passwd,$domain){
-        $code = $email . '!_!' . $passwd;
         $mall_name = get_cache('config.mall')['mall_name'];
+
         $key = get_cache('config.basic')['encrypt_key'];
-        $url = $domain . url('restrict/Index/mailprove') . '?checkcode='.authcode($code,$key,'E',48*60*60);
+        $code = $email . '!_!' . authcode($passwd,$key,'E');
+        $checkcode = authcode($code,$key,'E',48*60*60);
+        $url = $domain . url('restrict/Index/mailprove') . '?checkcode='.urlencode($checkcode);
         $body = "<div><span class=\"genEmailNicker\"></span><br><span class=\"genEmailContent\"><br>尊敬的用户 ：<br><br>&nbsp;&nbsp; &nbsp; &nbsp; 您好！恭喜您注册成为{$mall_name}。<br><br>&nbsp;&nbsp; &nbsp; &nbsp; 这是一封注册认证邮件，请点击以下链接确认：<br>&nbsp;&nbsp; &nbsp; &nbsp; <a href=\"{$url}\" target=\"_blank\">{$url}</a> <br><br>&nbsp;&nbsp; &nbsp; &nbsp; 如果链接不能点击，请复制地址到浏览器，然后直接打开。<br><br>&nbsp;&nbsp; &nbsp; &nbsp; 上述链接48小时内有效。如果激活链接失效，请您登录网站<a target=\"_blank\" href=\"{$domain}\"> {$domain}</a>重新申请认证。<br><br>&nbsp;&nbsp; &nbsp; &nbsp; 感谢您注册%s！<br><br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; {$mall_name}项目组<br><br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; <span style=\"border-bottom:1px dashed #ccc;\" t=\"5\" times=\"\">{$mall_name}</span></span><br><span class=\"genEmailTail\"></span></div>";
         $result = send_mail($email,$email,'幸运商城-注册认证',$body);
 
@@ -86,7 +94,7 @@ class Users extends Base
      * 自动加密密码
      */
     public function setPasswdAttr($value){
-        return md5(authcode($value));
+        return md5($value);
     }
     /*
      * 检验用户是否注册微信注册  根据openID
