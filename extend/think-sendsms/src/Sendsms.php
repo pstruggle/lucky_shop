@@ -21,7 +21,7 @@ class Sendsms
     protected $config = [
         'terrace'    => 'aliyun',
         // 发送短信平台 可选值 aliyun | alidayu
-        'seKey'    => 'ThinkPHP.CN',
+        'seKey'    => 'ThinkPHP',
         // 验证码加密密钥
         'codeSet'  => '0123456789',
         // 验证码字符集合
@@ -31,9 +31,9 @@ class Sendsms
         // 验证码位数
         'reset'    => false,
         // 验证成功后是否重置
-        'accessKeyId' => 'LTAI3zVfvEg9cdBW',
+        'accessKeyId' => '',
         // 短信验证key
-        'secret' => 'uNDDVOZX0lF6jAjnn9pk24gtsoD9M6',
+        'secret' => '',
         // 短信验证key对应secret
 
     ];
@@ -105,12 +105,12 @@ class Sendsms
             return false;
         }
         // session 过期
-        if (time() - $secode['verify_time'] > $this->expire) {
+        if (time() - $secode['verify_sms_time'] > $this->expire) {
             Session::delete($key, '');
             return false;
         }
 
-        if ($this->authcode(strtoupper($code)) == $secode['verify_code']) {
+        if ($this->authcode(strtoupper($code)) == $secode['verify_sms_code']) {
             $this->reset && Session::delete($key, '');
             return true;
         }
@@ -137,8 +137,8 @@ class Sendsms
         $key                   = $this->authcode($this->seKey);
         $code                  = $this->authcode($temp_code);
         $secode                = [];
-        $secode['verify_code'] = $code; // 把校验码保存到session
-        $secode['verify_time'] = time(); // 验证码创建时间
+        $secode['verify_sms_code'] = $code; // 把校验码保存到session
+        $secode['verify_sms_time'] = time(); // 验证码创建时间
         Session::set($key . $id, $secode, '');
         return $temp_code;
     }

@@ -59,16 +59,19 @@ class Index extends Common {
         $data['regip'] = $this->request->ip();
         $data['domain'] = $this->request->domain();
         $result = $_users->register($data);
-        dump($result);
-        dump($data);
+        if($result['code']===0){
+            $user = Db::name('users')->where($data['reg_type'],$data['$data["reg_type"]'])->find();
+            $this->record_user($user);
+            return $this->success($result['info'],
+                url('index/Index/index'));
+        }
+        return $this->error($result['info']);
     }
     /**
      * 邮箱验证
      */
     public function mailprove(){
         $checkcode= input('get.checkcode');
-        $checkcode = urldecode($checkcode);
-
         $key = get_cache('config.basic')['encrypt_key'];
         $decode = authcode($checkcode,$key,'D');
         if (!$decode){
@@ -76,13 +79,24 @@ class Index extends Common {
         }
         $result = explode('!_!',$decode);
         $user = Db::name('users')->where('email',$result[0])->find();
-        $passwd = md5($result[1]);
-        if(strcmp($user['passwd'],$passwd) === 0){
-            dump('验证成功');
-        }else{
-            dump('验证失败');
+        if(empty($user)){
+            return $this->error('该邮箱未注册',
+                url('restrict/Index/register'));
         }
-        dump($result);
+        if(strcmp($user['passwd'],$result[1]) === 0){
+            $up = Db::name('users')
+                ->where('id',$user['id'])
+                ->update(['mail_verify'=>1]);
+            if(!$up){
+                return $this->error('系统出错');
+            }
+            $this->record_user($user);
+            return $this->success('验证成功',
+                url('index/Index/index'));
+        }else{
+            return $this->error('验证失败,请登录后重新发送验证！',
+                url('restrict/Index/register'));
+        }
     }
     /**
      * 测试功能

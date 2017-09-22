@@ -281,6 +281,8 @@ return [
         'codeSet'  => '2345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY',
         // 验证码字体大小(px)
         'fontSize' => 10,
+        'seKey'    => 'lucky.captcha',
+        // 验证码加密密钥
         // 是否画混淆曲线
         'useCurve' => false,
         // 验证码图片高度
@@ -298,7 +300,7 @@ return [
     'sms' =>[
         'terrace'    => 'aliyun',
         // 发送短信平台 可选值 aliyun | alidayu
-        'seKey'    => 'ThinkPHP.CN',
+        'seKey'    => 'lucky.sms',
         // 验证码加密密钥
         'codeSet'  => '0123456789',
         // 验证码字符集合

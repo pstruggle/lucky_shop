@@ -38,21 +38,12 @@ class Common extends Controller
         }
         $this->error('您操作的权限不够，请先登录！',url('Restrict/login').'?url='.$url);
     }
-    /*
-     * 为模板赋必须值
-     * */
-    private function assigns(){
-        $cache_config= getCache('basic');
-        $trip_num = model('trip')->trip_num();
-        $shop_num = model('shop')->shop_num();
-        $user_num = model('userinfo')->user_num();
-        $this->assign([
-            'admininfo' => $this->admininfo,
-            'cache_config' => $cache_config,
-            'trip_num' => $trip_num,
-            'shop_num' => $shop_num,
-            'user_num' => $user_num,
-        ]);
+    protected function record_user($user){
+        $key = get_cache('config.basic')['encrypt_key'];
+        $id = authcode($user['id'],$key);
+        $secret = authcode($user['passwd'],$key);
+        Cookie::set('token',$id);
+        Cookie::set('secret',$secret);
     }
 
     /**
