@@ -29,7 +29,7 @@ class Index extends Common {
         return $this->template();
     }
     /**
-     * 验证码验证
+     * 图形验证码验证
      * @return string
      **/
     public function checkcode(){
@@ -59,13 +59,14 @@ class Index extends Common {
         $data['regip'] = $this->request->ip();
         $data['domain'] = $this->request->domain();
         $result = $_users->register($data);
-        if($result['code']===0){
+        if($result){
             $user = Db::name('users')->where($data['reg_type'],$data['$data["reg_type"]'])->find();
-            $this->record_user($user);
-            return $this->success($result['info'],
+            $this->setUser($user);
+            $this->record_user();
+            return $this->success($_users->getError(),
                 url('index/Index/index'));
         }
-        return $this->error($result['info']);
+        return $this->error($_users->getError());
     }
     /**
      * 邮箱验证

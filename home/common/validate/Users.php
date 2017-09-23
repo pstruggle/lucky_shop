@@ -31,7 +31,7 @@ class Users extends Validate
         'nickname.checkChar' => '用户名仅支持中英文、数字和下划线,且不能为纯数字',
     ];
     protected $scene = [
-        'mail' => ['email','passwd'],
+        'email' => ['email','passwd'],
         'phone' => ['phone','passwd'],
         'nickname' => ['nickname','passwd'],
     ];
