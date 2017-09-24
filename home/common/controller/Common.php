@@ -19,23 +19,53 @@ class Common extends Controller
         $this->module = $this->request->module(); // 获取模块
         $this->controller = $this->request->controller(); // 获取控制器
         $this->action = $this->request->action(); // 获取方法
+        $this->gain_user();
     }
     /**
      * 判断用户是否登录
      */
-    private function checkLogin(){
+    protected function check_login(){
+        if(empty($this->user)){
+            return $this->error('请先登录...');
+        }
+        if(empty($this->user['nickname']) &&
+            empty($this->user['phone']) &&
+            !empty($this->user['email']) &&
+            $this->user['mail_verify'] != 1){
+            return '';
+        }
+
+//        $_auth = model('auth');
+//        $_auth->setUser($this->user);
+//        if(!$_auth->check($this->action())){
+//            $url = '';
+//            if(empty($this->user)){
+//                $url = url('restrict/index/index');
+//            }
+//            return $this->error($_auth->getError(),$url);
+//        }
+    }
+    protected function gain_user(){
         $cookie_id = Cookie::get('token');
         $cookie_secret = Cookie::get('secret');
-        $_user = model('users');
-        $this->user = $_user->checkLogin($cookie_id,$cookie_secret);
-        $_auth = model('auth');
-
-
-
+        $key = get_cache('config.basic')['encrypt_key'];
+        $id = authcode($cookie_id,$key,'D');
+        $passwd = authcode($cookie_secret,$key,'D');
+        $user = $this->user = Db::name('users')->where('id',$id)->find();
+        if(empty($user) || strcmp($passwd,$user['passwd']) !== 0){
+            return false;
+        }
+        $this->assign('user',$user);
+        return true;
+    }
+    /**
+     * 权限标识
+     */
+    protected function action(){
+        return $this->module.'_'.strtolower($this->controller).'_'.$this->action;
     }
     /**
      * 用户信息储存
-     * @param mixed $user 用户信息
      * @return  null
      */
     protected function record_user(){

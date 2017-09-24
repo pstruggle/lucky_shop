@@ -161,13 +161,13 @@ var ReadyRegister = function() {
                             }
                         }
                     },
-                    'password': {
+                    'passwd': {
                         required: true,
                         minlength: 5
                     },
-                    'password_verify': {
+                    'passwd_verify': {
                         required: true,
-                        equalTo: '#password'
+                        equalTo: '#passwd'
                     },
                     'terms': {
                         required: true
@@ -189,11 +189,11 @@ var ReadyRegister = function() {
                         required:'请输入短信验证码',
                         remote: '短信验证码输入错误'
                     },
-                    'password': {
+                    'passwd': {
                         required: '请输入注册密码',
                         minlength: '您这也太短了吧！(>5)'
                     },
-                    'password_verify': {
+                    'passwd_verify': {
                         required: '请确认您的注册密码',
                         minlength: '您这也太短了吧！(>5)',
                         equalTo: '您两次密码输入不一致哦！'

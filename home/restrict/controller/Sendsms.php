@@ -9,9 +9,9 @@
 namespace app\restrict\controller;
 
 
-use app\common\controller\Common;
+use think\Controller;
 
-class Sendsms extends Common
+class Sendsms extends Controller
 {
     /**
      * 验证短信

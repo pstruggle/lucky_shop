@@ -249,12 +249,8 @@ return [
     // | Cookie设置
     // +----------------------------------------------------------------------
     'cookie'                 => [
-        //管理员的cookie 名称前缀
-        'aprefix'    => 'wwadmin_',
-        //管理员的cookie 名称前缀
-        'mprefix'    => 'wwmerchant_',
         // cookie 名称前缀
-        'prefix'    => 'wenwen_',
+        'prefix'    => 'lucky_',
         // cookie 保存时间
         'expire'    => 0,
         // cookie 保存路径

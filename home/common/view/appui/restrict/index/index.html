@@ -32,10 +32,11 @@
         <!-- END Login Title -->
 
         <!-- Login Form -->
-        <form id="form-login" action="{:url('admin/index/index')}" method="post" class="form-horizontal">
+        <form id="form-login" action="{:url('restrict/Index/sign')}" method="post" class="form-horizontal">
             <div class="form-group">
                 <label for="account" class="col-xs-12">邮箱 / 手机号码</label>
                 <div class="col-xs-12">
+                    <input type="hidden" name="url" value="{$url??''}" />
                     <input type="text" id="account" name="account" class="form-control" placeholder="邮箱 / 手机号码">
                 </div>
             </div>

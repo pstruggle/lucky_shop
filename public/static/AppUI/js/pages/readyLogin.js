@@ -51,6 +51,7 @@ var ReadyLogin = function() {
                             },
                             dataType: "JSON",        //发送的数据类型
                             dataFilter: function (data, type) { //返回结果
+                                console.log(data);
                                 var result = eval('('+eval('('+data+')')+')');
                                 if (result.code === true)
                                     return true;

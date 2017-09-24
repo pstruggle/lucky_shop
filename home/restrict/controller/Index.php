@@ -4,6 +4,7 @@ namespace app\restrict\controller;
 use app\common\controller\Common;
 use think\Db;
 use think\Exception;
+use think\Session;
 
 class Index extends Common {
     protected function _initialize()
@@ -14,7 +15,7 @@ class Index extends Common {
      * 用户登录模板
      */
     public function index(){
-        $url = input('url');
+        $url = $this->last_url();
         $this->assign([
             'url' => $url,
             'title' => '登录'
@@ -61,7 +62,7 @@ class Index extends Common {
         $result = $_users->register($data);
         if($result){
             $user = Db::name('users')->where($data['reg_type'],$data['$data["reg_type"]'])->find();
-            $this->setUser($user);
+            $this->user = $user;
             $this->record_user();
             return $this->success($_users->getError(),
                 url('index/Index/index'));
@@ -76,7 +77,7 @@ class Index extends Common {
         $key = get_cache('config.basic')['encrypt_key'];
         $decode = authcode($checkcode,$key,'D');
         if (!$decode){
-            dump('验证错误');
+            return $this->error('验证错误');
         }
         $result = explode('!_!',$decode);
         $user = Db::name('users')->where('email',$result[0])->find();
@@ -100,20 +101,32 @@ class Index extends Common {
         }
     }
     /**
+     * 用户登录
+     */
+    public function sign(){
+        if(!$this->request->isPost()){
+            return $this->error('请求出错');
+        }
+        $data = input('post.');
+        $_users = model('users');
+        $result = $_users->sign($data);
+        if($result === false){
+            return $this->error($_users->getError());
+        }
+        $url = $data['url']?:url('index/index/index');
+        $this->user = $result;
+        $this->record_user();
+        return $this->success('登录成功',$url);
+
+    }
+    /**
      * 测试功能
      */
     public function test(){
-        $send = [
-            'to'=>'1767158841@qq.com',
-            'subject' => '测试邮件',
-            'body' => '邮件内容很隐秘哦',
-            'name' => '' // 称呼
-        ];
-        $to = '1767158841@qq.com';
-        $subject = '测试邮件';
-        $body = '邮件内容很隐秘哦';
-        $name = '';
-        $result = send_mail($to,$name,$subject,$body);
-        dump($result);
+        $class = get_class_methods($this);
+        foreach ($class as $c){
+            echo $this->module . '_' . strtolower($this->controller) . '_' . $c.'<br />';
+        }
+        dump($class);
     }
 }

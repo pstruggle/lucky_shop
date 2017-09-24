@@ -26,7 +26,6 @@ class Users extends Base
      * @return mixed 用户存在就返回用户信息，不存在返回false
      */
     public function check_login($cookie_id,$cookie_secret){
-
         if(empty($cookie_id) || empty($cookie_secret)){
             return false;
         }
@@ -38,6 +37,42 @@ class Users extends Base
         $user = $this->where('id',$id)->find();
         if(empty($user) || strcmp($passwd,$user['passwd']) !== 0){
             $this->error = 'unlogin';
+            return false;
+        }
+        return $user;
+    }
+    /**
+     *
+     */
+
+    /**
+     * 用户登录操作
+     */
+    public function sign($data){
+        if(!captcha_check($data['check_code'])){
+            $this->error = '图形验证码不正确';
+            return false;
+        }
+        if(empty($data['account'])){
+            $this->error = '账号不能为空';
+            return false;
+        }
+        $where = [];
+        if(preg_match('/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/',$data['account'])){
+            $where = ['email'=>$data['account']];
+        }elseif(preg_match('/^1[0-9]{10}$/',$data['account'])){
+            $where = ['phone'=>$data['account']];
+        }else{
+            $where = ['nickname'=>$data['account']];
+        }
+        $user = $this->where($where)->find();
+        if(empty($user)){
+            $this->error = '用户不存在';
+            return false;
+        }
+        $passwd = md5($data['passwd']);
+        if(strcmp($passwd,$user['passwd']) !== 0){
+            $this->error = '密码不正确';
             return false;
         }
         return $user;

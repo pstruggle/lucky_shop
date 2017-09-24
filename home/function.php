@@ -147,7 +147,6 @@ function send_mail($to,$name='',$subject,$body){
     }else{
         $error = ['errorCode' => false,'error' => $mail->ErrorInfo];
     }
-    dump($error);
     mail_log($to,$name,$subject,$body,$error);
     return $error;
 }
