@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-09-25 17:45:37
+Date: 2017-09-25 23:06:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -98,13 +98,15 @@ CREATE TABLE `lucky_category` (
   `weight` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `addtime` int(11) NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_category
 -- ----------------------------
 INSERT INTO `lucky_category` VALUES ('1', '0', '点心/蛋糕', '点心蛋糕', '0', '', '0', '1506326961');
 INSERT INTO `lucky_category` VALUES ('2', '0', '点心/蛋糕', '点心蛋糕', '0', '', '0', '1506326973');
+INSERT INTO `lucky_category` VALUES ('3', '1', '蛋糕', '蛋糕', '1', '', '0', '1506345249');
+INSERT INTO `lucky_category` VALUES ('4', '3', '蒸蛋糕', '蒸蛋糕', '0', '', '0', '1506350097');
 
 -- ----------------------------
 -- Table structure for lucky_config

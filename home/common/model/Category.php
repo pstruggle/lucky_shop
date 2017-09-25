@@ -49,10 +49,11 @@ class Category extends Base
             if($layer != 1){
                 $hide = 'hide';
             }
-            $html .= "<tr data-layer='$layer' class='$hide parent_{$layer}_{$category['pid']}'>
-                        <td><i class=\"fa fa-plus sign\" data-id='{$category['id']}'></i></td>
+            $indent = str_pad(' ',$layer*$layer,'-');
+            $html .= "<tr class='$hide parent_{$layer}_{$category['pid']}'>
+                        <td>$indent<i class=\"fa fa-plus sign\" data-id='{$category['id']}' data-layer='$layer' ></i></td>
                         <td>
-                            <a href=\"javascript:void(0)\" data-toggle=\"tooltip\" title=\"Edit User\" class=\"btn btn-effect-ripple btn-xs btn-success\">
+                            <a href=\"javascript:void(0)\" data-toggle=\"tooltip\" title=\"编辑分类\" class=\"btn btn-effect-ripple btn-xs btn-success\">
                                 <i class=\"fa fa-pencil\">
                                 </i>
                             </a>
