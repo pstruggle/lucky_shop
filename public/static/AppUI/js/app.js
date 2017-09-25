@@ -608,11 +608,31 @@ var App = function() {
         // Restore all #page-container classes
         page.prop('class', pageCls);
     };
+    var check = function () {
+        $('.is_true').each(function () {
+            var val = $(this).val(),
+                name = $(this).attr('name'),
+                check = false;
+            if(val == '1'){
+                check = true;
+            }
+            $('#'+name).on('change',function () {
+                var id = $(this).attr('id'),
+                    input = $('input[name="'+id+'"]');
+                if($(this).is(':checked')){
+                    input.val(1)
+                }else{
+                    input.val(0)
 
+                }
+            }).prop('checked',check);
+        });
+    }
     return {
         init: function() {
             uiInit(); // Initialize UI
             pageLoading(); // Initialize Page Loading
+            check();
         },
         sidebar: function(mode, extra) {
             handleSidebar(mode, extra); // Handle sidebars - access functionality from everywhere

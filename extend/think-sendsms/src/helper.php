@@ -53,7 +53,6 @@ function sendsms_img($id = '')
 /**
  * @param        $value
  * @param string $id
- * @param array  $config
  * @return bool
  */
 function sendsms_check($value, $id = '')

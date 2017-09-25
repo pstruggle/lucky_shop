@@ -26,7 +26,8 @@ class Common extends Controller
      */
     protected function check_login(){
         if(empty($this->user)){
-            return $this->error('请先登录...');
+            return $this->error('请先登录...',
+                url('restrict/Index/index'));
         }
         if(empty($this->user['nickname']) &&
             empty($this->user['phone']) &&
@@ -79,12 +80,6 @@ class Common extends Controller
         Cookie::set('secret',$secret);
     }
 
-    /**
-     * 设置用户信息
-     */
-    public function setUser($user){
-        $this->user = $user;
-    }
     /**
      * 渲染输出
      * @param string $fetch 显示模板

@@ -18,6 +18,7 @@ class Base extends Common
      *
      */
     private function check_auth(){
+        $this->check_login(); // 验证登录
         if(empty($this->user) || $this->user['is_admin'] != 1){
             return $this->error('您不是管理员',
                 url('index/Index/index'));

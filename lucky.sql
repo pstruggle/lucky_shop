@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-09-24 23:03:15
+Date: 2017-09-25 17:45:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,11 +30,12 @@ CREATE TABLE `lucky_admin` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid` (`uid`),
   KEY `auth_id` (`auth_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_admin
 -- ----------------------------
+INSERT INTO `lucky_admin` VALUES ('1', '17', '0', '0', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for lucky_auth_group
@@ -84,6 +85,28 @@ INSERT INTO `lucky_auth_rule` VALUES ('8', '', '', 'restrict_index_mailprove', '
 INSERT INTO `lucky_auth_rule` VALUES ('9', '', '', 'restrict_index_sign', '登录验证', '', '1');
 
 -- ----------------------------
+-- Table structure for lucky_category
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_category`;
+CREATE TABLE `lucky_category` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '商品分类id',
+  `pid` int(11) unsigned NOT NULL COMMENT '商品父id',
+  `name` varchar(100) NOT NULL COMMENT '分类名称',
+  `mobile_name` varchar(100) NOT NULL COMMENT '手机名称',
+  `is_show` tinyint(1) unsigned NOT NULL COMMENT '是否导航显示',
+  `image` varchar(255) NOT NULL COMMENT '分类图片',
+  `weight` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_category
+-- ----------------------------
+INSERT INTO `lucky_category` VALUES ('1', '0', '点心/蛋糕', '点心蛋糕', '0', '', '0', '1506326961');
+INSERT INTO `lucky_category` VALUES ('2', '0', '点心/蛋糕', '点心蛋糕', '0', '', '0', '1506326973');
+
+-- ----------------------------
 -- Table structure for lucky_config
 -- ----------------------------
 DROP TABLE IF EXISTS `lucky_config`;
@@ -97,7 +120,7 @@ CREATE TABLE `lucky_config` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `action` (`action`),
   KEY `group_id` (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_config
@@ -113,6 +136,16 @@ INSERT INTO `lucky_config` VALUES ('10', '9', 'fromname', '幸运商城', '发�
 INSERT INTO `lucky_config` VALUES ('11', '9', 'password', 'cjphp1018', '邮箱密码', '请输入您的邮箱密码');
 INSERT INTO `lucky_config` VALUES ('12', '2', 'mall_name', '幸运商城', '商城名称', '商城名称');
 INSERT INTO `lucky_config` VALUES ('13', '3', 'encrypt_key', 'lucky', '加密key', '网站的加密密钥（不要随意改动）');
+INSERT INTO `lucky_config` VALUES ('14', '2', 'record_no', '备案信息', '备案信息', '网站备案号网站备案号，将显示在前台底部欢迎信息等位置');
+INSERT INTO `lucky_config` VALUES ('15', '2', 'store_title', '幸运商城', '网站标题', '网站标题，将显示在前台顶部欢迎信息等位置');
+INSERT INTO `lucky_config` VALUES ('16', '2', 'store_desc', '自营商场', '网站描述', '网站描述，将显示在前台顶部欢迎信息等位置');
+INSERT INTO `lucky_config` VALUES ('17', '2', 'store_keyword', '商城', '网站关键字', '网站关键字，便于SEO');
+INSERT INTO `lucky_config` VALUES ('18', '2', 'contact', '纯简', '联系人', '网站显示联系人');
+INSERT INTO `lucky_config` VALUES ('19', '2', 'phone', '1234567891', '联系人电话', '网站的联系人电话');
+INSERT INTO `lucky_config` VALUES ('20', '2', 'address', '具体地址', '具体地址', '具体地址');
+INSERT INTO `lucky_config` VALUES ('21', '2', 'qq', '1234567891', '客服QQ1', '商家中心右下侧显示，方便商家遇到问题时咨询');
+INSERT INTO `lucky_config` VALUES ('22', '2', 'qq1', '1234567895', '客服QQ2', '商家中心右下侧显示，方便商家遇到问题时咨询');
+INSERT INTO `lucky_config` VALUES ('23', '2', 'qq2', '1234567896', '客服QQ3', '商家中心右下侧显示，方便商家遇到问题时咨询');
 
 -- ----------------------------
 -- Table structure for lucky_config_group

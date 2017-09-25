@@ -72,5 +72,33 @@ class System extends Base
             return $this->error('编辑失败');
         }
     }
+    /**
+     * 邮件发送日志
+     */
+    public function mail_log(){
+        $logs = Db::name('mail_log')->order('send_time','desc')->paginate(20);
+        $page = $logs->render();
+        $this->assign([
+            'title' => '邮件发送日志',
+            'logs' => $logs,
+            'page' => $page,
+        ]);
+        return $this->template();
+
+    }
+    /**
+     * 短信发送日志
+     */
+    public function sms_log(){
+        $logs = Db::name('sms_log')->order('send_time','desc')->paginate(20);
+        $page = $logs->render();
+        $this->assign([
+            'title' => '邮件发送日志',
+            'logs' => $logs,
+            'page' => $page,
+        ]);
+        return $this->template();
+
+    }
 
 }
