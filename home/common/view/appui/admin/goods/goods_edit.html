@@ -1,0 +1,162 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Form Components</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Forms</li>
+                        <li><a href="">Components</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li class="active"><a href="{:url('admin/Goods/listing',['action'=>'goods'])}">商品列表</a></li>
+
+        </ul>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block full">
+                <!-- Block Tabs Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
+                    </div>
+                    <ul class="nav nav-tabs" data-toggle="tabs">
+                        <li class="active"><a href="#block-tabs-home">Home</a></li>
+                        <li><a href="#block-tabs-profile">Profile</a></li>
+                        <li><a href="#block-tabs-settings" data-toggle="tooltip" title="Settings"><i class="gi gi-settings"></i></a></li>
+                    </ul>
+                </div>
+                <!-- END Block Tabs Title -->
+
+                <!-- Tabs Content -->
+                <form action="{:url('admin/Goods/edit',['action'=>'goods'])}" method="post" class="tab-content">
+                    <input type="hidden" name="id" value="{$brand.id}" />
+                    <div class="tab-pane active" id="block-tabs-home">
+                        <div class="form-horizontal form-bordered">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="goods_name">商品名</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="goods_name" name="goods_name" class="form-control" value="{$good.goods_name}">
+                                    <span class="help-block">请输入商品名</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="goods_remark">商品简介</label>
+                                <div class="col-md-6">
+                                    <textarea id="goods_remark" name="goods_remark" class="form-control">{$good.goods_remark}</textarea>
+                                    <span class="help-block">请输入商品简介</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="goods_sn">商品货号</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="goods_sn" name="goods_sn" class="form-control" value="{$good.goods_sn}">
+                                    <span class="help-block">货号如果不填自动填写</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="logo">品牌logo</label>
+                                <div class="col-md-6">
+                                    <input type="file" id="logo" name="logo" class="form-control">
+                                    <span class="help-block">请输入上传品牌logo</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="pid_1">所属分类</label>
+                                <div class="col-md-3">
+                                    <select id="pid_1" name="pid_1" class="form-control">
+                                        <option value="0">请选择分类</option>
+                                    </select>
+                                    <span class="help-block">最多只能输入二级分类</span>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <select id="pid_2" name="pid_2" class="form-control">
+                                        <option value="">请选择分类</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">是否推荐</label>
+                                <div class="col-md-6">
+                                    <label class="switch switch-info">
+                                        <input type="checkbox" id="is_hot" checked="" ><span></span>
+                                    </label>
+                                    <input type="hidden" class="is_true" name="is_hot" value="{$brand.is_hot}"  >
+
+                                    <span class="help-block">是否推荐</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="sort">排序</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="sort" name="sort" class="form-control" value="{$brand.sort}">
+                                    <span class="help-block">根据排序进行由小到大排列显示。</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="desc">品牌描述</label>
+                                <div class="col-md-6">
+                                    <textarea id="desc" name="desc" class="form-control">{$brand.desc}</textarea>
+                                    <span class="help-block">品牌描述</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="block-tabs-profile">Profile..</div>
+                    <div class="tab-pane" id="block-tabs-settings">Settings..</div>
+                    <div class="form-horizontal form-bordered">
+                        <div class="form-group form-actions">
+                            <div class="col-md-9 col-md-offset-3">
+                                <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                                <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- END Tabs Content -->
+            </div>
+
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+{/block}
+{block name="foot_js"}
+<!-- Load and execute javascript code used only in this page -->
+<script src="__APPUI__js/pages/brand.js"></script>
+<link rel="stylesheet" href="__PUBLIC__Uploader/uploader.css" />
+<script src="__PUBLIC__Uploader/Uploader.js"></script>
+<script>
+    var category_url = "{:url('admin/Goods/ajax_category')}";
+    var pid_1 = "{$brand.parent_cat_id}",pid_2 = "{$brand.cat_id}";
+    $(function(){
+        var up = new Upload('logo',{},"{$brand.logo}");
+        Brand.category();
+    });
+</script>
+<!-- Load and execute javascript code used only in this page -->
+<!--<script src="__APPUI__js/pages/formsValidation.js"></script>-->
+<!--<script>$(function(){ FormsValidation.init(); });</script>-->
+{/block}

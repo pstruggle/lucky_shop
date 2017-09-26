@@ -33,6 +33,44 @@ class Category extends Base
         }
         return $this->save($map,$where);
     }
+    // 获取列表
+    public function listing(){
+        $categorys = $this->getCategory();
+        $view = $this->category_view($categorys);
+        $list = [
+            'title' => '商品分类',
+            'view' => $view,
+        ];
+        return $list;
+    }
+    // 编辑视图控制
+    public function edit_view(){
+        $id = input('id');
+        $where = ['id'=>$id];
+        $category = $this->where($where)->find();
+        $value = [];
+        if(!empty($category)){
+            if($category['pid'] != 0){
+                $pid = $this->where('id',$category['pid'])->value('pid');
+                if($pid != 0){
+                    $pid_1 = $pid;
+                    $pid_2 = $category['pid'];
+                }else{
+                    $pid_1 = $category['pid'];
+                    $pid_2 = '';
+                }
+            }else{
+                $pid_1 = $category['pid'];
+                $pid_2 = '';
+            }
+            $value['pid_1'] = $pid_1;
+            $value['pid_2'] = $pid_2;
+        }
+        $value['title'] = '分类编辑';
+        $value['category'] = $category;
+        return $value;
+    }
+
     // 获取分类
     public function getCategory($where=[],$order=[]){
         return $this->where($where)->order($order)->select();
@@ -49,11 +87,14 @@ class Category extends Base
             if($layer != 1){
                 $hide = 'hide';
             }
-            $indent = str_pad(' ',$layer*$layer,'-');
+            $indent = str_pad(' ',$layer*$layer*6,'&nbsp;');
+            if($layer != 3){
+                $indent .= "<i class=\"fa fa-plus sign\" data-id='{$category['id']}' data-layer='$layer' ></i>";
+            }
             $html .= "<tr class='$hide parent_{$layer}_{$category['pid']}'>
-                        <td>$indent<i class=\"fa fa-plus sign\" data-id='{$category['id']}' data-layer='$layer' ></i></td>
+                        <td>$indent</td>
                         <td>
-                            <a href=\"javascript:void(0)\" data-toggle=\"tooltip\" title=\"编辑分类\" class=\"btn btn-effect-ripple btn-xs btn-success\">
+                            <a href=\"javascript:void(0)\" data-id=\"{$category['id']}\" title=\"编辑分类\" class=\"btn btn-effect-ripple btn-xs btn-success edit\">
                                 <i class=\"fa fa-pencil\">
                                 </i>
                             </a>

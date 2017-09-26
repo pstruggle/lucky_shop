@@ -27,7 +27,7 @@
         <!--<h4 class="sub-header">Pills</h4>-->
         <ul class="nav nav-pills">
             <li class="active">
-                <a href="{:url('admin/Goods/category_edit')}">增加分类</a>
+                <a href="{:url('admin/Goods/edit_view',['action'=>'category'])}" class="edit_view">增加分类</a>
             </li>
 
         </ul>
@@ -55,19 +55,6 @@
                     </thead>
                     <tbody>
                     {$view}
-                    {volist name="logs" id="log" key='k'}
-                    <tr>
-
-                        <td><i class="fa fa-minus"></i><i class="fa fa-plus"></i></td>
-                        <td class="text-center">{$k}</td>
-                        <td>{$log.out_id}</td>
-                        <td>{$log.temp}</td>
-                        <td>{$log.sign_name}</td>
-                        <td>{$log.param}</td>
-                        <td>{$log.rec_num}</td>
-                        <td>{$log.message}</td>
-                    </tr>
-                    {/volist}
                     </tbody>
                 </table>
             </div>
@@ -78,5 +65,7 @@
 {/block}
 {block name="foot_js"}
 <script src="__APPUI__js/pages/category.js"></script>
-<script>$(function () {Category.init();});</script>
+<script>
+    $(function () {Category.init();});
+</script>
 {/block}

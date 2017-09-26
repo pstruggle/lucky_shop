@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-09-25 23:06:09
+Date: 2017-09-26 17:37:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -85,6 +85,31 @@ INSERT INTO `lucky_auth_rule` VALUES ('8', '', '', 'restrict_index_mailprove', '
 INSERT INTO `lucky_auth_rule` VALUES ('9', '', '', 'restrict_index_sign', '登录验证', '', '1');
 
 -- ----------------------------
+-- Table structure for lucky_brand
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_brand`;
+CREATE TABLE `lucky_brand` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '品牌表',
+  `name` varchar(60) NOT NULL DEFAULT '' COMMENT '品牌名称',
+  `logo` varchar(80) NOT NULL DEFAULT '' COMMENT '品牌logo',
+  `desc` text NOT NULL COMMENT '品牌描述',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌地址',
+  `sort` tinyint(3) unsigned NOT NULL DEFAULT '50' COMMENT '排序',
+  `initial` char(1) DEFAULT '' COMMENT '首字母',
+  `cat_name` varchar(128) DEFAULT '' COMMENT '品牌分类',
+  `parent_cat_id` int(11) DEFAULT '0' COMMENT '分类id',
+  `cat_id` int(10) DEFAULT '0' COMMENT '分类id',
+  `is_hot` tinyint(1) DEFAULT '0' COMMENT '是否推荐',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_brand
+-- ----------------------------
+INSERT INTO `lucky_brand` VALUES ('1', '华为/HUAWEI', '/upload/admin/image/20170926/1506397624110991.jpg', '华为/HUAWEI 描述', '', '20', 'H', '点心/蛋糕', '1', '0', '1');
+INSERT INTO `lucky_brand` VALUES ('2', '摩托罗拉/MOTOROLA', '/upload/admin/image/20170926/1506397941855084.jpg', '', '', '10', 'M', '点心/蛋糕', '1', '0', '0');
+
+-- ----------------------------
 -- Table structure for lucky_category
 -- ----------------------------
 DROP TABLE IF EXISTS `lucky_category`;
@@ -103,8 +128,8 @@ CREATE TABLE `lucky_category` (
 -- ----------------------------
 -- Records of lucky_category
 -- ----------------------------
-INSERT INTO `lucky_category` VALUES ('1', '0', '点心/蛋糕', '点心蛋糕', '0', '', '0', '1506326961');
-INSERT INTO `lucky_category` VALUES ('2', '0', '点心/蛋糕', '点心蛋糕', '0', '', '0', '1506326973');
+INSERT INTO `lucky_category` VALUES ('1', '0', '点心/蛋糕', '点心蛋糕', '0', '', '10', '1506326961');
+INSERT INTO `lucky_category` VALUES ('2', '0', '点心/蛋糕', '点心蛋糕', '0', '', '20', '1506326973');
 INSERT INTO `lucky_category` VALUES ('3', '1', '蛋糕', '蛋糕', '1', '', '0', '1506345249');
 INSERT INTO `lucky_category` VALUES ('4', '3', '蒸蛋糕', '蒸蛋糕', '0', '', '0', '1506350097');
 
@@ -175,6 +200,64 @@ INSERT INTO `lucky_config_group` VALUES ('6', 'payment', '支付配置', '5');
 INSERT INTO `lucky_config_group` VALUES ('7', 'watermark', '水印配置', '7');
 INSERT INTO `lucky_config_group` VALUES ('8', 'push', '推送配置', '8');
 INSERT INTO `lucky_config_group` VALUES ('9', 'email', '邮件配置', '9');
+
+-- ----------------------------
+-- Table structure for lucky_goods
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_goods`;
+CREATE TABLE `lucky_goods` (
+  `goods_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '商品id',
+  `cat_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分类id',
+  `extend_cat_id` int(11) DEFAULT '0' COMMENT '扩展分类id',
+  `goods_sn` varchar(60) NOT NULL DEFAULT '' COMMENT '商品编号',
+  `goods_name` varchar(120) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `click_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '点击数',
+  `brand_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '品牌id',
+  `store_count` smallint(5) unsigned NOT NULL DEFAULT '10' COMMENT '库存数量',
+  `comment_count` smallint(5) DEFAULT '0' COMMENT '商品评论数',
+  `weight` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品重量克为单位',
+  `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '市场价',
+  `shop_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本店价',
+  `cost_price` decimal(10,2) DEFAULT '0.00' COMMENT '商品成本价',
+  `price_ladder` text COMMENT '价格阶梯',
+  `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '商品关键词',
+  `goods_remark` varchar(255) NOT NULL DEFAULT '' COMMENT '商品简单描述',
+  `goods_content` text COMMENT '商品详细描述',
+  `original_img` varchar(255) NOT NULL DEFAULT '' COMMENT '商品上传原始图',
+  `is_real` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '是否为实物',
+  `is_on_sale` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否上架',
+  `is_free_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否包邮0否1是',
+  `on_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '商品上架时间',
+  `sort` smallint(4) unsigned NOT NULL DEFAULT '50' COMMENT '商品排序',
+  `is_recommend` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否推荐',
+  `is_new` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否新品',
+  `is_hot` tinyint(1) DEFAULT '0' COMMENT '是否热卖',
+  `last_update` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  `goods_type` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '商品所属类型id，取值表goods_type的cat_id',
+  `spec_type` smallint(5) DEFAULT '0' COMMENT '商品规格类型，取值表goods_type的cat_id',
+  `give_integral` mediumint(8) DEFAULT '0' COMMENT '购买商品赠送积分',
+  `exchange_integral` int(10) NOT NULL DEFAULT '0' COMMENT '积分兑换：0不参与积分兑换，积分和现金的兑换比例见后台配置',
+  `suppliers_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '供货商ID',
+  `sales_sum` int(11) DEFAULT '0' COMMENT '商品销量',
+  `prom_type` tinyint(1) DEFAULT '0' COMMENT '0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠,4预售',
+  `prom_id` int(11) DEFAULT '0' COMMENT '优惠活动id',
+  `commission` decimal(10,2) DEFAULT '0.00' COMMENT '佣金用于分销分成',
+  `spu` varchar(128) DEFAULT '' COMMENT 'SPU',
+  `sku` varchar(128) DEFAULT '' COMMENT 'SKU',
+  `shipping_area_ids` varchar(255) NOT NULL DEFAULT '' COMMENT '配送物流shipping_area_id,以逗号分隔',
+  PRIMARY KEY (`goods_id`),
+  KEY `goods_sn` (`goods_sn`),
+  KEY `cat_id` (`cat_id`),
+  KEY `last_update` (`last_update`),
+  KEY `brand_id` (`brand_id`),
+  KEY `goods_number` (`store_count`),
+  KEY `goods_weight` (`weight`),
+  KEY `sort_order` (`sort`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_goods
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for lucky_mail_log
