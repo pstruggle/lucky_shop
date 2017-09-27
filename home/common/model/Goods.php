@@ -14,8 +14,8 @@ class Goods extends Base
         $this->_base = $this;
     }
     // 商品编辑
-    public function edit(){
-
+    public function edit($data){
+        dump($data);
     }
     // 商品列表
     public function listing(){

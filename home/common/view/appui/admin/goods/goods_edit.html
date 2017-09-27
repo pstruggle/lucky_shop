@@ -36,13 +36,13 @@
             <div class="block full">
                 <!-- Block Tabs Title -->
                 <div class="block-title">
-                    <div class="block-options pull-right">
-                        <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
-                    </div>
+
                     <ul class="nav nav-tabs" data-toggle="tabs">
-                        <li class="active"><a href="#block-tabs-home">Home</a></li>
-                        <li><a href="#block-tabs-profile">Profile</a></li>
-                        <li><a href="#block-tabs-settings" data-toggle="tooltip" title="Settings"><i class="gi gi-settings"></i></a></li>
+                        <li class="active"><a href="#currency">通用信息</a></li>
+                        <li><a href="#profile">商品相册</a></li>
+                        <li><a href="#spec">商品规格</a></li>
+                        <li><a href="#logistics">商品物流</a></li>
+                        <li><a href="#integral">积分折扣</a></li>
                     </ul>
                 </div>
                 <!-- END Block Tabs Title -->
@@ -50,80 +50,144 @@
                 <!-- Tabs Content -->
                 <form action="{:url('admin/Goods/edit',['action'=>'goods'])}" method="post" class="tab-content">
                     <input type="hidden" name="id" value="{$brand.id}" />
-                    <div class="tab-pane active" id="block-tabs-home">
+                    <div class="tab-pane active" id="currency">
                         <div class="form-horizontal form-bordered">
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="goods_name">商品名</label>
                                 <div class="col-md-6">
                                     <input type="text" id="goods_name" name="goods_name" class="form-control" value="{$good.goods_name}">
-                                    <span class="help-block">请输入商品名</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="goods_remark">商品简介</label>
                                 <div class="col-md-6">
                                     <textarea id="goods_remark" name="goods_remark" class="form-control">{$good.goods_remark}</textarea>
-                                    <span class="help-block">请输入商品简介</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label" for="goods_sn">商品货号</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="goods_sn" name="goods_sn" class="form-control" value="{$good.goods_sn}">
-                                    <span class="help-block">货号如果不填自动填写</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label" for="logo">品牌logo</label>
-                                <div class="col-md-6">
-                                    <input type="file" id="logo" name="logo" class="form-control">
-                                    <span class="help-block">请输入上传品牌logo</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="pid_1">所属分类</label>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <select id="pid_1" name="pid_1" class="form-control">
                                         <option value="0">请选择分类</option>
                                     </select>
-                                    <span class="help-block">最多只能输入二级分类</span>
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <select id="pid_2" name="pid_2" class="form-control">
+                                        <option value="">请选择分类</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select id="pid_3" name="pid_3" class="form-control">
                                         <option value="">请选择分类</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">是否推荐</label>
+                                <label class="col-md-3 control-label" for="pid_1">商品品牌</label>
+                                <div class="col-md-6">
+                                    <select id="brand_id" name="brand_id" class="form-control">
+                                        <option value="0">请选择商品品牌</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="weight">商品重量</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="weight" name="weight" class="form-control" value="{$good.weight}">
+                                    <span class="help-block">请务必设置商品重量，用于计算物流费.以克为单位</span>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">是否包邮</label>
                                 <div class="col-md-6">
                                     <label class="switch switch-info">
-                                        <input type="checkbox" id="is_hot" checked="" ><span></span>
+                                        <input type="checkbox" id="is_free_shipping" checked="" ><span></span>
                                     </label>
-                                    <input type="hidden" class="is_true" name="is_hot" value="{$brand.is_hot}"  >
+                                    <input type="hidden" class="is_true" name="is_free_shipping" value="{$good.is_free_shipping}"  >
 
-                                    <span class="help-block">是否推荐</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="sort">排序</label>
+                                <label class="col-md-3 control-label" for="keywords">商品关键字</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="sort" name="sort" class="form-control" value="{$brand.sort}">
-                                    <span class="help-block">根据排序进行由小到大排列显示。</span>
+                                    <textarea id="keywords" name="keywords" class="form-control">{$good.keywords}</textarea>
+                                    <span class="help-block">请输入商品关键字，便于SEO</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="desc">品牌描述</label>
+                                <label class="col-md-3 control-label" for="goods_content">商品详情描述</label>
                                 <div class="col-md-6">
-                                    <textarea id="desc" name="desc" class="form-control">{$brand.desc}</textarea>
-                                    <span class="help-block">品牌描述</span>
+                                    <textarea id="goods_content" name="goods_content">{$good.goods_content}</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="block-tabs-profile">Profile..</div>
-                    <div class="tab-pane" id="block-tabs-settings">Settings..</div>
+                    <div class="tab-pane" id="profile">
+                        <div class="form-horizontal form-bordered">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="original_img">商品缩略图</label>
+                                <div class="col-md-6">
+                                    <input type="file" id="original_img" name="original_img" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="goods_img">商品相册</label>
+                                <div class="col-md-6">
+                                    <input type="file" id="goods_img" name="goods_img[]" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="spec">
+                        <div class="form-horizontal form-bordered">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="goods_sn">商品货号</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="goods_sn" name="goods_sn" class="form-control" value="{$good.goods_sn}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="shop_price">本店售价</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="shop_price" name="shop_price" class="form-control" value="{$good.shop_price}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="market_price">市场价</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="market_price" name="market_price" class="form-control" value="{$good.market_price}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="cost_price">成本价</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="cost_price" name="cost_price" class="form-control" value="{$good.market_price}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="store_count">库存</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="store_count" name="store_count" class="form-control" value="{$good.store_count}">
+                                </div>
+                            </div>
+                            <!--添加产品规格-->
+                        </div>
+                        <div class="form-group form-actions">
+                            <div class="col-md-9 col-md-offset-3">
+                                <button type="button" class="btn btn-effect-ripple btn-primary add_spec">添加规格</button>
+                                <button type="button" class="btn btn-effect-ripple btn-primary creat_spec">生成规格表</button>
+                            </div>
+                        </div>
+                        <table id="spec_table" class="table table-striped table-bordered table-vcenter">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="logistics">Settings..</div>
+                    <div class="tab-pane" id="integral">Settings..</div>
                     <div class="form-horizontal form-bordered">
                         <div class="form-group form-actions">
                             <div class="col-md-9 col-md-offset-3">
@@ -145,15 +209,23 @@
 {/block}
 {block name="foot_js"}
 <!-- Load and execute javascript code used only in this page -->
-<script src="__APPUI__js/pages/brand.js"></script>
-<link rel="stylesheet" href="__PUBLIC__Uploader/uploader.css" />
-<script src="__PUBLIC__Uploader/Uploader.js"></script>
+{load file="__APPUI__js/pages/good.js"}
+{load file="__PUBLIC__Uploader/uploader.css"}
+{load file="__PUBLIC__Uploader/Uploader.js"}
+{load file="__UEDITOR__ueditor.config.js"}
+{load file="__UEDITOR__ueditor.all.min.js"}
 <script>
     var category_url = "{:url('admin/Goods/ajax_category')}";
     var pid_1 = "{$brand.parent_cat_id}",pid_2 = "{$brand.cat_id}";
     $(function(){
-        var up = new Upload('logo',{},"{$brand.logo}");
-        Brand.category();
+        var original_img = new Upload('original_img',{},"{$good.original_img}");
+        var goods_img = new Upload('goods_img',{},"{$good.goods_img}");
+        var desc = UE.getEditor('goods_content', {
+//            toolbars: toolbars,
+            initialFrameHeight: '400',
+            initialFrameWidth: '100%'
+        });
+        Good.edit_good();
     });
 </script>
 <!-- Load and execute javascript code used only in this page -->
