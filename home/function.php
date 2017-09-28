@@ -222,4 +222,23 @@ function authcode($string, $key = '', $operation = 'E', $expiry = 0) {
         return $keyc.str_replace('=', '', base64_encode($result));
     }
 }
+function spec($data){
+    if(!is_array($data) && !is_array($data[0])){
+        throw new Exception("参数错误");
+    }
+    $len = count($data);
+    if($len < 2){
+        return $data[0];
+    }
+    $items = [];
+    foreach ($data[0] as $value0){
+        foreach ($data[1] as  $value1){
+            $items[] = $value0 .','. $value1;
+        }
+    }
+    $data = array_slice($data,2);
+    array_unshift($data,$items);
+    return spec($data);
+}
+
 

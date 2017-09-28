@@ -15,7 +15,25 @@ class Goods extends Base
     }
     // 商品编辑
     public function edit($data){
-        dump($data);
+        $good = $data;
+        unset($good['spec_name'],$good['spec_attr'],$good['shop_prices'],$good['store_counts'],$good['goods_sns'],$good['good_id']);
+        if(empty($good['original_img'])){
+            $this->error = '请上传商品缩略图';
+            return false;
+        }
+        if(empty($good['goods_img'])){
+            $this->error = '请上传商品相册';
+            return false;
+        }
+        $good['goods_img'] = implode(',',$good['goods_img']);
+        $good['goods_id'] = '';
+        $where = [];
+        if(!empty($good['goods_id'])){
+            $where = ['goods_id'=>$good['goods_id']];
+        }
+        $this->save($good,$where);
+        $goods_id = $this->getLastInsID()?:$good['goods_id'];
+        dump($this->specs_group($data,$goods_id));
     }
     // 商品列表
     public function listing(){
@@ -24,5 +42,48 @@ class Goods extends Base
     // 商品列表
     public function edit_view(){
 
+    }
+    // 规格，规格属性添加
+    public function specs($spec_name,$spec_attr,$goods_id){
+        $ids = [];
+        Db::name('spec')->where('good_id',$goods_id)->delete();
+        foreach ($spec_name as $k => $name){
+            $map = [
+                'good_id'=>$goods_id,
+                'pid' =>0,
+                'spec' => $name
+            ];
+            $names = Db::name('spec')->insert($map);
+            $nid = Db::name('spec')->getLastInsID();
+            $spec_attrs = explode(',',$spec_attr[$k]);
+            foreach ($spec_attrs as $attr){
+                $attrs = [
+                    'good_id'=>$goods_id,
+                    'pid' =>$nid,
+                    'spec' => $attr
+                ];
+                $names = Db::name('spec')->insert($attrs);
+                $ids[$k][] = Db::name('spec')->getLastInsID();
+            }
+        }
+        return $ids;
+    }
+    // 规格，规格属性添加
+    public function specs_group($data,$goods_id){
+        $ids = $this->specs($data['spec_name'],$data['spec_attr'],$goods_id);
+        $ids = spec($ids);
+        dump($ids);
+        foreach ($ids as $k => $id){
+            $map =[
+                'goods_id'=>$goods_id,
+                'specs' => $id,
+                'market_price' => $data['market_prices'][$k]?:'',
+                'shop_price' => $data['shop_prices'][$k],
+                'store_count' => $data['store_counts'][$k],
+                'goods_sn' => $data['goods_sns'][$k],
+            ];
+            Db::name('spec_group')->insert($map);
+        }
+        return true;
     }
 }

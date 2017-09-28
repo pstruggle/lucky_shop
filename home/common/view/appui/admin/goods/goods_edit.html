@@ -41,7 +41,6 @@
                         <li class="active"><a href="#currency">通用信息</a></li>
                         <li><a href="#profile">商品相册</a></li>
                         <li><a href="#spec">商品规格</a></li>
-                        <li><a href="#logistics">商品物流</a></li>
                         <li><a href="#integral">积分折扣</a></li>
                     </ul>
                 </div>
@@ -49,7 +48,7 @@
 
                 <!-- Tabs Content -->
                 <form action="{:url('admin/Goods/edit',['action'=>'goods'])}" method="post" class="tab-content">
-                    <input type="hidden" name="id" value="{$brand.id}" />
+                    <input type="hidden" name="goods_id" value="{$good.id}" />
                     <div class="tab-pane active" id="currency">
                         <div class="form-horizontal form-bordered">
                             <div class="form-group">
@@ -65,26 +64,26 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="pid_1">所属分类</label>
+                                <label class="col-md-3 control-label" for="top_cat_id">所属分类</label>
                                 <div class="col-md-2">
-                                    <select id="pid_1" name="pid_1" class="form-control">
+                                    <select id="top_cat_id" name="top_cat_id" class="form-control">
                                         <option value="0">请选择分类</option>
                                     </select>
 
                                 </div>
                                 <div class="col-md-2">
-                                    <select id="pid_2" name="pid_2" class="form-control">
+                                    <select id="pcat_id" name="pcat_id" class="form-control">
                                         <option value="">请选择分类</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <select id="pid_3" name="pid_3" class="form-control">
+                                    <select id="cat_id" name="cat_id" class="form-control">
                                         <option value="">请选择分类</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="pid_1">商品品牌</label>
+                                <label class="col-md-3 control-label" for="brand_id">商品品牌</label>
                                 <div class="col-md-6">
                                     <select id="brand_id" name="brand_id" class="form-control">
                                         <option value="0">请选择商品品牌</option>
@@ -100,15 +99,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">是否包邮</label>
-                                <div class="col-md-6">
-                                    <label class="switch switch-info">
-                                        <input type="checkbox" id="is_free_shipping" checked="" ><span></span>
-                                    </label>
-                                    <input type="hidden" class="is_true" name="is_free_shipping" value="{$good.is_free_shipping}"  >
-
+                                <label class="col-md-3 control-label" for="shipping_area_ids">物流方式选择</label>
+                                <div class="col-md-4">
+                                    <select id="shipping_area_ids" name="shipping_area_ids" class="form-control" value="{$good.shipping_area_ids}"></select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" _href="{:url('admin/Goods/edit_view',['action'=>'logistics'])}" class="btn btn-effect-ripple btn-primary btn-sm layer">添加物流方式</button>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="keywords">商品关键字</label>
                                 <div class="col-md-6">
@@ -186,8 +185,25 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                    <div class="tab-pane" id="logistics">Settings..</div>
-                    <div class="tab-pane" id="integral">Settings..</div>
+                    <div class="tab-pane" id="integral">
+                        <div class="form-horizontal form-bordered">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="give_integral">购买赠送积分</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="give_integral" name="give_integral" class="form-control" value="{$good.give_integral}">
+                                    <span class="help-block">订单完成后赠送积分</span>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="exchange_integral">积分兑换</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="exchange_integral" name="exchange_integral" class="form-control" value="{$good.give_integral}">
+                                    <span class="help-block">如果设置0将不能使用积分兑换</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-horizontal form-bordered">
                         <div class="form-group form-actions">
                             <div class="col-md-9 col-md-offset-3">
@@ -214,8 +230,12 @@
 {load file="__PUBLIC__Uploader/Uploader.js"}
 {load file="__UEDITOR__ueditor.config.js"}
 {load file="__UEDITOR__ueditor.all.min.js"}
+{load file="__PCAS__PCAS.js"}
+{load file="__PUBLIC__layer/layer.js"}
 <script>
     var category_url = "{:url('admin/Goods/ajax_category')}";
+    var brands_url = "{:url('admin/Goods/ajax_brand')}";
+    var logistics_url = "{:url('admin/Goods/ajax_logistics')}";
     var pid_1 = "{$brand.parent_cat_id}",pid_2 = "{$brand.cat_id}";
     $(function(){
         var original_img = new Upload('original_img',{},"{$good.original_img}");

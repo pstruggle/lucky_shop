@@ -6,45 +6,84 @@
 
 var Good = function() {
     // 更改类目
-    var p1change = function (id) {
-        var html = "<option value=''>请选择分类</option>";
-
-        var pid = id != 0 ? id :'';
+    var p1change = function (pid) {
+        var html = '';
+        console.log(pid)
+        if(pid === ''){
+            html += "<option value=''>请选择分类</option>";
+            pid = 0;
+        }
         var data = {pid:pid};
+        $.ajaxSetup({async:false});
         $.get(category_url,data,function (result) {
-            for(var i in result ){
+            for( var i in result ){
                 html += "<option value='"+result[i].id+"'>"+result[i].name+"</option>";
             }
-            $('#pid_2').html(html);
         });
+        return html;
     };
     // 编辑分类类目的值
     var category_layer = function () {
-        var html = "<option value='0'>请选择分类</option>";
-        var data = {pid:0};
-        var pid_1 = $('#pid_1');
+        var pid_1 = $('#top_cat_id'),pid_2 = $('#pcat_id'),pid_3 = $('#cat_id');
         if(pid_1.length <=0){
             return false;
         }
-        $.ajaxSetup({
-            async:false
-        });
-        $.get(category_url,data,function (result) {
-            if(!result){
-                return false ;
-            }
-            for(var i in result ){
-                html += "<option value='"+result[i].id+"'>"+result[i].name+"</option>";
-            }
-            pid_1.html(html);
-        });
+        pid_1.html(p1change(''));
         pid_1.on('change',function () {
             var id = $(this).val();
-            p1change(id);
-        })
+            pid_2.html(p1change(id));
+            var id_2 = pid_2.val();
+            pid_3.html(p1change(id_2));
+        });
+        pid_2.on('change',function () {
+            var id = $(this).val();
+            pid_3.html(p1change(id));
+        });
     };
+    // 商品品牌
+    var brands = function () {
+        $.get(brands_url,{},function (result) {
+            var html = "<option value='0'>请选择商品品牌</option>";
+            for(var i in result ){
+                html += "<option value='"+result[i].id+"'>"+result[i].initial+"--"+result[i].name+"</option>";
+            }
+            $('#brand_id').html(html)
+        });
+    };
+    var logistics = function () {
+        var logs = function () {
+            var html = "<option value=''>请选择物流方式</option>";
 
-    // 编辑已有分类跳转
+            $.ajaxSetup({async:false});
+            $.get(logistics_url,function (result) {
+                for(var i in result ){
+                    html += "<option value='"+result[i].id+"'>"+result[i].name+"</option>";
+                }
+            });
+            return html;
+        };
+        $('#shipping_area_ids').html(logs());
+        $('.layer').on('click',function () {
+            var href = $(this).attr('_href');
+            //iframe窗
+            layer.open({
+                type: 2,
+                title: '增加物流方式',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['80%', '60%'],
+                content: href,
+                cancel: function(){
+                    //右上角关闭回调
+                    $('#shipping_area_ids').html(logs());
+                    return true; // 开启该代码可禁止点击该按钮关闭
+                }
+            });
+
+        });
+    };
+    // 编辑跳转
     var edit = function () {
         $('.edit').on('click',function () {
             var id = $(this).data('id');
@@ -52,6 +91,7 @@ var Good = function() {
             location.href = edit_url + '?id=' + id;
         });
     };
+    // 规格分配生成
     var spec_allot = function (data) {
         var len = data.length;
         if(len < 2){
@@ -124,12 +164,13 @@ var Good = function() {
             }
             var shop_price = $('#shop_price').val(),
                 store_count = $('#store_count').val(),
+                market_price = $('#market_price').val(),
                 goods_sn = $('#goods_sn').val();
             var head = '<tr>',body = '';
             for (var de in spec){
                 head += '<th>'+spec[de]+'</th>';
             }
-            head += '<th>售价</th><th>库存</th><th>商品编码</th></tr>';
+            head += '<th>售价</th><th>市场价</th><th>库存</th><th>商品编码</th></tr>';
             tags = spec_allot(tags);
             for (var y in tags){
                 var tag = tags[y].split(',');
@@ -138,6 +179,7 @@ var Good = function() {
                     body += '<td>'+tag[x]+'</td>';
                 }
                 body += '<td><input type="text" class="form-control" name="shop_prices[]" value="'+shop_price+'"></td>' +
+                    '<td><input type="text" class="form-control" name="market_prices[]" value="'+market_prices+'"></td>' +
                     '<td><input type="text" class="form-control" name="store_counts[]" value="'+store_count+'"></td>' +
                     '<td><input type="text" class="form-control" name="goods_sns[]" value="'+goods_sn+'"></td></tr>';
             }
@@ -155,6 +197,8 @@ var Good = function() {
         },
         edit_good : function () {
             spec(); // 规格
+            brands(); // 品牌列表
+            logistics();
             category_layer(); // 分类层级的
             $('#pid_1').val(pid_1?pid_1:0);
             if(pid_1 != '0' && pid_1 != '' ){

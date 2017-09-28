@@ -10,6 +10,12 @@ class Brand extends Base
     protected function initialize(){
         parent::initialize();
     }
+    public function setCache(){
+        $name = lcfirst($this->name);
+
+        $brands = $this->order('initial','asc')->select();
+        get_cache($name,$brands);
+    }
     // 商品品牌编辑
     public function edit($data){
         $map = [
@@ -35,7 +41,9 @@ class Brand extends Base
         if(!empty($data['id'])){
             $where = ['id'=>$data['id']];
         }
-        return $this->save($map,$where);
+        $result = $this->save($map,$where);
+        $this->setCache();
+        return $result;
     }
     // 商品品牌列表
     public function listing(){

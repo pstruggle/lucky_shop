@@ -1,0 +1,44 @@
+{extend name="../common/after/frame"}
+{block name="page_wrapper"}
+<div class="block full">
+    <div class="table-responsive">
+        <div id="example-datatable_wrapper" class="dataTables_wrapper form-inline no-footer">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                <tr>
+                    <th class="text-center">序号</th>
+                    <th class="text-center" style="width: 50px;">ID</th>
+                    <th>模板名称</th>
+                    <th>价格</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="logistics" id="logistic" key='k'}
+                <tr>
+                    <td class="text-center">{$k}</td>
+                    <td>{$logistic.id}</td>
+                    <td>{$logistic.name}</td>
+                    <td>{$logistic.price}</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="row">
+
+                <div class="col-sm-12 col-xs-12 clearfix">
+                    <div class="dataTables_paginate paging_bootstrap" id="example-datatable_paginate">
+                        {$page}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="foot_js"}
+<!-- Load and execute javascript code used only in this page -->
+
+<!-- Load and execute javascript code used only in this page -->
+<!--<script src="__APPUI__js/pages/formsValidation.js"></script>-->
+<!--<script>$(function(){ FormsValidation.init(); });</script>-->
+{/block}
