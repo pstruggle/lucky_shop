@@ -54,7 +54,7 @@
                         <th>上/下架</th>
                         <th>库存</th>
                         <th>排序</th>
-                        <th>添加时间</th>
+                        <th>最后修改时间</th>
                         <th class="text-center" style="width: 75px;">
                             <i class="fa fa-flash">
                             </i>
@@ -65,21 +65,41 @@
                     {volist name="goods" id="good" key='k'}
                     <tr>
                         <td class="text-center">{$k}</td>
-                        <td>{$good.id}</td>
+                        <td>{$good.goods_id}</td>
                         <td>{$good.goods_name}</td>
                         <td>{$good.goods_sn}</td>
-                        <td>{$good.cat_id}</td>
+                        <td>{$good.category}</td>
                         <td>{$good.shop_price}</td>
                         <td>{$good.click_count}</td>
-                        <td>{$good.is_recommend}</td>
-                        <td>{$good.is_new}</td>
-                        <td>{$good.is_hot}</td>
-                        <td>{$good.is_on_sale}</td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_recommend_{$good.goods_id}" checked="" ><span></span>
+                            </label>
+                            <input type="hidden" class="is_true" name="is_recommend_{$good.goods_id}" value="{$good.is_recommend}"  >
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_new_{$good.goods_id}" checked="" ><span></span>
+                            </label>
+                            <input type="hidden" class="is_true" name="is_new_{$good.goods_id}" value="{$good.is_new}"  >
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_hot_{$good.goods_id}" checked="" ><span></span>
+                            </label>
+                            <input type="hidden" class="is_true" name="is_hot_{$good.goods_id}" value="{$good.is_hot}"  >
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_on_sale_{$good.goods_id}" checked="" ><span></span>
+                            </label>
+                            <input type="hidden" class="is_true" name="is_on_sale_{$good.goods_id}" value="{$good.is_on_sale}"  >
+                        </td>
                         <td>{$good.store_count}</td>
                         <td>{$good.sort}</td>
                         <td>{$good.last_update | date="Y-m-d H:i:s" , ###}</td>
                         <td class="text-center">
-                            <a href="javascript:void(0)" title="编辑商品" data-id="{$good.id}" class="btn btn-effect-ripple btn-xs btn-success edit">
+                            <a href="javascript:void(0)" title="编辑商品" data-id="{$good.goods_id}" class="btn btn-effect-ripple btn-xs btn-success edit">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <a href="javascript:void(0)" title="删除品牌" class="btn btn-effect-ripple btn-xs btn-danger">
@@ -105,6 +125,12 @@
 </div>
 {/block}
 {block name="foot_js"}
+{load file="__APPUI__js/pages/good.js"}
+<script>
+    $(function () {
+        Good.init();
+    })
+</script>
 <!--<script src="__APPUI__js/pages/uiTables.js"></script>-->
 <!--<script>$(function () {UiTables.init();});</script>-->
 {/block}

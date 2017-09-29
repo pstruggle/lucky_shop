@@ -616,7 +616,8 @@ var App = function() {
             if(val == '1'){
                 check = true;
             }
-            $('#'+name).on('change',function () {
+            $('#'+name).prop('checked',check)
+                .on('change',function () {
                 var id = $(this).attr('id'),
                     input = $('input[name="'+id+'"]');
                 if($(this).is(':checked')){
@@ -625,7 +626,7 @@ var App = function() {
                     input.val(0)
 
                 }
-            }).prop('checked',check);
+            });
         });
     }
     return {

@@ -163,6 +163,7 @@ return [
     // 视图输出字符串内容替换
     'view_replace_str'       => [
         '__APPUI__'     => '/static/AppUI/',
+        '__AMZ__'     => '/static/amz/',
         '__PUBLIC__'    => '/static/public/',
         '__JQUERY__'    => '/static/public/jQuery/',
         '__UEDITOR__'   => '/static/public/UEditor/',

@@ -29,6 +29,7 @@ class Goods extends Base
             $result = $_model->listing();
 
         }catch (Exception $e){
+            dump($e->getMessage());
             return $this->error('操作错误');
         }catch (ClassNotFoundException $c){
             return $this->error('操作错误');
@@ -45,9 +46,13 @@ class Goods extends Base
             $result = $_model->edit_view();
 
         }catch (Exception $e){
-            return $this->error('操作错误');
+            dump($e->getMessage());
+
+//            return $this->error('操作错误');
         }catch (ClassNotFoundException $c){
-            return $this->error('操作错误');
+            dump($c->getMessage());
+
+//            return $this->error('操作错误');
         }
         $this->assign($result);
         return $this->template($action.'_edit');
@@ -68,6 +73,8 @@ class Goods extends Base
             dump($e->getMessage());
 //            return $this->error('操作错误');
         }catch (ClassNotFoundException $c){
+            dump($c->getMessage());
+
             return $this->error('操作错误');
         }
         if (!$result){
@@ -89,5 +96,17 @@ class Goods extends Base
     // 异步物流模板
     public function ajax_logistics(){
         return json(get_cache('logistics'));
+    }
+    // 异步返回商品
+    public function ajax_spec(){
+        $goods_id = input('goods_id');
+        $_goods = model('goods');
+        $spec = $_goods->get_specs($goods_id);
+        $spec_group = $_goods->get_spec_groups($goods_id);
+        $result = [
+            'spec'=>$spec,
+            'spec_group' => $spec_group
+        ];
+        return json($result);
     }
 }
