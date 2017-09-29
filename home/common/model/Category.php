@@ -75,6 +75,13 @@ class Category extends Base
     public function getCategory($where=[],$order=[]){
         return $this->where($where)->order($order)->select();
     }
+
+    // 递归分类
+    public function category($pid = 0,$layer = 1){
+        $result = [];
+        $categorys = $this->getCategory(['pid'=>$pid]);
+        
+    }
     // 分类列表视图
     public function category_view($categorys,$pid = 0,$layer = 1){
         $html = '';
