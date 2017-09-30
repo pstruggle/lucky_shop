@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-09-28 17:36:56
+Date: 2017-09-30 17:26:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4104,7 +4104,7 @@ CREATE TABLE `lucky_goods` (
   `commission` decimal(10,2) DEFAULT '0.00' COMMENT '佣金用于分销分成',
   `spu` varchar(128) DEFAULT '' COMMENT 'SPU',
   `sku` varchar(128) DEFAULT '' COMMENT 'SKU',
-  `shipping_area_ids` varchar(255) NOT NULL DEFAULT '' COMMENT '配送物流shipping_area_id,以逗号分隔',
+  `shipping_area_ids` int(11) NOT NULL DEFAULT '0' COMMENT '配送物流shipping_area_id,以逗号分隔',
   PRIMARY KEY (`goods_id`),
   KEY `goods_sn` (`goods_sn`),
   KEY `cat_id` (`cat_id`),
@@ -4112,8 +4112,10 @@ CREATE TABLE `lucky_goods` (
   KEY `brand_id` (`brand_id`),
   KEY `goods_number` (`store_count`),
   KEY `goods_weight` (`weight`),
-  KEY `sort_order` (`sort`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  KEY `sort_order` (`sort`),
+  KEY `top_cat_id` (`top_cat_id`),
+  KEY `pcat_id` (`pcat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_goods
@@ -4131,6 +4133,8 @@ INSERT INTO `lucky_goods` VALUES ('10', '1', '3', '4', '0', 'lucky12345', '精�
 INSERT INTO `lucky_goods` VALUES ('11', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
 INSERT INTO `lucky_goods` VALUES ('12', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
 INSERT INTO `lucky_goods` VALUES ('13', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
+INSERT INTO `lucky_goods` VALUES ('14', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
+INSERT INTO `lucky_goods` VALUES ('15', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '120.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '1506675264', '0', '0', '20', '20', '0', '0', '0', '0', '0.00', '', '', '1');
 
 -- ----------------------------
 -- Table structure for lucky_logistics
@@ -4254,7 +4258,7 @@ CREATE TABLE `lucky_spec` (
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`),
   KEY `good_id` (`good_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_spec
@@ -4286,6 +4290,12 @@ INSERT INTO `lucky_spec` VALUES ('30', '12', '28', '白色');
 INSERT INTO `lucky_spec` VALUES ('31', '13', '0', '颜色');
 INSERT INTO `lucky_spec` VALUES ('32', '13', '31', '黑色');
 INSERT INTO `lucky_spec` VALUES ('33', '13', '31', '白色');
+INSERT INTO `lucky_spec` VALUES ('34', '14', '0', '颜色');
+INSERT INTO `lucky_spec` VALUES ('35', '14', '34', '黑色');
+INSERT INTO `lucky_spec` VALUES ('36', '14', '34', '白色');
+INSERT INTO `lucky_spec` VALUES ('43', '15', '0', '颜色');
+INSERT INTO `lucky_spec` VALUES ('44', '15', '43', '黑色');
+INSERT INTO `lucky_spec` VALUES ('45', '15', '43', '白色');
 
 -- ----------------------------
 -- Table structure for lucky_spec_group
@@ -4294,23 +4304,25 @@ DROP TABLE IF EXISTS `lucky_spec_group`;
 CREATE TABLE `lucky_spec_group` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '规格组合表',
   `goods_id` int(11) NOT NULL COMMENT '商品id',
-  `specs` varchar(0) NOT NULL COMMENT '规格组合逗号分隔',
+  `specs` varchar(2556) NOT NULL COMMENT '规格组合逗号分隔',
   `market_price` decimal(10,2) NOT NULL COMMENT '市场价',
   `shop_price` decimal(10,2) NOT NULL COMMENT '本店出售价',
   `store_count` int(5) NOT NULL COMMENT '库存数',
   `goods_sn` varchar(100) NOT NULL COMMENT '商品号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_spec_group
 -- ----------------------------
-INSERT INTO `lucky_spec_group` VALUES ('1', '10', '', '1.00', '1.00', '2', 'l');
-INSERT INTO `lucky_spec_group` VALUES ('2', '10', '', '3.00', '2.00', '0', 'u');
 INSERT INTO `lucky_spec_group` VALUES ('3', '12', '', '0.00', '123.00', '20', 'lucky12345');
 INSERT INTO `lucky_spec_group` VALUES ('4', '12', '', '0.00', '123.00', '20', 'lucky12345');
 INSERT INTO `lucky_spec_group` VALUES ('5', '13', '', '0.00', '123.00', '20', 'lucky12345');
 INSERT INTO `lucky_spec_group` VALUES ('6', '13', '', '0.00', '123.00', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('7', '14', '', '0.00', '123.00', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('8', '14', '', '0.00', '123.00', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('13', '15', '44', '132.00', '123.00', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('14', '15', '45', '132.00', '123.00', '20', 'lucky12345');
 
 -- ----------------------------
 -- Table structure for lucky_users
