@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-09-30 17:26:15
+Date: 2017-10-06 00:05:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3958,7 +3958,7 @@ CREATE TABLE `lucky_brand` (
   `cat_id` int(10) DEFAULT '0' COMMENT '分类id',
   `is_hot` tinyint(1) DEFAULT '0' COMMENT '是否推荐',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_brand
@@ -3980,15 +3980,211 @@ CREATE TABLE `lucky_category` (
   `weight` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `addtime` int(11) NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_category
 -- ----------------------------
-INSERT INTO `lucky_category` VALUES ('1', '0', '点心/蛋糕', '点心蛋糕', '0', '', '10', '1506326961');
-INSERT INTO `lucky_category` VALUES ('2', '0', '点心/蛋糕', '点心蛋糕', '0', '', '20', '1506326973');
+INSERT INTO `lucky_category` VALUES ('1', '0', '点心/蛋糕', '点心蛋糕', '1', '/upload/admin/image/20170930/1506770469769795.png', '1', '1506326961');
+INSERT INTO `lucky_category` VALUES ('2', '0', '饼干/膨化', '饼干/膨化', '1', '/upload/admin/image/20170930/1506770447567417.png', '2', '1506326973');
 INSERT INTO `lucky_category` VALUES ('3', '1', '蛋糕', '蛋糕', '1', '', '0', '1506345249');
 INSERT INTO `lucky_category` VALUES ('4', '3', '蒸蛋糕', '蒸蛋糕', '0', '', '0', '1506350097');
+INSERT INTO `lucky_category` VALUES ('5', '0', '熟食/肉类', '熟食/肉类', '1', '/upload/admin/image/20170930/1506770492283966.png', '3', '1506770494');
+INSERT INTO `lucky_category` VALUES ('6', '0', '素食/卤味', '素食/卤味', '1', '/upload/admin/image/20170930/1506770517104778.png', '4', '1506770520');
+INSERT INTO `lucky_category` VALUES ('7', '0', '坚果/炒货', '坚果/炒货', '1', '/upload/admin/image/20170930/1506770561122765.png', '5', '1506770566');
+INSERT INTO `lucky_category` VALUES ('8', '0', '糖果/蜜饯', '糖果/蜜饯', '1', '/upload/admin/image/20170930/1506770640769365.png', '6', '1506770645');
+INSERT INTO `lucky_category` VALUES ('9', '0', '巧克力', '巧克力', '1', '/upload/admin/image/20170930/1506770673704688.png', '7', '1506770675');
+INSERT INTO `lucky_category` VALUES ('10', '0', '海味/河鲜', '海味/河鲜', '1', '/upload/admin/image/20170930/1506770833353721.png', '8', '1506770836');
+INSERT INTO `lucky_category` VALUES ('11', '0', '花茶/果茶', '花茶/果茶', '1', '/upload/admin/image/20170930/1506770855109765.png', '9', '1506770858');
+INSERT INTO `lucky_category` VALUES ('12', '0', '品牌/礼包', '品牌/礼包', '1', '/upload/admin/image/20170930/1506770880316799.png', '10', '1506770883');
+INSERT INTO `lucky_category` VALUES ('13', '1', '点心', '点心', '1', '', '2', '1506771061');
+INSERT INTO `lucky_category` VALUES ('14', '3', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('15', '3', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('16', '3', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('17', '3', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('18', '3', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('19', '3', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('20', '3', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('21', '3', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('22', '13', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('23', '13', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('24', '13', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('25', '13', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('26', '13', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('27', '13', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('28', '13', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('29', '13', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('30', '2', '饼干', '饼干', '1', '', '0', '1506771711');
+INSERT INTO `lucky_category` VALUES ('31', '2', '薯片', '薯片', '1', '', '0', '1506772490');
+INSERT INTO `lucky_category` VALUES ('32', '2', '虾条', '虾条', '1', '', '0', '1506772565');
+INSERT INTO `lucky_category` VALUES ('33', '30', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('34', '30', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('35', '30', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('36', '30', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('37', '30', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('38', '30', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('39', '30', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('40', '30', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('41', '31', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('42', '31', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('43', '31', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('44', '31', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('45', '31', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('46', '31', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('47', '31', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('48', '31', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('49', '32', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('50', '32', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('51', '32', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('52', '32', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('53', '32', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('54', '32', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('55', '32', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('56', '32', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('57', '5', '猪肉脯', '猪肉脯', '1', '', '0', '1506780406');
+INSERT INTO `lucky_category` VALUES ('58', '5', '牛肉丝', '牛肉丝', '1', '', '0', '1506780425');
+INSERT INTO `lucky_category` VALUES ('59', '5', '小香肠', '小香肠', '1', '', '0', '1506780444');
+INSERT INTO `lucky_category` VALUES ('60', '57', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('61', '57', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('62', '57', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('63', '57', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('64', '57', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('65', '57', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('66', '57', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('67', '57', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('68', '58', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('69', '58', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('70', '58', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('71', '58', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('72', '58', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('73', '58', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('74', '58', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('75', '58', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('76', '59', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('77', '59', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('78', '59', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('79', '59', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('80', '59', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('81', '59', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('82', '59', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('83', '59', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('84', '6', '豆干', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('85', '6', '干笋', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('86', '6', '鸭脖', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('87', '84', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('88', '84', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('89', '84', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('90', '84', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('91', '84', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('92', '84', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('93', '84', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('94', '84', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('95', '85', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('96', '85', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('97', '85', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('98', '85', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('99', '85', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('100', '85', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('101', '85', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('102', '85', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('103', '86', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('104', '86', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('105', '86', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('106', '86', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('107', '86', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('108', '86', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('109', '86', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('110', '86', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('111', '7', '坚果', '坚果', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('112', '7', '锅巴', '锅巴', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('113', '8', '糖果', '糖果', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('114', '8', '蜜饯', '蜜饯', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('115', '9', '巧克力', '巧克力', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('116', '9', '果冻', '果冻', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('117', '10', '海带丝', '海带丝', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('118', '10', '小鱼干', '小鱼干', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('119', '11', '小鱼干', '小鱼干', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('120', '12', '小鱼干', '小鱼干', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('121', '111', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('122', '111', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('123', '111', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('124', '111', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('125', '111', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('126', '111', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('127', '111', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('128', '111', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('129', '112', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('130', '112', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('131', '112', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('132', '112', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('133', '112', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('134', '112', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('135', '112', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('136', '112', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('137', '113', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('138', '113', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('139', '113', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('140', '113', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('141', '113', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('142', '113', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('143', '113', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('144', '113', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('145', '114', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('146', '114', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('147', '114', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('148', '114', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('149', '114', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('150', '114', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('151', '114', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('152', '114', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('153', '115', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('154', '115', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('155', '115', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('156', '115', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('157', '115', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('158', '115', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('159', '115', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('160', '115', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('161', '116', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('162', '116', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('163', '116', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('164', '116', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('165', '116', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('166', '116', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('167', '116', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('168', '116', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('169', '117', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('170', '117', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('171', '117', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('172', '117', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('173', '117', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('174', '117', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('175', '117', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('176', '117', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('177', '118', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('178', '118', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('179', '118', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('180', '118', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('181', '118', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('182', '118', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('183', '118', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('184', '118', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('185', '119', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('186', '119', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('187', '119', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('188', '119', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('189', '119', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('190', '119', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('191', '119', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('192', '119', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
+INSERT INTO `lucky_category` VALUES ('193', '120', '脱水蛋糕', '脱水蛋糕', '1', '', '0', '1506771116');
+INSERT INTO `lucky_category` VALUES ('194', '120', '瑞士卷', '瑞士卷', '1', '', '0', '1506771172');
+INSERT INTO `lucky_category` VALUES ('195', '120', '软面包', '软面包', '1', '', '0', '1506771200');
+INSERT INTO `lucky_category` VALUES ('196', '120', '马卡龙', '马卡龙', '1', '', '0', '1506771261');
+INSERT INTO `lucky_category` VALUES ('197', '120', '千层饼', '千层饼', '1', '', '0', '1506771289');
+INSERT INTO `lucky_category` VALUES ('198', '120', '甜甜圈', '甜甜圈', '1', '', '0', '1506771315');
+INSERT INTO `lucky_category` VALUES ('199', '120', '蒸三明治', '蒸三明治', '1', '', '0', '1506771352');
+INSERT INTO `lucky_category` VALUES ('200', '120', '铜锣烧', '铜锣烧', '1', '', '0', '1506771381');
 
 -- ----------------------------
 -- Table structure for lucky_config
@@ -4133,7 +4329,7 @@ INSERT INTO `lucky_goods` VALUES ('10', '1', '3', '4', '0', 'lucky12345', '精�
 INSERT INTO `lucky_goods` VALUES ('11', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
 INSERT INTO `lucky_goods` VALUES ('12', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
 INSERT INTO `lucky_goods` VALUES ('13', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
-INSERT INTO `lucky_goods` VALUES ('14', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '0', '0', '0', '20', '30', '0', '0', '0', '0', '0.00', '', '', '1');
+INSERT INTO `lucky_goods` VALUES ('14', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '100.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '1506768961', '0', '0', '20', '20', '0', '0', '0', '0', '0.00', '', '', '1');
 INSERT INTO `lucky_goods` VALUES ('15', '1', '3', '4', '0', 'lucky12345', '精品蛋糕', '0', '1', '20', '0', '20', '132.00', '123.00', '120.00', null, '关键字', '草莓蛋糕', '<p>描述详情</p>', '/upload/admin/image/20170928/1506588131116826.png', '/upload/admin/image/20170928/1506588134114374.png', '1', '1', '0', '0', '50', '0', '0', '0', '1506675264', '0', '0', '20', '20', '0', '0', '0', '0', '0.00', '', '', '1');
 
 -- ----------------------------
@@ -4258,7 +4454,7 @@ CREATE TABLE `lucky_spec` (
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`),
   KEY `good_id` (`good_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_spec
@@ -4290,12 +4486,12 @@ INSERT INTO `lucky_spec` VALUES ('30', '12', '28', '白色');
 INSERT INTO `lucky_spec` VALUES ('31', '13', '0', '颜色');
 INSERT INTO `lucky_spec` VALUES ('32', '13', '31', '黑色');
 INSERT INTO `lucky_spec` VALUES ('33', '13', '31', '白色');
-INSERT INTO `lucky_spec` VALUES ('34', '14', '0', '颜色');
-INSERT INTO `lucky_spec` VALUES ('35', '14', '34', '黑色');
-INSERT INTO `lucky_spec` VALUES ('36', '14', '34', '白色');
 INSERT INTO `lucky_spec` VALUES ('43', '15', '0', '颜色');
 INSERT INTO `lucky_spec` VALUES ('44', '15', '43', '黑色');
 INSERT INTO `lucky_spec` VALUES ('45', '15', '43', '白色');
+INSERT INTO `lucky_spec` VALUES ('49', '14', '0', '颜色');
+INSERT INTO `lucky_spec` VALUES ('50', '14', '49', '黑色');
+INSERT INTO `lucky_spec` VALUES ('51', '14', '49', '白色');
 
 -- ----------------------------
 -- Table structure for lucky_spec_group
@@ -4310,7 +4506,7 @@ CREATE TABLE `lucky_spec_group` (
   `store_count` int(5) NOT NULL COMMENT '库存数',
   `goods_sn` varchar(100) NOT NULL COMMENT '商品号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_spec_group
@@ -4319,10 +4515,10 @@ INSERT INTO `lucky_spec_group` VALUES ('3', '12', '', '0.00', '123.00', '20', 'l
 INSERT INTO `lucky_spec_group` VALUES ('4', '12', '', '0.00', '123.00', '20', 'lucky12345');
 INSERT INTO `lucky_spec_group` VALUES ('5', '13', '', '0.00', '123.00', '20', 'lucky12345');
 INSERT INTO `lucky_spec_group` VALUES ('6', '13', '', '0.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('7', '14', '', '0.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('8', '14', '', '0.00', '123.00', '20', 'lucky12345');
 INSERT INTO `lucky_spec_group` VALUES ('13', '15', '44', '132.00', '123.00', '20', 'lucky12345');
 INSERT INTO `lucky_spec_group` VALUES ('14', '15', '45', '132.00', '123.00', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('17', '14', '50', '132.00', '123.00', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('18', '14', '51', '132.00', '123.00', '20', 'lucky12345');
 
 -- ----------------------------
 -- Table structure for lucky_users

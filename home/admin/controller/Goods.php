@@ -29,7 +29,6 @@ class Goods extends Base
             $result = $_model->listing();
 
         }catch (Exception $e){
-            dump($e->getMessage());
             return $this->error('操作错误');
         }catch (ClassNotFoundException $c){
             return $this->error('操作错误');
@@ -46,13 +45,9 @@ class Goods extends Base
             $result = $_model->edit_view();
 
         }catch (Exception $e){
-            dump($e->getMessage());
-
-//            return $this->error('操作错误');
+            return $this->error('操作错误');
         }catch (ClassNotFoundException $c){
-            dump($c->getMessage());
-
-//            return $this->error('操作错误');
+            return $this->error('操作错误');
         }
         $this->assign($result);
         return $this->template($action.'_edit');
@@ -70,17 +65,14 @@ class Goods extends Base
             $result = $_model->edit($data);
 
         }catch (Exception $e){
-            dump($e->getMessage());
-//            return $this->error('操作错误');
+            return $this->error('操作错误');
         }catch (ClassNotFoundException $c){
-            dump($c->getMessage());
-
             return $this->error('操作错误');
         }
         if (!$result){
-//            return $this->error($_model->getError());
+            return $this->error($_model->getError());
         }
-//        return $this->redirect('admin/Goods/listing',['action'=>$action]);
+        return $this->redirect('admin/Goods/listing',['action'=>$action]);
     }
     // 异步返回产品分类
     public function ajax_category(){

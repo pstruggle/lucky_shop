@@ -77,10 +77,15 @@ class Category extends Base
     }
 
     // 递归分类
-    public function category($pid = 0,$layer = 1){
+    public function category($pid = 0,$layer = 1,$w = []){
         $result = [];
-        $categorys = $this->getCategory(['pid'=>$pid]);
-        
+        $where = array_merge(['pid'=>$pid],$w);
+        $categorys = $this->getCategory($where);
+        foreach ($categorys as $k => $category){
+            $result[$k][] = $category;
+            $result[$k][] = $this->category($category['id'],$layer+1,$w);
+        }
+        return $result;
     }
     // 分类列表视图
     public function category_view($categorys,$pid = 0,$layer = 1){

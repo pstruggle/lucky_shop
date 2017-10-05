@@ -15,10 +15,11 @@ class Index extends Common
     //首页
     public function index()
     {
-        $category = model('category')->ge
-        $this->assign([
-            'title' => '小惠猫-旅游首页',
+        $categorys = model('category')->category();
 
+        $this->assign([
+            'title' => get_cache('config.mall')['store_title'],
+            'categorys' => $categorys
         ]);
         return $this->template();
     }
