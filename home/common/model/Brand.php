@@ -24,17 +24,19 @@ class Brand extends Base
             'is_hot' => $data['is_hot'],
             'sort' => $data['sort'],
             'logo' => !empty($data['logo'])?$data['logo']:'',
-            'parent_cat_id' => $data['pid_1'],
-            'cat_id' => $data['pid_2'],
+            'top_cat_id' => $data['top_cat_id'],
+            'parent_cat_id' => $data['parent_cat_id'],
+            'cat_id' => $data['cat_id'],
             'desc' => $data['desc'],
         ];
-        $map['cat_name'] = '';
-        if($map['parent_cat_id']){
+        if($map['cat_id']){
+            $map['cat_name'] .= Db::name('category')->where('id',$map['cat_id'])->value('name');
+        }elseif($map['parent_cat_id']){
             $map['cat_name'] .= Db::name('category')->where('id',$map['parent_cat_id'])->value('name');
-            if($map['cat_id']){
-                $map['cat_name'] .= Db::name('category')->where('id',$map['cat_id'])->value('name');
-            }
+        }elseif($map['top_cat_id']){
+            $map['cat_name'] .= Db::name('category')->where('id',$map['top_cat_id'])->value('name');
         }
+
         $chinese = new \ChineseSpell();
         $map['initial'] = $chinese->getFirstCharter($map['name']);
         $where = [];

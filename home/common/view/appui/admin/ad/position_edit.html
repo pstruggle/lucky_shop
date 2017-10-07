@@ -1,0 +1,94 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Form Components</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Forms</li>
+                        <li><a href="">Components</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li class="active"><a href="{:url('admin/Ad/index')}">广告位列表</a></li>
+
+        </ul>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/Ad/edit',['action'=>'position'])}" method="post" class="form-horizontal form-bordered">
+                    <input type="hidden" name="id" value="{$position.id}" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="position_name">广告位置名称</label>
+                        <div class="col-md-6">
+                            <input type="text" id="position_name" name="position_name" class="form-control" value="{$position.position_name}">
+                            <span class="help-block">请输入广告位置名称</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="mark">广告位置标识</label>
+                        <div class="col-md-6">
+                            <input type="text" id="mark" name="mark" class="form-control" value="{$position.mark}">
+                            <span class="help-block">请输入广告位置标识</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="desc">描述</label>
+                        <div class="col-md-6">
+                            <textarea id="desc" name="desc" class="form-control">{$position.desc}</textarea>
+                            <span class="help-block">对广告位简单描述</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+
+{/block}
+{block name="foot_js"}
+<!-- Load and execute javascript code used only in this page -->
+<script src="__APPUI__js/pages/brand.js"></script>
+<link rel="stylesheet" href="__PUBLIC__Uploader/uploader.css" />
+<script src="__PUBLIC__Uploader/Uploader.js"></script>
+<script>
+    var category_url = "{:url('admin/Goods/ajax_category')}";
+    $(function(){
+        var up = new Upload('logo',{},"{$brand.logo}");
+        Brand.category();
+    });
+</script>
+<!-- Load and execute javascript code used only in this page -->
+<!--<script src="__APPUI__js/pages/formsValidation.js"></script>-->
+<!--<script>$(function(){ FormsValidation.init(); });</script>-->
+{/block}

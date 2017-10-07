@@ -36,7 +36,7 @@ class System extends Base
     /**
      * 编辑配置内容
      */
-    public function edit(){
+    public function edit_op(){
         if(!$this->request->isPost()){
             return $this->error('请求出错');
         }
@@ -93,12 +93,10 @@ class System extends Base
         $logs = Db::name('sms_log')->order('send_time','desc')->paginate(20);
         $page = $logs->render();
         $this->assign([
-            'title' => '邮件发送日志',
+            'title' => '短信发送日志',
             'logs' => $logs,
             'page' => $page,
         ]);
         return $this->template();
-
     }
-
 }

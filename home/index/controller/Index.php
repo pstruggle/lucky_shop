@@ -1,8 +1,6 @@
 <?php
 namespace app\index\controller;
 use app\common\controller\Common;
-use think\Cookie;
-use think\Db;
 
 class Index extends Common
 {
@@ -15,11 +13,14 @@ class Index extends Common
     //首页
     public function index()
     {
-        $categorys = model('category')->category();
-
+        $categorys = get_cache('category');
+        $pc_ads = get_cache('ad.pc_home');
+        $navs = get_cache('nav');
         $this->assign([
             'title' => get_cache('config.mall')['store_title'],
-            'categorys' => $categorys
+            'categorys' => $categorys,
+            'pc_ads' => $pc_ads,
+            'navs' => $navs
         ]);
         return $this->template();
     }

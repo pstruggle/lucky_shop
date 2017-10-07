@@ -1,0 +1,108 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Form Components</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Forms</li>
+                        <li><a href="">Components</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li class="active"><a href="{:url('admin/Ad/index',['action'=>'ad','position'=>input('position')])}">广告列表</a></li>
+
+        </ul>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/System/edit',['action'=>'nav'])}" method="post" class="form-horizontal form-bordered">
+                    <input type="hidden" name="id" value="{$nav.id}" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="name">导航名称</label>
+                        <div class="col-md-6">
+                            <input type="text" id="name" name="name" class="form-control" value="{$nav.name}">
+                            <span class="help-block">请输入导航名称</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="url">导航链接</label>
+                        <div class="col-md-6">
+                            <input type="text" id="url" name="url" class="form-control" value="{$nav.url}">
+                            <span class="help-block">请输入导航链接</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="is_show">是否显示</label>
+                        <div class="col-md-6">
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_show" checked="" ><span></span>
+                            </label>
+                            <input type="hidden" class="is_true" name="is_show" value="{$nav.is_show}"  >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="weight">排序</label>
+                        <div class="col-md-6">
+                            <input type="text" id="weight" name="weight" class="form-control" value="{$nav.weight}">
+                            <span class="help-block">广告排序（越大越在前）</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+
+{/block}
+{block name="foot_js"}
+<!-- Load and execute javascript code used only in this page -->
+<link rel="stylesheet" href="__PUBLIC__Uploader/uploader.css" />
+<script src="__PUBLIC__Uploader/Uploader.js"></script>
+{load file="__PUBLIC__jedate/jquery.jedate.js"}
+{load file="__PUBLIC__jedate/skin/jedate.css"}
+<script>
+    $(function(){
+        var up = new Upload('img_url',{},"{$ad.img_url}");
+        $("#start_time,#end_time").jeDate({
+            format:"YYYY-MM-DD hh:mm:ss",
+            isTime:false,
+            isToday:true,
+            minDate:$.nowDate({DD:0})
+        })
+    });
+</script>
+<!-- Load and execute javascript code used only in this page -->
+<!--<script src="__APPUI__js/pages/formsValidation.js"></script>-->
+<!--<script>$(function(){ FormsValidation.init(); });</script>-->
+{/block}

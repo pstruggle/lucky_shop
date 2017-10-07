@@ -1,0 +1,99 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Tables</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Elements</li>
+                        <li>
+                            <a href="">Tables</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a href="{:url('admin/Ad/edit_view',['action'=>'position'])}" class="edit_view" >广告位编辑</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <div class="block full">
+        <div class="table-responsive">
+            <div id="example-datatable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                    <thead>
+                    <tr>
+                        <th class="text-center">序号</th>
+                        <th class="text-center" style="width: 50px;">ID</th>
+                        <th>广告标识</th>
+                        <th>广告位置名称</th>
+                        <th>广告位置描述</th>
+                        <th>广告</th>
+                        <th class="text-center" style="width: 75px;">
+                            <i class="fa fa-flash">
+                            </i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="positions" id="position" key='k'}
+                    <tr>
+                        <td class="text-center">{$k}</td>
+                        <td class="text-center">{$position.id}</td>
+                        <td>{$position.mark}</td>
+                        <td>{$position.position_name}</td>
+                        <td>{$position.desc}</td>
+                        <td><a href="{:url('admin/ad/index',['action'=>'ad','position'=>$position.mark])}">查看</a></td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" title="编辑" data-id="{$position.id}" class="btn btn-effect-ripple btn-xs btn-success edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a href="javascript:void(0)" title="删除" class="btn btn-effect-ripple btn-xs btn-danger">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                <div class="row">
+
+                    <div class="col-sm-12 col-xs-12 clearfix">
+                        <div class="dataTables_paginate paging_bootstrap" id="example-datatable_paginate">
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+{/block}
+{block name="foot_js"}
+<script src="__APPUI__js/pages/brand.js"></script>
+<script>
+    var edit_url = "{:url('admin/Goods/brand_edit')}";
+    $(function () {
+        Brand.init();
+    });
+</script>
+{/block}

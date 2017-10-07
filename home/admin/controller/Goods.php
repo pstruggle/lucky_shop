@@ -20,60 +20,6 @@ class Goods extends Base
         ]);
         return $this->template();
     }
-
-    // 列表控制器
-    public function listing(){
-        $action = input('action');
-        try{
-            $_model = model($action);
-            $result = $_model->listing();
-
-        }catch (Exception $e){
-            return $this->error('操作错误');
-        }catch (ClassNotFoundException $c){
-            return $this->error('操作错误');
-        }
-        $this->assign($result);
-        return $this->template($action.'_list');
-    }
-
-    // 编辑视图控制器
-    public function edit_view(){
-        $action = input('action');
-        try{
-            $_model = model($action);
-            $result = $_model->edit_view();
-
-        }catch (Exception $e){
-            return $this->error('操作错误');
-        }catch (ClassNotFoundException $c){
-            return $this->error('操作错误');
-        }
-        $this->assign($result);
-        return $this->template($action.'_edit');
-    }
-
-    // 各种编辑操作
-    public function edit(){
-        if (!$this->request->isPost()){
-            return $this->error('请求出错');
-        }
-        $action = input('action');
-        $data = input('post.');
-        try{
-            $_model = model($action);
-            $result = $_model->edit($data);
-
-        }catch (Exception $e){
-            return $this->error('操作错误');
-        }catch (ClassNotFoundException $c){
-            return $this->error('操作错误');
-        }
-        if (!$result){
-            return $this->error($_model->getError());
-        }
-        return $this->redirect('admin/Goods/listing',['action'=>$action]);
-    }
     // 异步返回产品分类
     public function ajax_category(){
         $where = ['pid'=>input('get.pid')];

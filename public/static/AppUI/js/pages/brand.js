@@ -5,42 +5,49 @@
  */
 
 var Brand = function() {
-    var p1change = function (id) {
-        var html = "<option value=''>请选择分类</option>";
-
-        var pid = id != 0 ? id :'';
+    var p1change = function (pid,select) {
+        var html = '';
+        if(pid === ''){
+            html += "<option value=''>请选择分类</option>";
+            pid = 0;
+        }
         var data = {pid:pid};
+        $.ajaxSetup({async:false});
         $.get(category_url,data,function (result) {
-            for(var i in result ){
-                html += "<option value='"+result[i].id+"'>"+result[i].name+"</option>";
+            for( var i in result ){
+                var sele = '';
+                if(select == result[i].id){
+                    sele = 'selected ="selected"';
+                }
+                html += "<option value='"+result[i].id+"' "+sele+">"+result[i].name+"</option>";
             }
-            $('#pid_2').html(html);
         });
+        return html;
     };
     // 编辑分类类目的值
     var category_layer = function () {
-        var html = "<option value='0'>请选择分类</option>";
-        var data = {pid:0};
-        var pid_1 = $('#pid_1');
-        if(pid_1.length <=0){
+        var top_cat_id = $('#top_cat_id'),parent_cat_id = $('#parent_cat_id'),cat_id = $('#cat_id');
+        var pid_1 = top_cat_id.data('val'),pid_2 = parent_cat_id.data('val'),pid_3 = cat_id.data('val');
+        if(parent_cat_id.length <=0){
             return false;
         }
-        $.ajaxSetup({
-            async:false
-        });
-        $.get(category_url,data,function (result) {
-            if(!result){
-                return false ;
-            }
-            for(var i in result ){
-                html += "<option value='"+result[i].id+"'>"+result[i].name+"</option>";
-            }
-            pid_1.html(html);
-        });
-        pid_1.on('change',function () {
-            var id = $(this).val();
-            p1change(id);
-        })
+
+        var selP = function () {
+            top_cat_id.html(p1change('',pid_1));
+            selC();
+        };
+        var selC = function () {
+            var id = top_cat_id.val();
+            parent_cat_id.html(p1change(id,pid_2));
+            selA();
+        };
+        var selA = function () {
+            var id = parent_cat_id.val();
+            cat_id.html(p1change(id,pid_3));
+        };
+        top_cat_id.on('change',selC);
+        parent_cat_id.on('change',selA);
+        selP();
     };
 
     // 编辑已有分类跳转
@@ -57,14 +64,6 @@ var Brand = function() {
         },
         category : function () {
             category_layer(); // 分类层级的
-            $('#pid_1').val(pid_1?pid_1:0);
-
-            if(pid_1 != '0' && pid_1 != '' ){
-                p1change(pid_1);
-                if(pid_2 != 0){
-                    $('#pid_2').val(pid_2);
-                }
-            }
         }
     };
 }();

@@ -1,0 +1,105 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Tables</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Elements</li>
+                        <li>
+                            <a href="">Tables</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li>
+                <a href="{:url('admin/System/edit_view',['action'=>'nav'])}" class="edit_view" >导航编辑</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <div class="block full">
+        <div class="table-responsive">
+            <div id="example-datatable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                    <thead>
+                    <tr>
+                        <th class="text-center">序号</th>
+                        <th class="text-center" style="width: 50px;">ID</th>
+                        <th>导航名称</th>
+                        <th>导航链接</th>
+                        <th>是否显示</th>
+                        <th>排序</th>
+                        <th>修改时间</th>
+                        <th class="text-center"><i class="fa fa-flash"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="navs" id="nav" key='k'}
+                    <tr>
+                        <td class="text-center">{$k}</td>
+                        <td class="text-center">{$nav.id}</td>
+                        <td>{$nav.name}</td>
+                        <td>
+                            <a href="{$nav.url}" title="{$nav.name}">跳转</a>
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_show{$nav.id}" checked="" ><span></span>
+                            </label>
+                            <input type="hidden" class="is_true" name="is_show{$nav.id}" value="{$nav.is_show}"  >
+                        </td>
+                        <td>{$nav.weight}</td>
+                        <td>{$nav.addtime | date="Y-m-d H:i:s" , ###}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" title="编辑" data-id="{$nav.id}" class="btn btn-effect-ripple btn-xs btn-success edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a href="javascript:void(0)" title="删除" class="btn btn-effect-ripple btn-xs btn-danger">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                <div class="row">
+
+                    <div class="col-sm-12 col-xs-12 clearfix">
+                        <div class="dataTables_paginate paging_bootstrap" id="example-datatable_paginate">
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+{/block}
+{block name="foot_js"}
+<script src="__APPUI__js/pages/brand.js"></script>
+<script>
+    var edit_url = "{:url('admin/Goods/brand_edit')}";
+    $(function () {
+        Brand.init();
+    });
+</script>
+{/block}

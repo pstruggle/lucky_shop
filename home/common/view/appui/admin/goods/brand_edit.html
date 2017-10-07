@@ -1,181 +1,124 @@
 {extend name="../common/after/frame"}
 {block name="page_content"}
-<div id="page-wrapper" class="page-loading">
-    <!-- Preloader -->
-    <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
-    <!-- Used only if page preloader enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
-
-    <div class="preloader">
-        <div class="inner">
-            <!-- Animation spinner for all modern browsers -->
-            <div class="preloader-spinner themed-background hidden-lt-ie10"></div>
-
-            <!-- Text for IE9 -->
-            <h3 class="text-primary visible-lt-ie10"><strong>Loading..</strong></h3>
-        </div>
-    </div>
-    <!-- END Preloader -->
-
-    <!-- Page Container -->
-    <!-- In the PHP version you can set the following options from inc/config file -->
-    <!--
-        Available #page-container classes:
-
-        'sidebar-light'                                 for a light main sidebar (You can add it along with any other class)
-
-        'sidebar-visible-lg-mini'                       main sidebar condensed - Mini Navigation (> 991px)
-        'sidebar-visible-lg-full'                       main sidebar full - Full Navigation (> 991px)
-
-        'sidebar-alt-visible-lg'                        alternative sidebar visible by default (> 991px) (You can add it along with any other class)
-
-        'header-fixed-top'                              has to be added only if the class 'navbar-fixed-top' was added on header.navbar
-        'header-fixed-bottom'                           has to be added only if the class 'navbar-fixed-bottom' was added on header.navbar
-
-        'fixed-width'                                   for a fixed width layout (can only be used with a static header/main sidebar layout)
-
-        'enable-cookies'                                enables cookies for remembering active color theme when changed from the sidebar links (You can add it along with any other class)
-    -->
-    <div id="page-container" class="header-fixed-top sidebar-visible-lg-full enable-cookies">
-        <!-- Main Container -->
-        <div id="main-container">
-            <!-- Header -->
-            <!-- In the PHP version you can set the following options from inc/config file -->
-            <!--
-                Available header.navbar classes:
-
-                'navbar-default'            for the default light header
-                'navbar-inverse'            for an alternative dark header
-
-                'navbar-fixed-top'          for a top fixed header (fixed main sidebar with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar())
-                    'header-fixed-top'      has to be added on #page-container only if the class 'navbar-fixed-top' was added
-
-                'navbar-fixed-bottom'       for a bottom fixed header (fixed main sidebar with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar()))
-                    'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
-            -->
-            <!-- END Header -->
-
-            <!-- Page content -->
-            <div id="page-content">
-                <!-- Forms Components Header -->
-                <div class="content-header">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="header-section">
-                                <h1>Form Components</h1>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 hidden-xs">
-                            <div class="header-section">
-                                <ul class="breadcrumb breadcrumb-top">
-                                    <li>User Interface</li>
-                                    <li>Forms</li>
-                                    <li><a href="">Components</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Form Components</h1>
                 </div>
-                <div class="block-section">
-                    <!--<h4 class="sub-header">Pills</h4>-->
-                    <ul class="nav nav-pills">
-                        <li class="active"><a href="{:url('admin/Goods/listing',['action'=>'brand'])}">商品分类</a></li>
-
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Forms</li>
+                        <li><a href="">Components</a></li>
                     </ul>
                 </div>
-                <!-- END Forms Components Header -->
-
-                <!-- Form Components Row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- Horizontal Form Block -->
-
-                        <div class="block">
-                            <!-- Horizontal Form Content -->
-                            <form action="{:url('admin/Goods/edit',['action'=>'brand'])}" method="post" class="form-horizontal form-bordered">
-                                <input type="hidden" name="id" value="{$brand.id}" />
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="name">品牌名称</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="name" name="name" class="form-control" value="{$brand.name}">
-                                        <span class="help-block">请输入品牌名称</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="url">品牌网址</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="url" name="url" class="form-control" value="{$brand.url}">
-                                        <span class="help-block">请输入品牌网址</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="logo">品牌logo</label>
-                                    <div class="col-md-6">
-                                        <input type="file" id="logo" name="logo" class="form-control">
-                                        <span class="help-block">请输入上传品牌logo</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="pid_1">所属分类</label>
-                                    <div class="col-md-3">
-                                        <select id="pid_1" name="pid_1" class="form-control">
-                                            <option value="0">请选择分类</option>
-                                        </select>
-                                        <span class="help-block">最多只能输入二级分类</span>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select id="pid_2" name="pid_2" class="form-control">
-                                            <option value="">请选择分类</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">是否推荐</label>
-                                    <div class="col-md-6">
-                                        <label class="switch switch-info">
-                                            <input type="checkbox" id="is_hot" checked="" ><span></span>
-                                        </label>
-                                        <input type="hidden" class="is_true" name="is_hot" value="{$brand.is_hot}"  >
-
-                                        <span class="help-block">是否推荐</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="sort">排序</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="sort" name="sort" class="form-control" value="{$brand.sort}">
-                                        <span class="help-block">根据排序进行由小到大排列显示。</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="desc">品牌描述</label>
-                                    <div class="col-md-6">
-                                        <textarea id="desc" name="desc" class="form-control">{$brand.desc}</textarea>
-                                        <span class="help-block">品牌描述</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group form-actions">
-                                    <div class="col-md-9 col-md-offset-3">
-                                        <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
-                                        <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <!-- END Horizontal Form Content -->
-                        </div>
-                        <!-- END Horizontal Form Block -->
-                    </div>
-                </div>
-                <!-- END Form Components Row -->
             </div>
-
-            <!-- END Page Content -->
         </div>
-        <!-- END Main Container -->
     </div>
-    <!-- END Page Container -->
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li class="active"><a href="{:url('admin/Goods/listing',['action'=>'brand'])}">商品品牌列表</a></li>
+
+        </ul>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/Goods/edit',['action'=>'brand'])}" method="post" class="form-horizontal form-bordered">
+                    <input type="hidden" name="id" value="{$brand.id}" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="name">品牌名称</label>
+                        <div class="col-md-6">
+                            <input type="text" id="name" name="name" class="form-control" value="{$brand.name}">
+                            <span class="help-block">请输入品牌名称</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="url">品牌网址</label>
+                        <div class="col-md-6">
+                            <input type="text" id="url" name="url" class="form-control" value="{$brand.url}">
+                            <span class="help-block">请输入品牌网址</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="logo">品牌logo</label>
+                        <div class="col-md-6">
+                            <input type="file" id="logo" name="logo" class="form-control">
+                            <span class="help-block">请输入上传品牌logo</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="parent_cat_id">所属分类</label>
+                        <div class="col-md-2">
+                            <select id="top_cat_id" name="top_cat_id" class="form-control" data-val="{$brand.top_cat_id}">
+                                <option value="">请选择分类</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="parent_cat_id" name="parent_cat_id" class="form-control" data-val="{$brand.parent_cat_id}">
+                                <option value="">请选择分类</option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-2">
+                            <select id="cat_id" name="cat_id" class="form-control" data-val="{$brand.cat_id}">
+                                <option value="">请选择分类</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">是否推荐</label>
+                        <div class="col-md-6">
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_hot" checked="" ><span></span>
+                            </label>
+                            <input type="hidden" class="is_true" name="is_hot" value="{$brand.is_hot}"  >
+
+                            <span class="help-block">是否推荐</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="sort">排序</label>
+                        <div class="col-md-6">
+                            <input type="text" id="sort" name="sort" class="form-control" value="{$brand.sort}">
+                            <span class="help-block">根据排序进行由小到大排列显示。</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="desc">品牌描述</label>
+                        <div class="col-md-6">
+                            <textarea id="desc" name="desc" class="form-control">{$brand.desc}</textarea>
+                            <span class="help-block">品牌描述</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
 </div>
+
 {/block}
 {block name="foot_js"}
 <!-- Load and execute javascript code used only in this page -->
@@ -184,7 +127,6 @@
 <script src="__PUBLIC__Uploader/Uploader.js"></script>
 <script>
     var category_url = "{:url('admin/Goods/ajax_category')}";
-    var pid_1 = "{$brand.parent_cat_id}",pid_2 = "{$brand.cat_id}";
     $(function(){
         var up = new Upload('logo',{},"{$brand.logo}");
         Brand.category();

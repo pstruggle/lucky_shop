@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>首页</title>
+    <title>{$title??''}</title>
 
     <link href="__AMZ__AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css" />
     <link href="__AMZ__AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css" />
@@ -68,11 +68,9 @@
     <!--轮播 -->
     <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
         <ul class="am-slides">
-            <li class="banner1"><a href="introduction.html"><img src="__AMZ__images/ad1.jpg" /></a></li>
-            <li class="banner2"><a><img src="__AMZ__images/ad2.jpg" /></a></li>
-            <li class="banner3"><a><img src="__AMZ__images/ad3.jpg" /></a></li>
-            <li class="banner4"><a><img src="__AMZ__images/ad4.jpg" /></a></li>
-
+            {volist name="pc_ads" id="pc_ad" key="k"}
+            <li style="background: {$pc_ad.background??'#000'};"><a href="{$pc_ad.url}" title="{$pc_ad.ad_title}"><img src="{$pc_ad.img_url}" alt="{$pc_ad.ad_title}" /></a></li>
+            {/volist}
         </ul>
     </div>
     <div class="clear"></div>
@@ -84,11 +82,15 @@
         <div class="long-title"><span class="all-goods">全部分类</span></div>
         <div class="nav-cont">
             <ul>
-                <li class="index"><a href="#">首页</a></li>
-                <li class="qc"><a href="#">闪购</a></li>
-                <li class="qc"><a href="#">限时抢</a></li>
-                <li class="qc"><a href="#">团购</a></li>
-                <li class="qc last"><a href="#">大包装</a></li>
+                {php}$last = count(navs)-1;{/php}
+                {volist name="navs" id="nav"}
+                {php}
+                $str = '';
+                if($key == 0)$str = 'index';
+                if($key == $last)$str = 'last';
+                {/php}
+                <li class="qc {$str}"><a href="{$nav.url??''}">{$nav.name}</a></li>
+                {/volist}
             </ul>
             <div class="nav-extra">
                 <i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
@@ -164,22 +166,26 @@
         <!--小导航 -->
         <div class="am-g am-g-fixed smallnav">
             <div class="am-u-sm-3">
-                <a href="sort.html"><img src="__AMZ__images/navsmall.jpg" />
+                <a href="sort.html">
+                    <img src="__AMZ__images/navsmall.jpg" />
                     <div class="title">商品分类</div>
                 </a>
             </div>
             <div class="am-u-sm-3">
-                <a href="#"><img src="__AMZ__images/huismall.jpg" />
+                <a href="#">
+                    <img src="__AMZ__images/huismall.jpg" />
                     <div class="title">大聚惠</div>
                 </a>
             </div>
             <div class="am-u-sm-3">
-                <a href="#"><img src="__AMZ__images/mansmall.jpg" />
+                <a href="#">
+                    <img src="__AMZ__images/mansmall.jpg" />
                     <div class="title">个人中心</div>
                 </a>
             </div>
             <div class="am-u-sm-3">
-                <a href="#"><img src="__AMZ__images/moneysmall.jpg" />
+                <a href="#">
+                    <img src="__AMZ__images/moneysmall.jpg" />
                     <div class="title">投资理财</div>
                 </a>
             </div>
@@ -259,8 +265,9 @@
 
         <div class="am-g am-g-fixed recommendation">
             <div class="clock am-u-sm-3">
-            <img src="__AMZ__images/2016.png "/>
-            <p>今日<br>推荐</p>
+                <img src="__AMZ__images/2016.png "/>
+                <p>今日<br>推荐</p>
+            </div>
         </div>
         <div class="am-u-sm-4 am-u-lg-3 ">
             <div class="info ">
@@ -367,8 +374,8 @@
                 <a href="# ">豌豆黄</a>
             </div>
             <span class="more ">
-                    <a class="more-link " href="# ">更多美味</a>
-                        </span>
+                <a class="more-link " href="# ">更多美味</a>
+            </span>
         </div>
     </div>
 
@@ -482,13 +489,11 @@
                 <a href="# ">核桃仁</a>
             </div>
             <span class="more ">
-                    <a class="more-link " href="# ">更多美味</a>
-                        </span>
+                <a class="more-link " href="# ">更多美味</a>
+            </span>
         </div>
     </div>
     <div class="am-g am-g-fixed floodTwo ">
-
-
         <div class="am-u-sm-5 am-u-md-4 text-one ">
             <a href="# ">
                 <img src="__AMZ__images/act1.png " />
@@ -526,7 +531,7 @@
                     尝鲜价：¥4.8
                 </div>
             </div>
-            <a href="# "><img src="__AMZ__images/act3.png " /></a>
+            <a href="#"><img src="__AMZ__images/act3.png " /></a>
         </div>
         <div class="am-u-md-4 am-u-lg-2 text-three">
             <div class="outer-con ">
