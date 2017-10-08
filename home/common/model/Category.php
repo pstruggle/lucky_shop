@@ -17,7 +17,8 @@ class Category extends Base
     }
     public function setCache(){
         $name = lcfirst($this->name);
-        get_cache($name,$this->category());
+        $where = ['is_show'=>1];
+        get_cache($name,$this->category($where));
     }
     // 编辑操作
     public function edit($data){
@@ -25,6 +26,8 @@ class Category extends Base
             'name' => $data['name'],
             'mobile_name' => $data['mobile_name'],
             'is_show' => $data['is_show'],
+            'is_home' => $data['is_home'],
+            'desc' => $data['desc'],
             'weight' => $data['weight'],
             'image' => !empty($data['image'])?$data['image']:'',
         ];
@@ -74,6 +77,16 @@ class Category extends Base
         $value['category'] = $category;
         return $value;
     }
+    // 首页获取分类商品
+    public function home(){
+        $where = ['is_home'=>1];
+        $categorys = $this->category($where);
+        foreach ($categorys as $k=> $category){
+            $where = ['top_cat_id'=>$category[0]['id']];
+            $categorys[$k]['goods'] = model('goods')->get_goods($where,['sort'=>'desc'],12);
+        }
+        return $categorys;
+    }
 
     // 获取分类
     public function getCategory($where=[],$order=[]){
@@ -81,13 +94,13 @@ class Category extends Base
     }
 
     // 递归分类
-    public function category($pid = 0,$layer = 1,$w = []){
+    public function category($w = [],$pid = 0,$layer = 1){
         $result = [];
         $where = array_merge(['pid'=>$pid],$w);
         $categorys = $this->getCategory($where);
         foreach ($categorys as $k => $category){
-            $result[$k][] = $category;
-            $result[$k][] = $this->category($category['id'],$layer+1,$w);
+            $result[$category['id']][] = $category;
+            $result[$category['id']][] = $this->category($w,$category['id'],$layer+1);
         }
         return $result;
     }
@@ -118,7 +131,18 @@ class Category extends Base
                         <td class='text-center'>{$category['id']}</td>
                         <td>{$category['name']}</td>
                         <td>{$category['mobile_name']}</td>
-                        <td>{$category['is_show']}</td>
+                        <td>
+                        <label class=\"switch switch-info\">
+                                <input type=\"checkbox\" id=\"is_show{$category['id']}\" checked=\"\" ><span></span>
+                            </label>
+                            <input type=\"hidden\" class=\"is_true\" name=\"is_show{$category['id']}\" value=\"{$category['is_show']}\"  >
+                        </td>
+                        <td>
+                        <label class=\"switch switch-info\">
+                                <input type=\"checkbox\" id=\"is_home{$category['id']}\" checked=\"\" ><span></span>
+                            </label>
+                            <input type=\"hidden\" class=\"is_true\" name=\"is_home{$category['id']}\" value=\"{$category['is_home']}\"  >
+                        </td>
                         <td>{$category['weight']}</td>
                         <td>{$date}</td>
                     </tr>";

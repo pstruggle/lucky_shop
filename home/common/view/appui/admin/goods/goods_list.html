@@ -88,7 +88,7 @@
                         <td>{$good.goods_id}</td>
                         <td>{$good.goods_name}</td>
                         <td>{$good.goods_sn}</td>
-                        <td>{$good.category}</td>
+                        <td>{:goods_cat($good.top_cat_id,$good.pcat_id,$good.cat_id) }</td>
                         <td>{$good.shop_price}</td>
                         <td>{$good.click_count}</td>
                         <td>

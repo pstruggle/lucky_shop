@@ -116,16 +116,14 @@ class Goods extends Base
     }
     // 商品列表
     public function get_goods($where=[],$order=[],$page = 20){
-        $join = [
-            ['category c',"g.cat_id = c.id",'LEFT'],
-        ];
-        $field = ['g.*','c.name category'];
-        $goods = $this->join($join)
-            ->alias('g')
+
+        $field = ['g.*'];
+        $goods = $this->alias('g')
             ->where($where)
             ->field($field)
             ->order($order)
             ->paginate($page);
+
         return $goods;
     }
     // 获取单一商品

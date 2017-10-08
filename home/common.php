@@ -14,9 +14,9 @@ error_reporting(0 );
 use think\Request;
 /**
  * 异步访问链接并返回结果
- * @param $url 访问链接地址
- * @param $datas post访问数据
- * @param $type 以get、post方式访问链接
+ * @param string $url 访问链接地址
+ * @param string $datas post访问数据
+ * @param string $type 以get、post方式访问链接
  * @return mixed
  */
 //异步访问链接
@@ -43,7 +43,16 @@ function is_wechat(){
     }
     return false;
 }
-
+/**
+ * 获取商品分类
+ */
+function goods_cat($top_cat_id,$pid,$cat_id=0){
+    $categorys = get_cache('category');
+    $category = $categorys[$top_cat_id][0]['name'];
+    $category .= '->'.$categorys[$top_cat_id][1][$pid][0]['name'];
+    $category .= '->'.$categorys[$top_cat_id][1][$pid][1][$cat_id][0]['name'];
+    return $category;
+}
 /**
  * 获取中文字的首字母
  * @param string $str 中文字符串
@@ -190,62 +199,6 @@ function get_week(){
     $times = array_pad($times,7,0);
     return $times;
 }
-/*********************************************************************
-函数名称:encrypt
-函数作用:加密解密字符串
-使用方法:
-加密  :encrypt('str','E','nowamagic');
-解密  :encrypt('被加密过的字符串','D','nowamagic');
-参数说明:
-$string :需要加密解密的字符串
-$operation:判断是加密还是解密:E:加密 D:解密
-$key  :加密的钥匙(密匙);
- *********************************************************************/
-function encrypt($string,$operation,$key='')
-{
-    $key=md5($key);
-    $key_length=strlen($key);
-    $string=$operation=='D'?base64_decode($string):substr(md5($string.$key),0,8).$string;
-    $string_length=strlen($string);
-    $rndkey=$box=array();
-    $result='';
-    for($i=0;$i<=255;$i++)
-    {
-        $rndkey[$i]=ord($key[$i%$key_length]);
-        $box[$i]=$i;
-    }
-    for($j=$i=0;$i<256;$i++)
-    {
-        $j=($j+$box[$i]+$rndkey[$i])%256;
-        $tmp=$box[$i];
-        $box[$i]=$box[$j];
-        $box[$j]=$tmp;
-    }
-    for($a=$j=$i=0;$i<$string_length;$i++)
-    {
-        $a=($a+1)%256;
-        $j=($j+$box[$a])%256;
-        $tmp=$box[$a];
-        $box[$a]=$box[$j];
-        $box[$j]=$tmp;
-        $result.=chr(ord($string[$i])^($box[($box[$a]+$box[$j])%256]));
-    }
-    if($operation=='D')
-    {
-        if(substr($result,0,8)==substr(md5(substr($result,8).$key),0,8))
-        {
-            return substr($result,8);
-        }
-        else
-        {
-            return'';
-        }
-    }
-    else
-    {
-        return str_replace('=','',base64_encode($result));
-    }
-}
 /**
  * 获取这个周末时间
  *
@@ -295,9 +248,10 @@ function gettime($time_s,$time_n){
 }
 /**
  * 图片压缩url
- * @param $img string 图片地址
- * @param $w 压缩图片宽度
- * @param $h 压缩图片高度
+ * @param string $img string 图片地址
+ * @param int $w 压缩图片宽度
+ * @param integer $h 压缩图片高度
+ * @return string
  */
 function img_url($img = '', $w = 0, $h = 0){
     $request = Request::instance();

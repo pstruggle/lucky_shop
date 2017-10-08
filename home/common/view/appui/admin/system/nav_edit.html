@@ -23,7 +23,7 @@
     <div class="block-section">
         <!--<h4 class="sub-header">Pills</h4>-->
         <ul class="nav nav-pills">
-            <li class="active"><a href="{:url('admin/Ad/index',['action'=>'ad','position'=>input('position')])}">广告列表</a></li>
+            <li class="active"><a href="{:url('admin/System/listing',['action'=>'nav'])}">导航列表</a></li>
 
         </ul>
     </div>
@@ -46,10 +46,29 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label" for="position">导航位置</label>
+                        <div class="col-md-6">
+                            <select id="position" name="position" class="form-control" data-val="{$nav.position}">
+                                <option value="">请选择导航位置</option>
+                                {volist name="positions" id="position"}
+                                <option value="{$position.id}">{$position.position}</option>
+                                {/volist}
+                            </select>
+                            <span class="help-block">请输入导航名称</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label" for="url">导航链接</label>
                         <div class="col-md-6">
                             <input type="text" id="url" name="url" class="form-control" value="{$nav.url}">
                             <span class="help-block">请输入导航链接</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="img_url">导航图片</label>
+                        <div class="col-md-6">
+                            <input type="text" id="img_url" name="img_url" class="form-control">
+                            <span class="help-block">手机端需要图片</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -87,19 +106,14 @@
 {/block}
 {block name="foot_js"}
 <!-- Load and execute javascript code used only in this page -->
-<link rel="stylesheet" href="__PUBLIC__Uploader/uploader.css" />
-<script src="__PUBLIC__Uploader/Uploader.js"></script>
-{load file="__PUBLIC__jedate/jquery.jedate.js"}
-{load file="__PUBLIC__jedate/skin/jedate.css"}
+{load file="__PUBLIC__Uploader/uploader.css"}
+{load file="__PUBLIC__Uploader/Uploader.js"}
 <script>
     $(function(){
-        var up = new Upload('img_url',{},"{$ad.img_url}");
-        $("#start_time,#end_time").jeDate({
-            format:"YYYY-MM-DD hh:mm:ss",
-            isTime:false,
-            isToday:true,
-            minDate:$.nowDate({DD:0})
-        })
+        var up = new Upload('img_url',{},"{$nav.img_url}");
+        var position = $('#position');
+        position.val(position.data('val'));
+
     });
 </script>
 <!-- Load and execute javascript code used only in this page -->

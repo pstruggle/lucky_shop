@@ -1,7 +1,7 @@
 <?php
 namespace app\common\model;
 
-
+use think\Db;
 
 class Nav extends Base{
 
@@ -11,9 +11,12 @@ class Nav extends Base{
     // 缓存导航
     public function setCache(){
         $name = lcfirst($this->name);
-        $where = ['is_show'=>1];
-        $navs = $this->where($where)->order('weight','desc')->select();
-        get_cache($name,$navs);
+        $positions = Db::name('nav_position')->select();
+        foreach ($positions as $position){
+            $where = ['is_show'=>1,'position'=>$position['id']];
+            $navs = $this->where($where)->order('weight','desc')->select();
+            get_cache($name.'.'.$position['mark'],$navs);
+        }
     }
     // 获取列表
     public function listing(){
@@ -39,6 +42,8 @@ class Nav extends Base{
             $nav = $this->where($where)->find();
             $assign['nav'] = $nav;
         }
+        $positions = Db::name('nav_position')->select();
+        $assign['positions'] = $positions;
         $assign['title'] = '导航编辑';
         return $assign;
     }
@@ -50,6 +55,7 @@ class Nav extends Base{
         }
         $data['addtime'] = time();
         $result = $this->save($data,$where);
+        $this->setCache();
         return $result;
     }
 }

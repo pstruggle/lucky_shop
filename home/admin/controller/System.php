@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use think\Cache;
 use think\Db;
 
 class System extends Base
@@ -98,5 +99,9 @@ class System extends Base
             'page' => $page,
         ]);
         return $this->template();
+    }
+    public function clear_cache(){
+        Cache::clear();
+        return $this->last_redirect();
     }
 }
