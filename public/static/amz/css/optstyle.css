@@ -28,7 +28,7 @@ input{font-size:12px;font-size:100%;outline:none;line-height:normal;color:#444;}
 .theme-signin-right .img-info img{margin:5px 5px ;width:80px;height:80px ;}
 .theme-signin-right .text-info{position:absolute;left:110px;top:20px ;}
 .text-info .price-now{display:block;font-size:16px ;color:#f50;}
-.text-info span#Stock{font-size:14px ;}
+.text-info span.stock{font-size:14px ;}
 
 /*可选规格*/
 .theme-signin-left{padding-bottom:30px;max-height:250px ;overflow-y: scroll;background: #fff;}
@@ -59,6 +59,7 @@ input{font-size:12px;font-size:100%;outline:none;line-height:normal;color:#444;}
 
 .theme-signin-left .sku-line {background: none;border-radius:0 ;margin:5px;padding:3px;border:2px solid #F5F5F5 ;color:#000 ;}
 .theme-signin-left .sku-line.selected {background:none;color:#000;border: 2px solid #BE0106;}
+.theme-signin-left .sku-line.disabled {background:rgba(221, 221, 221, 0.51);color:#000;border: 2px solid rgba(221, 221, 221, 0.51); cursor: not-allowed;}
 
 /*选中样式*/
 .sku-line{position: relative;}

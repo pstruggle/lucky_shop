@@ -52,7 +52,7 @@ Upload.prototype.getHtml = function(){
     var body = upload.find('body');
 
     body.css({'width':'100%','height':'100%','margin':'0','overflow':'hidden'}).html(
-        "<form action='"+up.host+"/api.php/Upload/single_upload/action/uploadimage.html' id='upload_form' enctype='multipart/form-data' target='upload_iframe' method='post'><input type='file' name='"+ upfile+"' "+multiple+" id='upfile' style='display:block;width: 100%;height: 100%;overflow: hidden;border: none; margin: 0;padding: 0;opacity:0;cursor: pointer;' /></form><iframe name='upload_iframe' id='upload_iframe' frameborder='0' style='display: none;'></iframe>"
+        "<form action='"+up.host+"/index.php/api/Upload/single_upload/action/uploadimage.html' id='upload_form' enctype='multipart/form-data' target='upload_iframe' method='post'><input type='file' name='"+ upfile+"' "+multiple+" id='upfile' style='display:block;width: 100%;height: 100%;overflow: hidden;border: none; margin: 0;padding: 0;opacity:0;cursor: pointer;' /></form><iframe name='upload_iframe' id='upload_iframe' frameborder='0' style='display: none;'></iframe>"
     );
     var upload_form = $('#'+timestrap).contents().find('#upload_form');
     var upfile = $('#'+timestrap).contents().find('#upfile');

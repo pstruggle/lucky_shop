@@ -257,7 +257,7 @@ function img_url($img = '', $w = 0, $h = 0){
     $request = Request::instance();
     $host = $request->domain();
     $date = date('YmdHis').mt_rand(10000,99999);
-    $url = '/api.php/upload/handle/'.$date.'.html';
+    $url = '/index.php/api/upload/handle/'.$date.'.html';
     $parameter = '?';
     $parameter .= 'pic='.urlencode($img);
     if($w !== 0){

@@ -1,8 +1,7 @@
 <?php
 namespace app\index\controller;
-use app\common\controller\Common;
 
-class Index extends Common
+class Index extends Base
 {
 
     protected function _initialize()

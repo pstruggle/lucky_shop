@@ -1,7 +1,6 @@
 <?php
 namespace app\api\controller;
 
-use app\api\controller\Webase;
 class Jssdk extends Webase
 {
     protected function _initialize()

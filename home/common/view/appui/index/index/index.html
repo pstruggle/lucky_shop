@@ -348,7 +348,9 @@
 
     <!--甜点-->
     {php}
+    reset($home);
     $cate = current($home);
+
     if(!empty($cate)){
     $goods = $cate['goods']->toArray()['data'];
     {/php}
@@ -371,12 +373,10 @@
     </div>
 
     <div class="am-g am-g-fixed floodOne ">
-        {php}
-        $good = current($goods);
-        {/php}
+        {php}$good = current($goods);{/php}
         {notempty name="good"}
         <div class="am-u-sm-5 am-u-md-3 am-u-lg-4 text-one ">
-            <a href="#">
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}">
                 <div class="outer-con ">
                     <div class="title ">
                         {$good.goods_name}
@@ -406,7 +406,7 @@
                     </div>
 
                 </div>
-                <a href="# "><img src="{$good.original_img}" /></a>
+                <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
             </div>
             {/notempty}
             {php}
@@ -424,7 +424,7 @@
                     </div>
 
                 </div>
-                <a href="# "><img src="{$good.original_img}" /></a>
+                <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
             </div>
             {/notempty}
         </div>
@@ -442,7 +442,7 @@
                     </div>
 
                 </div>
-                <a href="# "><img src="{$good.original_img}" /></a>
+                <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
             </div>
             {/notempty}
             {php}next($goods);$good = current($goods);{/php}
@@ -458,7 +458,7 @@
                     </div>
 
                 </div>
-                <a href="# "><img src="{$good.original_img}" /></a>
+                <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
             </div>
             {/notempty}
             {php}next($goods);$good = current($goods);{/php}
@@ -474,7 +474,7 @@
                     </div>
 
                 </div>
-                <a href="# "><img src="{$good.original_img}" /></a>
+                <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
             </div>
             {/notempty}
             {php}next($goods);$good = current($goods);{/php}
@@ -490,7 +490,7 @@
                     </div>
 
                 </div>
-                <a href="# "><img src="{$good.original_img}" /></a>
+                <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
             </div>
             {/notempty}
         </div>
@@ -521,12 +521,12 @@
         </div>
     </div>
     <div class="am-g am-g-fixed floodTwo ">
-        {php}next($goods);$good = current($goods);{/php}
+        {php}$good = current($goods);{/php}
         {notempty name="good"}
 
         <div class="am-u-sm-5 am-u-md-4 text-one ">
-            <a href="# ">
-                <img src="{$good.original_img}" />
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}">
+                <img src="{$good.original_img}" alt="" />
                 <div class="outer-con ">
                     <div class="title ">
                         {$good.goods_name}
@@ -552,7 +552,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="# "><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
         {php}next($goods);$good = current($goods);{/php}
@@ -568,7 +568,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="# "><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
         {php}next($goods);$good = current($goods);{/php}
@@ -584,7 +584,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="#"><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
         {php}next($goods);$good = current($goods);{/php}
@@ -600,7 +600,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="# "><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
         {php}next($goods);$good = current($goods);{/php}
@@ -616,7 +616,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="# "><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
         {php}next($goods);$good = current($goods);{/php}
@@ -632,7 +632,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="# "><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
         {php}next($goods);$good = current($goods);{/php}
@@ -648,7 +648,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="# "><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
         {php}next($goods);$good = current($goods);{/php}
@@ -664,7 +664,7 @@
                     仅售：¥{$good.shop_price}
                 </div>
             </div>
-            <a href="# "><img src="{$good.original_img}" /></a>
+            <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}"><img src="{$good.original_img}" /></a>
         </div>
         {/notempty}
 
@@ -698,7 +698,7 @@
             {volist name="goods" id="good"}
             <li>
                 <div class="list ">
-                    <a href="# ">
+                    <a href="{:url('index/Goods/details',['id'=>$good.goods_id])}">
                         <img src="{$good.original_img}" />
                         <div class="pro-title ">{$good.goods_name}</div>
                         <span class="e-price ">￥{$good.shop_price}</span>
@@ -901,9 +901,6 @@
         </div>
     </div>
 </div>
-<script>
-    window.jQuery || document.write('<script src="basic/js/jquery.min.js "><\/script>');
-</script>
 <script type="text/javascript " src="__AMZ__basic/js/quick_links.js "></script>
 </body>
 

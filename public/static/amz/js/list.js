@@ -2,22 +2,39 @@
 
 //商品规格选择
 $(function() {
-	$(".theme-options").each(function() {
+	// 选中规格后获取价格
+	var options = $(".theme-options");
+	var spec_selected = function () {
+		var specs = '';
+		options.each(function () {
+			var _this = $(this);
+			var select = _this.find('ul>li.selected');
+			if(select.length>0){
+                specs += select.data("spec") + ',';
+            }
+        });
+        specs = specs.substr(0,specs.length-1);
+		console.log(specs);
+    };
+    options.each(function() {
 		var i = $(this);
 		var p = i.find("ul>li");
 		p.click(function() {
+			if($(this).hasClass('disabled')){
+				return;
+			}
 			if (!!$(this).hasClass("selected")) {
 				$(this).removeClass("selected");
-
 			} else {
 				$(this).addClass("selected").siblings("li").removeClass("selected");
-
 			}
+            spec_selected();
+		});
+		i.find('ul>li:not(".disabled")').eq(0).addClass("selected");
+	});
+    spec_selected();
 
-		})
-	})
-
-})
+});
 
 
 //弹出规格选择
@@ -107,10 +124,7 @@ $(document).ready(function() {
 	//优惠券
 	$(".hot span").click(function() {
 		$(".shopPromotion.gold .coupon").toggle();
-	})
-
-
-
+	});
 
 	//获得文本框对象
 	var t = $("#text_box");

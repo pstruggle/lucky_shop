@@ -37,9 +37,11 @@ class Goods extends Base
     // 商品列表
     public function listing(){
         $goods = $this->get_goods();
+        $page = $goods->render();
         $assign = [
             'title' => '商品列表',
-            'goods' => $goods
+            'goods' => $goods,
+            'page' => $page,
         ];
         return $assign;
     }
@@ -130,6 +132,7 @@ class Goods extends Base
     public function get_good($where=[]){
         $good = $this->where($where)->find();
         if(empty($good)){
+            $this->error = '商品不存在';
             // 商品不存在
             return false;
         }
