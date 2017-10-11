@@ -24,6 +24,7 @@ class Goods extends Base
             $this->error = '请上传商品相册';
             return false;
         }
+        $good['store_count'] = empty($data['store_counts'])?$good['store_count']:array_sum($data['store_counts']);
         $good['last_update'] = time();
         $good['goods_img'] = implode(',',$good['goods_img']);
         $where = [];

@@ -19,6 +19,7 @@
     <script type="text/javascript" src="__AMZ__AmazeUI-2.4.2/assets/js/amazeui.js"></script>
     <script type="text/javascript" src="__AMZ__js/jquery.imagezoom.min.js"></script>
     <script type="text/javascript" src="__AMZ__js/jquery.flexslider.js"></script>
+    {load file="__PUBLIC__layer/layer.js"}
     <script type="text/javascript" src="__AMZ__js/list.js"></script>
 
 </head>
@@ -237,7 +238,7 @@
                         <div class="theme-popover">
                             <div class="theme-span"></div>
                             <div class="theme-poptit">
-                                <a href="javascript:;" title="关闭" class="close">×</a>
+                                <a href="javascript:void (0);" title="关闭" class="close">×</a>
                             </div>
                             <div class="theme-popbod dform">
                                 <form class="theme-signin" name="loginform" action="" method="post">
@@ -255,12 +256,11 @@
                                         <div class="theme-options">
                                             <div class="cart-title number">数量</div>
 
-
                                             <div>
                                                 <input id="min" class="am-btn am-btn-default" name="" type="button" value="-" />
                                                 <input id="text_box" name="" type="text" value="1" style="width:30px; text-align: center" />
                                                 <input id="add" class="am-btn am-btn-default" name="" type="button" value="+" />
-                                                <span class="tb-hidden stock">库存<span class="stock">{$good.store_count}</span>件</span>
+                                                <span class="tb-hidden">库存<span class="stock">{$good.store_count}</span>件</span>
                                             </div>
                                         </div>
 
@@ -317,12 +317,12 @@
                 </div>
                 <li>
                     <div class="clearfix tb-btn tb-btn-buy theme-login">
-                        <a id="LikBuy" title="点此按钮到下一步确认购买信息" href="#">立即购买</a>
+                        <a id="likbuy" title="点此按钮到下一步确认购买信息" href="javascript:void (0);">立即购买</a>
                     </div>
                 </li>
                 <li>
                     <div class="clearfix tb-btn tb-btn-basket theme-login">
-                        <a id="LikBasket" title="加入购物车" href="#"><i></i>加入购物车</a>
+                        <a id="likbasket" title="加入购物车" href="javascript:void (0);"><i></i>加入购物车</a>
                     </div>
                 </li>
             </div>
@@ -1306,7 +1306,8 @@
         </div>
     </div>
 </div>
-
 </body>
-
 </html>
+<script>
+    var spec_url = "{:url('index/Goods/specs',['good_id'=>$good.goods_id])}";
+</script>

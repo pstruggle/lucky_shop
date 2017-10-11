@@ -9,6 +9,8 @@
 namespace app\index\controller;
 
 
+use think\Db;
+
 class Goods extends Base
 {
     protected function _initialize()
@@ -30,6 +32,17 @@ class Goods extends Base
         $assign['title'] = $good['good']['goods_name'] . '_' . get_cache('config.mall')['store_title'];
         $this->assign($assign);
         return $this->template();
+    }
+    // 获取商品规格
+    public function specs(){
+        $goods_id = input('good_id');
+        $where = ['goods_id'=>$goods_id];
+        $specs = Db::name('spec_group')->where($where)->select();
+        return json($specs);
+    }
+    // 异步验证规格组是否还存在库存
+    public function ajax_spec_store(){
+
     }
 
 }
