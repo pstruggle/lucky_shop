@@ -3,10 +3,10 @@
 //商品规格选择
 $(function() {
     // 选中规格后获取价格
-    var options = $(".theme-signin-left ul");
-    var specs = {} , specs_select = [],error='';
+    var options = $(".theme-signin-left ul"),main = $('#main');
+    var specs = {} , specs_select = [],error='',good_id = main.data('good-id');
     $.ajaxSetup({async:false});
-    $.get(spec_url,function (data) {
+    $.get(spec_url,{good_id:good_id},function (data) {
         specs = data;
     });
     // 前端判断组合是否有库存
@@ -100,6 +100,18 @@ $(function() {
             error = '请选全规格';
             return false;
         }
+        var para = {specs:specs_select,goods_id:good_id};
+        var status = true;
+        $.get(spec_store_url,para,function (data) {
+            console.log(data);
+            if(data.store_count == 0){
+                status = false;
+            }
+        });
+        if(status === false){
+            error = '您下手慢了，该规格商品已经没有啦';
+            return false;
+        }
         return true;
     };
     // 用户点击购买
@@ -109,9 +121,15 @@ $(function() {
         if (!validate){
             layer.msg(error);
         }
+
     });
     // 用户点击加入购物车
     $('#likbasket').on('click',function () {
+        var validate = validate_shop();
+        console.log(validate);
+        if (!validate){
+            layer.msg(error);
+        }
 
     });
 });

@@ -42,7 +42,12 @@ class Goods extends Base
     }
     // 异步验证规格组是否还存在库存
     public function ajax_spec_store(){
-
+        $specs = input('specs/a');
+        $good_id = input('goods_id');
+        $specs = implode(',',$specs);
+        $where = ['goods_id'=>$good_id,'specs'=>$specs];
+        $spec = Db::name('spec_group')->where($where)->find();
+        return json($spec);
     }
 
 }

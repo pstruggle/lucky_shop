@@ -24,7 +24,7 @@
 
 </head>
 
-<body>
+<body id="main" data-good-id="{$good.goods_id}">
 
 
 <!--顶部导航条 -->
@@ -1309,5 +1309,6 @@
 </body>
 </html>
 <script>
-    var spec_url = "{:url('index/Goods/specs',['good_id'=>$good.goods_id])}";
+    var spec_url = "{:url('index/Goods/specs')}",
+        spec_store_url = "{:url('index/Goods/ajax_spec_store')}";
 </script>
