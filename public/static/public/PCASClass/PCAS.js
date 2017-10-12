@@ -30,7 +30,7 @@ function PCAS(){
 };
 PCAS.SetP=function(PCA){
     PCA.SelP.options.add(new Option(SPT,''));
-    if(PCA.DefP=='')PCA.SelP[i].selected=true;
+    if(PCA.DefP=='')PCA.SelP[0].selected=true;
     for(i in AREA){
         PCAPV = i;
         PCAPT = AREA[i][0];
@@ -42,8 +42,8 @@ PCAS.SetP=function(PCA){
 PCAS.SetC=function(PCA){
 
     PI=PCA.SelP.value;
+    PCA.SelC.length=0;
     if(PI != 0 && PI != ''){
-        PCA.SelC.length=0;
         C = AREA[PI][1];
         for(i in C){
             PCACV= i;
@@ -53,17 +53,16 @@ PCAS.SetC=function(PCA){
         }
     }else {
         PCA.SelC.options.add(new Option(SCT,''));
-        if(PCA.DefC=='')PCA.SelC[i-1].selected=true;
+        if(PCA.DefC=='')PCA.SelC[0].selected=true;
     }
     if(PCA.SelA)PCAS.SetA(PCA)
 };
 PCAS.SetA=function(PCA){
     PI=PCA.SelP.value;
     CI=PCA.SelC.value;
+    PCA.SelA.length=0;
     if(PI != 0 && PI != ''){
-        PCA.SelA.length=0;
         AV = AREA[PI][1][CI][1];
-        console.log(AV);
         for(i in AV){
             PCAAV=i;
             PCAAT=AV[i][0];
@@ -72,6 +71,6 @@ PCAS.SetA=function(PCA){
         }
     }else {
         PCA.SelA.options.add(new Option(SAT,''));
-        if(PCA.DefA=='')PCA.SelA[i-1].selected=true
+        if(PCA.DefA=='')PCA.SelA[0].selected=true
     }
 }

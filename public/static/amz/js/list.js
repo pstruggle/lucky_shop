@@ -3,8 +3,15 @@
 //商品规格选择
 $(function() {
     // 选中规格后获取价格
-    var options = $(".theme-signin-left ul"),main = $('#main');
-    var specs = {} , specs_select = [],error='',good_id = main.data('good-id');
+    var options = $(".theme-signin-left ul"), //规格元素
+        main = $('#main'), //主袁术
+        text_box = $('#text_box');//数量元素
+    var specs = {} , //商品对应规格
+        specs_select = [],//用户选择规格
+        error='',// 提示错误
+        good_id = main.data('good-id'), // 商品id
+        sum=text_box.val(),// 商品数量
+        specs_group = 0;
     $.ajaxSetup({async:false});
     $.get(spec_url,{good_id:good_id},function (data) {
         specs = data;
@@ -32,6 +39,7 @@ $(function() {
                     $('.sys_item_price').text(specs[x].shop_price);
                     $('.sys_item_mktprice').text(specs[x].market_price);
                     $('.stock').text(specs[x].store_count);
+                    specs_group = specs[x].id;
                 }
                 if(un_len[0] == s_len-1){
                     for (var z in un_len[1]){
@@ -93,40 +101,55 @@ $(function() {
             spec_selected();
         }
     });
+    // 验证用户是否符合购买
     var validate_shop = function () {
-        var un_len = un_count(specs_select);
-        console.log(specs_select);
-        if(un_len[0] != specs_select.length){
-            error = '请选全规格';
-            return false;
-        }
-        var para = {specs:specs_select,goods_id:good_id};
-        var status = true;
-        $.get(spec_store_url,para,function (data) {
-            console.log(data);
-            if(data.store_count == 0){
-                status = false;
+        //当商品有规格选择时
+        if(specs.length >0){
+            var un_len = un_count(specs_select);
+            if(un_len[0] != specs_select.length){
+                error = '请选全规格';
+                return false;
             }
-        });
-        if(status === false){
-            error = '您下手慢了，该规格商品已经没有啦';
-            return false;
+            var param = {specs:specs_select,goods_id:good_id};
+            var status = true;
+            $.get(spec_store_url,param,function (data) {
+                if(data.store_count <= 0){
+                    status = false;
+                }
+            });
+            if(status === false){
+                error = '您下手慢了，该规格商品已经没有啦';
+                return false;
+            }
+        }else { // 当商品没有规格选择时
+            var param = {goods_id:good_id};
+            var status = true;
+            $.get(spec_store_url,param,function (data) {
+                if(data.store_count <= 0){
+                    status = false;
+                }
+            });
+            if(status === false){
+                error = '您下手慢了，该规格商品已经没有啦';
+                return false;
+            }
         }
+
         return true;
     };
     // 用户点击购买
     $('#likbuy').on('click',function () {
         var validate = validate_shop();
-        console.log(validate);
         if (!validate){
             layer.msg(error);
+            return false;
         }
-
+        var param = {goods_id:good_id,specs_group:specs_group,sum:sum};
+        PostForm.init(buy_url,param);
     });
     // 用户点击加入购物车
     $('#likbasket').on('click',function () {
         var validate = validate_shop();
-        console.log(validate);
         if (!validate){
             layer.msg(error);
         }
@@ -143,7 +166,7 @@ $(document).ready(function() {
             $('.theme-popover-mask').show();
             $('.theme-popover').slideDown(200);
 
-        })
+        });
 
         $('.theme-poptit .close,.btn-op .close').click(function() {
             $(document.body).css("position", "static");

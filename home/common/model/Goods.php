@@ -159,4 +159,29 @@ class Goods extends Base
         ];
         return $goods;
     }
+    // 根据规格组id获取规格属性，
+    public function get_spec_group_specs($id){
+        $spec_group = Db::name('spec_group')->where('id',$id)->find();
+        $specs = Db::name('spec')->where('id','in',$spec_group['specs'])->select();
+        $pid = array_column($specs,'pid');
+        $specs_p = Db::name('spec')->where('id','in',$pid)->select();
+        $spec_str = [];
+        foreach ($specs as $key => $spec){
+            $spec_str[]= $specs_p[$key]['spec'].': '.$spec['spec'] ;
+        }
+        $spec_group['spec_str'] = $spec_str;
+        return $spec_group;
+    }
+    // 获取购买商品
+    public function buy_goods($good_id,$specs_group){
+        $good = $this->where('goods_id',$good_id)->find();
+        // 当商品有规格组的时候查询规格
+        if(!empty($specs_group)){
+            $good['spec_group'] = $this->get_spec_group_specs($specs_group);
+        }
+        // 物流
+        $logistic = Db::name('logistics')->where('id',$good['shipping_area_ids'])->find();
+        $good['logistic'] = $logistic;
+        return $good;
+    }
 }

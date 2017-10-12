@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-11 17:45:11
+Date: 2017-10-12 17:50:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,6 +42,54 @@ INSERT INTO `lucky_ad` VALUES ('1', '1', 'http://www.cjphp.com', '/upload/admin/
 INSERT INTO `lucky_ad` VALUES ('2', '1', 'http://www.cjphp.com', '/upload/admin/image/20171007/1507339085846435.jpg', '由内而外爱自己', '由内而外爱自己，买二付一分享闺蜜', '1507339050', '1569892653', '#55be59', '1', '50', '1507340547');
 INSERT INTO `lucky_ad` VALUES ('3', '1', 'http://www.cjphp.com', '/upload/admin/image/20171007/1507339319286806.jpg', '吃货联盟', '吃货联盟 3.8折起', '1507339290', '1601515291', '#f44661', '1', '0', '1507340585');
 INSERT INTO `lucky_ad` VALUES ('4', '1', 'http://www.cjphp.com', '/upload/admin/image/20171007/1507339424140769.jpg', '鲜货直达', '鲜货直达 满119减15', '1507339397', '1509413000', '#0f1024', '1', '0', '1507340617');
+
+-- ----------------------------
+-- Table structure for lucky_address
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_address`;
+CREATE TABLE `lucky_address` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户收货地址',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `full_name` varchar(50) NOT NULL COMMENT '收件人姓名',
+  `mobile` varchar(50) NOT NULL COMMENT '手机号码',
+  `province` mediumint(5) unsigned NOT NULL COMMENT '省',
+  `city` mediumint(5) unsigned NOT NULL COMMENT '市id',
+  `county` mediumint(5) unsigned NOT NULL COMMENT '县/区',
+  `address` varchar(300) NOT NULL COMMENT '详细地址',
+  `is_default` tinyint(1) unsigned NOT NULL COMMENT '是否默认',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_address
+-- ----------------------------
+INSERT INTO `lucky_address` VALUES ('1', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('2', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('3', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('4', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('5', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('6', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('7', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('8', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('9', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('10', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('11', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('12', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('13', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('14', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('15', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('16', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('17', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('18', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('19', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('20', '0', '', '', '0', '0', '0', '', '0', '0');
+INSERT INTO `lucky_address` VALUES ('21', '0', '潘谋勇', '15879221657', '2376', '2377', '2380', '土地庙八号小区', '0', '0');
+INSERT INTO `lucky_address` VALUES ('22', '17', '', '', '0', '0', '0', '', '0', '1507800244');
+INSERT INTO `lucky_address` VALUES ('23', '17', '潘谋勇', '1', '0', '0', '0', '', '0', '1507801181');
+INSERT INTO `lucky_address` VALUES ('24', '17', '潘谋勇', '1', '0', '0', '0', '', '0', '1507801276');
+INSERT INTO `lucky_address` VALUES ('25', '17', '潘谋勇', '15879221657', '0', '0', '0', '', '0', '1507801456');
+INSERT INTO `lucky_address` VALUES ('26', '17', '潘谋勇', '15879221657', '1021', '1038', '1040', '土地庙', '0', '1507801759');
 
 -- ----------------------------
 -- Table structure for lucky_admin
@@ -89,7 +137,7 @@ INSERT INTO `lucky_ad_position` VALUES ('1', 'PC首页轮播广告', 'pc_home', 
 -- ----------------------------
 DROP TABLE IF EXISTS `lucky_area`;
 CREATE TABLE `lucky_area` (
-  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '地区id',
   `pid` int(5) unsigned NOT NULL COMMENT '地址父id 区分省市',
   `area` varchar(50) NOT NULL COMMENT '地区',
   PRIMARY KEY (`id`)
