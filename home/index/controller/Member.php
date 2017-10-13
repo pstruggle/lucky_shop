@@ -32,6 +32,30 @@ class Member extends Base
             $error['code'] = 1;
             $error['info'] = '编辑失败';
         }
-        return json($error);
+        return $this->type == 'json'?json($error):$error;
+    }
+    // 获取用户地址
+    public function address(){
+        $id = input('id');
+        $where = ['uid'=>$this->user['id']];
+        if (!empty($id)){
+            $where['id']=$id;
+        }
+        $order = ['is_default'=>'desc'];
+        $_address = model('address');
+        $address = $_address->get_address($where,$order);
+        return $this->type == 'json'?json($address):$address;
+    }
+    public function address_edit(){
+        $error = ['code'=>0,'info'=>'编辑成功'];
+        $data = input('post.');
+        $data['uid'] = $this->user['id'];
+        $_address = model('address');
+        $address = $_address->modify($data);
+        if (!$address){
+            $error = ['code'=>1,'info'=>'编辑失败'];
+        }
+        return $this->type == 'json'?json($error):$error;
+
     }
 }

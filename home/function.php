@@ -231,9 +231,12 @@ function spec($data){
         return $data[0];
     }
     $items = [];
+    $i = 0;
     foreach ($data[0] as $value0){
         foreach ($data[1] as  $value1){
-            $items[] = $value0 .','. $value1;
+            $items[$i][] = $value0[0] .','. $value1[0];
+            $items[$i][] = $value0[1] .','. $value1[1];
+            $i++;
         }
     }
     $data = array_slice($data,2);

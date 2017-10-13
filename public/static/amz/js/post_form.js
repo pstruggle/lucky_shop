@@ -5,9 +5,10 @@
 var PostForm = function () {
     var form_html = '';//表单字符串
     var id = 'form'+Date.parse(new Date());
-    var post_html = function (url,param,method) {
+    var post_html = function (url,param,method,target) {
         method = method || 'post';
-        form_html += "<form method='"+method+"' action='"+url+"' id='"+id+"'>";
+        target = target || '_self';
+        form_html += "<form method='"+method+"' action='"+url+"' id='"+id+"' target='"+target+"'>";
         for (var name in param){
             if($.isArray(param[name])){
                 for(var x in param[name]){
@@ -18,12 +19,12 @@ var PostForm = function () {
             }
         }
         form_html +="</form>";
-        $('body').after(form_html);
-        $('#'+id).submit();
+        $('body').append(form_html);
+        $('#'+id).submit().remove();
     };
     return {
-        init : function (url,param) {
-            post_html(url,param);
+        init : function (url,param,method,target) {
+            post_html(url,param,method,target);
         }
     };
 }();

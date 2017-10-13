@@ -176,8 +176,8 @@ hr {margin: 5px 0px;}
 .paycont{margin:0px auto;}
 	/*地址管理*/
 .address ul{margin-top:10px ;}
-.address li.user-addresslist{display:block; width: 255px;height: 150px;float: left;background: url(../images/peraddbg.png) no-repeat scroll 0% 0%;margin-right:10px ;padding:10px ;}
-.address li.user-addresslist.defaultAddr{background: url(../images/peraddressbg.png) no-repeat scroll 0% 0%;}
+.address li.user-addresslist{display:block; width: 240px;height: 150px;float: left;background: url(../images/peraddbg.png) no-repeat scroll 0% 0%;margin-right:10px ;padding:10px ;background-size: contain;}
+.address li.user-addresslist.defaultAddr{background: url(../images/peraddressbg.png) no-repeat scroll 0% 0%;background-size: contain;}
 .address-left{ width:100%;position: relative;}
 .address-right,.per-border{display:none ;}
 .th .td-inner{padding-left:0 ;}

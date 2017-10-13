@@ -71,14 +71,15 @@ class Goods extends Base
             $names = Db::name('spec')->insert($map);
             $nid = Db::name('spec')->getLastInsID();
             $spec_attrs = explode(',',$spec_attr[$k]);
-            foreach ($spec_attrs as $attr){
+            foreach ($spec_attrs as $a => $attr){
                 $attrs = [
                     'good_id'=>$goods_id,
                     'pid' =>$nid,
                     'spec' => $attr
                 ];
                 $names = Db::name('spec')->insert($attrs);
-                $ids[$k][] = Db::name('spec')->getLastInsID();
+                $ids[$k][$a][] = Db::name('spec')->getLastInsID();
+                $ids[$k][$a][] = $name .': '.$attr;
             }
         }
         return $ids;
@@ -88,10 +89,12 @@ class Goods extends Base
         $ids = $this->specs($data['spec_name'],$data['spec_attr'],$goods_id);
         Db::name('spec_group')->where('goods_id',$goods_id)->delete();
         $ids = spec($ids);
+        dump($ids);
         foreach ($ids as $k => $id){
             $map =[
                 'goods_id'=>$goods_id,
-                'specs' => $id,
+                'specs' => $id[0],
+                'specs_name' => $id[1],
                 'market_price' => $data['market_prices'][$k]?:'',
                 'shop_price' => $data['shop_prices'][$k],
                 'store_count' => $data['store_counts'][$k],
@@ -162,14 +165,7 @@ class Goods extends Base
     // 根据规格组id获取规格属性，
     public function get_spec_group_specs($id){
         $spec_group = Db::name('spec_group')->where('id',$id)->find();
-        $specs = Db::name('spec')->where('id','in',$spec_group['specs'])->select();
-        $pid = array_column($specs,'pid');
-        $specs_p = Db::name('spec')->where('id','in',$pid)->select();
-        $spec_str = [];
-        foreach ($specs as $key => $spec){
-            $spec_str[]= $specs_p[$key]['spec'].': '.$spec['spec'] ;
-        }
-        $spec_group['spec_str'] = $spec_str;
+        $spec_group['spec_str'] = explode(',',$spec_group['specs_name']);
         return $spec_group;
     }
     // 获取购买商品

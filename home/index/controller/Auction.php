@@ -30,8 +30,23 @@ class Auction extends Base
             'good' => $good,
             'sum' => $sum
         ]);
-
         return $this->template();
+    }
+    // 创建订单
+    public function pay_now(){
+        dump( input('post.') );
+
+        $param = [
+            'body' =>'', //商品主题一般为商品名
+            'attach' => '', // 支付回传的值
+            'trade_no' => '', // 订单号
+            'fee' => '', // 价格以分为单位
+            'start' => '', // 开始时间
+            'expire' => '' , // 有效时间
+            'goods_tag' => '', // 商品标记
+            'notify_url' => '', // 回调地址
+            'product_id' => '', // 商品id
+        ];
     }
     // 确认订单页面
     public function confirm_order(){
