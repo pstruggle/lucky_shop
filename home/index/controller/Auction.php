@@ -35,7 +35,7 @@ class Auction extends Base
     // 创建订单
     public function pay_now(){
         dump( input('post.') );
-
+        serial();
         $param = [
             'body' =>'', //商品主题一般为商品名
             'attach' => '', // 支付回传的值

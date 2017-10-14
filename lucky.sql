@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-13 17:31:29
+Date: 2017-10-14 17:28:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4065,6 +4065,29 @@ CREATE TABLE `lucky_brand` (
 -- ----------------------------
 INSERT INTO `lucky_brand` VALUES ('1', '华为/HUAWEI', '/upload/admin/image/20170926/1506397624110991.jpg', '华为/HUAWEI 描述', '', '20', 'H', '瑞士卷', '1', '3', '15', '1');
 INSERT INTO `lucky_brand` VALUES ('2', '摩托罗拉/MOTOROLA', '/upload/admin/image/20170926/1506397941855084.jpg', '', '', '10', 'M', '软面包', '5', '58', '70', '0');
+
+-- ----------------------------
+-- Table structure for lucky_cart
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_cart`;
+CREATE TABLE `lucky_cart` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '购物车id',
+  `good_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品id',
+  `original_img` varchar(255) NOT NULL DEFAULT '' COMMENT '商品图片',
+  `spec_group` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '规格组id',
+  `spec_name` varchar(2555) NOT NULL DEFAULT '' COMMENT '规格组合文字',
+  `shop_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品售出价格',
+  `market_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '市场价',
+  `goods_sn` varchar(255) NOT NULL DEFAULT '' COMMENT '商品编号',
+  `freight` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '运费',
+  `sum` smallint(3) NOT NULL DEFAULT '0' COMMENT '数量',
+  `addtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_cart
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for lucky_category

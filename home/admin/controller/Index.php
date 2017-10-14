@@ -5,6 +5,7 @@ use app\admin\controller\Base;
 use think\Cache;
 use think\Cookie;
 use think\Db;
+use think\Log;
 
 class Index extends Base
 {
@@ -16,7 +17,7 @@ class Index extends Base
 
     public function index()
     {
-
+        cache('test',1);
         $this->assign([
             'title' => '首页',
         ]);
@@ -48,5 +49,16 @@ class Index extends Base
         }
         $this->error('清除失败，正在返回上一页面！');
 
+    }
+    // 测试页面
+    public function test(){
+        set_time_limit(0);
+//        ignore_user_abort(true);
+//        $i = 0 ;
+//        while(true && cache('test')==0){
+//            Log::write($i++);
+//        }
+//        log::write('执行完成');
+        // 用户执行关闭浏览器还会继续执行的脚本片段
     }
 }
