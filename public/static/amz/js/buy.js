@@ -269,7 +269,7 @@ var Buy = function () {
             var payment = $('.pay.selected').data('pay');//支付方式
             var sum = $('.text_box').val();// 购买数量
             var good_id = $('.bundle').data('good'); // 商品id
-            var remarks = $('.J_MakePoint').val();
+            var remarks = $('#remark').val();
             var spec_group = $('.item-props').data('spec-group');
             if(!addr_id){
                 layer.msg('请选择您的地址');
@@ -287,7 +287,7 @@ var Buy = function () {
                 layer.msg('商品不存在');
                 return false;
             }
-            var param = {addr_id:addr_id,payment:payment,sum:sum,good_id:good_id,spec_group:spec_group,remarks:remarks};
+            var param = {addr_id:addr_id,payment:payment,sum:sum,good_id:good_id,spec_group:spec_group,remark:remarks,token:new Date().valueOf()};
             var url = '/index/auction/pay_now.html';
             PostForm.init(url,param,'post','_blank');
 

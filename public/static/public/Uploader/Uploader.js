@@ -67,7 +67,7 @@ Upload.prototype.getHtml = function(){
         for(x in pics){
             // console.log(pics[x]);
             timestr = (+new Date()).toString(36);
-            imgShow = $("<div  class='upfiles'><img src='"+ up.host+ '/api.php/upload/handle.html?pic=' + pics[x] + "&w=200&h=200' alt='图片' title='" + pics[x] + "' height='42'/><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + timestr + "' value='" + pics[x] + "' /><i class='del'></i></div>");
+            imgShow = $("<div  class='upfiles'><img src='"+ up.host+ '/index.php/api/upload/handle.html?pic=' + pics[x] + "&w=200&h=200' alt='图片' title='" + pics[x] + "' height='42'/><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + timestr + "' value='" + pics[x] + "' /><i class='del'></i></div>");
             out.after(imgShow);
         }
     }
@@ -92,7 +92,7 @@ Upload.prototype.getHtml = function(){
                     out.siblings('.upfiles').remove();
                 }
                 if ($.inArray(json.type, images) != -1) {
-                    imgShow = $("<div  class='upfiles'><img src='"+ up.host+ '/api.php/upload/handle.html?pic=' + json.url + "&w=200&h=200' alt='图片' title='" + json.title + "' height='42'/><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + timestr + "'value='" + json.url + "' /><i class='del'></i></div>");
+                    imgShow = $("<div  class='upfiles'><img src='"+ up.host+ '/index.php/api/upload/handle.html?pic=' + json.url + "&w=200&h=200' alt='图片' title='" + json.title + "' height='42'/><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + timestr + "' value='" + json.url + "' /><i class='del'></i></div>");
                     out.after(imgShow);
                 } else {
                     imgShow = $("<div  class='upfiles'><a href='" + json.url + "'>" + json.original + "</a><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + "'value='" + json.url + "' /><i class='del'></i></div>");
@@ -108,7 +108,7 @@ Upload.prototype.getHtml = function(){
                 timestr = (+new Date()).toString(36);
                 if (json.state[i] == 'SUCCESS') {
                     if ($.inArray(json.type[i], images) != -1) {
-                        imgShow = $("<div class='upfiles'><img src='"+ up.host+ '/api.php/upload/handle.html?pic=' + json.url[i] + "&w=200&h=200' alt='图片' title='" + json.title[i] + "' height='42'/><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + timestr + "' value='" + json.url[i] + "' /><i class='del'></i></div>");
+                        imgShow = $("<div class='upfiles'><img src='"+ up.host+ '/index.php/api/upload/handle.html?pic=' + json.url[i] + "&w=200&h=200' alt='图片' title='" + json.title[i] + "' height='42'/><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + timestr + "' value='" + json.url[i] + "' /><i class='del'></i></div>");
                         out.after(imgShow);
                     } else {
                         imgShow = $("<div  class='upfiles'><a href='" + json.url[i] + "'>" + json.original[i] + "</a><input type='hidden' name='" + up.inputName + "' id='" + up.inputId + timestr + "'value='" + json.url[i] + "' /><i class='del'></i></div>");

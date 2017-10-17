@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-14 17:28:10
+Date: 2017-10-17 17:37:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4072,22 +4072,59 @@ INSERT INTO `lucky_brand` VALUES ('2', '摩托罗拉/MOTOROLA', '/upload/admin/i
 DROP TABLE IF EXISTS `lucky_cart`;
 CREATE TABLE `lucky_cart` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '购物车id',
-  `good_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品id',
+  `uid` int(11) unsigned NOT NULL COMMENT '用户id',
+  `order_id` int(11) unsigned NOT NULL COMMENT '订单id',
+  `goods_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品id',
+  `goods_name` varchar(255) NOT NULL COMMENT '商品名',
   `original_img` varchar(255) NOT NULL DEFAULT '' COMMENT '商品图片',
   `spec_group` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '规格组id',
-  `spec_name` varchar(2555) NOT NULL DEFAULT '' COMMENT '规格组合文字',
+  `specs_name` varchar(2555) NOT NULL DEFAULT '' COMMENT '规格组合文字',
   `shop_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品售出价格',
   `market_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '市场价',
   `goods_sn` varchar(255) NOT NULL DEFAULT '' COMMENT '商品编号',
   `freight` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '运费',
   `sum` smallint(3) NOT NULL DEFAULT '0' COMMENT '数量',
   `addtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `goods_id` (`goods_id`),
+  KEY `spec_group` (`spec_group`),
+  KEY `uid` (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_cart
 -- ----------------------------
+INSERT INTO `lucky_cart` VALUES ('1', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208407');
+INSERT INTO `lucky_cart` VALUES ('2', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208509');
+INSERT INTO `lucky_cart` VALUES ('3', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208529');
+INSERT INTO `lucky_cart` VALUES ('4', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208650');
+INSERT INTO `lucky_cart` VALUES ('5', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208708');
+INSERT INTO `lucky_cart` VALUES ('6', '17', '1', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208724');
+INSERT INTO `lucky_cart` VALUES ('7', '17', '2', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208757');
+INSERT INTO `lucky_cart` VALUES ('8', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508209044');
+INSERT INTO `lucky_cart` VALUES ('9', '17', '3', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508209073');
+INSERT INTO `lucky_cart` VALUES ('10', '17', '4', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508212699');
+INSERT INTO `lucky_cart` VALUES ('11', '17', '5', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508212906');
+INSERT INTO `lucky_cart` VALUES ('12', '17', '6', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508212924');
+INSERT INTO `lucky_cart` VALUES ('13', '17', '7', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508212947');
+INSERT INTO `lucky_cart` VALUES ('14', '17', '8', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508212963');
+INSERT INTO `lucky_cart` VALUES ('15', '17', '9', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508213016');
+INSERT INTO `lucky_cart` VALUES ('16', '17', '10', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508218715');
+INSERT INTO `lucky_cart` VALUES ('17', '17', '11', '21', '精品蛋糕', '/upload/admin/image/20171008/1507454933182024.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508220880');
+INSERT INTO `lucky_cart` VALUES ('18', '17', '12', '21', '精品蛋糕', '/upload/admin/image/20171008/1507454933182024.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508220997');
+INSERT INTO `lucky_cart` VALUES ('19', '17', '0', '21', '精品蛋糕', '/upload/admin/image/20171008/1507454933182024.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508221202');
+INSERT INTO `lucky_cart` VALUES ('20', '17', '13', '21', '精品蛋糕', '/upload/admin/image/20171008/1507454933182024.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508221229');
+INSERT INTO `lucky_cart` VALUES ('21', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508222907');
+INSERT INTO `lucky_cart` VALUES ('22', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508223634');
+INSERT INTO `lucky_cart` VALUES ('23', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508223714');
+INSERT INTO `lucky_cart` VALUES ('24', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508223761');
+INSERT INTO `lucky_cart` VALUES ('25', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508223780');
+INSERT INTO `lucky_cart` VALUES ('26', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '433', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 20cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508223842');
+INSERT INTO `lucky_cart` VALUES ('27', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508224085');
+INSERT INTO `lucky_cart` VALUES ('28', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '4', '1508224181');
+INSERT INTO `lucky_cart` VALUES ('29', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '4', '1508224240');
+INSERT INTO `lucky_cart` VALUES ('30', '17', '0', '18', '精品蛋糕', '/upload/admin/image/20171008/1507454702820616.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508225307');
 
 -- ----------------------------
 -- Table structure for lucky_category
@@ -4542,7 +4579,7 @@ CREATE TABLE `lucky_nav` (
   `weight` int(6) unsigned NOT NULL DEFAULT '50' COMMENT '排序',
   `addtime` int(11) NOT NULL COMMENT '最后修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_nav
@@ -4556,6 +4593,10 @@ INSERT INTO `lucky_nav` VALUES ('6', '2', '商品分类', 'http://www.cjphp.com'
 INSERT INTO `lucky_nav` VALUES ('7', '2', '大聚惠', 'http://www.cjphp.com', '/upload/admin/image/20171008/1507428955360176.jpg', '1', '4', '1507429004');
 INSERT INTO `lucky_nav` VALUES ('8', '2', '个人中心', 'http://www.cjphp.com', '/upload/admin/image/20171008/1507428983123152.jpg', '1', '3', '1507428998');
 INSERT INTO `lucky_nav` VALUES ('9', '2', '投资理财', 'http://www.cjphp.com', '/upload/admin/image/20171008/1507429057272993.jpg', '1', '1', '1507429066');
+INSERT INTO `lucky_nav` VALUES ('10', '3', '首页', 'http://www.cjphp.com', '', '1', '10', '1508230241');
+INSERT INTO `lucky_nav` VALUES ('11', '3', '分类', '', '', '1', '9', '1508230292');
+INSERT INTO `lucky_nav` VALUES ('12', '3', '购物车', 'http://www.cjphp.com/index/goods/shop_cart.html', '', '1', '5', '1508230427');
+INSERT INTO `lucky_nav` VALUES ('13', '3', '我的', 'http://www.cjphp.com', '', '1', '1', '1508230510');
 
 -- ----------------------------
 -- Table structure for lucky_nav_position
@@ -4566,13 +4607,80 @@ CREATE TABLE `lucky_nav_position` (
   `mark` varchar(50) NOT NULL COMMENT '导航标识',
   `position` varchar(50) NOT NULL COMMENT '位置',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_nav_position
 -- ----------------------------
 INSERT INTO `lucky_nav_position` VALUES ('1', 'pc_nav', '电脑端首页导航');
 INSERT INTO `lucky_nav_position` VALUES ('2', 'm_nav', '手机端首页导航');
+INSERT INTO `lucky_nav_position` VALUES ('3', 'foot_nav', '手机底部导航');
+
+-- ----------------------------
+-- Table structure for lucky_orders
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_orders`;
+CREATE TABLE `lucky_orders` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单表',
+  `uid` int(11) NOT NULL COMMENT '用户id',
+  `serial` char(20) NOT NULL DEFAULT '' COMMENT '订单序列号',
+  `pay_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '支付金额',
+  `market_price` decimal(10,2) unsigned NOT NULL COMMENT '市场价格 可算出优惠价格',
+  `discount` mediumint(9) unsigned NOT NULL DEFAULT '0' COMMENT '优惠方式',
+  `consignee` varchar(2555) NOT NULL DEFAULT '' COMMENT '收货人信息json',
+  `integral` int(10) unsigned NOT NULL COMMENT '订单获得积分',
+  `payment` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '支付方式',
+  `pay_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '支付状态 0：未支付，1：已支付',
+  `delivery_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '发货流通状态0：未发货，1：已发货（待收货）,2：确认收货',
+  `refund_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '退款状态 0：未退款 ，1：申请退款，2：退款成功，3：退款失败',
+  `logistics` varchar(50) NOT NULL COMMENT '物流公司',
+  `waybillnum` char(30) NOT NULL COMMENT '运单号',
+  `remark` varchar(255) NOT NULL COMMENT '用户订单备注',
+  `give_up` tinyint(1) NOT NULL DEFAULT '0' COMMENT '该订单是否为弃单0否1是',
+  `place_time` int(11) NOT NULL DEFAULT '0' COMMENT '下单时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `serial` (`serial`),
+  KEY `uid` (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_orders
+-- ----------------------------
+INSERT INTO `lucky_orders` VALUES ('1', '17', 'p20872453369', '123.00', '132.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208724');
+INSERT INTO `lucky_orders` VALUES ('2', '17', 'p20875742669', '123.00', '132.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208757');
+INSERT INTO `lucky_orders` VALUES ('3', '17', 'p20907328997', '123.00', '132.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508209073');
+INSERT INTO `lucky_orders` VALUES ('4', '17', 'p21269914972', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212699');
+INSERT INTO `lucky_orders` VALUES ('5', '17', 'p21290639011', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212906');
+INSERT INTO `lucky_orders` VALUES ('6', '17', 'p21292450510', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212924');
+INSERT INTO `lucky_orders` VALUES ('7', '17', 'p21294723166', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212947');
+INSERT INTO `lucky_orders` VALUES ('8', '17', 'p21296388699', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212963');
+INSERT INTO `lucky_orders` VALUES ('9', '17', 'p21301665434', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508213016');
+INSERT INTO `lucky_orders` VALUES ('10', '17', 'p21871565878', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508218715');
+INSERT INTO `lucky_orders` VALUES ('11', '17', 'p22088021074', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220880');
+INSERT INTO `lucky_orders` VALUES ('12', '17', 'p22099759664', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220997');
+INSERT INTO `lucky_orders` VALUES ('13', '17', 'p22122914399', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '留言你要看哦', '0', '1508221229');
+
+-- ----------------------------
+-- Table structure for lucky_order_log
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_order_log`;
+CREATE TABLE `lucky_order_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单操作日志',
+  `uid` int(11) unsigned NOT NULL COMMENT '操作用户',
+  `uname` varchar(50) NOT NULL COMMENT '订单操作用户名',
+  `utype` tinyint(2) unsigned NOT NULL COMMENT '用户类型',
+  `order_id` int(11) unsigned NOT NULL COMMENT '订单id',
+  `explain` varchar(300) NOT NULL COMMENT '订单操作说明',
+  `remark` varchar(300) NOT NULL COMMENT '操作员备注',
+  `op_time` int(11) NOT NULL COMMENT '操作时间',
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`) USING BTREE,
+  KEY `uid` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_order_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for lucky_sms_log

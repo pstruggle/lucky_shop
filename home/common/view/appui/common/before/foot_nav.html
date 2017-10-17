@@ -1,0 +1,10 @@
+<!--引导 -->
+<div class="navCir">
+    {volist name=":get_cache('nav.foot_nav')" id="nav"}
+    <li><a href="{$nav.url}"><i class="am-icon-home "></i>{$nav.name}</a></li>
+    {/volist}
+    <li><a href="home2.html"><i class="am-icon-home "></i>首页</a></li>
+    <li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
+    <li class="active"><a href="{:url('index/Goods/shop_cart')}"><i class="am-icon-shopping-basket"></i>购物车</a></li>
+    <li><a href="__AMZ__person/index.html"><i class="am-icon-user"></i>我的</a></li>
+</div>

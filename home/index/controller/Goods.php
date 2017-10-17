@@ -54,5 +54,13 @@ class Goods extends Base
         }
         return json($spec);
     }
+    // 购物车页面控制器
+    public function shop_cart(){
+
+        $carts = model('cart')->where('')->select();
+        $assign = [];
+        $this->assign($assign);
+        return $this->template();
+    }
 
 }

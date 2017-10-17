@@ -1,0 +1,18 @@
+<div class="long-title"><span class="all-goods">全部分类</span></div>
+<div class="nav-cont">
+    <ul>
+        {php}$pc_navs = get_cache('nav.pc_nav');$last = count(navs)-1;{/php}
+        {volist name="pc_navs" id="nav"}
+        {php}
+        $str = '';
+        if($key == 0)$str = 'index';
+        if($key == $last)$str = 'last';
+        {/php}
+        <li class="qc {$str}"><a href="{$nav.url??''}">{$nav.name}</a></li>
+        {/volist}
+    </ul>
+    <div class="nav-extra">
+        <i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
+        <i class="am-icon-angle-right" style="padding-left: 10px;"></i>
+    </div>
+</div>

@@ -172,9 +172,7 @@ class Goods extends Base
     public function buy_goods($good_id,$specs_group){
         $good = $this->where('goods_id',$good_id)->find();
         // 当商品有规格组的时候查询规格
-        if(!empty($specs_group)){
-            $good['spec_group'] = $this->get_spec_group_specs($specs_group);
-        }
+        $good['spec_group'] = !empty($specs_group)? $this->get_spec_group_specs($specs_group) : '';
         // 物流
         $logistic = Db::name('logistics')->where('id',$good['shipping_area_ids'])->find();
         $good['logistic'] = $logistic;

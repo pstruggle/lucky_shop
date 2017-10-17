@@ -17,11 +17,14 @@ class Logistics extends Base
     }
     public function setCache(){
         $name = lcfirst($this->name);
-
         $logistics = $this->select();
-        get_cache($name,$logistics);
+        $logis = [];
+        foreach ($logistics as $logistic){
+            $logis[$logistic['id']] = $logistic;
+        }
+        get_cache($name,$logis);
     }
-    // 商品编辑
+    // 邮费模板
     public function edit($data){
         if(empty($data['name'])){
             $this->error = '请填写邮费模板';
@@ -31,7 +34,7 @@ class Logistics extends Base
         $this->setCache();
         return $result;
     }
-    // 商品列表
+    // 邮费模板列表
     public function listing(){
         $logistics = $this->paginate(20);
         $page = $logistics->render();
@@ -43,7 +46,7 @@ class Logistics extends Base
 
         return $list;
     }
-    // 商品列表
+    // 编辑视图
     public function edit_view(){
 
     }

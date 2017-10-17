@@ -34,8 +34,12 @@ class Auction extends Base
     }
     // 创建订单
     public function pay_now(){
-        dump( input('post.') );
-        serial();
+        $data = input('post.');
+        $data['uid'] = $this->user['id'];
+        $data['uname'] = $this->user['nickname'];
+        $_orders = model('orders');
+        $buy_now = $_orders->buy_now($data);
+        dump($buy_now);
         $param = [
             'body' =>'', //商品主题一般为商品名
             'attach' => '', // 支付回传的值
@@ -51,5 +55,22 @@ class Auction extends Base
     // 确认订单页面
     public function confirm_order(){
 
+    }
+    // 异步加入购物车
+    public function cart(){
+        // 未登录的状态 code == 9
+        $data = input('post.');
+        $data['uid'] = $this->user['id'];
+        $_cart = model('cart');
+        $create_id = $_cart->create_cart($data);
+        $error = [];
+        if(empty($create_id)){
+            $error['code'] = 1;
+            $error['info'] = '添加失败，请稍后再试';
+        }else{
+            $error['code'] = 0;
+            $error['info'] = '添加成功';
+        }
+        return json($error);
     }
 }

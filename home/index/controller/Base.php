@@ -30,4 +30,13 @@ class Base extends Common
             return $this->error('操作错误');
         }
     }
+    // 传值
+    public function assigns(){
+        $pc_navs = get_cache('nav.pc_nav');
+        $m_navs = get_cache('nav.m_nav');
+        $this->assign([
+            'pc_navs' => $pc_navs,
+            'm_navs' => $m_navs
+        ]);
+    }
 }

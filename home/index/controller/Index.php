@@ -14,16 +14,12 @@ class Index extends Base
     {
         $categorys = get_cache('category');
         $pc_ads = get_cache('ad.pc_home');
-        $pc_navs = get_cache('nav.pc_nav');
-        $m_navs = get_cache('nav.m_nav');
         $home = model('category')->home();
         $this->assign([
             'title' => get_cache('config.mall')['store_title'],
             'categorys' => $categorys,
             'pc_ads' => $pc_ads,
-            'pc_navs' => $pc_navs,
             'home' => $home,
-            'm_navs' => $m_navs
         ]);
         return $this->template();
     }

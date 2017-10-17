@@ -2,6 +2,10 @@
 
 //商品规格选择
 $(function() {
+    var spec_url = "/index/Goods/specs.html",
+        spec_store_url = "/index/Goods/ajax_spec_store.html",
+        buy_url = "/index/Auction/buy_now.html",
+        cart_url = "/index/Auction/cart.html" ;
     // 选中规格后获取价格
     var options = $(".theme-signin-left ul"), //规格元素
         main = $('#main'), //主袁术
@@ -134,6 +138,11 @@ $(function() {
                 return false;
             }
         }
+        sum = text_box.val();
+        if(sum<=0){
+            error = '数量要大于等于1哦';
+            return false;
+        }
 
         return true;
     };
@@ -144,6 +153,7 @@ $(function() {
             layer.msg(error);
             return false;
         }
+
         var param = {goods_id:good_id,specs_group:specs_group,sum:sum};
         PostForm.init(buy_url,param);
     });
@@ -152,7 +162,18 @@ $(function() {
         var validate = validate_shop();
         if (!validate){
             layer.msg(error);
+            return false;
         }
+        var param = {good_id:good_id,spec_group:specs_group,sum:sum};
+        $.post(cart_url,param,function (data) {
+            if(data.code == 0){
+                var cart_num_e1 = $('.cart_num'),cart_num_e2 = $('#J_MiniCartNum');
+                var num = parseInt(cart_num_e2.text())+1;
+                cart_num_e1.text(num);
+                cart_num_e2.text(num);
+            }
+            layer.msg(data.info);
+        });
 
     });
 });

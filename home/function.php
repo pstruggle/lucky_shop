@@ -64,7 +64,7 @@ function sms_param($param,$value){
  * @return string
  */
 function serial($prefix=''){
-    $time_ext = substr(time(),'5');
+    $time_ext = substr(time(),'4');
     return $prefix . $time_ext.mt_rand(10000,99999);
 }
 
