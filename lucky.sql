@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-17 17:37:26
+Date: 2017-10-18 17:30:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4090,7 +4090,7 @@ CREATE TABLE `lucky_cart` (
   KEY `goods_id` (`goods_id`),
   KEY `spec_group` (`spec_group`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_cart
@@ -4125,6 +4125,7 @@ INSERT INTO `lucky_cart` VALUES ('27', '17', '0', '13', '精品蛋糕', '/upload
 INSERT INTO `lucky_cart` VALUES ('28', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '4', '1508224181');
 INSERT INTO `lucky_cart` VALUES ('29', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '4', '1508224240');
 INSERT INTO `lucky_cart` VALUES ('30', '17', '0', '18', '精品蛋糕', '/upload/admin/image/20171008/1507454702820616.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508225307');
+INSERT INTO `lucky_cart` VALUES ('31', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '433', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 20cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508294989');
 
 -- ----------------------------
 -- Table structure for lucky_category

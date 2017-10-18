@@ -18,10 +18,9 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           t.val(0);
           }
        })
-    }) 
+    })
 
 	
-	<!--兼容IE浏览器 -->
 	    if (!document.getElementsByClassName) {
         document.getElementsByClassName = function (cls) {
             var ret = [];
@@ -55,60 +54,60 @@ $(function(){
 	})
 
 })
- 
- 
- 
- 
- 
+
+
+
+
+
 })
- 
+
 // 弹出规格选择
- 
+
 			$(document).ready(function($) {
-	
+
 				var $ww = $(window).width();
-	
+
 				$('.theme-login').click(function() {
 //					禁止遮罩层下面的内容滚动
 					$(document.body).css("position","fixed");
-					
+
 					$(this).addClass("selected");
 					$(this).parent().addClass("selected");
 					var to=$(this).prev().offset().top+30;
 					var th=$(this).offset().top;
 					var tl=$(this).offset().left-200;
-					
-					$('.theme-span').show();				
+
+					$('.theme-span').show();
 					$('.theme-popover-mask').show();
 					$('.theme-popover-mask').height($(document).height());
 					$('.theme-popover').slideDown(200);
-					
+
 			   if ($ww>640){
 					$('.theme-popover').css("top",th);
 					$('.theme-popover').css("left",tl);
 					$('.theme-popover-mask').hide();
-				 	}					
-			   if ($ww>1024){				
+				 	}
+			   if ($ww>1024){
 					$('.theme-popover').css("top",to);
 					$('.theme-popover').css("left",tl);
 					$('.theme-popover-mask').hide();
-				 	}													
-					
+				 	}
+
 				})
 				$('.theme-poptit .close,.btn-op .close').click(function() {
 					$(document.body).css("position","static");
 //					滚动条复位
-					$('.theme-signin-left').scrollTop(0);					
+					$('.theme-signin-left').scrollTop(0);
 					$('.theme-login').removeClass("selected");
-					$('.item-props-can').removeClass("selected");					
+					$('.item-props-can').removeClass("selected");
 					$('.theme-span').hide();
 					$('.theme-popover-mask').hide();
 					$('.theme-popover').slideUp(200);
 				})
 
-				
-			}); 
- 
+
+			});
+
  
  
  

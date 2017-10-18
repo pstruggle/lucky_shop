@@ -37,7 +37,7 @@ class Goods extends Base
         $goods_id = input('good_id');
         $where = ['goods_id'=>$goods_id];
         $specs = Db::name('spec_group')->where($where)->select();
-        return json($specs);
+        return $this->type== 'json'?json($specs):$specs;
     }
     // 异步验证规格组是否还存在库存
     public function ajax_spec_store(){
@@ -52,15 +52,22 @@ class Goods extends Base
             $good_store = Db::name('goods')->where($where)->value('store_count');
             $spec = ['store_count'=>$good_store];
         }
-        return json($spec);
+        return $this->type=='json'?json($spec):$spec;
     }
     // 购物车页面控制器
     public function shop_cart(){
-
-        $carts = model('cart')->where('')->select();
-        $assign = [];
+        $assign = ['title'=>'我的购物车'];
         $this->assign($assign);
         return $this->template();
     }
+    // 购物车
+    public function carts(){
+        $where = [
+            'uid'=>$this->user['id'],
+            'order_id' => '0',
+        ];
 
+        $carts = Db::name('cart')->where($where)->paginate(10);
+        return $this->type=='json'?json($carts):$carts;
+    }
 }
