@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-18 17:30:16
+Date: 2017-10-19 17:51:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4090,13 +4090,13 @@ CREATE TABLE `lucky_cart` (
   KEY `goods_id` (`goods_id`),
   KEY `spec_group` (`spec_group`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_cart
 -- ----------------------------
-INSERT INTO `lucky_cart` VALUES ('1', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208407');
-INSERT INTO `lucky_cart` VALUES ('2', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208509');
+INSERT INTO `lucky_cart` VALUES ('1', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '452', '颜色: 白色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '3', '1508406646');
+INSERT INTO `lucky_cart` VALUES ('2', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '433', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 20cm', '123.00', '132.00', 'lucky12345', '10.00', '3', '1508406614');
 INSERT INTO `lucky_cart` VALUES ('3', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208529');
 INSERT INTO `lucky_cart` VALUES ('4', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208650');
 INSERT INTO `lucky_cart` VALUES ('5', '17', '0', '13', '', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508208708');
@@ -4126,6 +4126,7 @@ INSERT INTO `lucky_cart` VALUES ('28', '17', '0', '13', '精品蛋糕', '/upload
 INSERT INTO `lucky_cart` VALUES ('29', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '4', '1508224240');
 INSERT INTO `lucky_cart` VALUES ('30', '17', '0', '18', '精品蛋糕', '/upload/admin/image/20171008/1507454702820616.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508225307');
 INSERT INTO `lucky_cart` VALUES ('31', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '433', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 20cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508294989');
+INSERT INTO `lucky_cart` VALUES ('32', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508396950');
 
 -- ----------------------------
 -- Table structure for lucky_category

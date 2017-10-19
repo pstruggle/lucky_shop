@@ -35,9 +35,16 @@ class Goods extends Base
     // 获取商品规格
     public function specs(){
         $goods_id = input('good_id');
-        $where = ['goods_id'=>$goods_id];
-        $specs = Db::name('spec_group')->where($where)->select();
+        $_goods = model('goods');
+        $specs = $_goods->get_specs($goods_id);
         return $this->type== 'json'?json($specs):$specs;
+    }
+    // 获取商品规格组
+    public function spec_group(){
+        $goods_id = input('good_id');
+        $where = ['goods_id'=>$goods_id];
+        $spec_groups = Db::name('spec_group')->where($where)->select();
+        return $this->type== 'json'?json($spec_groups):$spec_groups;
     }
     // 异步验证规格组是否还存在库存
     public function ajax_spec_store(){
@@ -60,14 +67,37 @@ class Goods extends Base
         $this->assign($assign);
         return $this->template();
     }
+    // 异步加入购物车
+    public function cart(){
+        // 未登录的状态 code == 9
+        $data = input('post.');
+        $data['uid'] = $this->user['id'];
+        $_cart = model('cart');
+        $create_id = $_cart->create_cart($data);
+        $error = [];
+        if(empty($create_id)){
+            $error['code'] = 1;
+            $error['info'] = '添加失败，请稍后再试';
+        }else{
+            $error['code'] = 0;
+            $error['info'] = '添加成功';
+        }
+        return $this->type=='json'?json($error):$error;
+    }
+
     // 购物车
     public function carts(){
         $where = [
             'uid'=>$this->user['id'],
             'order_id' => '0',
         ];
-
-        $carts = Db::name('cart')->where($where)->paginate(10);
+        $cart_id = input('cart_id');
+        if(!empty($cart_id)){
+            $where['id'] = $cart_id;
+        }
+        $limit = input('limit');
+        $_cart = model('cart');
+        $carts = $_cart->get_carts($where,[],$limit);
         return $this->type=='json'?json($carts):$carts;
     }
 }

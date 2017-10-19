@@ -12,6 +12,8 @@
     <link href="__AMZ__css/cartstyle.css" rel="stylesheet" type="text/css" />
     <link href="__AMZ__css/optstyle.css" rel="stylesheet" type="text/css" />
     {load file="__AMZ__js/jquery-1.7.2.min.js"}
+    {load file="__PUBLIC__layer/layer.js"}
+
 </head>
 
 <body>
@@ -129,7 +131,7 @@
 
 <div class="theme-popover-mask"></div>
 
-<div class="theme-popover">
+<div class="theme-popover" style="background-color: #fff;">
     <div class="theme-span"></div>
     <div class="theme-poptit h-title">
         <a href="javascript:;" title="关闭" class="close">×</a>
@@ -138,34 +140,36 @@
         <form class="theme-signin" name="loginform" action="" method="post">
 
             <div class="theme-signin-left">
+                <ul id="theme">
+                    <li class="theme-options">
+                        <div class="cart-title">颜色：</div>
+                        <ul>
+                            <li class="sku-line selected">12#川南玛瑙<i></i></li>
+                            <li class="sku-line">10#蜜橘色+17#樱花粉<i></i></li>
+                        </ul>
+                    </li>
+                    <li class="theme-options">
+                        <div class="cart-title">包装：</div>
+                        <ul>
+                            <li class="sku-line selected">包装：裸装<i></i></li>
+                            <li class="sku-line">两支手袋装（送彩带）<i></i></li>
+                        </ul>
+                    </li>
+                </ul>
 
-                <li class="theme-options">
-                    <div class="cart-title">颜色：</div>
-                    <ul>
-                        <li class="sku-line selected">12#川南玛瑙<i></i></li>
-                        <li class="sku-line">10#蜜橘色+17#樱花粉<i></i></li>
-                    </ul>
-                </li>
-                <li class="theme-options">
-                    <div class="cart-title">包装：</div>
-                    <ul>
-                        <li class="sku-line selected">包装：裸装<i></i></li>
-                        <li class="sku-line">两支手袋装（送彩带）<i></i></li>
-                    </ul>
-                </li>
                 <div class="theme-options">
                     <div class="cart-title number">数量</div>
                     <dd>
                         <input class="min am-btn am-btn-default" name="" type="button" value="-" />
                         <input class="text_box" name="" type="text" value="1" style="width:30px;" />
                         <input class="add am-btn am-btn-default" name="" type="button" value="+" />
-                        <span  class="tb-hidden">库存<span class="stock">1000</span>件</span>
+                        <span  class="tb-hidden">库存<span class="stock">0</span>件</span>
                     </dd>
 
                 </div>
                 <div class="clear"></div>
                 <div class="btn-op">
-                    <div class="btn am-btn am-btn-warning">确认</div>
+                    <div class="btn confirm am-btn am-btn-warning">确认</div>
                     <div class="btn close am-btn am-btn-warning">取消</div>
                 </div>
 
@@ -175,8 +179,8 @@
                     <img src="__AMZ__images/kouhong.jpg_80x80.jpg" />
                 </div>
                 <div class="text-info">
-                    <span class="J_Price price-now">¥39.00</span>
-                    <span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
+                    <span class="J_Price price-now">¥0</span>
+                    <span id="Stock" class="tb-hidden">库存<span class="stock">0</span>件</span>
                 </div>
             </div>
 

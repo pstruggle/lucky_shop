@@ -56,21 +56,4 @@ class Auction extends Base
     public function confirm_order(){
 
     }
-    // 异步加入购物车
-    public function cart(){
-        // 未登录的状态 code == 9
-        $data = input('post.');
-        $data['uid'] = $this->user['id'];
-        $_cart = model('cart');
-        $create_id = $_cart->create_cart($data);
-        $error = [];
-        if(empty($create_id)){
-            $error['code'] = 1;
-            $error['info'] = '添加失败，请稍后再试';
-        }else{
-            $error['code'] = 0;
-            $error['info'] = '添加成功';
-        }
-        return json($error);
-    }
 }

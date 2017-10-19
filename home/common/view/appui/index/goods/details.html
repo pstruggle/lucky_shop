@@ -185,16 +185,19 @@
                             <div class="theme-popbod dform">
                                 <form class="theme-signin" name="loginform" action="" method="post">
                                     <div class="theme-signin-left">
-                                        {volist name="specs" id="spec"}
-                                        <div class="theme-options">
-                                            <div class="cart-title">{$spec.0}</div>
-                                            <ul>
-                                                {volist name="$spec['1']" id="spec_1"}
-                                                <li class="sku-line" data-spec="{$key}">{$spec_1.0}<i></i></li>
-                                                {/volist}
-                                            </ul>
-                                        </div>
-                                        {/volist}
+                                        <ul id="theme">
+                                            {volist name="specs" id="spec"}
+                                            <li class="theme-options">
+                                                <div class="cart-title">{$spec.0}</div>
+                                                <ul>
+                                                    {volist name="$spec['1']" id="spec_1"}
+                                                    <li class="sku-line" data-spec="{$key}">{$spec_1.0}<i></i></li>
+                                                    {/volist}
+                                                </ul>
+                                            </li>
+                                            {/volist}
+                                        </ul>
+
                                         <div class="theme-options">
                                             <div class="cart-title number">数量</div>
 

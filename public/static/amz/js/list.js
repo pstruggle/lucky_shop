@@ -2,12 +2,12 @@
 
 //商品规格选择
 $(function() {
-    var spec_url = "/index/Goods/specs.html",
+    var spec_group_url = "/index/Goods/spec_group.html",
         spec_store_url = "/index/Goods/ajax_spec_store.html",
         buy_url = "/index/Auction/buy_now.html",
-        cart_url = "/index/Auction/cart.html" ;
+        cart_url = "/index/goods/cart.html" ;
     // 选中规格后获取价格
-    var options = $(".theme-signin-left ul"), //规格元素
+    var options = $("#theme ul"), //规格元素
         main = $('#main'), //主袁术
         text_box = $('#text_box');//数量元素
     var specs = {} , //商品对应规格
@@ -15,9 +15,9 @@ $(function() {
         error='',// 提示错误
         good_id = main.data('good-id'), // 商品id
         sum=text_box.val(),// 商品数量
-        specs_group = 0;
+        specs_group = 0; //用户选中规格组
     $.ajaxSetup({async:false});
-    $.get(spec_url,{good_id:good_id},function (data) {
+    $.get(spec_group_url,{good_id:good_id},function (data) {
         specs = data;
     });
     // 前端判断组合是否有库存
@@ -81,7 +81,7 @@ $(function() {
         }
         return [count,index];
     };
-    // 初始化
+    // 初始化规格
     options.each(function(e) {
         var i = $(this);
         var p = i.find("li");

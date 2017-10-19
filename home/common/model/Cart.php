@@ -37,10 +37,23 @@ class Cart extends Base
         $good['uid'] = $data['uid'];
         $good['sum'] = $data['sum'];
         $good['addtime'] = time();
-        $result = $this->save($good);
+        $where = [];
+        if(!empty($data['cart_id'])){
+            $where['id'] = $data['cart_id'];
+        }
+        $result = $this->save($good,$where);
         if($result){
-            return $this->getLastInsID();
+            return $this->getLastInsID()?$this->getLastInsID():$data['cart_id'];
         }
         return false;
+    }
+    // 购物车列表
+    public function get_carts($where=[],$order=[],$page = 10){
+        $carts = $this->where($where)->order($order)->paginate($page);
+        $temp = [];
+        foreach ($carts as $cart){
+            $temp[$cart['id']] = $cart;
+        }
+        return $temp;
     }
 }
