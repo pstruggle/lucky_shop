@@ -77,14 +77,13 @@ class Goods extends Base
         $error = [];
         if(empty($create_id)){
             $error['code'] = 1;
-            $error['info'] = '添加失败，请稍后再试';
+            $error['info'] = '编辑失败，请稍后再试';
         }else{
             $error['code'] = 0;
-            $error['info'] = '添加成功';
+            $error['info'] = '编辑成功';
         }
         return $this->type=='json'?json($error):$error;
     }
-
     // 购物车
     public function carts(){
         $where = [
@@ -99,5 +98,37 @@ class Goods extends Base
         $_cart = model('cart');
         $carts = $_cart->get_carts($where,[],$limit);
         return $this->type=='json'?json($carts):$carts;
+    }
+    // 购物车删除
+    public function del_cart(){
+        $cart_id = input('cart_id');
+        $where = ['uid'=>$this->user['id'],'id'=>$cart_id];
+        $result = model('cart')->del_cart($where);
+        if($result){
+            // 删除成功
+            $error['code'] = 0;
+            $error['info'] = '编辑成功';
+        }else{
+            // 删除失败
+            $error['code'] = 1;
+            $error['info'] = '编辑失败，请稍后再试';
+        }
+        return $this->type=='json'?json($error):$error;
+    }
+    // 购物车移动到收藏夹
+    public function move_favorite(){
+        $data = input('post.');
+        $data['uid'] = $this->user['id'];
+        $_cart = model('cart');
+        $result = $_cart->move_favorite($data);
+        if(empty($result)){
+            // 删除失败
+            $error['code'] = 1;
+            $error['info'] = '编辑失败，请稍后再试';
+        }else{
+            $error['code'] = 0;
+            $error['info'] = '编辑成功';
+        }
+        return $this->type=='json'?json($error):$error;
     }
 }
