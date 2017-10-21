@@ -34,6 +34,9 @@ class Auction extends Base
     }
     // 创建订单
     public function pay_now(){
+        if (!$this->request->isPost()){
+            return $this->error('请求错误');
+        }
         $data = input('post.');
         $data['uid'] = $this->user['id'];
         $data['uname'] = $this->user['nickname'];
@@ -51,6 +54,38 @@ class Auction extends Base
             'notify_url' => '', // 回调地址
             'product_id' => '', // 商品id
         ];
+    }
+    // 从购物车选中商品购买
+    public function buy(){
+        if (!$this->request->isPost()){
+            return $this->error('请求错误');
+        }
+        $data = input('post.');
+        if(empty($data['carts'])){
+            return $this->error('请选择购买商品');
+        }
+        $where = ['uid'=>$this->user['id'],'id'=>['in',$data['carts']]];
+        $_cart = model('cart');
+        $carts = $_cart->get_carts($where);
+        $this->assign([
+            'title' => get_cache('config.mall')['store_title'],
+            'carts' => $carts,
+        ]);
+        return $this->template();
+    }
+    // 创建购物车来的订单
+    public function pay(){
+        if (!$this->request->isPost()){
+            return $this->error('请求错误');
+        }
+        $data = input('post.');
+        $data['uid'] = $this->user['id'];
+        $data['uname'] = $this->user['nickname'];
+
+        $_orders = model('orders');
+        $buy = $_orders->buy($data);
+
+        dump($buy);
     }
     // 确认订单页面
     public function confirm_order(){

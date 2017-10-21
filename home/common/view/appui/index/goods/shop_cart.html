@@ -13,6 +13,7 @@
     <link href="__AMZ__css/optstyle.css" rel="stylesheet" type="text/css" />
     {load file="__AMZ__js/jquery-1.7.2.min.js"}
     {load file="__PUBLIC__layer/layer.js"}
+    {load file="__AMZ__js/post_form.js"}
 
 </head>
 
@@ -95,35 +96,14 @@
                 <strong class="price">¥<em id="J_Total">0.00</em></strong>
             </div>
             <div class="btn-area">
-                <a href="pay.html" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
+                <a href="javascript:void(0);" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
                     <span>结&nbsp;算</span></a>
             </div>
         </div>
 
     </div>
 
-    <div class="footer">
-        <div class="footer-hd">
-            <p>
-                <a href="#">恒望科技</a>
-                <b>|</b>
-                <a href="#">商城首页</a>
-                <b>|</b>
-                <a href="#">支付宝</a>
-                <b>|</b>
-                <a href="#">物流</a>
-            </p>
-        </div>
-        <div class="footer-bd">
-            <p>
-                <a href="#">关于恒望</a>
-                <a href="#">合作伙伴</a>
-                <a href="#">联系我们</a>
-                <a href="#">网站地图</a>
-                <em>© 2015-2025 Hengwang.com 版权所有. 更多模板 <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></em>
-            </p>
-        </div>
-    </div>
+    {include file="../common/before/footer"}
 
 </div>
 
@@ -141,20 +121,7 @@
 
             <div class="theme-signin-left">
                 <ul id="theme">
-                    <li class="theme-options">
-                        <div class="cart-title">颜色：</div>
-                        <ul>
-                            <li class="sku-line selected">12#川南玛瑙<i></i></li>
-                            <li class="sku-line">10#蜜橘色+17#樱花粉<i></i></li>
-                        </ul>
-                    </li>
-                    <li class="theme-options">
-                        <div class="cart-title">包装：</div>
-                        <ul>
-                            <li class="sku-line selected">包装：裸装<i></i></li>
-                            <li class="sku-line">两支手袋装（送彩带）<i></i></li>
-                        </ul>
-                    </li>
+
                 </ul>
 
                 <div class="theme-options">
@@ -176,7 +143,7 @@
             </div>
             <div class="theme-signin-right">
                 <div class="img-info">
-                    <img src="__AMZ__images/kouhong.jpg_80x80.jpg" />
+                    <img src="" />
                 </div>
                 <div class="text-info">
                     <span class="J_Price price-now">¥0</span>

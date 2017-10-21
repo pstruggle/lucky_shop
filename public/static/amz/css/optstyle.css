@@ -36,6 +36,7 @@ input{font-size:12px;font-size:100%;outline:none;line-height:normal;color:#444;}
 .theme-signin-left .cart-title{font-size:14px ;font-weight: 600;}
 .theme-signin-left .sku-line{float: left; margin:10px;margin-left:0;border-radius:5px ; background:#f5f5f5 ;padding:5px;}
 .theme-signin-left .sku-line.selected{background:#f50;color: #fff;}
+.theme-signin-left .sku-line.disabled {background: rgba(0, 0, 0, 0.09);color:#000;border: 2px solid rgba(221, 221, 221, 0); cursor: not-allowed;}
 
 .theme-signin .btn{width:100%;font-size: 16px;padding:5px ;}
 .btn-op{position:fixed;left:0;bottom: 0;width:100% ;}

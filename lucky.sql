@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-20 17:30:40
+Date: 2017-10-21 17:29:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -88,8 +88,8 @@ INSERT INTO `lucky_address` VALUES ('18', '0', '', '', '0', '', '0', '', '0', ''
 INSERT INTO `lucky_address` VALUES ('19', '0', '', '', '0', '', '0', '', '0', '', '', '0', '0');
 INSERT INTO `lucky_address` VALUES ('20', '0', '', '', '0', '', '0', '', '0', '', '', '0', '0');
 INSERT INTO `lucky_address` VALUES ('21', '0', '潘谋勇', '15879221657', '2376', '', '2377', '', '2380', '', '土地庙八号小区', '0', '0');
-INSERT INTO `lucky_address` VALUES ('22', '17', '潘谋勇', '15879221657', '1237', '山西省', '1238', '太原市', '1242', '杏花岭区', '详细地址', '1', '1507863126');
-INSERT INTO `lucky_address` VALUES ('23', '17', '潘谋勇', '15879221657', '1501', '辽宁省', '1529', '鞍山市', '1533', '立山区', '地址', '0', '1507861938');
+INSERT INTO `lucky_address` VALUES ('22', '17', '潘谋勇', '15879221657', '1237', '山西省', '1238', '太原市', '1242', '杏花岭区', '详细地址', '0', '1507863126');
+INSERT INTO `lucky_address` VALUES ('23', '17', '潘谋勇', '15879221657', '1501', '辽宁省', '1529', '鞍山市', '1533', '立山区', '地址', '1', '1507861938');
 INSERT INTO `lucky_address` VALUES ('24', '17', '潘谋勇', '15879221657', '2272', '福建省', '2296', '莆田市', '2301', '秀屿区', '土地庙', '0', '1507861898');
 INSERT INTO `lucky_address` VALUES ('25', '17', '潘谋勇', '15879221657', '1630', '吉林省', '1662', '辽源市', '1666', '东丰县', '市辖区', '0', '1507861823');
 INSERT INTO `lucky_address` VALUES ('26', '17', '潘谋勇', '15879221657', '1021', '天津市', '1038', '市辖县', '1040', '静海县', '土地庙', '0', '1507861767');
@@ -4090,7 +4090,7 @@ CREATE TABLE `lucky_cart` (
   KEY `goods_id` (`goods_id`),
   KEY `spec_group` (`spec_group`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_cart
@@ -4105,12 +4105,20 @@ INSERT INTO `lucky_cart` VALUES ('13', '17', '7', '13', '精品蛋糕', '/upload
 INSERT INTO `lucky_cart` VALUES ('14', '17', '8', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508212963');
 INSERT INTO `lucky_cart` VALUES ('15', '17', '9', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508213016');
 INSERT INTO `lucky_cart` VALUES ('16', '17', '10', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508218715');
-INSERT INTO `lucky_cart` VALUES ('17', '17', '11', '21', '精品蛋糕', '/upload/admin/image/20171008/1507454933182024.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508220880');
 INSERT INTO `lucky_cart` VALUES ('18', '17', '12', '21', '精品蛋糕', '/upload/admin/image/20171008/1507454933182024.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508220997');
 INSERT INTO `lucky_cart` VALUES ('20', '17', '13', '21', '精品蛋糕', '/upload/admin/image/20171008/1507454933182024.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508221229');
-INSERT INTO `lucky_cart` VALUES ('21', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '433', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 20cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508461925');
-INSERT INTO `lucky_cart` VALUES ('22', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508223634');
-INSERT INTO `lucky_cart` VALUES ('23', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.00', '132.00', 'lucky12345', '10.00', '1', '1508491484');
+INSERT INTO `lucky_cart` VALUES ('37', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '446', '颜色: 白色,大小: 大号,尺寸: M,深浅: 30cm', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570240');
+INSERT INTO `lucky_cart` VALUES ('38', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '446', '颜色: 白色,大小: 大号,尺寸: M,深浅: 30cm', '123.23', '132.00', 'lucky12345', '10.00', '1', '1508570242');
+INSERT INTO `lucky_cart` VALUES ('39', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '446', '颜色: 白色,大小: 大号,尺寸: M,深浅: 30cm', '123.23', '132.00', 'lucky12345', '10.00', '1', '1508570243');
+INSERT INTO `lucky_cart` VALUES ('40', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '434', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '123.23', '132.00', 'lucky12345', '10.00', '9', '1508570243');
+INSERT INTO `lucky_cart` VALUES ('41', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '446', '颜色: 白色,大小: 大号,尺寸: M,深浅: 30cm', '123.23', '132.00', 'lucky12345', '10.00', '4', '1508570245');
+INSERT INTO `lucky_cart` VALUES ('42', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '446', '颜色: 白色,大小: 大号,尺寸: M,深浅: 30cm', '123.23', '132.00', 'lucky12345', '10.00', '4', '1508570247');
+INSERT INTO `lucky_cart` VALUES ('43', '17', '0', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '447', '颜色: 白色,大小: 大号,尺寸: M,深浅: 50cm', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570229');
+INSERT INTO `lucky_cart` VALUES ('44', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '463', '颜色: 黑色,大小: 大号', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570252');
+INSERT INTO `lucky_cart` VALUES ('46', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '465', '颜色: 白色,大小: 大号', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570253');
+INSERT INTO `lucky_cart` VALUES ('47', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '463', '颜色: 黑色,大小: 大号', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570254');
+INSERT INTO `lucky_cart` VALUES ('48', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '466', '颜色: 白色,大小: 小号', '123.23', '132.00', 'lucky12345', '10.00', '1', '1508570257');
+INSERT INTO `lucky_cart` VALUES ('49', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '465', '颜色: 白色,大小: 大号', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570259');
 
 -- ----------------------------
 -- Table structure for lucky_category
@@ -4419,7 +4427,7 @@ CREATE TABLE `lucky_favorite` (
   KEY `uid_goods_id` (`uid`,`goods_id`) USING BTREE,
   KEY `uid` (`uid`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_favorite
@@ -4432,6 +4440,7 @@ INSERT INTO `lucky_favorite` VALUES ('5', '17', '13', '精品蛋糕', '/upload/a
 INSERT INTO `lucky_favorite` VALUES ('6', '17', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508488901');
 INSERT INTO `lucky_favorite` VALUES ('7', '17', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508488929');
 INSERT INTO `lucky_favorite` VALUES ('8', '17', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508488929');
+INSERT INTO `lucky_favorite` VALUES ('9', '17', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508555140');
 
 -- ----------------------------
 -- Table structure for lucky_goods
@@ -4643,6 +4652,7 @@ CREATE TABLE `lucky_orders` (
   `serial` char(20) NOT NULL DEFAULT '' COMMENT '订单序列号',
   `pay_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '支付金额',
   `market_price` decimal(10,2) unsigned NOT NULL COMMENT '市场价格 可算出优惠价格',
+  `freight` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '运费',
   `discount` mediumint(9) unsigned NOT NULL DEFAULT '0' COMMENT '优惠方式',
   `consignee` varchar(2555) NOT NULL DEFAULT '' COMMENT '收货人信息json',
   `integral` int(10) unsigned NOT NULL COMMENT '订单获得积分',
@@ -4658,24 +4668,25 @@ CREATE TABLE `lucky_orders` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `serial` (`serial`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_orders
 -- ----------------------------
-INSERT INTO `lucky_orders` VALUES ('1', '17', 'p20872453369', '123.00', '132.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208724');
-INSERT INTO `lucky_orders` VALUES ('2', '17', 'p20875742669', '123.00', '132.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208757');
-INSERT INTO `lucky_orders` VALUES ('3', '17', 'p20907328997', '123.00', '132.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508209073');
-INSERT INTO `lucky_orders` VALUES ('4', '17', 'p21269914972', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212699');
-INSERT INTO `lucky_orders` VALUES ('5', '17', 'p21290639011', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212906');
-INSERT INTO `lucky_orders` VALUES ('6', '17', 'p21292450510', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212924');
-INSERT INTO `lucky_orders` VALUES ('7', '17', 'p21294723166', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212947');
-INSERT INTO `lucky_orders` VALUES ('8', '17', 'p21296388699', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212963');
-INSERT INTO `lucky_orders` VALUES ('9', '17', 'p21301665434', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508213016');
-INSERT INTO `lucky_orders` VALUES ('10', '17', 'p21871565878', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508218715');
-INSERT INTO `lucky_orders` VALUES ('11', '17', 'p22088021074', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220880');
-INSERT INTO `lucky_orders` VALUES ('12', '17', 'p22099759664', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220997');
-INSERT INTO `lucky_orders` VALUES ('13', '17', 'p22122914399', '133.00', '142.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '留言你要看哦', '0', '1508221229');
+INSERT INTO `lucky_orders` VALUES ('1', '17', 'p20872453369', '123.00', '132.00', '0.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208724');
+INSERT INTO `lucky_orders` VALUES ('2', '17', 'p20875742669', '123.00', '132.00', '0.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208757');
+INSERT INTO `lucky_orders` VALUES ('3', '17', 'p20907328997', '123.00', '132.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508209073');
+INSERT INTO `lucky_orders` VALUES ('4', '17', 'p21269914972', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212699');
+INSERT INTO `lucky_orders` VALUES ('5', '17', 'p21290639011', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212906');
+INSERT INTO `lucky_orders` VALUES ('6', '17', 'p21292450510', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212924');
+INSERT INTO `lucky_orders` VALUES ('7', '17', 'p21294723166', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212947');
+INSERT INTO `lucky_orders` VALUES ('8', '17', 'p21296388699', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212963');
+INSERT INTO `lucky_orders` VALUES ('9', '17', 'p21301665434', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508213016');
+INSERT INTO `lucky_orders` VALUES ('10', '17', 'p21871565878', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508218715');
+INSERT INTO `lucky_orders` VALUES ('11', '17', 'p22088021074', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220880');
+INSERT INTO `lucky_orders` VALUES ('12', '17', 'p22099759664', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220997');
+INSERT INTO `lucky_orders` VALUES ('13', '17', 'p22122914399', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '留言你要看哦', '0', '1508221229');
+INSERT INTO `lucky_orders` VALUES ('14', '17', 'p57516429278', '1119.07', '1198.00', '0.00', '0', '{\"id\":23,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1501,\"province_area\":\"\\u8fbd\\u5b81\\u7701\",\"city\":1529,\"city_area\":\"\\u978d\\u5c71\\u5e02\",\"county\":1533,\"county_area\":\"\\u7acb\\u5c71\\u533a\",\"address\":\"\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507861938}', '0', '1', '0', '0', '0', '', '', '', '0', '1508575164');
 
 -- ----------------------------
 -- Table structure for lucky_order_log
@@ -4838,50 +4849,50 @@ CREATE TABLE `lucky_spec_group` (
 -- ----------------------------
 -- Records of lucky_spec_group
 -- ----------------------------
-INSERT INTO `lucky_spec_group` VALUES ('101', '15', '128', '颜色: 黑色', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('102', '15', '129', '颜色: 白色', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('427', '13', '257,260,263,267', '颜色: 黑色,大小: 大号,尺寸: M,深浅: 20cm', '132.00', '101.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('428', '13', '257,260,263,268', '颜色: 黑色,大小: 大号,尺寸: M,深浅: 30cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('429', '13', '257,260,263,269', '颜色: 黑色,大小: 大号,尺寸: M,深浅: 50cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('430', '13', '257,260,264,267', '颜色: 黑色,大小: 大号,尺寸: L,深浅: 20cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('431', '13', '257,260,264,268', '颜色: 黑色,大小: 大号,尺寸: L,深浅: 30cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('432', '13', '257,260,264,269', '颜色: 黑色,大小: 大号,尺寸: L,深浅: 50cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('433', '13', '257,260,265,267', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 20cm', '132.00', '123.00', '201', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('434', '13', '257,260,265,268', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '132.00', '123.00', '201', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('435', '13', '257,260,265,269', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 50cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('436', '13', '257,261,263,267', '颜色: 黑色,大小: 小号,尺寸: M,深浅: 20cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('437', '13', '257,261,263,268', '颜色: 黑色,大小: 小号,尺寸: M,深浅: 30cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('438', '13', '257,261,263,269', '颜色: 黑色,大小: 小号,尺寸: M,深浅: 50cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('439', '13', '257,261,264,267', '颜色: 黑色,大小: 小号,尺寸: L,深浅: 20cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('440', '13', '257,261,264,268', '颜色: 黑色,大小: 小号,尺寸: L,深浅: 30cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('441', '13', '257,261,264,269', '颜色: 黑色,大小: 小号,尺寸: L,深浅: 50cm', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('442', '13', '257,261,265,267', '颜色: 黑色,大小: 小号,尺寸: S,深浅: 20cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('443', '13', '257,261,265,268', '颜色: 黑色,大小: 小号,尺寸: S,深浅: 30cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('444', '13', '257,261,265,269', '颜色: 黑色,大小: 小号,尺寸: S,深浅: 50cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('445', '13', '258,260,263,267', '颜色: 白色,大小: 大号,尺寸: M,深浅: 20cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('446', '13', '258,260,263,268', '颜色: 白色,大小: 大号,尺寸: M,深浅: 30cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('447', '13', '258,260,263,269', '颜色: 白色,大小: 大号,尺寸: M,深浅: 50cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('448', '13', '258,260,264,267', '颜色: 白色,大小: 大号,尺寸: L,深浅: 20cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('449', '13', '258,260,264,268', '颜色: 白色,大小: 大号,尺寸: L,深浅: 30cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('450', '13', '258,260,264,269', '颜色: 白色,大小: 大号,尺寸: L,深浅: 50cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('451', '13', '258,260,265,267', '颜色: 白色,大小: 大号,尺寸: S,深浅: 20cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('452', '13', '258,260,265,268', '颜色: 白色,大小: 大号,尺寸: S,深浅: 30cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('453', '13', '258,260,265,269', '颜色: 白色,大小: 大号,尺寸: S,深浅: 50cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('454', '13', '258,261,263,267', '颜色: 白色,大小: 小号,尺寸: M,深浅: 20cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('455', '13', '258,261,263,268', '颜色: 白色,大小: 小号,尺寸: M,深浅: 30cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('456', '13', '258,261,263,269', '颜色: 白色,大小: 小号,尺寸: M,深浅: 50cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('457', '13', '258,261,264,267', '颜色: 白色,大小: 小号,尺寸: L,深浅: 20cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('458', '13', '258,261,264,268', '颜色: 白色,大小: 小号,尺寸: L,深浅: 30cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('459', '13', '258,261,264,269', '颜色: 白色,大小: 小号,尺寸: L,深浅: 50cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('460', '13', '258,261,265,267', '颜色: 白色,大小: 小号,尺寸: S,深浅: 20cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('461', '13', '258,261,265,268', '颜色: 白色,大小: 小号,尺寸: S,深浅: 30cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('462', '13', '258,261,265,269', '颜色: 白色,大小: 小号,尺寸: S,深浅: 50cm', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('463', '14', '271,274', '颜色: 黑色,大小: 大号', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('464', '14', '271,275', '颜色: 黑色,大小: 小号', '132.00', '123.00', '0', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('465', '14', '272,274', '颜色: 白色,大小: 大号', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('466', '14', '272,275', '颜色: 白色,大小: 小号', '132.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('467', '12', '277', '颜色: 黑色', '0.00', '123.00', '20', 'lucky12345');
-INSERT INTO `lucky_spec_group` VALUES ('468', '12', '278', '颜色: 白色', '0.00', '123.00', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('101', '15', '128', '颜色: 黑色', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('102', '15', '129', '颜色: 白色', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('427', '13', '257,260,263,267', '颜色: 黑色,大小: 大号,尺寸: M,深浅: 20cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('428', '13', '257,260,263,268', '颜色: 黑色,大小: 大号,尺寸: M,深浅: 30cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('429', '13', '257,260,263,269', '颜色: 黑色,大小: 大号,尺寸: M,深浅: 50cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('430', '13', '257,260,264,267', '颜色: 黑色,大小: 大号,尺寸: L,深浅: 20cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('431', '13', '257,260,264,268', '颜色: 黑色,大小: 大号,尺寸: L,深浅: 30cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('432', '13', '257,260,264,269', '颜色: 黑色,大小: 大号,尺寸: L,深浅: 50cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('433', '13', '257,260,265,267', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 20cm', '132.00', '123.23', '201', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('434', '13', '257,260,265,268', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 30cm', '132.00', '123.23', '201', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('435', '13', '257,260,265,269', '颜色: 黑色,大小: 大号,尺寸: S,深浅: 50cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('436', '13', '257,261,263,267', '颜色: 黑色,大小: 小号,尺寸: M,深浅: 20cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('437', '13', '257,261,263,268', '颜色: 黑色,大小: 小号,尺寸: M,深浅: 30cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('438', '13', '257,261,263,269', '颜色: 黑色,大小: 小号,尺寸: M,深浅: 50cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('439', '13', '257,261,264,267', '颜色: 黑色,大小: 小号,尺寸: L,深浅: 20cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('440', '13', '257,261,264,268', '颜色: 黑色,大小: 小号,尺寸: L,深浅: 30cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('441', '13', '257,261,264,269', '颜色: 黑色,大小: 小号,尺寸: L,深浅: 50cm', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('442', '13', '257,261,265,267', '颜色: 黑色,大小: 小号,尺寸: S,深浅: 20cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('443', '13', '257,261,265,268', '颜色: 黑色,大小: 小号,尺寸: S,深浅: 30cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('444', '13', '257,261,265,269', '颜色: 黑色,大小: 小号,尺寸: S,深浅: 50cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('445', '13', '258,260,263,267', '颜色: 白色,大小: 大号,尺寸: M,深浅: 20cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('446', '13', '258,260,263,268', '颜色: 白色,大小: 大号,尺寸: M,深浅: 30cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('447', '13', '258,260,263,269', '颜色: 白色,大小: 大号,尺寸: M,深浅: 50cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('448', '13', '258,260,264,267', '颜色: 白色,大小: 大号,尺寸: L,深浅: 20cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('449', '13', '258,260,264,268', '颜色: 白色,大小: 大号,尺寸: L,深浅: 30cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('450', '13', '258,260,264,269', '颜色: 白色,大小: 大号,尺寸: L,深浅: 50cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('451', '13', '258,260,265,267', '颜色: 白色,大小: 大号,尺寸: S,深浅: 20cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('452', '13', '258,260,265,268', '颜色: 白色,大小: 大号,尺寸: S,深浅: 30cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('453', '13', '258,260,265,269', '颜色: 白色,大小: 大号,尺寸: S,深浅: 50cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('454', '13', '258,261,263,267', '颜色: 白色,大小: 小号,尺寸: M,深浅: 20cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('455', '13', '258,261,263,268', '颜色: 白色,大小: 小号,尺寸: M,深浅: 30cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('456', '13', '258,261,263,269', '颜色: 白色,大小: 小号,尺寸: M,深浅: 50cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('457', '13', '258,261,264,267', '颜色: 白色,大小: 小号,尺寸: L,深浅: 20cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('458', '13', '258,261,264,268', '颜色: 白色,大小: 小号,尺寸: L,深浅: 30cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('459', '13', '258,261,264,269', '颜色: 白色,大小: 小号,尺寸: L,深浅: 50cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('460', '13', '258,261,265,267', '颜色: 白色,大小: 小号,尺寸: S,深浅: 20cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('461', '13', '258,261,265,268', '颜色: 白色,大小: 小号,尺寸: S,深浅: 30cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('462', '13', '258,261,265,269', '颜色: 白色,大小: 小号,尺寸: S,深浅: 50cm', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('463', '14', '271,274', '颜色: 黑色,大小: 大号', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('464', '14', '271,275', '颜色: 黑色,大小: 小号', '132.00', '123.23', '0', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('465', '14', '272,274', '颜色: 白色,大小: 大号', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('466', '14', '272,275', '颜色: 白色,大小: 小号', '132.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('467', '12', '277', '颜色: 黑色', '0.00', '123.23', '20', 'lucky12345');
+INSERT INTO `lucky_spec_group` VALUES ('468', '12', '278', '颜色: 白色', '0.00', '123.23', '20', 'lucky12345');
 
 -- ----------------------------
 -- Table structure for lucky_users

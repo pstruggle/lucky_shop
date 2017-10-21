@@ -9,12 +9,13 @@ $(function () {
         specs_group=0, // 规格分组id
         cart_id = 0, // 选择修改购物车
         cart_elem = '',
-        move_favorite_url = '/index/goods/move_favorite.html',
-        mode_cart_url = '/index/goods/cart.html',
-        del_cart_url = '/index/goods/del_cart.html',
-        cart_url = '/index/goods/carts.html',
-        spec_url = '/index/goods/specs.html',
-        spec_group_url = '/index/goods/spec_group.html';
+        buy_url = '/index/auction/buy.html', // 购买确认页面
+        move_favorite_url = '/index/goods/move_favorite.html', // 收藏夹
+        mode_cart_url = '/index/goods/cart.html', // 修改购物车
+        del_cart_url = '/index/goods/del_cart.html', // 删除购物车
+        cart_url = '/index/goods/carts.html', // 获取购物车商品
+        spec_url = '/index/goods/specs.html', // 商品规格
+        spec_group_url = '/index/goods/spec_group.html';  // 商品规格组
     var img_url = function (img) {
         return '/index.php/api/upload/handle.html?pic='+img+'&w=80&h=80'
     };
@@ -79,7 +80,7 @@ $(function () {
             '</li>'+
             '<li class="td td-sum">'+
             '<div class="td-inner">'+
-            '<em tabindex="0" class="J_ItemSum number">'+(cart.shop_price * cart.sum)+'</em>'+
+            '<em tabindex="0" class="J_ItemSum number">'+(parseFloat(cart.shop_price) * cart.sum)+'</em>'+
             '</div>'+
             '</li>'+
             '<li class="td td-op">'+
@@ -106,6 +107,9 @@ $(function () {
         }
         $.ajaxSetup({async:false});
         $.get(cart_url,param,function (cart) {
+            if(cart == ''){
+                $(document).unbind('scroll');
+            }
             carts = cart;
             shop_carts = Object.assign(shop_carts,cart);
         });
@@ -164,6 +168,7 @@ $(function () {
     var init_specs = function (good_id) {
         var options = $("#theme ul");
         var specs = get_spec_groups(good_id);
+        specs_select = [];
         // 前端判断组合是否有库存
         var spec_selected = function () {
             options.each(function (e) {
@@ -225,7 +230,7 @@ $(function () {
             }
             return [count,index];
         };
-        options.each(function(e) {
+        options.each(function() {
             var i = $(this);
             var p = i.find("li");
             p.click(function() {
@@ -265,10 +270,17 @@ $(function () {
         // $(document.body).css("overflow","hidden");
         $(this).addClass("selected");
         $(this).parent().addClass("selected");
-        var to=$(this).prev().offset().top+30;
-        var th=$(this).offset().top;
-        var tl=$(this).offset().left-200;
+        var to = 0,th = 0,tl=0;
+        if(!$(this).hasClass('item-props')){
+            to=$(this).prev().offset().top+30;
+            th=$(this).offset().top;
+            tl=$(this).offset().left-200;
+        }else {
+            to=$(this).find('.sku-line').offset().top+30;
+            th=$(this).offset().top;
+            tl=$(this).offset().left;
 
+        }
         $('.theme-span').show();
         $('.theme-popover-mask').show();
         $('.theme-popover-mask').height($(document).height());
@@ -298,7 +310,7 @@ $(function () {
         $('.theme-popover').slideUp(200);
     };
     var confirm_spec = function (sum) {
-        sum = sum || $('.theme-popover').find('.text_box').val();
+        sum = ( !isNaN(sum) && sum ) || $('.theme-popover').find('.text_box').val();
         var param = {cart_id:cart_id,good_id:shop_carts[cart_id].goods_id,spec_group:specs_group,sum:sum};
         $.post(mode_cart_url,param,function (data) {
             if(data.code == 0){
@@ -308,11 +320,10 @@ $(function () {
                 item_props.find('.sku-line').remove();
                 item_props.prepend(specs_name(shop_carts[cart_id].specs_name));
                 cart_elem.find('.text_box').val(shop_carts[cart_id].sum);
-                cart_elem.find('.td-inner .number').text(shop_carts[cart_id].sum *shop_carts[cart_id].shop_price);
+                cart_elem.find('.td-inner .number').text(shop_carts[cart_id].sum * parseFloat(shop_carts[cart_id].shop_price));
             }
             layer.msg(data.info);
         });
-
     };
     // 选择所有的购物车
     var selectAll = function () {
@@ -345,7 +356,7 @@ $(function () {
         var price = 0;
         checked.each(function () {
             var item = $(this).val();
-            price += shop_carts[item].shop_price * shop_carts[item].sum;
+            price += parseFloat(shop_carts[item].shop_price) * shop_carts[item].sum;
         });
         $('#J_Total').text(price);
         count_elem.text(checked.length);
@@ -359,18 +370,31 @@ $(function () {
         confirm_spec(sum);
         price_specs();
     };
+    // 增加数量没有视图操作
+    var add = function (elem) {
+        elem = elem.target? $(elem.target) : elem;
+        var t = elem.parent().find('input[class*=text_box]');
+        t.val(parseInt(t.val())+1);
+    };
+    //减少数量没有视图操作
+    var min = function (elem) {
+        elem = elem.target? $(elem.target) : elem;
+        var t = elem.parent().find('input[class*=text_box]');
+        t.val(parseInt(t.val())-1);
+        if(parseInt(t.val())<1){
+            t.val(1);
+            return false;
+        }
+        return true;
+    };
     // 添加数量
     var add_sum = function () {
-        var t=$(this).parent().find('input[class*=text_box]');
-        t.val(parseInt(t.val())+1)
+        add($(this));
         sum_op($(this));
     };
     // 减少数量
     var min_sum = function () {
-        var t=$(this).parent().find('input[class*=text_box]');
-        t.val(parseInt(t.val())-1);
-        if(parseInt(t.val())<1){
-            t.val(1);
+        if(!min($(this))){
             return false;
         }
         sum_op($(this))
@@ -413,6 +437,21 @@ $(function () {
             del_cart($(a));
         });
     };
+    // 结算账单
+    var submit_go = function () {
+        var checks = $('.check:checked:not(".check-all")');
+        if(checks.length<=0){
+            layer.msg('请选择结算商品');
+            return false;
+        }
+        var checked_cart = [];
+        checks.each(function (e) {
+            checked_cart[e] = $(this).val();
+        });
+        var param = {carts:checked_cart};
+        PostForm.init(buy_url,param);
+        console.log(checked_cart);
+    };
     // 事件绑定集合方法
     var events = function () {
         cart_view();
@@ -422,8 +461,10 @@ $(function () {
         // 增加数量
         cart_table.on('click',".add",add_sum);
         cart_table.on('click',".min",min_sum);
+        $('.theme-popover .add').on('click',add);
+        $('.theme-popover .min').on('click',min);
         // 修改商品规格
-        cart_table.on('click','.theme-login',pop_spec);
+        cart_table.on('click','.theme-login , .item-props',pop_spec);
         // 关闭修改购物车
         $('.theme-poptit .close,.btn-op .close').on('click',close_spec);
         // 确认修改购物车
@@ -440,6 +481,8 @@ $(function () {
         $('.J_BatchFav').on('click',move_check_favorite);
         // 删除选中购物车
         $('.deleteAll').on('click',del_check_cart);
+        // 结算商品
+        $('#J_Go').on('click',submit_go);
     };
     events();
 });

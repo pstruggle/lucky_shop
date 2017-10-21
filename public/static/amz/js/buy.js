@@ -196,11 +196,13 @@ var Buy = function () {
     };
     // 计算价格商品价格
     var price_view = function () {
+
         var price_now = $('.price-now').text(); //单价
         var freprice = $('.sys_item_freprice').text();
         var sum = $('.text_box').val();
-        var price = parseFloat(price_now) * parseInt(sum) + parseFloat(freprice);
-        $('.pay-sum,#J_ActualFee').text(price);
+        var price = parseFloat(price_now) * parseInt(sum);
+        $('.J_ItemSum').text(price);
+        $('.pay-sum,#J_ActualFee').text(price + parseFloat(freprice));
     };
     // 添加编辑用户地址
     var interactive = function () {
@@ -249,6 +251,9 @@ var Buy = function () {
                 }
             })
         });
+    };
+    // 立即购买操作
+    var buy_now = function () {
         // 添加商品数量
         $(".add").click(function(){
             var t=$(this).parent().find('input[class*=text_box]');
@@ -293,12 +298,46 @@ var Buy = function () {
 
         });
     };
+    // 购物车购买
+    var buy = function () {
+        $('#J_Go').on('click',function () {
+            var addr_id = $('li.user-addresslist.defaultAddr').data('addr'); // 配送id
+            var payment = $('.pay.selected').data('pay');//支付方式
+            var cart_ids = []; // 购物车id
+            var remarks = $('#remark').val();
+            var cart_elem = $('.item-content');
+            cart_elem.each(function (e) {
+                cart_ids[e] = $(this).data('cart');
+            });
+            if(!addr_id){
+                layer.msg('请选择您的地址');
+                return false;
+            }
+            if(!payment){
+                layer.msg('请选择支付方式');
+                return false;
+            }
+            if(cart_ids.length <=0){
+                layer.msg('是否有购物车！');
+                return false;
+            }
+            var param = {addr_id:addr_id,payment:payment,cart_id:cart_ids,remark:remarks,token:new Date().valueOf()};
+            var url = '/index/auction/pay.html';
+            PostForm.init(url,param,'post','_blank');
 
+        });
+    };
     return {
         init:function () {
             interactive(); // 编辑，添加地址
+            buy_now(); // 立即支付应该有的操作
             rendering_1(); // 初始化地址
             price_view(); // 价格的计算
         },
+        buy:function () {
+            interactive(); // 编辑，添加地址
+            buy();
+            rendering_1(); // 初始化地址
+        }
     };
 }();
