@@ -220,6 +220,7 @@ function getWeekend(){
  * 剩余时间计算
  * @param $time_s int min_time
  * @param $time_n int max_time
+ * @return string
  */
 function gettime($time_s,$time_n){
     $strtime = '';
@@ -270,18 +271,19 @@ function img_url($img = '', $w = 0, $h = 0){
 }
 /**
  * 图片添加文字水印
- * @param $img 图片链接地址
- * @param $txt 水印文字
+ * @param string $img 图片链接地址
+ * @param string $txt 水印文字
+ * @return string
  */
 //图片添加文件水印处理链接
-function water_img_url($img = '', $txt = 0){
+function water_img_url($img = '', $txt = ''){
     $request = Request::instance();
     $host = $request->domain();
     $date = date('YmdHis').mt_rand(10000,99999);
     $url = '/api.php/upload/water_text/'.$date.'.html';
     $parameter = '?';
     $parameter .= 'pic='.urlencode($img);
-    if($txt !== 0){
+    if($txt !== ''){
         $parameter .= '&txt='.$txt;
     }
     return $host.$url.$parameter;

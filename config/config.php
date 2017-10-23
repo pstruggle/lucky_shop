@@ -19,7 +19,7 @@ return [
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => true,
+    'app_trace'              => false,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -30,22 +30,16 @@ return [
     'root_namespace'         => [],
     // 扩展函数文件
     'extra_file_list'        => [
-        THINK_PATH . 'helper' . EXT ,
-        APP_PATH . 'function' . EXT ,
-        VENDOR_PATH . 'think-captcha/src/helper' . EXT ,
-        VENDOR_PATH . 'think-captcha/src/CaptchaController' . EXT ,
-        VENDOR_PATH . 'think-captcha/src/Captcha' . EXT,
-        EXTEND_PATH . 'think-sendsms/src/helper' . EXT ,
-        EXTEND_PATH . 'think-sendsms/src/Sendsms' . EXT,
-        VENDOR_PATH . 'phpqrcode/phpqrcode' . EXT,
-        VENDOR_PATH . 'Chinese/ChineseSpell' . EXT,
-        VENDOR_PATH . 'WxpayAPI/lib/WxPay.Api' . EXT,
-//        VENDOR_PATH . 'WxpayAPI/lib/WxPay.Api' . EXT,
-        VENDOR_PATH . 'WxpayAPI/lib/WxPay.Notify' . EXT,
-//        VENDOR_PATH . 'Aliyun/TopSdk' . EXT,
-//        VENDOR_PATH . 'AliyunSms/api/aliyun-php-sdk-core/Config' . EXT,
-//        VENDOR_PATH . 'AliyunSms/api/Dysmsapi/Request/V20170525/SendSmsRequest' . EXT,
-//        VENDOR_PATH . 'AliyunSms/api/Dysmsapi/Request/V20170525/QuerySendDetailsRequest' . EXT,
+        THINK_PATH . 'helper' . EXT , // 系统内置函数
+        APP_PATH . 'function' . EXT , // 自定义函数
+        APP_PATH . 'shanpayfunction' . EXT , // 自定义函数
+        VENDOR_PATH . 'think-captcha/src/helper' . EXT , // 图片验证码处理函数
+        VENDOR_PATH . 'think-captcha/src/CaptchaController' . EXT , // 图片验证码处理控制器
+        VENDOR_PATH . 'think-captcha/src/Captcha' . EXT, // 图片验证码处理模块
+        EXTEND_PATH . 'think-sendsms/src/helper' . EXT , // 短信验证码处理函数
+        EXTEND_PATH . 'think-sendsms/src/Sendsms' . EXT, // 短信验证码处理控制器
+        VENDOR_PATH . 'phpqrcode/phpqrcode' . EXT, // 二维码生成类
+        VENDOR_PATH . 'Chinese/ChineseSpell' . EXT, // 文字字符串转拼音字符串
     ],
     // 默认输出类型
     'default_return_type'    => 'html',

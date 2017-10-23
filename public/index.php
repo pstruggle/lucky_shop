@@ -12,7 +12,7 @@
 // [ 应用入口文件 ]
 
 // 定义应用目录
-define('APP_PATH', __DIR__ . '/../home/');
+define('APP_PATH', __DIR__ . '/../app/');
 // 定义配置目录
 define('CONF_PATH', __DIR__ . '/../config/');
 //定义默认模块

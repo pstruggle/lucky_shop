@@ -22,10 +22,10 @@ class Orders extends Base
     }
     // 直接购买添加订单
     public function buy_now($data){
-        $order = Session::get('order');
-        if(!empty($order) && $order['expire']>time() && $order['token'] == $data['token']){
+        $create_order = Session::get('create_order');
+        if(!empty($create_order['order']) && $create_order['expire']>time() && $create_order['token'] == $data['token']){
             dump(true);
-            return $order;
+            return $create_order['order'];
         }
         $cart_id = $this->_cart->create_cart($data);
         if($cart_id === false){
@@ -38,10 +38,10 @@ class Orders extends Base
     }
     // 购物车购买
     public function buy($data){
-        $order = Session::get('order');
-        if(!empty($order) && $order['expire']>time() && $order['token'] == $data['token']){
+        $create_order = Session::get('create_order');
+        if(!empty($create_order['order']) && $create_order['expire']>time() && $create_order['token'] == $data['token']){
             dump(true);
-            return $order;
+            return $create_order['order'];
         }
         $order = $this->create_order($data);
         return $order;
@@ -63,14 +63,14 @@ class Orders extends Base
             'give_up' => '0',
             'place_time' => time()
         ];
-        $session = []; // 订单添加成功时记录值
+        $session = ['order'=>[],'token'=>$data['token'],'expire'=>$session['expire'] = time()+30*60]; // 订单添加成功时记录值
         $price_field = ['sum(`shop_price`*`sum`) pay_price','sum(`market_price`*`sum`) market_price','goods_name' ,'max(`freight`) freight'];
         $prices = $this->_cart
             ->where('id','in',$data['cart_id'])
             ->field($price_field)
             ->find()->toArray();
         // 添加session
-        $session['body'] = $prices['goods_name'].'等...';
+        $session['order']['body'] = $prices['goods_name'].'等...';
         unset($prices['goods_name']);
         $map = array_merge($map,$prices);
         $consignee = Db::name('address')->where('id',$data['addr_id'])->find();
@@ -83,14 +83,16 @@ class Orders extends Base
         }
         $order_id = $this->getLastInsID();
         $cart = $this->_cart->save(['order_id'=>$order_id],['id'=>['in',$data['cart_id']] ]);
-        $session['fee'] = (int) ( ( $prices['pay_price']+ $prices['freight'] ) * 100);
-        $session['trade_no'] = $map['serial'];
-        $session['attach'] = $map['serial'];
-        $session['product_id'] = $order_id;
-        $session['expire'] = time()+30*60;
-        $session['token'] = $data['token'];
-        Session::set('order',$session);
-        return $session;
+        if(empty($cart)){
+            $this->error = '购物车修改失败';
+            return false;
+        }
+        $session['order']['total_fee'] = $prices['pay_price'] + $prices['freight']; // 金额
+        $session['order']['out_order_no'] = $map['serial']; // 订单号
+        $session['order']['subject'] = $session['order']['body']; // 商品描述
+        $session['order']['product_id'] = $order_id; // 商品id
+        Session::set('create_order',$session);
+        return $session['order'];
     }
 
 }

@@ -42,16 +42,16 @@ class Auction extends Base
         $data['uname'] = $this->user['nickname'];
         $_orders = model('orders');
         $buy_now = $_orders->buy_now($data);
+        $url = url('index/Shan/index');
+        $html = buildFrom($url,$buy_now);
+        return $html;
         dump($buy_now);
         $param = [
             'body' =>'', //商品主题一般为商品名
             'attach' => '', // 支付回传的值
             'trade_no' => '', // 订单号
             'fee' => '', // 价格以分为单位
-            'start' => '', // 开始时间
-            'expire' => '' , // 有效时间
             'goods_tag' => '', // 商品标记
-            'notify_url' => '', // 回调地址
             'product_id' => '', // 商品id
         ];
     }
@@ -64,9 +64,12 @@ class Auction extends Base
         if(empty($data['carts'])){
             return $this->error('请选择购买商品');
         }
-        $where = ['uid'=>$this->user['id'],'id'=>['in',$data['carts']]];
+        $where = ['uid'=>$this->user['id'],'id'=>['in',$data['carts']],'order_id'=>'0'];
         $_cart = model('cart');
         $carts = $_cart->get_carts($where);
+        if(empty($carts)){
+            return $this->error('购物车为空','index/Goods/shop_cart');
+        }
         $this->assign([
             'title' => get_cache('config.mall')['store_title'],
             'carts' => $carts,
@@ -84,8 +87,9 @@ class Auction extends Base
 
         $_orders = model('orders');
         $buy = $_orders->buy($data);
-
-        dump($buy);
+        $url = url('index/Shan/index');
+        $html = buildFrom($url,$buy);
+        return $html;
     }
     // 确认订单页面
     public function confirm_order(){

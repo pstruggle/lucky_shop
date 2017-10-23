@@ -1,12 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
+ * 自定义函数系统处理函数
  * User: 纯简
  * Date: 2017\9\18 0018
  * Time: 22:43
  */
 
-use app\common\model\Config;
 
 /**
  * 提取短信模板${name}参数
@@ -222,6 +221,11 @@ function authcode($string, $key = '', $operation = 'E', $expiry = 0) {
         return $keyc.str_replace('=', '', base64_encode($result));
     }
 }
+/**
+ * 规格分组处理
+ * @param array $data  规格数组
+ * @return mixed
+ */
 function spec($data){
     if(!is_array($data) && !is_array($data[0])){
         throw new Exception("参数错误");
@@ -242,6 +246,23 @@ function spec($data){
     $data = array_slice($data,2);
     array_unshift($data,$items);
     return spec($data);
+}
+/**
+ * 输出自定义表单并自动提交
+ * @param string $url 提交链接
+ * @param array $params 数据以数组方式传递
+ * @param string $method 提交方式get,post 非两种方式  默认post
+ * @return  string
+ */
+function buildFrom($url,$params,$method="POST"){
+    $method = $method=='GET' ?'GET':'POST';
+    $name = make_password();
+    $html = '<form id="'.$name.'" name="'.$name.'" method="'.$method.'" action="'.$url.'">';
+    foreach ($params as $key => $val){
+        $html .= '<input type="hidden" name="'.$key.'" value="'.$val.'" />';
+    }
+    $html .= '</form><script>document.forms["'.$name.'"].submit();</script>';
+    return $html;
 }
 
 

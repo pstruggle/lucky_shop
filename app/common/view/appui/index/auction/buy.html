@@ -19,7 +19,7 @@
     {load file="__AMZ__js/buy.js"}
     <script type="text/javascript">
         $(function () {
-            Buy.init();
+            Buy.buy();
         });
     </script>
 </head>
@@ -43,14 +43,14 @@
             <div class="clear"></div>
         </div>
         <!--支付方式-->
-        <div class="logistics">
+        <!--<div class="logistics">
             <h3>选择支付方式</h3>
             <ul class="pay-list">
                 <li class="pay qq" data-pay="1"><img src="__AMZ__images/weizhifu.jpg" />微信<span></span></li>
                 <li class="pay taobao" data-pay="2"><img src="__AMZ__images/zhifubao.jpg" />支付宝<span></span></li>
             </ul>
         </div>
-        <div class="clear"></div>
+        <div class="clear"></div>-->
 
         <!--订单 -->
         <div class="concent">
@@ -79,24 +79,26 @@
                 </div>
                 <div class="clear"></div>
 
-                <div class="bundle  bundle-last" data-good="{$good.goods_id}">
+                <div class="bundle  bundle-last" >
                     <div class="bundle-main">
-                        <ul class="item-content clearfix">
+                        {php}$freight=0;$price=0;{/php}
+                        {volist name="carts" id="cart"}
+                        <ul class="item-content clearfix" data-cart="{$cart.id}">
                             <div class="pay-phone">
                                 <li class="td td-item">
                                     <div class="item-pic">
-                                        <a href="{:url('index/goods/details',['id'=>$good.goods_id])}" class="J_MakePoint">
-                                            <img src="{:img_url($good.original_img,80,80)}" class="itempic J_ItemImg"></a>
+                                        <a href="{:url('index/goods/details',['id'=>$cart.goods_id])}" class="J_MakePoint">
+                                            <img src="{:img_url($cart.original_img,80,80)}" class="itempic J_ItemImg"></a>
                                     </div>
                                     <div class="item-info">
                                         <div class="item-basic-info">
-                                            <a href="{:url('index/goods/details',['id'=>$good.goods_id])}" class="item-title J_MakePoint">{$good.goods_name}</a>
+                                            <a href="{:url('index/goods/details',['id'=>$cart.goods_id])}" class="item-title J_MakePoint">{$cart.goods_name}</a>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="td td-info">
-                                    <div class="item-props" data-spec-group="{$good.spec_group.id}">
-                                        {volist name="good.spec_group.spec_str" id="spec_str"}
+                                    <div class="item-props" data-spec-group="{$cart.spec_group}">
+                                        {volist name=":explode(',',$cart['specs_name'])" id="spec_str"}
                                         <span class="sku-line">{$spec_str}</span>
                                         {/volist}
                                     </div>
@@ -104,7 +106,7 @@
                                 <li class="td td-price">
                                     <div class="item-price price-promo-promo">
                                         <div class="price-content">
-                                            <em class="J_Price price-now">{$good.spec_group.shop_price??$good.shop_price}</em>
+                                            <em class="J_Price price-now">{$cart.shop_price}</em>
                                         </div>
                                     </div>
                                 </li>
@@ -114,30 +116,29 @@
                                     <div class="item-amount ">
                                         <span class="phone-title">购买数量</span>
                                         <div class="sl">
-                                            <input class="min am-btn" name="" type="button" value="-" />
-                                            <input class="text_box" name="" type="text" value="{$sum}" style="width:30px;" />
-                                            <input class="add am-btn" name="" type="button" value="+" />
+                                            <input class="text_box" disabled name="" type="text" value="{$cart.sum}" style="width:30px;" />
                                         </div>
                                     </div>
                                 </div>
                             </li>
                             <li class="td td-sum">
                                 <div class="td-inner">
-                                    <em tabindex="0" class="J_ItemSum number">{$good.spec_group.shop_price?$good.spec_group.shop_price*$sum:$good.shop_price*$sum}</em>
+                                    {php}$price += $cart['shop_price'] * $cart['sum'];{/php}
+                                    <em tabindex="0" class="J_ItemSum number">{$cart.shop_price * $cart.sum}</em>
                                 </div>
                             </li>
                             <li class="td td-oplist">
                                 <div class="td-inner">
                                     <span class="phone-title">配送方式</span>
                                     <div class="pay-logis">
-                                        {$good.logistic.price?'快递<b class="sys_item_freprice">'. $good.logistic.price. '</b>元':'免邮'}
+                                        {php}$freight = $freight<$cart.freight?$cart.freight:$freight;{/php}
+                                        {$cart.freight?'快递<b class="sys_item_freprice">'. $cart.freight. '</b>元':'免邮'}
                                     </div>
                                 </div>
                             </li>
 
                         </ul>
-                        <div class="clear"></div>
-
+                        {/volist}
                     </div>
                     <div class="clear"></div>
                 </div>
@@ -164,7 +165,7 @@
                 <!--含运费小计 -->
                 <div class="buy-point-discharge ">
                     <p class="price g_price ">
-                        合计（含运费） <span>¥</span><em class="pay-sum">{$good.spec_group.shop_price?$good.spec_group.shop_price+$good.logistic.price:$good.shop_price+$good.logistic.price }</em>
+                        合计（含运费） <span>¥</span><em class="pay-sum">{$freight+$price}</em>
                     </p>
                 </div>
 
@@ -175,7 +176,7 @@
                             <div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
                                 <span class="price g_price ">
                                     <span>¥</span>
-                                    <em class="style-large-bold-red " id="J_ActualFee">244.00</em>
+                                    <em class="style-large-bold-red " id="J_ActualFee">{$freight+$price}</em>
                                 </span>
                             </div>
 

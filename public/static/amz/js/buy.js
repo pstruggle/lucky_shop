@@ -280,10 +280,10 @@ var Buy = function () {
                 layer.msg('请选择您的地址');
                 return false;
             }
-            if(!payment){
-                layer.msg('请选择支付方式');
-                return false;
-            }
+            // if(!payment){
+            //     layer.msg('请选择支付方式');
+            //     return false;
+            // }
             if(sum<=0){
                 layer.msg('购买数量必须>=1');
                 return false;
@@ -313,10 +313,10 @@ var Buy = function () {
                 layer.msg('请选择您的地址');
                 return false;
             }
-            if(!payment){
-                layer.msg('请选择支付方式');
-                return false;
-            }
+            // if(!payment){
+            //     layer.msg('请选择支付方式');
+            //     return false;
+            // }
             if(cart_ids.length <=0){
                 layer.msg('是否有购物车！');
                 return false;

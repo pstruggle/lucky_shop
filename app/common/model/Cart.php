@@ -74,9 +74,10 @@ class Cart extends Base
     // 删除购物车
     public function del_cart($where){
         $result = $this->where($where)->delete();
-        $having = 'uid = '.$where['uid'];
-        $this->setCache($having);
-
+        $having = '';
+        if(!empty($where['uid'])){
+            $having .= 'uid = '.$where['uid'];
+        }
         if(empty($result)){
             return false;
         }
@@ -107,5 +108,14 @@ class Cart extends Base
             return false;
         }
         return true;
+    }
+    // 修改商品删除购物车，并删除订单
+    public function good_del_cart($goods_id=''){
+        $where = ['goods_id'=>$goods_id];
+        $carts = $this->where($where)->value('order_id');
+        $o_where = ['id'=>['in',$carts],'pay_status'=>'0'];
+        $order = Db::name('orders')->where($o_where)->select();
+        
+        dump($order);
     }
 }

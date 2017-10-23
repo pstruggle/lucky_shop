@@ -1,0 +1,118 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    {include file="system/nav"}
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block full">
+                <!-- Block Tabs Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
+                    </div>
+                    <ul class="nav nav-tabs" data-toggle="tabs">
+                        <li class="active"><a href="#wechat">微信支付</a></li>
+                        <li><a href="#alipay">支付宝支付</a></li>
+                        <li><a href="#ytf">云通付支付</a></li>
+                    </ul>
+                </div>
+                <!-- END Block Tabs Title -->
+
+                <!-- Tabs Content -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="wxpay">
+                        <form action="page_forms_components.html" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="example-hf-email">Email</label>
+                                <div class="col-md-6">
+                                    <input type="email" id="example-hf-emai" name="example-hf-email" class="form-control">
+                                    <span class="help-block">Please enter your email</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="example-hf-password">Password</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="example-hf-passwor" name="example-hf-password" class="form-control">
+                                    <span class="help-block">Please enter your password</span>
+                                </div>
+                            </div>
+                            <div class="form-group form-actions">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                                    <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="tab-pane" id="alipay">
+                        <form action="page_forms_components.html" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="example-hf-email">Email</label>
+                                <div class="col-md-6">
+                                    <input type="email" id="example-hf-email" name="example-hf-email" class="form-control">
+                                    <span class="help-block">Please enter your email</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="example-hf-password">Password</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="example-hf-password" name="example-hf-password" class="form-control">
+                                    <span class="help-block">Please enter your password</span>
+                                </div>
+                            </div>
+                            <div class="form-group form-actions">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                                    <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="tab-pane" id="ytf">
+                        <form action="{:url('admin/System/edit_op')}" method="post" class="form-horizontal form-bordered">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="ytf_user_seller">商户号</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="ytf_user_seller" name="ytf_user_seller" value="{$config.ytf_user_seller}" class="form-control">
+                                    <span class="help-block">该商户号从云通付支付平台获取，适用于个人支付</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="ytf_partner">云通付PID</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="ytf_partner" name="ytf_partner" value="{$config.ytf_partner}" class="form-control" />
+                                    <span class="help-block">该PID从云通付支付平台获取，适用于个人支付</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="ytf_key">KEY码</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="ytf_key" name="ytf_key" value="{$config.ytf_key}" class="form-control" />
+                                    <span class="help-block">云通付KEY码</span>
+                                </div>
+                            </div>
+                            <div class="form-group form-actions">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                                    <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- END Tabs Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+{/block}
+{block name="foot_js"}
+{include file="system/system"}
+{/block}

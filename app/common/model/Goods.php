@@ -30,6 +30,7 @@ class Goods extends Base
         $where = [];
         if(!empty($good['goods_id'])){
             $where = ['goods_id'=>$good['goods_id']];
+            // 修改商品修改购物车  订单
         }
         $this->save($good,$where);
         $goods_id = $this->getLastInsID()?:$good['goods_id'];
