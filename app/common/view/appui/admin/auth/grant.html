@@ -1,0 +1,67 @@
+{extend name="../common/after/frame"}
+{block name="page_wrapper"}
+<div id="page-content">
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-lg-6 col-lg-offset-3  col-sm-10 col-sm-offset-1">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><strong>提示</strong></h4>
+                        <p>这里是选择后台角色权限的地方！</p>
+                        <p>标注【显示】的功能为后端菜单列表项，需要选择上一级菜单才能显示出您所选择的菜单。不过就算不显示 还是有访问权限的！</p>
+                    </div>
+                </div>
+            </div>
+            <form action="javascript:void(0);" id="add-task-form" class="push">
+                <input type="text" id="add-task" name="add-task" class="form-control input-lg" placeholder="Enter a task and press enter..">
+            </form>
+            <ul class="task-list">
+                <!--选择树-->
+            </ul>
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+            <!-- Horizontal Form Block -->
+
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/auth/edit',['action'=>'roles'])}" method="post" class="form-horizontal form-bordered">
+                    <input type="hidden" name="id" value="{$role.id??''}" />
+                    <div class="form-group hide">
+                        <label class="col-md-3 control-label" for="auths">权限</label>
+                        <div class="col-md-6">
+                            <input type="text" id="auths" name="auths" class="form-control" value="{$role.auths??''}">
+                            <span class="help-block">权限</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+
+</div>
+{/block}
+{block name="foot_js"}
+{load file="__APPUI__js/pages/auth.js"}
+<script>
+    $(function () {
+        Auth.grant_view()
+    });
+</script>
+<!-- Load and execute javascript code used only in this page -->
+
+<!-- Load and execute javascript code used only in this page -->
+<!--<script src="__APPUI__js/pages/formsValidation.js"></script>-->
+<!--<script>$(function(){ FormsValidation.init(); });</script>-->
+{/block}

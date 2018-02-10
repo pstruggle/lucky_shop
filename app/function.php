@@ -35,7 +35,11 @@ function get_cache($name,$value = null){
     $result = cache($name);
     if(empty($result)){
         $names = explode('.',$name);
-        model($names[0])->setCache();
+        try{
+            model($names[0])->setCache(empty($names[1])?'':$names[1]);
+        }catch (Exception $e){
+             throw new Exception($name.'缓存不存在');
+        }
         $result = cache($name);
     }
     return $result;

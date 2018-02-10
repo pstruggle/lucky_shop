@@ -1,0 +1,170 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Tables</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Elements</li>
+                        <li>
+                            <a href="">Tables</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li>
+                <a href="{:url('admin/System/edit_view',['action'=>'action'])}" class="edit_view" >功能编辑</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <div class="block full">
+        <div class="table-responsive">
+            <div id="example-datatable_wrapper" class="dataTables_wrapper form-inline no-footer">
+
+                <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                    <thead>
+                    <tr>
+                        <th class="text-center">序号</th>
+                        <th class="text-center" style="width: 50px;">ID</th>
+                        <th>功能名</th>
+                        <th>URI</th>
+                        <th>排序</th>
+                        <th>是否显示</th>
+                        <th>是否为API</th>
+                        <th>是否验证登陆</th>
+                        <th>最后修改时间</th>
+                        <th class="text-center" style="width: 75px;">
+                            <i class="fa fa-flash">
+                            </i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="after_actions" id="after_action" key='k'}
+                    <tr>
+                        <td class="text-center">{$k}</td>
+                        <td>{$after_action.id??''}</td>
+                        <td>{$after_action.tree}{$after_action.title}</td>
+                        <td>/{$after_action.controller??''}/{$after_action.model??''}/{$after_action.action??''}/{$after_action.params??''}</td>
+                        <td>{$after_action.weight??'' }</td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_show_{$after_action.id??''}" checked="" class="is_true" name="is_show_{$after_action.id??''}" value="{$after_action.is_show??''}" /><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_api_{$after_action.id??''}" checked="" class="is_true" name="is_api_{$after_action.id??''}" value="{$good.is_api??''}" ><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_login_{$after_action.id??''}" checked=""  class="is_true" name="is_login_{$after_action.id??''}" value="{$after_action.is_login}" ><span></span>
+                            </label>
+                        </td>
+
+                        <td>{$after_action.update_time??''}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" title="编辑商品" data-id="{$after_action.id}" class="btn btn-effect-ripple btn-xs btn-success edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a href="javascript:void(0)" title="删除品牌" class="btn btn-effect-ripple btn-xs btn-danger">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="table-responsive">
+            <div id="before_actions_datatable" class="dataTables_wrapper form-inline no-footer">
+
+                <table id="before_actions" class="table table-striped table-bordered table-vcenter">
+                    <thead>
+                    <tr>
+                        <th class="text-center">序号</th>
+                        <th class="text-center" style="width: 50px;">ID</th>
+                        <th>功能名</th>
+                        <th>URI</th>
+                        <th>排序</th>
+                        <th>是否显示</th>
+                        <th>是否为API</th>
+                        <th>是否验证登陆</th>
+                        <th>最后修改时间</th>
+                        <th class="text-center" style="width: 75px;">
+                            <i class="fa fa-flash">
+                            </i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="before_actions" id="before_action" key='k'}
+                    <tr>
+                        <td class="text-center">{$k}</td>
+                        <td>{$before_action.id??''}</td>
+                        <td>{$before_action.tree}{$before_action.title}</td>
+                        <td>/{$before_action.controller??''}/{$after_action.model??''}/{$before_action.action??''}/{$before_action.params??''}</td>
+                        <td>{$before_action.weight??'' }</td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_show_{$before_action.id??''}" checked="" class="is_true" name="is_show_{$before_action.id??''}" value="{$before_action.is_show??''}" /><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_api_{$before_action.id??''}" checked="" class="is_true" name="is_api_{$after_action.id??''}" value="{$good.is_api??''}" ><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_login_{$before_action.id??''}" checked=""  class="is_true" name="is_login_{$after_action.id??''}" value="{$after_action.is_login}" ><span></span>
+                            </label>
+                        </td>
+
+                        <td>{$after_action.update_time??''}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" title="编辑功能" data-id="{$before_action.id}" class="btn btn-effect-ripple btn-xs btn-success edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a href="javascript:void(0)" title="删除品牌" class="btn btn-effect-ripple btn-xs btn-danger">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+{/block}
+{block name="foot_js"}
+
+<!-- Load and execute javascript code used only in this page -->
+<script src="__APPUI__js/pages/system/actions.js"></script>
+<script>$(function(){ Actions.init(); });</script>
+
+{/block}

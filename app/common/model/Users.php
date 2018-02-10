@@ -2,12 +2,14 @@
 namespace app\common\model;
 
 use app\common\model\Base;
+use think\Cookie;
 use think\Db;
 use think\Exception;
 use think\Request;
 
 class Users extends Base
 {
+    protected $autoWriteTimestamp = true;
     private $_user ;
     private $infos = [
         'nickname' => '该用户名存在',
@@ -21,11 +23,31 @@ class Users extends Base
     }
     /**
      * 验证用户登录情况
-     * @param string $cookie_id 记录的id值
-     * @param string $cookie_secret 记录的密码值
+     * @param $cookie_id string  记录的id值
+     * @param $cookie_secret string  记录的密码值
      * @return mixed 用户存在就返回用户信息，不存在返回false
      */
-    public function check_login($cookie_id,$cookie_secret){
+    public function check_login(){
+        try{
+            $cookie_id = Cookie::get('token');
+            $cookie_secret = Cookie::get('secret');
+            $key = get_cache('config.basic')['encrypt_key'];
+            $id = authcode($cookie_id,$key,'D');
+            $passwd = authcode($cookie_secret,$key,'D');
+            $user  = $this->where('id',$id)->find();
+            if(empty($user)){
+                throw new Exception('用户不存在！');
+            }
+            if(strcmp($passwd,$user['passwd']) !== 0){
+                throw new Exception('密码被修改,请重新登陆！');
+            }
+            return $user;
+        }catch (Exception $e){
+            $this->error = $e->getMessage();
+            return false;
+        }
+
+        /*后面代码留着可能还会用*/
         if(empty($cookie_id) || empty($cookie_secret)){
             return false;
         }
@@ -49,33 +71,37 @@ class Users extends Base
      * 用户登录操作
      */
     public function sign($data){
-        if(!captcha_check($data['check_code'])){
-            $this->error = '图形验证码不正确';
+        try{
+            if(!captcha_check($data['check_code'])){
+                throw new Exception('图形验证码不正确');
+            }
+            if(empty($data['account'])){
+                throw new Exception('账号不能为空');
+            }
+            $where = [];
+            $reg = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/';
+            if(preg_match($reg,$data['account'])){
+                $where = ['email'=>$data['account']];
+            }elseif(preg_match('/^1[0-9]{10}$/',$data['account'])){
+                $where = ['phone'=>$data['account']];
+            }else{
+                $where = ['nickname'=>$data['account']];
+            }
+            $user = $this->where($where)->find();
+            if(empty($user)){
+                throw new Exception('用户不存在');
+            }
+            $passwd = md5(md5($data['passwd']));
+            if(strcmp($passwd,$user['passwd']) !== 0){
+                throw new Exception('密码不正确');
+            }
+            $map = ['lastdate'=>time()];
+            $this->save($map,$where);
+            return $user;
+        }catch (Exception $e){
+            $this->error = $e->getMessage();
             return false;
         }
-        if(empty($data['account'])){
-            $this->error = '账号不能为空';
-            return false;
-        }
-        $where = [];
-        if(preg_match('/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/',$data['account'])){
-            $where = ['email'=>$data['account']];
-        }elseif(preg_match('/^1[0-9]{10}$/',$data['account'])){
-            $where = ['phone'=>$data['account']];
-        }else{
-            $where = ['nickname'=>$data['account']];
-        }
-        $user = $this->where($where)->find();
-        if(empty($user)){
-            $this->error = '用户不存在';
-            return false;
-        }
-        $passwd = md5($data['passwd']);
-        if(strcmp($passwd,$user['passwd']) !== 0){
-            $this->error = '密码不正确';
-            return false;
-        }
-        return $user;
     }
 
     /**
@@ -84,54 +110,45 @@ class Users extends Base
      * @return boolean
      */
     public function register($data){
-        if(!captcha_check($data['check_code'])){
-            $this->error = '图形验证码不正确';
-            return false;
-        }
-        if($data['reg_type'] == 'phone'){
-            if(!sendsms_check($data['sms_code'])){
-                $this->error = '短信验证码不正确';
-                return false;
-            }
-        }
         try{
-            $user = $this->where($data['reg_type'],$data[$data['reg_type']])->find();
-        }catch (Exception $e){
-            $this->error = '请求出错';
-            return false;
-        }
-        if(!empty($user)){
-            $this->error = $this->infos[$data['reg_type']];
-            return false;
-        }
-        if(strcmp($data['passwd'],$data['passwd_verify']) !== 0){
-            $this->error = '您输入的密码不一致';
-            return false;
-        }
-        $map=[
-            $data['reg_type'] => $data[ $data['reg_type'] ],
-            'passwd' => $data['passwd'],
-            'regip' => $data['regip'],
-            'regdate' => time(),
-            'status' => 1, // 状态为正常状态
-        ];
-        $save = $this->validate('Users.'.$data['reg_type'])->save($map);
-        if($save === false){
-            $this->error = $this->getError();
-            return false;
-        }
-        if($data['reg_type'] == 'email'){
-            $result = $this->body($data['email'],$data['passwd'],$data['domain']);
-            if($result['errorCode']){
-                $this->error = '邮箱注册成功,赶紧去邮箱验证吧...';
-                return true;
-            }else{
-                $this->error = '服务器繁忙，邮件发送失败，请稍后再试...';
-                return false;
-
+            if(!captcha_check($data['check_code'])){
+                throw new Exception('图形验证码不正确');
             }
+            if($data['reg_type'] == 'phone' && !sendsms_check($data['sms_code'])){
+                throw new Exception('短信验证码不正确');
+            }
+            $user = $this->where($data['reg_type'],$data[$data['reg_type']])->find();
+            if(!empty($user)){
+                throw new Exception($this->infos[$data['reg_type']]);
+            }
+            if(strcmp($data['passwd'],$data['passwd_verify']) !== 0){
+                throw new Exception('您输入的密码不一致');
+            }
+            $map=[
+                $data['reg_type'] => $data[ $data['reg_type'] ],
+                'passwd' => $data['passwd'],
+                'regip' => $data['regip'],
+                'status' => 1, // 状态为正常状态
+            ];
+            $save = $this->validate('Users.'.$data['reg_type'])->save($map);
+            if($save === false){
+                return false;
+            }
+            if($data['reg_type'] == 'email'){
+                $result = $this->body($data['email'],$data['passwd'],$data['domain']);
+                if($result['errorCode']){
+                    throw new Exception('邮箱注册成功,赶紧去邮箱验证吧...');
+                }else{
+                    throw new Exception('服务器繁忙，邮件发送失败，请稍后再试...');
+                }
+            }
+            $this->error = '注册成功';
+            return true;
+        }catch (Exception $e){
+            $this->error = $e->getMessage();
+            return false;
         }
-        return true;
+
 
     }
     // 邮箱注册时发送邮件
@@ -139,7 +156,7 @@ class Users extends Base
         $mall_name = get_cache('config.mall')['mall_name'];
 
         $key = get_cache('config.basic')['encrypt_key'];
-        $passwd_en = md5($passwd);
+        $passwd_en = md5(md5($passwd));
         $code = $email . '!_!' . $passwd_en;
         $checkcode = authcode($code,$key,'E',48*60*60);
         $url = $domain . url('restrict/Index/mailprove') . '?checkcode='.urlencode($checkcode);
@@ -151,6 +168,6 @@ class Users extends Base
      * 自动加密密码
      */
     public function setPasswdAttr($value){
-        return md5($value);
+        return md5(md5($value));
     }
 }

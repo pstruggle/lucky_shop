@@ -10,10 +10,9 @@ class Brand extends Base
     protected function initialize(){
         parent::initialize();
     }
-    public function setCache(){
+    public function setCache($pet_name=''){
         $name = lcfirst($this->name);
-
-        $brands = $this->order('initial','asc')->select();
+        $brands = $this->order('initial','asc')->select()->toArray();
         get_cache($name,$brands);
     }
     // 商品品牌编辑

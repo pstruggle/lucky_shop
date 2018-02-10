@@ -1,0 +1,94 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Form Components</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Forms</li>
+                        <li><a href="">Components</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li class="active"><a href="{:url('admin/Auth/listing',['action'=>'roles'])}">角色列表</a></li>
+
+        </ul>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/Auth/edit',['action'=>'roles'])}" method="post" class="form-horizontal form-bordered">
+                    <input type="hidden" name="id" value="{$role.id??''}" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="role_name">角色名称</label>
+                        <div class="col-md-6">
+                            <input type="text" id="role_name" name="role_name" class="form-control" value="{$role.role_name??''}">
+                            <span class="help-block">请输入角色名称</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="group_id">角色分组</label>
+                        <div class="col-md-6">
+                            <select name="group_id" id="group_id" data-val="{$role.group_id??''}" class="form-control">
+                                <option value="">请选择角色组</option>
+                                {foreach name="role_groups" id="role_group"}
+                                <option value="{$role_group.id??''}">{$role_group.group_name??''}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">请输入角色分组</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="remarks">角色备注</label>
+                        <div class="col-md-6">
+                            <input type="text" id="remarks" name="remarks" class="form-control" value="{$role.remarks??''}">
+                            <span class="help-block">请输入角色备注</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+
+{/block}
+{block name="foot_js"}
+<!-- Load and execute javascript code used only in this page -->
+<script src="__APPUI__js/pages/brand.js"></script>
+<script>
+    $(function(){
+        App.selected();
+    });
+</script>
+<!-- Load and execute javascript code used only in this page -->
+<!--<script src="__APPUI__js/pages/formsValidation.js"></script>-->
+<!--<script>$(function(){ FormsValidation.init(); });</script>-->
+{/block}

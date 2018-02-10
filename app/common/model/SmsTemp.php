@@ -20,14 +20,10 @@ class SmsTemp extends Base
         $this->_base = $this;
     }
     // 将短信模板缓存
-    public function setCache(){
+    public function setCache($pet_name=''){
         $name = lcfirst($this->name);
-        $temps = $this->_smsTemp->select();
-        $datas = [];
-        foreach ($temps as $temp){
-            $datas[$temp['scene']] = $temp;
-        }
-        get_cache($name,$datas);
+        $temps = $this->column('*','scene');
+        get_cache($name,$temps);
     }
 
     /**

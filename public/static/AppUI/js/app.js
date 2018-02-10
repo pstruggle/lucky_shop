@@ -150,6 +150,10 @@ var App = function() {
             }
         }
     };
+    /* 初始化后台菜单 */
+    var initNav = function () {
+
+    };
     /* Sidebar Navigation functionality */
     var handleNav = function() {
         // Get all vital links
@@ -628,7 +632,25 @@ var App = function() {
                 }
             });
         });
-    }
+    };
+    // 编辑跳转
+    var edit = function () {
+        $('.edit').on('click',function () {
+            var id = $(this).data('id');
+            var edit_url = $('.edit_view').attr('href');
+            location.href = edit_url + '?id=' + id;
+        });
+    };
+    // 初始化下拉框
+    var selected = function () {
+        $('select').each(function () {
+            var val = $(this).data('val');
+            if(val){
+                $(this).val(val);
+            }
+            return true;
+        })
+    };
     return {
         init: function() {
             uiInit(); // Initialize UI
@@ -643,7 +665,9 @@ var App = function() {
         },
         pagePrint: function() {
             handlePrint(); // Print functionality
-        }
+        },
+        edit:edit,//跳转编辑
+        selected:selected   // 初始化下拉框
     };
 }();
 

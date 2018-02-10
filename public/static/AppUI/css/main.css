@@ -1573,6 +1573,12 @@ a[data-toggle="lightbox-image"]:hover img {
 .task-list li.in-2x {
     margin-left: 40px;
 }
+.task-list li.in-3x {
+    margin-left: 60px;
+}
+.task-list li.in-4x {
+    margin-left: 80px;
+}
 
 .task-list li > .task-close {
     position: absolute;

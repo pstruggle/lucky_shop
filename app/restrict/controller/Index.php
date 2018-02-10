@@ -62,13 +62,13 @@ class Index extends Common {
         $data['domain'] = $this->request->domain();
         $result = $_users->register($data);
         if($result){
-            $user = Db::name('users')->where($data['reg_type'],$data['$data["reg_type"]'])->find();
+            $user = Db::name('users')->where($data['reg_type'],$data[$data["reg_type"]])->find();
             $this->user = $user;
             $this->record_user();
-            return $this->success($_users->getError(),
+            $this->success($_users->getError(),
                 url('index/Index/index'));
         }
-        return $this->error($_users->getError());
+        $this->error($_users->getError());
     }
     /**
      * 邮箱验证
@@ -78,12 +78,12 @@ class Index extends Common {
         $key = get_cache('config.basic')['encrypt_key'];
         $decode = authcode($checkcode,$key,'D');
         if (!$decode){
-            return $this->error('验证错误');
+            $this->error('验证错误');
         }
         $result = explode('!_!',$decode);
         $user = Db::name('users')->where('email',$result[0])->find();
         if(empty($user)){
-            return $this->error('该邮箱未注册',
+            $this->error('该邮箱未注册',
                 url('restrict/Index/register'));
         }
         if(strcmp($user['passwd'],$result[1]) === 0){
@@ -91,13 +91,13 @@ class Index extends Common {
                 ->where('id',$user['id'])
                 ->update(['mail_verify'=>1]);
             if(!$up){
-                return $this->error('系统出错');
+                $this->error('系统出错');
             }
             $this->record_user($user);
-            return $this->success('验证成功',
+            $this->success('验证成功',
                 url('index/Index/index'));
         }else{
-            return $this->error('验证失败,请登录后重新发送验证！',
+            $this->error('验证失败,请登录后重新发送验证！',
                 url('restrict/Index/register'));
         }
     }
@@ -106,18 +106,18 @@ class Index extends Common {
      */
     public function sign(){
         if(!$this->request->isPost()){
-            return $this->error('请求出错');
+            $this->error('请求出错');
         }
         $data = input('post.');
         $_users = model('users');
         $result = $_users->sign($data);
         if($result === false){
-            return $this->error($_users->getError());
+            $this->error($_users->getError());
         }
         $url = $data['url']?:url('index/index/index');
         $this->user = $result;
         $this->record_user();
-        return $this->success('登录成功',$url);
+        $this->success('登录成功',$url);
 
     }
     /**

@@ -1,0 +1,104 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Tables</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Elements</li>
+                        <li>
+                            <a href="">Tables</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a href="{:url('admin/Auth/edit_view',['action'=>'roleGroup'])}" class="edit_view" >角色分组编辑</a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <div class="block full">
+        <div class="table-responsive">
+            <div id="example-datatable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                    <thead>
+                    <tr>
+                        <th class="text-center">序号</th>
+                        <th class="text-center" style="width: 50px;">ID</th>
+                        <th>分组名</th>
+                        <th>备注</th>
+                        <th>更新时间</th>
+                        <th>创建时间</th>
+                        <th class="text-center" style="width: 75px;">
+                            <i class="fa fa-flash">
+                            </i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="role_groups" id="role_group" key='k'}
+                    <tr>
+                        <td class="text-center">{$k}</td>
+                        <td class="text-center">{$role_group.id}</td>
+                        <td>
+                            <strong>{$role_group.group_name}</strong>
+                        </td>
+                        <td>
+                            {$role_group.remarks}
+                        </td>
+                        <td>{$role_group.update_time}</td>
+
+                        <td>{$role_group.create_time}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" title="编辑品牌" data-id="{$role_group.id}" class="btn btn-effect-ripple btn-xs btn-success edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a href="javascript:void(0)" title="删除品牌" class="btn btn-effect-ripple btn-xs btn-danger">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                <div class="row">
+
+                    <div class="col-sm-12 col-xs-12 clearfix">
+                        <div class="dataTables_paginate paging_bootstrap" id="example-datatable_paginate">
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+{/block}
+{block name="foot_js"}
+<script src="__APPUI__js/pages/brand.js"></script>
+<script>
+    $(function () {
+        App.edit();
+    });
+</script>
+{/block}

@@ -23,5 +23,22 @@ class Base extends Model
         return $this->_base->where($where)->delete();
 
     }
+    // 列表检索条件
+    public function list_where(){
+        $where = '';
+        return $where;
+    }
+    // 编辑是图
+    public function edit_view(){}
+    // 列表获取
+    public function listing(){}
+    // 编辑操作
+    public function edit($data){
+        $this->error = '请重写方法';
+        return false;
+    }
+    public function setCache($pet_name=''){
+        //设置缓存
+    }
 
 }

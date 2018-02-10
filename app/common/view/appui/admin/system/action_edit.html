@@ -1,0 +1,180 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Form Components</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li>User Interface</li>
+                        <li>Forms</li>
+                        <li><a href="">Components</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-section">
+        <!--<h4 class="sub-header">Pills</h4>-->
+        <ul class="nav nav-pills">
+            <li>
+                <a href="{:url('admin/System/listing',['action'=>'action'])}">功能列表</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END Forms Components Header -->
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+                <!-- Horizontal Form Content -->
+                <form action="{:url('admin/System/edit',['action'=>'action'])}" method="post" class="form-horizontal form-bordered" >
+                    <input type="hidden" name="id" value="{$action.id??''}" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="title">功能名</label>
+                        <div class="col-md-6">
+                            <input type="text" id="title" name="title" class="form-control" value="{$action.title??''}">
+                            <span class="help-block">功能名称</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="controller">控制器</label>
+                        <div class="col-md-6">
+                            <input type="text" id="controller" name="controller" class="form-control" value="{$action.controller??''}">
+                            <span class="help-block">请输入功能控制器</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="model">模块</label>
+                        <div class="col-md-6">
+                            <input type="text" id="model" name="model" class="form-control" value="{$action.model??''}">
+                            <span class="help-block">请输入功能模块</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="action">方法</label>
+                        <div class="col-md-6">
+                            <input type="text" id="action" name="action" class="form-control" value="{$action.action??''}">
+                            <span class="help-block">请输入功能方法</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="params">参数</label>
+                        <div class="col-md-6">
+                            <input type="text" id="params" name="params" class="form-control" value="{$action.params??''}">
+                            <span class="help-block">请输入功能参数控制</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="remark">功能描述</label>
+                        <div class="col-md-6">
+                            <input type="text" id="remark" name="remark" class="form-control" value="{$action.remark??''}">
+                            <span class="help-block">请输入功能描述</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="icon">后端功能图标</label>
+                        <div class="col-md-6">
+                            <input type="text" id="icon" name="icon" class="form-control" value="{$action.icon??''}">
+                            <span class="help-block">请输入菜单的图标样式</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="log_rules">日志规则</label>
+                        <div class="col-md-6">
+                            <input type="text" id="log_rules" name="log_rules" class="form-control" value="{$action.log_rules}">
+                            <span class="help-block">请输入日志规则</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="validation_rules">验证规则</label>
+                        <div class="col-md-6">
+                            <input type="text" id="validation_rules" name="validation_rules" class="form-control" value="{$action.validation_rules}">
+                            <span class="help-block">请输入验证规则</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="pid">父级功能</label>
+                        <div class="col-md-6">
+                            <select id="pid" name="pid" class="form-control">
+                                <option value="0">--ROOT--</option>
+                                {foreach name="actions" id="act"}
+                                <option value="{$act.id??''}">{$act.tree??''}{$act.title??''}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">请输入父级功能</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="weight">排序</label>
+                        <div class="col-md-6">
+                            <input type="number" id="weight" name="weight" class="form-control" value="{$action.weight??''}">
+                            <span class="help-block">请输入数字（越大越在前）</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="is_api">是否为api</label>
+                        <div class="col-md-6">
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_api" class="is_true"  name="is_api" checked="" value="{$action.is_api??''}" ><span></span>
+                            </label>
+                            <span class="help-block">是否为api</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="is_nose">是否前端功能</label>
+                        <div class="col-md-6">
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_nose" class="is_true"  name="is_nose" checked="" value="{$action.is_nose??''}" ><span></span>
+                            </label>
+                            <span class="help-block">是否为前端功能</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="is_login">是否必须登录</label>
+                        <div class="col-md-6">
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_login" class="is_true"  name="is_login" checked="" value="{$action.is_login??'1'}" ><span></span>
+                            </label>
+                            <span class="help-block">是否必须登录</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="is_show">是否菜单显示</label>
+                        <div class="col-md-6">
+                            <label class="switch switch-info">
+                                <input type="checkbox" id="is_show" class="is_true"  name="is_show" checked="" value="{$action.is_show??''}" ><span></span>
+                            </label>
+                            <span class="help-block">是否菜单隐藏（该选项在后台菜单内有效）</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">提交</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Horizontal Form Content -->
+            </div>
+            <!-- END Horizontal Form Block -->
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+{/block}
+{block name="foot_js"}
+<script type="text/javascript">
+    $(function () {
+        $('#pid').val("{$action.pid??'0'}");
+    })
+</script>
+{//include file="system/system"}
+{/block}

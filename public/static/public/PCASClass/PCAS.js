@@ -36,7 +36,6 @@ PCAS.SetP=function(PCA){
         PCAPV = i;
         PCAPT = AREA[i][0];
         PCA.SelP.options.add(new Option(PCAPT,PCAPV));
-        console.log(PCA.SelP);
         if(PCA.DefP==PCAPV)PCA.SelP[x].selected=true;
         x++;
     }

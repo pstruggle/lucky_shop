@@ -100,8 +100,11 @@ class System extends Base
         ]);
         return $this->template();
     }
+    // 清除缓存
     public function clear_cache(){
         Cache::clear();
         return $this->last_redirect();
     }
+    // 获取菜单
+
 }

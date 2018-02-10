@@ -17,7 +17,9 @@ var CompNestable = function() {
             output.html('JSON browser support required!');
         }
     };
+    var init_action = function () {
 
+    };
     return {
         init: function() {
             var nestLists = $('.dd');

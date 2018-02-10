@@ -53,6 +53,8 @@ class Index extends Base
     // 测试页面
     public function test(){
         set_time_limit(0);
+        $a = strtotime(1517992261);
+        dump($a);
 //        ignore_user_abort(true);
 //        $i = 0 ;
 //        while(true && cache('test')==0){
