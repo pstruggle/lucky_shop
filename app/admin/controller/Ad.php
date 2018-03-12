@@ -4,7 +4,7 @@ namespace app\admin\controller;
 use app\common\controller\Common;
 use think\Exception;
 
-class Ad extends Common {
+class Ad extends Base {
 
     protected function _initialize()
     {

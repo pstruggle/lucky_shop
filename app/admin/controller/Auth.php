@@ -21,7 +21,7 @@ class Auth extends Base
         try{
             $_model = model('roles');
             if($this->request->isAjax()){
-                $data = get_cache('action.afterAction');
+                $data = get_cache('action.actions');
                 $this->success('获取成功',null,$data);
             }
             $result = $_model->grant();

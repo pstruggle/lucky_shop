@@ -15,7 +15,7 @@
                             <img src="__AMZ__images/getAvatar.do.jpg">
                         </a>
                         <div class="m-info">
-                            <em class="s-name">小叮当</em>
+                            <em class="s-name">{$user.user_name??'无昵称'}</em>
                             <div class="vip1"><a href="#"><span></span><em>会员专享</em></a></div>
                             <div class="safeText"><a href="safety.html">账户安全:<em style="margin-left:20px ;">60</em>分</a>
                                 <div class="progressBar"><span style="left: -95px;" class="progress"></span></div>
@@ -99,55 +99,33 @@
                     <li><a href="order.html"><i><img src="__AMZ__images/comment.png"/></i><span>待评价<em class="m-num">3</em></span></a></li>
                     <li><a href="change.html"><i><img src="__AMZ__images/refund.png"/></i><span>退换货</span></a></li>
                 </ul>
+                {volist name="orders" id="order"}
+
                 <div class="orderContentBox">
                     <div class="orderContent">
                         <div class="orderContentpic">
                             <div class="imgBox">
-                                <a href="orderinfo.html"><img src="__AMZ__images/youzi.jpg"></a>
+                                <a href="orderinfo.html"><img src="{$order.goods.0.original_img??''}"></a>
                             </div>
                         </div>
                         <div class="detailContent">
                             <a href="orderinfo.html" class="delivery">签收</a>
                             <div class="orderID">
-                                <span class="time">2016-03-09</span>
-                                <span class="splitBorder">|</span>
-                                <span class="time">21:52:47</span>
+                                <span class="time">{$order.create_time??''}</span>
+
                             </div>
                             <div class="orderID">
-                                <span class="num">共1件商品</span>
+                                <span class="num">共{$order.num??0}件商品</span>
                             </div>
                         </div>
                         <div class="state">待评价</div>
-                        <div class="price"><span class="sym">¥</span>23.<span class="sym">80</span></div>
+                        <div class="price"><span class="sym">¥</span>{$order.pay_price | ceil}.<span class="sym">{$order.pay_price - ceil($order.pay_price)}</span></div>
 
                     </div>
                     <a href="javascript:void(0);" class="btnPay">再次购买</a>
                 </div>
 
-                <div class="orderContentBox">
-                    <div class="orderContent">
-                        <div class="orderContentpic">
-                            <div class="imgBox">
-                                <a href="orderinfo.html"><img src="__AMZ__images/heart.jpg"></a>
-                            </div>
-                        </div>
-                        <div class="detailContent">
-                            <a href="orderinfo.html" class="delivery">派件</a>
-                            <div class="orderID">
-                                <span class="time">2016-03-09</span>
-                                <span class="splitBorder">|</span>
-                                <span class="time">21:52:47</span>
-                            </div>
-                            <div class="orderID">
-                                <span class="num">共2件商品</span>
-                            </div>
-                        </div>
-                        <div class="state">已发货</div>
-                        <div class="price"><span class="sym">¥</span>246.<span class="sym">50</span></div>
-
-                    </div>
-                    <a href="javascript:void(0);" class="btnPay">再次购买</a>
-                </div>
+                {/volist}
             </div>
             <!--九宫格-->
             <div class="user-squaredIcon">
@@ -376,4 +354,7 @@
 
 
 </div>
+{/block}
+{block name="script"}
+<link href="__AMZ__css/vipstyle.css" rel="stylesheet" type="text/css">
 {/block}

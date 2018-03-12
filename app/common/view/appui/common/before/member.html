@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
 
-    <title>框架</title>
-    <link href="__AMZ__basic/css/demo.css" rel="stylesheet" type="text/css" />
+    <title>{$title??'个人中心'}</title>
+
     <link href="__AMZ__AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
     <link href="__AMZ__AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
     <link href="__AMZ__css/personal.css" rel="stylesheet" type="text/css">
-    <link href="__AMZ__css/vipstyle.css" rel="stylesheet" type="text/css">
+    {block name="script"}{/block}
     <script src="__AMZ__AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
     <script src="__AMZ__AmazeUI-2.4.2/assets/js/amazeui.js"></script>
 </head>
@@ -30,7 +30,7 @@
     {include file="../common/before/nav_cont"}
 </div>
 <b class="line"></b>
-
+{block name="center"}
 <div class="center">
     <div class="col-main">
         {block name="main_wrap"}{/block}
@@ -91,6 +91,7 @@
 
     </aside>
 </div>
+{/block}
 {include file="../common/before/foot_nav"}
 </body>
 

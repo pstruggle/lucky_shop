@@ -9,6 +9,8 @@
 namespace app\common\model;
 
 
+use think\Cache;
+
 class Action extends Base
 {
     protected $autoWriteTimestamp = true;
@@ -18,12 +20,25 @@ class Action extends Base
         $pet_names = explode('_',$pet_name);
         switch ($pet_names[0]){
             case 'menus':
-                get_cache($name.'.menus_'.$pet_names[1],$this->menus($pet_names[1]));
+                Cache::tag($name)->set($name.'.menus_'.$pet_names[1],$this->menus($pet_names[1]));
                 break;
-            case 'afterAction': // 获取所有功能
+            case 'afterAction': // 获取前端所有功能
                 $where = ['is_nose'=>0];
-                get_cache($name.'.afterAction',$this->actions_list($where));
+                Cache::tag($name)->set($name.'.afterAction',$this->actions_list($where));
                 break;
+            case 'beforeAction': // 获取前端所有功能
+                $where = ['is_nose'=>1];
+                Cache::tag($name)->set($name.'.beforeAction',$this->actions_list($where));
+                break;
+            case 'action': // 获取前端所有功能
+                Cache::tag($name)->set($name.'.action',$this->column("*",'id'));
+                break;
+            case 'actions': // 获取前端所有功能
+                Cache::tag($name)->set($name.'.actions',$this->actions_list());
+                break;
+            default:
+                Cache::clear($name);
+
         }
     }
     // 包含方式获取功能控制器
@@ -41,7 +56,7 @@ class Action extends Base
         $where['pid'] = $pid;
         $order = ['is_show'=>'desc','is_nose'=>'desc','weight'=>'desc'];
         $actions = $this->where($where)->order($order)->select()->toArray();
-        $tree = ' ├──';
+        $tree = ' ├─';
         $s = [];
         foreach ($actions as $item => $action){
             $action['tree'] = str_pad('',mb_strlen($tree)*$layer,$tree);
@@ -53,12 +68,11 @@ class Action extends Base
     }
     // 获取后端菜单
     public function menus($role){
-        $role = $this->db()->name('role')->where('id',$role)->value('id');
-        if(!$role){
+        $roles = $this->db()->name('roles')->where('id',$role)->value('auths');
+        if(!$roles){
             return false;
         }
-
-        $where = ['pid'=>0,'is_show'=>'1','is_nose'=>'0'];
+        $where = ['pid'=>0,'is_show'=>'1','is_nose'=>'0','id'=>['in',$roles]];
         $menus = $this->actions($where);
         return $menus;
     }
@@ -112,6 +126,7 @@ class Action extends Base
             $where['id']= $data['id'];
         }
         $save = $this->validate(true)->save($data,$where);
+        $this->setCache();
         return $save;
     }
 }

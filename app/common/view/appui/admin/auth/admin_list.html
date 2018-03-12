@@ -50,6 +50,7 @@
                         <th>部门</th>
                         <th>角色</th>
                         <th>登陆次数</th>
+                        <th>有效时间</th>
                         <th>注册ip</th>
                         <th>最后登陆</th>
                         <th>更新时间</th>
@@ -66,12 +67,13 @@
                         <td class="text-center">{$k}</td>
                         <td class="text-center">{$admin.id}</td>
                         <td><strong>{$admin.nickname}</strong></td>
-                        <td>{$admin.phone}</td>
                         <td>{$admin.username}</td>
+                        <td>{$admin.phone}</td>
                         <td>{$admin.email}</td>
                         <td>{$role_groups[$admin.group_id]['group_name']}</td>
                         <td>{:get_cache($role_name . $admin.role_id)['role_name'] }</td>
                         <td>{$admin.loginnum}</td>
+                        <td>{$admin.firstdate}<br/>{$admin.overdate}</td>
                         <td>{$admin.regip}</td>
                         <td>{$admin.lastdate}</td>
                         <td>{$admin.update_time}</td>

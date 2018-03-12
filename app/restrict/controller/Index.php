@@ -81,7 +81,7 @@ class Index extends Common {
             $this->error('验证错误');
         }
         $result = explode('!_!',$decode);
-        $user = Db::name('users')->where('email',$result[0])->find();
+        $user = $this->user = Db::name('users')->where('email',$result[0])->find();
         if(empty($user)){
             $this->error('该邮箱未注册',
                 url('restrict/Index/register'));
@@ -93,7 +93,7 @@ class Index extends Common {
             if(!$up){
                 $this->error('系统出错');
             }
-            $this->record_user($user);
+            $this->record_user();
             $this->success('验证成功',
                 url('index/Index/index'));
         }else{

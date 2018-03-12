@@ -23,8 +23,7 @@ class Config extends Base
                 get_cache($name.'.config_group',$groups); // 配置分组缓存
                 break;
             default:
-                $configs = $this->getConfig($pet_name);
-                get_cache($name.'.'.$pet_name,$configs); // 配置具体缓存
+                $this->get_config($pet_name);
                 break;
         }
     }
@@ -47,9 +46,16 @@ class Config extends Base
     /**
      * 根据配置分组action获取需要配置的值
      * @param string $action 分组key
-     * @return array ['action'=>'value']
+     * @return mixed ['action'=>'value']
      */
-    public function getConfig($action){
+    public function get_config($action){
+        $name = lcfirst($this->name);
+        if(empty($action)){
+            $groups = get_cache($name.'.config_group');
+            foreach ($groups as $action=>$group){
+                $this->get_config($action);
+            }
+        }
         $group_id = $this->db()->name('config_group')->where(['action'=>$action])->value('id');
         if(empty($group_id)){
             return false ;
@@ -57,6 +63,7 @@ class Config extends Base
         $configs = $this->_config
             ->where(['group_id'=>$group_id])
             ->column('value','action');
+        get_cache($name.'.'.$action,$configs); // 配置具体缓存
         return $configs;
     }
     public function test(){

@@ -180,8 +180,10 @@ height: 14px;background: url(../images/cardbg.png);}
 .suggestmain .am-btn.anniu{width:100%;margin:20px auto 25px;}
 .suggestTel i{margin-right:10px ;}
 /*底部*/
-.footer{display:none; text-align: center;border-top: 2px solid #F8F8F8 margin-top:20px; padding-top: 5px;}
+.footer{display:none; text-align: center;border-top: 2px solid #F8F8F8; margin-top:20px; padding-top: 5px;}
 .main-wrap {background-color:#fff;}
+.nav.white .logo{display:none;}
+
 @media only screen and (min-width:640px) 
 {	
 	
@@ -214,7 +216,9 @@ header article{max-width: 1200px;margin:0px auto;}
 .message-r .topMessage {float: left;padding: 0px 6px;height: 35px;line-height: 35px;}
 /*浮动框*/
 .nav.white{width:100%;margin:0px auto;}
-.nav.white .logoBig{ display:block;float:left;height:56px;width:115px; margin:0px auto; margin-left:5%} 
+
+
+	.nav.white .logoBig{ display:block;float:left;height:56px;width:115px; margin:0px auto; margin-left:5%}
 .nav.white .logoBig img{width:100%;}
 .my-cart { width: 46px;height: 46px;}
 

@@ -4,7 +4,7 @@ use app\admin\controller\Base;
 use think\Controller;
 use think\Db;
 
-class User extends Base
+class Users extends Base
 {
     private $_userinfo;
 

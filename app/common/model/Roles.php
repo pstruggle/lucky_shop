@@ -10,6 +10,7 @@ namespace app\common\model;
 
 
 use think\Exception;
+use think\Log;
 
 class Roles extends Base
 {
@@ -22,6 +23,7 @@ class Roles extends Base
     {
         $name = lcfirst($this->name);
         $pet_names = explode('_',$pet_name);
+
         if (empty($pet_names[1])){
             return false;
         }
@@ -34,6 +36,10 @@ class Roles extends Base
             case 'roles':// 组下的角色
                 $role = $this->where('group_id',$id)->column('*','group_id');
                 get_cache($name.'.roles_'.$id,$role);
+                break;
+            case 'all':// 获得所有角色
+                $role = $this->column('*','id');
+                get_cache($name.'.all_roles',$role);
                 break;
         }
     }
@@ -84,10 +90,9 @@ class Roles extends Base
         }
         $result = $this->save($data,$where);
         if($result){
-            $name = lcfirst($this->name);
-
-            $this->setCache($name.'.role_'.$id);
+            $this->setCache('role_'.$id);
         }
+
         return $result;
     }
 

@@ -14,6 +14,7 @@ use think\Session;
 
 class Orders extends Base
 {
+    protected $autoWriteTimestamp=true;
     protected $_cart;
     protected function initialize()
     {
@@ -64,7 +65,7 @@ class Orders extends Base
             'place_time' => time()
         ];
         $session = ['order'=>[],'token'=>$data['token'],'expire'=>$session['expire'] = time()+30*60]; // 订单添加成功时记录值
-        $price_field = ['sum(`shop_price`*`sum`) pay_price','sum(`market_price`*`sum`) market_price','goods_name' ,'max(`freight`) freight'];
+        $price_field = ['sum(`shop_price`*`sum`) pay_price','sum(`market_price`*`sum`) market_price','goods_name' ,'max(`freight`) freight','sum(`sum`) num'];
         $prices = $this->_cart
             ->where('id','in',$data['cart_id'])
             ->field($price_field)
@@ -94,5 +95,14 @@ class Orders extends Base
         Session::set('create_order',$session);
         return $session['order'];
     }
-
+    // 分页获取订单信息
+    public function orders($where='', $order = null,$limit=20)
+    {
+        $field = "*";
+        $orders = $this->field($field)->where($where)->order($order)->paginate($limit);
+        foreach ($orders as $key => $order){
+            $orders[$key]['goods'] = model('cart')->where('order_id',$order['id'])->select()->toArray();
+        }
+        return $orders;
+    }
 }

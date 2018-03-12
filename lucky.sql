@@ -3,17 +3,159 @@ Navicat MySQL Data Transfer
 
 Source Server         : lucky
 Source Server Version : 50505
-Source Host           : localhost:3306
+Source Host           : 127.0.0.1:3306
 Source Database       : lucky
 
 Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-23 17:39:02
+Date: 2018-03-12 15:15:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for lucky_action
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_action`;
+CREATE TABLE `lucky_action` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '功能id',
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父id',
+  `controller` char(20) NOT NULL DEFAULT '' COMMENT '控制器',
+  `model` varchar(255) NOT NULL DEFAULT '' COMMENT '模块',
+  `action` varchar(255) NOT NULL DEFAULT '' COMMENT '功能',
+  `params` varchar(255) NOT NULL DEFAULT '' COMMENT '参数格式  key/value',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '功能标题',
+  `icon` varchar(255) NOT NULL COMMENT '图标代码',
+  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '功能备注',
+  `log_rules` varchar(255) NOT NULL COMMENT '日志规则',
+  `validation_rules` varchar(255) NOT NULL DEFAULT '' COMMENT '验证规则',
+  `is_show` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否显示，默认否0',
+  `is_api` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为api，默认否0',
+  `is_login` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否需要登录，默认是1',
+  `is_nose` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否前端功能，默认否0',
+  `weight` int(11) unsigned NOT NULL COMMENT '排序',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '最新更新时间',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `pid` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of lucky_action
+-- ----------------------------
+INSERT INTO `lucky_action` VALUES ('1', '0', '', '', '', '', '系统设置', 'fa fa-rocket', '', '', '', '1', '0', '1', '0', '2', '1519796104', '1517487183');
+INSERT INTO `lucky_action` VALUES ('2', '1', 'admin', 'index', 'table', '', '配送方式', '', '设置配送方式', '', '', '1', '0', '1', '0', '0', '1517628288', '1517487183');
+INSERT INTO `lucky_action` VALUES ('3', '1', 'admin', 'system', 'index', '', '商城设置', '', '设置商城中的各项功能', '', '', '1', '0', '1', '0', '3', '1519796169', '1517542742');
+INSERT INTO `lucky_action` VALUES ('4', '1', 'admin', 'index', 'index', '', '计划任务', '', '', '', '', '1', '0', '1', '0', '0', '1517628354', '1517628354');
+INSERT INTO `lucky_action` VALUES ('5', '1', 'admin', 'index', 'index', '', '友情链接', '', '', '', '', '1', '0', '1', '0', '0', '1517628386', '1517628386');
+INSERT INTO `lucky_action` VALUES ('6', '1', 'admin', 'system', 'listing', 'action/nav', '自定义导航栏', '', '', '', '', '1', '0', '1', '0', '0', '1517628464', '1517628433');
+INSERT INTO `lucky_action` VALUES ('7', '1', 'admin', 'ad', 'index', '', '广告管理', '', '', '', '', '1', '0', '1', '0', '0', '1517628530', '1517628530');
+INSERT INTO `lucky_action` VALUES ('8', '31', 'admin', 'system', 'listing', 'action/action', '功能设置', '', '', '', '', '1', '0', '1', '0', '0', '1517991284', '1517628769');
+INSERT INTO `lucky_action` VALUES ('9', '1', 'admin', 'system', 'clear_cache', '', '清除缓存', '', '', '', '', '1', '0', '1', '0', '0', '1517629431', '1517629431');
+INSERT INTO `lucky_action` VALUES ('10', '0', 'admin', 'goods', 'index', '', '商品管理', 'gi gi-airplane', '', '', '', '1', '0', '1', '0', '0', '1519718738', '1517629576');
+INSERT INTO `lucky_action` VALUES ('11', '10', 'admin', 'goods', 'listing', 'action/category', '商品分类', '', '', '', '', '1', '0', '1', '0', '0', '1517629727', '1517629713');
+INSERT INTO `lucky_action` VALUES ('12', '10', 'admin', 'goods', 'listing', 'action/brand', '品牌列表', '', '', '', '', '1', '0', '1', '0', '0', '1517629950', '1517629938');
+INSERT INTO `lucky_action` VALUES ('13', '10', 'admin', 'goods', 'listing', 'action/goods', '商品列表', '', '', '', '', '1', '0', '1', '0', '0', '1517629990', '1517629990');
+INSERT INTO `lucky_action` VALUES ('14', '10', 'admin', 'goods', 'stock_list', '', '库存日志', '', '', '', '', '1', '0', '1', '0', '0', '1517630060', '1517630041');
+INSERT INTO `lucky_action` VALUES ('15', '10', 'admin', 'comment', 'index', '', '用户评论', '', '', '', '', '1', '0', '1', '0', '0', '1517630105', '1517630105');
+INSERT INTO `lucky_action` VALUES ('16', '10', 'admin', 'comment', 'asc_list', '', '产品咨询', '', '', '', '', '1', '0', '1', '0', '0', '1517630172', '1517630172');
+INSERT INTO `lucky_action` VALUES ('17', '0', 'admin', 'orders', 'index', '', '订单管理', 'gi gi-airplane', '', '', '', '1', '0', '1', '0', '0', '1519718763', '1517630222');
+INSERT INTO `lucky_action` VALUES ('18', '17', 'admin', 'orders', 'listing', 'action/orders', '订单列表', '', '', '', '', '1', '0', '1', '0', '0', '1517630269', '1517630269');
+INSERT INTO `lucky_action` VALUES ('19', '17', 'admin', 'index', 'index', '', '退款、退货、换货', '', '', '', '', '1', '0', '1', '0', '0', '1517630383', '1517630383');
+INSERT INTO `lucky_action` VALUES ('20', '17', 'admin', 'orders', 'logs', '', '订单日志', '', '', '', '', '1', '0', '1', '0', '0', '1517630413', '1517630413');
+INSERT INTO `lucky_action` VALUES ('21', '0', 'admin', 'index', 'index', '', '促销管理', 'gi gi-airplane', '', '', '', '1', '0', '1', '0', '0', '1519718792', '1517630529');
+INSERT INTO `lucky_action` VALUES ('22', '21', 'admin', 'index', 'index', '', '抢购管理', '', '', '', '', '1', '0', '1', '0', '0', '1517630685', '1517630685');
+INSERT INTO `lucky_action` VALUES ('23', '21', 'admin', 'index', 'index', '', '团购管理', '', '', '', '', '1', '0', '1', '0', '0', '1517630710', '1517630710');
+INSERT INTO `lucky_action` VALUES ('24', '21', 'admin', 'index', 'index', '', '优惠管理', '', '', '', '', '1', '0', '1', '0', '0', '1517630753', '1517630753');
+INSERT INTO `lucky_action` VALUES ('25', '21', 'admin', 'index', 'index', '', '订单促销', '', '', '', '', '1', '0', '1', '0', '0', '1517630811', '1517630811');
+INSERT INTO `lucky_action` VALUES ('26', '21', 'admin', 'index', 'index', '', '拼团管理', '', '', '', '', '1', '0', '1', '0', '0', '1517630843', '1517630843');
+INSERT INTO `lucky_action` VALUES ('27', '0', 'admin', 'users', 'index', '', '会员管理', 'gi gi-airplane', '', '', '', '1', '0', '1', '0', '0', '1519718806', '1517630921');
+INSERT INTO `lucky_action` VALUES ('28', '27', 'admin', 'users', 'listing', 'action/userinfo', '会员列表', '', '', '', '', '1', '0', '1', '0', '0', '1520145576', '1517632128');
+INSERT INTO `lucky_action` VALUES ('29', '27', 'admin', 'users', 'index', '', '充值列表', '', '', '', '', '1', '0', '1', '0', '0', '1517632177', '1517632177');
+INSERT INTO `lucky_action` VALUES ('30', '27', 'admin', 'users', 'index', '', '会员等级设置', '', '', '', '', '1', '0', '1', '0', '0', '1517633506', '1517633506');
+INSERT INTO `lucky_action` VALUES ('31', '0', 'admin', 'index', 'index', '', '权限管理', 'gi gi-airplane', '', '', '', '1', '0', '1', '0', '1', '1519962369', '1517633635');
+INSERT INTO `lucky_action` VALUES ('32', '31', 'admin', 'auth', 'listing', 'action/admin', '管理员管理', '', '', '', '', '1', '0', '1', '0', '0', '1518345724', '1517633691');
+INSERT INTO `lucky_action` VALUES ('33', '31', 'admin', 'auth', 'listing', 'action/roles', '角色管理', '', '', '', '', '1', '0', '1', '0', '0', '1517898057', '1517633747');
+INSERT INTO `lucky_action` VALUES ('34', '0', 'admin', 'index', 'index', '', '概览', 'gi gi-compass', '', '', '', '1', '0', '1', '0', '30', '1517800179', '1517634080');
+INSERT INTO `lucky_action` VALUES ('35', '31', 'admin', 'auth', 'listing', 'action/roleGroup', '角色组', '', '', '', '', '1', '0', '1', '0', '0', '1517895153', '1517895153');
+INSERT INTO `lucky_action` VALUES ('36', '43', 'restrict', 'index', 'index', '', '用户登陆', '', '用户登陆的视图', '', '', '0', '0', '0', '1', '0', '1518418447', '1518329027');
+INSERT INTO `lucky_action` VALUES ('37', '43', 'restrict', 'index', 'register', '', '用户注册', '', '用户注册显示视图', '', '', '0', '0', '0', '1', '0', '1518418460', '1518329795');
+INSERT INTO `lucky_action` VALUES ('38', '36', 'restrict', 'index', 'checkcode', '', '验证图形验证码', '', '注册登录时严恒图形验证码是否正确', '', '', '0', '0', '0', '1', '0', '1518417403', '1518417403');
+INSERT INTO `lucky_action` VALUES ('39', '37', 'restrict', 'index', 'create', '', '创建用户', '', '用户注册提交', '', '', '0', '0', '0', '1', '0', '1518417604', '1518417604');
+INSERT INTO `lucky_action` VALUES ('40', '37', 'restrict', 'index', 'mailprove', '', '邮箱验证', '', '邮箱注册，验证邮箱', '', '', '0', '0', '0', '1', '0', '1518417687', '1518417687');
+INSERT INTO `lucky_action` VALUES ('41', '36', 'restrict', 'index', 'sign', '', '用户登陆操作', '', '用户登陆信息提交', '', '', '0', '0', '0', '1', '0', '1518417769', '1518417769');
+INSERT INTO `lucky_action` VALUES ('42', '43', 'restrict', 'sendsms', 'index', '', '短信发送', '', '提交发送短信', '', '', '0', '0', '0', '1', '0', '1518418436', '1518417913');
+INSERT INTO `lucky_action` VALUES ('43', '0', '', '', '', '', '用户登陆注册', '', '用户的登陆注册可不选制作集合组', '', '', '0', '0', '0', '1', '0', '1518418052', '1518418052');
+INSERT INTO `lucky_action` VALUES ('44', '0', 'index', 'index', 'index', '', '首页', '', '网站首页展示', '', '', '0', '0', '0', '1', '99', '1518424647', '1518423065');
+INSERT INTO `lucky_action` VALUES ('45', '8', 'admin', 'system', 'edit_view', 'action/action', '功能编辑视图', '', '', '', '', '0', '0', '1', '0', '0', '1518423804', '1518423804');
+INSERT INTO `lucky_action` VALUES ('46', '0', 'index', 'goods', 'details', '', '商品详情', '', '商品详情页', '', '', '0', '0', '0', '1', '0', '1518424536', '1518424536');
+INSERT INTO `lucky_action` VALUES ('47', '8', 'admin', 'system', 'edit', 'action/action', '功能编辑操作', '', '功能编辑操作', '', '', '0', '0', '1', '0', '0', '1519482550', '1519482550');
+INSERT INTO `lucky_action` VALUES ('48', '35', 'admin', 'auth', 'edit_view', 'action/roleGroup', '角色分组编辑视图', '', '角色分组视图展示', '', '', '0', '0', '1', '0', '0', '1519485086', '1519485086');
+INSERT INTO `lucky_action` VALUES ('49', '33', 'admin', 'auth', 'grant', '', '赋予权限视图', '', '赋予权限视图', '', '', '0', '0', '1', '0', '0', '1519545895', '1519545895');
+INSERT INTO `lucky_action` VALUES ('50', '33', 'admin', 'auth', 'edit', 'action/roles', '角色编辑操作', '', '以及配置赋予权限操作', '', '', '0', '0', '1', '0', '0', '1519795421', '1519546027');
+INSERT INTO `lucky_action` VALUES ('51', '35', 'admin', 'auth', 'edit', 'action/roleGroup', '角色组编辑操作', '', '角色组编辑操作', '', '', '0', '0', '1', '0', '0', '1519546201', '1519546201');
+INSERT INTO `lucky_action` VALUES ('52', '3', 'admin', 'system', 'index', 'config/basic', '商城基本配置', '', '商城基本配置', '', '', '0', '0', '1', '0', '0', '1519547220', '1519547220');
+INSERT INTO `lucky_action` VALUES ('53', '3', 'admin', 'system', 'index', 'config/mall', '商城信息', '', '商城信息配置', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('54', '3', 'admin', 'system', 'index', 'config/trade', '购物流程', '', '商品购物流程的配置', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('55', '3', 'admin', 'system', 'index', 'config/wechat', '微信配置', '', '配置微信公众号对象信息', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('56', '3', 'admin', 'system', 'index', 'config/payment', '支付配置', '', '配置支付信息参数', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('57', '3', 'admin', 'system', 'index', 'config/sms', '短信配置', '', '配置短信参数', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('58', '3', 'admin', 'system', 'index', 'config/watermark', '水印配置', '', '配置水印位置等参数', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('59', '3', 'admin', 'system', 'index', 'config/push', '推送配置', '', '推送参数配置', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('60', '3', 'admin', 'system', 'index', 'config/email', '邮件配置', '', '邮件参数配置', '', '', '0', '0', '1', '0', '0', '1519549682', '1519549682');
+INSERT INTO `lucky_action` VALUES ('61', '3', 'admin', 'system', 'edit', 'action/config', '配置提交操作', '', '配置提交操作', '', '', '0', '0', '1', '0', '0', '1519550661', '1519482550');
+INSERT INTO `lucky_action` VALUES ('62', '32', 'admin', 'auth', 'edit_view', 'action/admin', '管理员编辑视图', '', '', '', '', '0', '0', '1', '0', '0', '1519795136', '1519795136');
+INSERT INTO `lucky_action` VALUES ('63', '33', 'admin', 'auth', 'edit_view', 'action/roles', '角色编辑视图', '', '', '', '', '0', '0', '1', '0', '0', '1519795311', '1519795311');
+INSERT INTO `lucky_action` VALUES ('64', '33', 'admin', 'auth', 'roles', '', '组下角色', '', '获取角色组下所有角色', '', '', '0', '1', '1', '0', '0', '1519795817', '1519795817');
+INSERT INTO `lucky_action` VALUES ('65', '32', 'admin', 'auth', 'edit', 'action/admin', '管理员编辑操作', '', '', '', '', '0', '0', '1', '0', '0', '1519795914', '1519795914');
+INSERT INTO `lucky_action` VALUES ('66', '11', 'admin', 'goods', 'edit_view', 'action/category', '修改分类视图', '', '修改分类视图', '', '', '0', '0', '1', '0', '0', '1519806840', '1519806840');
+INSERT INTO `lucky_action` VALUES ('67', '11', 'admin', 'goods', 'edit', 'action/category', '分类编辑操作', '', '分类编辑操作修改等', '', '', '0', '0', '1', '0', '0', '1519807364', '1519807364');
+INSERT INTO `lucky_action` VALUES ('68', '12', 'admin', 'goods', 'edit_view', 'action/brand', '品牌编辑视图', '', '', '', '', '0', '0', '1', '0', '0', '1519807555', '1519807555');
+INSERT INTO `lucky_action` VALUES ('69', '12', 'admin', 'goods', 'edit', 'action/brand', '品牌编辑操作', '', '品牌编辑操作，修改', '', '', '0', '0', '1', '0', '0', '1519807654', '1519807654');
+INSERT INTO `lucky_action` VALUES ('70', '13', 'admin', 'goods', 'edit_view', 'action/goods', '商品编辑视图', '', '商品编辑视图', '', '', '0', '0', '1', '0', '0', '1519807765', '1519807765');
+INSERT INTO `lucky_action` VALUES ('71', '13', 'admin', 'goods', 'edit', 'action/goods', '商品编辑操作', '', '商品编辑操作修改', '', '', '0', '0', '1', '0', '0', '1519809173', '1519809173');
+INSERT INTO `lucky_action` VALUES ('72', '70', 'admin', 'goods', 'ajax_brand', '', '异步品牌信息', '', '异步返回品牌数据', '', '', '0', '1', '1', '0', '0', '1519814617', '1519814617');
+INSERT INTO `lucky_action` VALUES ('73', '70', 'admin', 'goods', 'ajax_logistics', '', '异步物流信息', '', '异步获取物流信息', '', '', '0', '1', '1', '0', '0', '1519814744', '1519814744');
+INSERT INTO `lucky_action` VALUES ('74', '70', 'admin', 'goods', 'ajax_category', '', '异步获取分类信息', '', '异步获取分类信息详情', '', '', '0', '1', '1', '0', '0', '1519816050', '1519816050');
+INSERT INTO `lucky_action` VALUES ('75', '70', 'admin', 'goods', 'ajax_spec', '', '异步获取商品规格', '', '异步获取商品规格信息', '', '', '0', '1', '1', '0', '0', '1519816536', '1519816536');
+INSERT INTO `lucky_action` VALUES ('76', '46', 'index', 'goods', 'spec_group', '', '获取商品规格', '', '获取商品规格信息', '', '', '0', '1', '0', '1', '0', '1519986135', '1519986135');
+INSERT INTO `lucky_action` VALUES ('77', '46', 'index', 'auction', 'buy_now', '', '直接购买商品', '', '用户选择商品直接购买', '', '', '0', '0', '1', '1', '0', '1519986791', '1519986791');
+INSERT INTO `lucky_action` VALUES ('78', '0', 'index', 'member', 'index', '', '个人中心', '', '查看个人中心信息', '', '', '0', '0', '1', '1', '0', '1520152362', '1520152362');
+INSERT INTO `lucky_action` VALUES ('79', '78', 'index', 'member', 'information', '', '个人信息', '', '查看个人信息', '', '', '0', '0', '1', '1', '0', '1520152667', '1520152667');
+INSERT INTO `lucky_action` VALUES ('80', '78', 'index', 'member', 'safety', '', '安全设置', '', '', '', '', '0', '0', '1', '1', '0', '1520152711', '1520152711');
+INSERT INTO `lucky_action` VALUES ('81', '78', 'index', 'member', 'address', '', '地址管理', '', '地址各项信息', '', '', '0', '0', '1', '1', '0', '1520152776', '1520152776');
+INSERT INTO `lucky_action` VALUES ('82', '78', 'index', 'member', 'cardlist', '', '快捷支付', '', '查看快捷支付信息', '', '', '0', '0', '1', '1', '0', '1520152828', '1520152828');
+INSERT INTO `lucky_action` VALUES ('83', '78', 'index', 'member', 'order', '', '订单管理', '', '查看订单列表信息', '', '', '0', '0', '1', '1', '0', '1520152888', '1520152888');
+INSERT INTO `lucky_action` VALUES ('84', '78', 'index', 'member', 'change', '', '退款售后', '', '退款售后信息', '', '', '0', '0', '1', '1', '0', '1520152939', '1520152939');
+INSERT INTO `lucky_action` VALUES ('85', '78', 'index', 'member', 'comment', '', '商品评价', '', '商品评价信息', '', '', '0', '0', '1', '1', '0', '1520152997', '1520152997');
+INSERT INTO `lucky_action` VALUES ('86', '78', 'index', 'member', 'points', '', '我的积分', '', '', '', '', '0', '0', '1', '1', '0', '1520153044', '1520153044');
+INSERT INTO `lucky_action` VALUES ('87', '78', 'index', 'member', 'coupon', '', '优惠券', '', '查看优惠券信息', '', '', '0', '0', '1', '1', '0', '1520153119', '1520153119');
+INSERT INTO `lucky_action` VALUES ('88', '78', 'index', 'member', 'bonus', '', '红包', '', '红包', '', '', '0', '0', '1', '1', '0', '1520153162', '1520153162');
+INSERT INTO `lucky_action` VALUES ('89', '78', 'index', 'member', 'walletlist', '', '账户余额', '', '账户余额查看', '', '', '0', '0', '1', '1', '0', '1520153216', '1520153216');
+INSERT INTO `lucky_action` VALUES ('90', '78', 'index', 'member', 'bill', '', '账单明细', '', '账单明细', '', '', '0', '0', '1', '1', '0', '1520153275', '1520153275');
+INSERT INTO `lucky_action` VALUES ('91', '78', 'index', 'member', 'collection', '', '我的收藏', '', '查看我的收藏详情', '', '', '0', '0', '1', '1', '0', '1520153333', '1520153333');
+INSERT INTO `lucky_action` VALUES ('92', '78', 'index', 'member', 'foot', '', '足迹', '', '足迹（查看记录）', '', '', '0', '0', '1', '1', '0', '1520153385', '1520153385');
+INSERT INTO `lucky_action` VALUES ('93', '78', 'index', 'member', 'consultation', '', '商品咨询', '', '商品咨询', '', '', '0', '0', '1', '1', '0', '1520153466', '1520153466');
+INSERT INTO `lucky_action` VALUES ('94', '78', 'index', 'member', 'suggest', '', '意见反馈', '', '查看意见反馈', '', '', '0', '0', '1', '1', '0', '1520153511', '1520153511');
+INSERT INTO `lucky_action` VALUES ('95', '78', 'index', 'member', 'news', '', '我的消息', '', '查看我的消息', '', '', '0', '0', '1', '1', '0', '1520153552', '1520153552');
+INSERT INTO `lucky_action` VALUES ('96', '78', 'index', 'member', 'wallet', '', '账户余额', '', '账户余额查看', '', '', '0', '0', '1', '1', '0', '1520156966', '1520156966');
+INSERT INTO `lucky_action` VALUES ('97', '78', 'index', 'member', 'pointnew', '', '我的积分', '', '我的积分', '', '', '0', '0', '1', '1', '0', '1520157284', '1520157284');
+INSERT INTO `lucky_action` VALUES ('98', '78', 'index', 'member', 'password', '', '修改密码', '', '', '', '', '0', '0', '1', '1', '0', '1520222535', '1520222535');
+INSERT INTO `lucky_action` VALUES ('99', '78', 'index', 'member', 'setpay', '', '设置支付密码', '', '', '', '', '0', '0', '1', '1', '0', '1520222586', '1520222586');
+INSERT INTO `lucky_action` VALUES ('100', '78', 'index', 'member', 'bindphone', '', '绑定手机号码', '', '', '', '', '0', '0', '1', '1', '0', '1520222702', '1520222702');
+INSERT INTO `lucky_action` VALUES ('101', '78', 'index', 'member', 'email', '', '绑定邮箱', '', '绑定邮箱', '', '', '0', '0', '1', '1', '0', '1520749616', '1520222792');
+INSERT INTO `lucky_action` VALUES ('102', '78', 'index', 'member', 'idcard', '', '实名认证', '', '', '', '', '0', '0', '1', '1', '0', '1520222839', '1520222839');
+INSERT INTO `lucky_action` VALUES ('103', '78', 'index', 'member', 'question', '', '安全问题', '', '', '', '', '0', '0', '1', '1', '0', '1520222872', '1520222872');
+INSERT INTO `lucky_action` VALUES ('104', '78', 'index', 'member', 'cardmethod', '', '添加银行卡', '', '', '', '', '0', '0', '1', '1', '0', '1520237908', '1520237908');
+INSERT INTO `lucky_action` VALUES ('105', '78', 'index', 'member', 'orderinfo', '', '订单详情', '', '', '', '', '0', '0', '1', '1', '0', '1520238237', '1520238237');
+INSERT INTO `lucky_action` VALUES ('106', '78', 'index', 'member', 'logistics', '', '物流详情', '', '', '', '', '0', '0', '1', '1', '0', '1520238415', '1520238415');
+INSERT INTO `lucky_action` VALUES ('107', '78', 'index', 'member', 'record', '', '钱款去向', '', '', '', '', '0', '0', '1', '1', '0', '1520238607', '1520238607');
+INSERT INTO `lucky_action` VALUES ('108', '78', 'index', 'member', 'refund', '', '退换货', '', '', '', '', '0', '0', '1', '1', '0', '1520238959', '1520238959');
+INSERT INTO `lucky_action` VALUES ('109', '78', 'index', 'member', 'billlist', '', '查看支出明细', '', '', '', '', '0', '0', '1', '1', '0', '1520239578', '1520239578');
+INSERT INTO `lucky_action` VALUES ('110', '78', 'index', 'member', 'commentlist', '', '评论商品', '', '', '', '', '0', '0', '1', '1', '0', '1520240372', '1520240372');
+INSERT INTO `lucky_action` VALUES ('111', '78', 'index', 'member', 'blog', '', '消息详情', '', '', '', '', '0', '0', '1', '1', '0', '1520477733', '1520477733');
 
 -- ----------------------------
 -- Table structure for lucky_ad
@@ -62,7 +204,7 @@ CREATE TABLE `lucky_address` (
   `is_default` tinyint(1) unsigned NOT NULL COMMENT '是否默认',
   `addtime` int(11) NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_address
@@ -94,6 +236,7 @@ INSERT INTO `lucky_address` VALUES ('24', '17', '潘谋勇', '15879221657', '227
 INSERT INTO `lucky_address` VALUES ('25', '17', '潘谋勇', '15879221657', '1630', '吉林省', '1662', '辽源市', '1666', '东丰县', '市辖区', '0', '1507861823');
 INSERT INTO `lucky_address` VALUES ('26', '17', '潘谋勇', '15879221657', '1021', '天津市', '1038', '市辖县', '1040', '静海县', '土地庙', '0', '1507861767');
 INSERT INTO `lucky_address` VALUES ('27', '17', '潘谋勇', '15879221657', '2376', '江西省', '2377', '南昌市', '2380', '西湖区', '土地庙八号小区', '0', '1507858451');
+INSERT INTO `lucky_address` VALUES ('28', '18', '潘谋勇', '15879221657', '1000', '北京市', '1018', '市辖县', '1020', '延庆县', '详细地址', '1', '1514019704');
 
 -- ----------------------------
 -- Table structure for lucky_admin
@@ -102,20 +245,24 @@ DROP TABLE IF EXISTS `lucky_admin`;
 CREATE TABLE `lucky_admin` (
   `id` int(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '管理员',
   `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-  `auth_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '权限组id',
+  `group_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '角色组id',
+  `role_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '角色id',
   `firstdate` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '成为管理员时间',
   `overdate` int(11) NOT NULL DEFAULT '0' COMMENT '过期时间 0为不过期',
   `islock` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否锁定该管理员',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除管理员状态',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uid` (`uid`),
-  KEY `auth_id` (`auth_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `uid` (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_admin
 -- ----------------------------
-INSERT INTO `lucky_admin` VALUES ('1', '17', '0', '0', '0', '0', '1');
+INSERT INTO `lucky_admin` VALUES ('1', '17', '1', '1', '1518259108', '1519814314', '0', '0', '1519870834', '0');
+INSERT INTO `lucky_admin` VALUES ('2', '26', '2', '2', '0', '0', '0', '0', '1519970363', '1518260856');
+INSERT INTO `lucky_admin` VALUES ('3', '27', '0', '0', '0', '0', '0', '0', '1518319839', '1518318931');
 
 -- ----------------------------
 -- Table structure for lucky_ad_position
@@ -129,12 +276,13 @@ CREATE TABLE `lucky_ad_position` (
   `addtime` int(11) NOT NULL DEFAULT '0' COMMENT '广告位添加时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `mark` (`mark`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_ad_position
 -- ----------------------------
 INSERT INTO `lucky_ad_position` VALUES ('1', 'PC首页轮播广告', 'pc_home', 'PC端首页轮播广告', '1507261776');
+INSERT INTO `lucky_ad_position` VALUES ('2', '', '', '', '1517049304');
 
 -- ----------------------------
 -- Table structure for lucky_area
@@ -3994,53 +4142,6 @@ INSERT INTO `lucky_area` VALUES ('4840', '4812', '马绍尔群岛');
 INSERT INTO `lucky_area` VALUES ('4841', '4812', '瓦里斯加富士那群岛');
 
 -- ----------------------------
--- Table structure for lucky_auth_group
--- ----------------------------
-DROP TABLE IF EXISTS `lucky_auth_group`;
-CREATE TABLE `lucky_auth_group` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '权限分组',
-  `title` varchar(100) NOT NULL COMMENT '权限组名称',
-  `status` tinyint(1) NOT NULL COMMENT '权限组状态',
-  `rules` text NOT NULL COMMENT '权限组包含可访问id',
-  `addtime` int(11) NOT NULL COMMENT '添加时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of lucky_auth_group
--- ----------------------------
-INSERT INTO `lucky_auth_group` VALUES ('1', '游客访问权限', '1', '3,4,5,6,7,8,9', '0');
-
--- ----------------------------
--- Table structure for lucky_auth_rule
--- ----------------------------
-DROP TABLE IF EXISTS `lucky_auth_rule`;
-CREATE TABLE `lucky_auth_rule` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '功能id',
-  `module` varchar(100) NOT NULL COMMENT '模块',
-  `controller` varchar(100) NOT NULL COMMENT '控制器',
-  `action` varchar(100) NOT NULL COMMENT '操作',
-  `title` varchar(50) NOT NULL COMMENT '功能中文概述',
-  `relation` text NOT NULL COMMENT '关联功能id 以，分隔',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用该功能1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `action` (`action`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of lucky_auth_rule
--- ----------------------------
-INSERT INTO `lucky_auth_rule` VALUES ('1', '', '', 'admin_index_index', '首页', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('2', '', '', 'admin_system_index', '系统设置', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('3', '', '', 'restrict_index_index', '用户登录', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('4', '', '', 'restrict_index_test', '功能测试', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('5', '', '', 'restrict_index_register', '用户注册', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('6', '', '', 'restrict_index_checkcode', '验证图形验证码是否正确', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('7', '', '', 'restrict_index_create', '创建用户', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('8', '', '', 'restrict_index_mailprove', '邮箱验证', '', '1');
-INSERT INTO `lucky_auth_rule` VALUES ('9', '', '', 'restrict_index_sign', '登录验证', '', '1');
-
--- ----------------------------
 -- Table structure for lucky_brand
 -- ----------------------------
 DROP TABLE IF EXISTS `lucky_brand`;
@@ -4090,7 +4191,7 @@ CREATE TABLE `lucky_cart` (
   KEY `goods_id` (`goods_id`),
   KEY `spec_group` (`spec_group`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_cart
@@ -4119,6 +4220,10 @@ INSERT INTO `lucky_cart` VALUES ('46', '17', '14', '14', '精品蛋糕', '/uploa
 INSERT INTO `lucky_cart` VALUES ('47', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '463', '颜色: 黑色,大小: 大号', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570254');
 INSERT INTO `lucky_cart` VALUES ('48', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '466', '颜色: 白色,大小: 小号', '123.23', '132.00', 'lucky12345', '10.00', '1', '1508570257');
 INSERT INTO `lucky_cart` VALUES ('49', '17', '14', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '465', '颜色: 白色,大小: 大号', '123.23', '132.00', 'lucky12345', '10.00', '2', '1508570259');
+INSERT INTO `lucky_cart` VALUES ('53', '18', '17', '2', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '4', '1514019736');
+INSERT INTO `lucky_cart` VALUES ('54', '18', '18', '2', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '4', '1514019748');
+INSERT INTO `lucky_cart` VALUES ('55', '18', '19', '2', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '0', '', '123.00', '132.00', 'lucky12345', '10.00', '4', '1514019761');
+INSERT INTO `lucky_cart` VALUES ('58', '18', '20', '12', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '467', '颜色: 黑色', '123.23', '0.00', 'lucky12345', '10.00', '3', '1514517820');
 
 -- ----------------------------
 -- Table structure for lucky_category
@@ -4356,7 +4461,7 @@ CREATE TABLE `lucky_config` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `action` (`action`),
   KEY `group_id` (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_config
@@ -4385,6 +4490,10 @@ INSERT INTO `lucky_config` VALUES ('23', '2', 'qq2', '1234567896', '客服QQ3', 
 INSERT INTO `lucky_config` VALUES ('24', '6', 'ytf_partner', '738513346376621', '云通付支付PID', '该PID从云通付支付平台获取，适用于个人支付');
 INSERT INTO `lucky_config` VALUES ('25', '6', 'ytf_user_seller', '385469', '商户号', '该商户号从云通付支付平台获取，适用于个人支付');
 INSERT INTO `lucky_config` VALUES ('26', '6', 'ytf_key', 'JHeP76Kzd8aMQv8GZxZ3Gi8NgI2gfgAW', 'KEY码', '云通付KEY码');
+INSERT INTO `lucky_config` VALUES ('27', '3', 'not_login', '36', '未登录跳转的默认页面', '未登录跳转的默认页面');
+INSERT INTO `lucky_config` VALUES ('28', '3', 'default', '44', '网站首页', '网站默认页面');
+INSERT INTO `lucky_config` VALUES ('29', '3', 'initial_role', '3', '用户初始角色', '注册用户初始角色');
+INSERT INTO `lucky_config` VALUES ('30', '3', 'admin_role', '1', '超级管理员角色', '拥有最高权限的角色');
 
 -- ----------------------------
 -- Table structure for lucky_config_group
@@ -4414,6 +4523,30 @@ INSERT INTO `lucky_config_group` VALUES ('8', 'push', '推送配置', '8');
 INSERT INTO `lucky_config_group` VALUES ('9', 'email', '邮件配置', '9');
 
 -- ----------------------------
+-- Table structure for lucky_coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_coupon`;
+CREATE TABLE `lucky_coupon` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '优惠券id',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '优惠券标题',
+  `remarks` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `style` tinyint(2) NOT NULL DEFAULT '0' COMMENT '类型',
+  `rule` text NOT NULL COMMENT '优惠券规则',
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '优惠券状态，默认1正常状态',
+  `active_start_time` int(11) NOT NULL DEFAULT '0' COMMENT '有效起始时间',
+  `active_end_time` int(11) NOT NULL DEFAULT '0' COMMENT '有效结束时间',
+  `start_time` int(11) NOT NULL DEFAULT '0' COMMENT '开始时间',
+  `end_time` int(11) NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of lucky_coupon
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for lucky_favorite
 -- ----------------------------
 DROP TABLE IF EXISTS `lucky_favorite`;
@@ -4430,7 +4563,7 @@ CREATE TABLE `lucky_favorite` (
   KEY `uid_goods_id` (`uid`,`goods_id`) USING BTREE,
   KEY `uid` (`uid`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_favorite
@@ -4444,6 +4577,7 @@ INSERT INTO `lucky_favorite` VALUES ('6', '17', '13', '精品蛋糕', '/upload/a
 INSERT INTO `lucky_favorite` VALUES ('7', '17', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508488929');
 INSERT INTO `lucky_favorite` VALUES ('8', '17', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508488929');
 INSERT INTO `lucky_favorite` VALUES ('9', '17', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508555140');
+INSERT INTO `lucky_favorite` VALUES ('10', '18', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1514517759');
 
 -- ----------------------------
 -- Table structure for lucky_goods
@@ -4667,31 +4801,38 @@ CREATE TABLE `lucky_orders` (
   `waybillnum` char(30) NOT NULL COMMENT '运单号',
   `remark` varchar(255) NOT NULL COMMENT '用户订单备注',
   `give_up` tinyint(1) NOT NULL DEFAULT '0' COMMENT '该订单是否为弃单0否1是',
+  `num` int(11) NOT NULL DEFAULT '0' COMMENT '商品数量',
   `place_time` int(11) NOT NULL DEFAULT '0' COMMENT '下单时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '订单更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '订单创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `serial` (`serial`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_orders
 -- ----------------------------
-INSERT INTO `lucky_orders` VALUES ('1', '17', 'p20872453369', '123.00', '132.00', '0.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208724');
-INSERT INTO `lucky_orders` VALUES ('2', '17', 'p20875742669', '123.00', '132.00', '0.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '1508208757');
-INSERT INTO `lucky_orders` VALUES ('3', '17', 'p20907328997', '123.00', '132.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508209073');
-INSERT INTO `lucky_orders` VALUES ('4', '17', 'p21269914972', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212699');
-INSERT INTO `lucky_orders` VALUES ('5', '17', 'p21290639011', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212906');
-INSERT INTO `lucky_orders` VALUES ('6', '17', 'p21292450510', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212924');
-INSERT INTO `lucky_orders` VALUES ('7', '17', 'p21294723166', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212947');
-INSERT INTO `lucky_orders` VALUES ('8', '17', 'p21296388699', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508212963');
-INSERT INTO `lucky_orders` VALUES ('9', '17', 'p21301665434', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508213016');
-INSERT INTO `lucky_orders` VALUES ('10', '17', 'p21871565878', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508218715');
-INSERT INTO `lucky_orders` VALUES ('11', '17', 'p22088021074', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220880');
-INSERT INTO `lucky_orders` VALUES ('12', '17', 'p22099759664', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '1508220997');
-INSERT INTO `lucky_orders` VALUES ('13', '17', 'p22122914399', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '留言你要看哦', '0', '1508221229');
-INSERT INTO `lucky_orders` VALUES ('14', '17', 'p57516429278', '1119.07', '1198.00', '0.00', '0', '{\"id\":23,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1501,\"province_area\":\"\\u8fbd\\u5b81\\u7701\",\"city\":1529,\"city_area\":\"\\u978d\\u5c71\\u5e02\",\"county\":1533,\"county_area\":\"\\u7acb\\u5c71\\u533a\",\"address\":\"\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507861938}', '0', '1', '0', '0', '0', '', '', '', '0', '1508575164');
-INSERT INTO `lucky_orders` VALUES ('15', '17', 'p73680315933', '739.38', '792.00', '10.00', '0', '{\"id\":23,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1501,\"province_area\":\"\\u8fbd\\u5b81\\u7701\",\"city\":1529,\"city_area\":\"\\u978d\\u5c71\\u5e02\",\"county\":1533,\"county_area\":\"\\u7acb\\u5c71\\u533a\",\"address\":\"\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507861938}', '0', '1', '0', '0', '0', '', '', '', '0', '1508736803');
-INSERT INTO `lucky_orders` VALUES ('16', '17', 'p73860566046', '492.92', '528.00', '10.00', '0', '{\"id\":23,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1501,\"province_area\":\"\\u8fbd\\u5b81\\u7701\",\"city\":1529,\"city_area\":\"\\u978d\\u5c71\\u5e02\",\"county\":1533,\"county_area\":\"\\u7acb\\u5c71\\u533a\",\"address\":\"\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507861938}', '0', '1', '0', '0', '0', '', '', '', '0', '1508738605');
+INSERT INTO `lucky_orders` VALUES ('1', '17', 'p20872453369', '123.00', '132.00', '0.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508208724', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('2', '17', 'p20875742669', '123.00', '132.00', '0.00', '0', '', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508208757', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('3', '17', 'p20907328997', '123.00', '132.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508209073', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('4', '17', 'p21269914972', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508212699', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('5', '17', 'p21290639011', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508212906', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('6', '17', 'p21292450510', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508212924', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('7', '17', 'p21294723166', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508212947', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('8', '17', 'p21296388699', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508212963', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('9', '17', 'p21301665434', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508213016', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('10', '17', 'p21871565878', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508218715', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('11', '17', 'p22088021074', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508220880', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('12', '17', 'p22099759664', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508220997', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('13', '17', 'p22122914399', '133.00', '142.00', '0.00', '0', '{\"id\":22,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1237,\"province_area\":\"\\u5c71\\u897f\\u7701\",\"city\":1238,\"city_area\":\"\\u592a\\u539f\\u5e02\",\"county\":1242,\"county_area\":\"\\u674f\\u82b1\\u5cad\\u533a\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507863126}', '0', '1', '0', '0', '0', '', '', '留言你要看哦', '0', '0', '1508221229', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('14', '17', 'p57516429278', '1119.07', '1198.00', '0.00', '0', '{\"id\":23,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1501,\"province_area\":\"\\u8fbd\\u5b81\\u7701\",\"city\":1529,\"city_area\":\"\\u978d\\u5c71\\u5e02\",\"county\":1533,\"county_area\":\"\\u7acb\\u5c71\\u533a\",\"address\":\"\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507861938}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508575164', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('15', '17', 'p73680315933', '739.38', '792.00', '10.00', '0', '{\"id\":23,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1501,\"province_area\":\"\\u8fbd\\u5b81\\u7701\",\"city\":1529,\"city_area\":\"\\u978d\\u5c71\\u5e02\",\"county\":1533,\"county_area\":\"\\u7acb\\u5c71\\u533a\",\"address\":\"\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507861938}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508736803', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('16', '17', 'p73860566046', '492.92', '528.00', '10.00', '0', '{\"id\":23,\"uid\":17,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1501,\"province_area\":\"\\u8fbd\\u5b81\\u7701\",\"city\":1529,\"city_area\":\"\\u978d\\u5c71\\u5e02\",\"county\":1533,\"county_area\":\"\\u7acb\\u5c71\\u533a\",\"address\":\"\\u5730\\u5740\",\"is_default\":1,\"addtime\":1507861938}', '0', '1', '0', '0', '0', '', '', '', '0', '0', '1508738605', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('17', '18', 'p01973684516', '492.00', '528.00', '10.00', '0', '{\"id\":28,\"uid\":18,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1000,\"province_area\":\"\\u5317\\u4eac\\u5e02\",\"city\":1018,\"city_area\":\"\\u5e02\\u8f96\\u53bf\",\"county\":1020,\"county_area\":\"\\u5ef6\\u5e86\\u53bf\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1514019704}', '0', '0', '0', '0', '0', '', '', '', '0', '0', '1514019736', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('18', '18', 'p01974860809', '492.00', '528.00', '10.00', '0', '{\"id\":28,\"uid\":18,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1000,\"province_area\":\"\\u5317\\u4eac\\u5e02\",\"city\":1018,\"city_area\":\"\\u5e02\\u8f96\\u53bf\",\"county\":1020,\"county_area\":\"\\u5ef6\\u5e86\\u53bf\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1514019704}', '0', '0', '0', '0', '0', '', '', '', '0', '0', '1514019748', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('19', '18', 'p01976198479', '492.00', '528.00', '10.00', '0', '{\"id\":28,\"uid\":18,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1000,\"province_area\":\"\\u5317\\u4eac\\u5e02\",\"city\":1018,\"city_area\":\"\\u5e02\\u8f96\\u53bf\",\"county\":1020,\"county_area\":\"\\u5ef6\\u5e86\\u53bf\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1514019704}', '0', '0', '0', '0', '0', '', '', '', '0', '0', '1514019761', '0', '0');
+INSERT INTO `lucky_orders` VALUES ('20', '18', 'p51782060348', '369.69', '0.00', '10.00', '0', '{\"id\":28,\"uid\":18,\"full_name\":\"\\u6f58\\u8c0b\\u52c7\",\"mobile\":\"15879221657\",\"province\":1000,\"province_area\":\"\\u5317\\u4eac\\u5e02\",\"city\":1018,\"city_area\":\"\\u5e02\\u8f96\\u53bf\",\"county\":1020,\"county_area\":\"\\u5ef6\\u5e86\\u53bf\",\"address\":\"\\u8be6\\u7ec6\\u5730\\u5740\",\"is_default\":1,\"addtime\":1514019704}', '0', '0', '0', '0', '0', '', '', '', '0', '0', '1514517820', '0', '0');
 
 -- ----------------------------
 -- Table structure for lucky_order_log
@@ -4716,6 +4857,48 @@ CREATE TABLE `lucky_order_log` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for lucky_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_roles`;
+CREATE TABLE `lucky_roles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色',
+  `group_id` int(11) NOT NULL DEFAULT '0' COMMENT '分组id',
+  `role_name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色名',
+  `remarks` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `auths` text NOT NULL COMMENT '功能id',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of lucky_roles
+-- ----------------------------
+INSERT INTO `lucky_roles` VALUES ('1', '1', '超级管理员', '超级管理员，拥有最高权限的角色', '34,1,3,52,53,54,55,56,57,58,59,60,61,2,4,5,6,7,9,31,8,45,47,32,62,65,33,49,50,63,64,35,48,51,10,11,66,67,12,68,69,13,70,72,73,74,75,71,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30', '1520059905', '1517903510');
+INSERT INTO `lucky_roles` VALUES ('2', '2', '市场人员', '管理市场部门工作', '34,1,3,52', '1519797004', '1519795555');
+INSERT INTO `lucky_roles` VALUES ('3', '3', '普通会员', '平台注册用户', '44,43,36,38,41,37,39,40,42,46,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111', '1520478800', '1519888895');
+
+-- ----------------------------
+-- Table structure for lucky_role_group
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_role_group`;
+CREATE TABLE `lucky_role_group` (
+  `id` int(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色组id',
+  `group_name` varchar(50) NOT NULL DEFAULT '' COMMENT '分组名称',
+  `remarks` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of lucky_role_group
+-- ----------------------------
+INSERT INTO `lucky_role_group` VALUES ('1', '超级管理员', '该管理员拥有最高权限，无所不能', '1517991794', '1517888806');
+INSERT INTO `lucky_role_group` VALUES ('2', '市场部', '市场人员所在组', '1517893603', '1517893603');
+INSERT INTO `lucky_role_group` VALUES ('3', '客户', '该组为客户组，即为普通用户组，该组的角色可以为普通用户设置各项前端权限', '1518060838', '1518060838');
+
+-- ----------------------------
 -- Table structure for lucky_sms_log
 -- ----------------------------
 DROP TABLE IF EXISTS `lucky_sms_log`;
@@ -4731,7 +4914,7 @@ CREATE TABLE `lucky_sms_log` (
   `result` varchar(2555) NOT NULL COMMENT '短信发送结果',
   `send_time` int(11) unsigned NOT NULL COMMENT '发送时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_sms_log
@@ -4746,6 +4929,8 @@ INSERT INTO `lucky_sms_log` VALUES ('7', 'sms8935957897', '{\"code\":\"48063\",\
 INSERT INTO `lucky_sms_log` VALUES ('8', 'sms8953146091', '{\"code\":\"09472\",\"product\":\"\"}', 'SMS_73920020', '小惠猫', '15879221657', 'OK', 'OK', '{\"Message\":\"OK\",\"RequestId\":\"BFB4EA62-D5FD-41E8-A568-67666C67A7CB\",\"BizId\":\"227819006089556673^0\",\"Code\":\"OK\"}', '1506089531');
 INSERT INTO `lucky_sms_log` VALUES ('9', 'sms8984973073', '{\"code\":\"71184\",\"product\":\"\"}', 'SMS_73920020', '小惠猫', '15879221657', 'OK', 'OK', '{\"Message\":\"OK\",\"RequestId\":\"07972E30-716E-451B-98E3-DD0A143D8C03\",\"BizId\":\"352723706089875054^0\",\"Code\":\"OK\"}', '1506089849');
 INSERT INTO `lucky_sms_log` VALUES ('10', 'sms9179036855', '{\"code\":\"31038\",\"product\":\"\"}', 'SMS_73920020', '小惠猫', '15879221657', 'OK', 'OK', '{\"Message\":\"OK\",\"RequestId\":\"9B1A43CA-65EB-4112-8D39-E0FE62E8048A\",\"BizId\":\"573302506091816152^0\",\"Code\":\"OK\"}', '1506091790');
+INSERT INTO `lucky_sms_log` VALUES ('11', 'sms98956015372', '{\"code\":\"73675\",\"product\":\"\"}', 'SMS_73920020', '小惠猫', '15879221657', 'OK', 'OK', '{\"Message\":\"OK\",\"RequestId\":\"2910365B-DBE2-4CDF-A723-C0359934F886\",\"BizId\":\"829512717989561299^0\",\"Code\":\"OK\"}', '1517989560');
+INSERT INTO `lucky_sms_log` VALUES ('12', 'sms99065211348', '{\"code\":\"11596\",\"product\":\"\"}', 'SMS_73920020', '小惠猫', '15879221657', 'OK', 'OK', '{\"Message\":\"OK\",\"RequestId\":\"1252729D-BD57-42E2-B788-96E4C709A5D6\",\"BizId\":\"791925117990653574^0\",\"Code\":\"OK\"}', '1517990652');
 
 -- ----------------------------
 -- Table structure for lucky_sms_temp
@@ -4900,50 +5085,80 @@ INSERT INTO `lucky_spec_group` VALUES ('467', '12', '277', '颜色: 黑色', '0.
 INSERT INTO `lucky_spec_group` VALUES ('468', '12', '278', '颜色: 白色', '0.00', '123.23', '20', 'lucky12345');
 
 -- ----------------------------
+-- Table structure for lucky_userinfo
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_userinfo`;
+CREATE TABLE `lucky_userinfo` (
+  `id` int(10) unsigned NOT NULL COMMENT '用户信息表，用户id',
+  `uid` int(10) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `user_group_id` int(11) unsigned NOT NULL COMMENT '角色组id',
+  `user_role_id` int(11) unsigned NOT NULL COMMENT '角色id',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '增加时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uid` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of lucky_userinfo
+-- ----------------------------
+INSERT INTO `lucky_userinfo` VALUES ('20', '17', '3', '3', '0', '0');
+
+-- ----------------------------
 -- Table structure for lucky_users
 -- ----------------------------
 DROP TABLE IF EXISTS `lucky_users`;
 CREATE TABLE `lucky_users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `username` varchar(50) NOT NULL COMMENT '用户名',
+  `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
   `nickname` varchar(50) NOT NULL DEFAULT '' COMMENT '用户昵称',
-  `mobile` char(11) NOT NULL COMMENT '手机号码',
-  `phone` char(20) NOT NULL COMMENT '用户电话号码',
-  `email` varchar(100) NOT NULL COMMENT '邮件地址',
-  `wechat` varchar(100) NOT NULL COMMENT '微信账号',
-  `passwd` char(255) NOT NULL COMMENT '密码',
+  `mobile` char(11) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `phone` char(20) NOT NULL DEFAULT '' COMMENT '用户电话号码',
+  `email` varchar(100) NOT NULL DEFAULT '' COMMENT '邮件地址',
+  `wechat` varchar(100) NOT NULL DEFAULT '' COMMENT '微信账号',
+  `passwd` char(255) NOT NULL DEFAULT '' COMMENT '密码',
   `loginnum` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '登录次数',
-  `regdate` int(11) unsigned NOT NULL COMMENT '注册时间',
-  `regip` char(15) NOT NULL COMMENT '注册ip',
-  `lastdate` int(11) unsigned NOT NULL COMMENT '最后登录时间',
-  `lastip` varchar(255) NOT NULL COMMENT '最后一次登录ip',
-  `islock` tinyint(1) unsigned NOT NULL COMMENT '用户是否锁定',
+  `regip` char(15) NOT NULL DEFAULT '' COMMENT '注册ip',
+  `lastdate` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
+  `lastip` varchar(255) NOT NULL DEFAULT '' COMMENT '最后一次登录ip',
+  `islock` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '用户是否锁定',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用户状态软删除',
   `mail_verify` tinyint(1) NOT NULL DEFAULT '0' COMMENT '邮箱验证状态0未验证1验证',
   `is_admin` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为管理员，1为是',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建（注册）时间',
+  PRIMARY KEY (`id`),
+  KEY `nickname` (`nickname`),
+  KEY `phone` (`phone`),
+  KEY `email` (`email`),
+  KEY `passwd` (`passwd`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_users
 -- ----------------------------
-INSERT INTO `lucky_users` VALUES ('17', '', '', '', '', '1767158841@qq.com', '', 'e10adc3949ba59abbe56e057f20f883e', '0', '1506084193', '127.0.0.1', '0', '', '0', '1', '1', '1');
-INSERT INTO `lucky_users` VALUES ('18', '', '', '', '15879221657', '', '', 'e10adc3949ba59abbe56e057f20f883e', '0', '1506092599', '127.0.0.1', '0', '', '0', '1', '0', '1');
-INSERT INTO `lucky_users` VALUES ('19', '', '123a', '', '', '', '', 'e10adc3949ba59abbe56e057f20f883e', '0', '1506094075', '127.0.0.1', '0', '', '0', '1', '0', '0');
+INSERT INTO `lucky_users` VALUES ('17', 'test', 'test1', '', '15879221654', '1767158841@qq.com', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '1520749582', '', '0', '1', '1', '1', '1520749582', '0');
+INSERT INTO `lucky_users` VALUES ('19', '', '123a', '', '', '', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '0', '', '0', '1', '0', '0', '0', '0');
+INSERT INTO `lucky_users` VALUES ('26', '任你花', 'test', '', '15879221657', '532170416@qq.com', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '1519970144', '', '0', '0', '0', '1', '1519970363', '1518260856');
+INSERT INTO `lucky_users` VALUES ('27', '测试2', 'name', '', '15879221659', '1737511215@qq.com', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '0', '', '0', '0', '0', '1', '1518319839', '1518318931');
 
 -- ----------------------------
--- Table structure for lucky_user_access
+-- Table structure for lucky_user_coupon
 -- ----------------------------
-DROP TABLE IF EXISTS `lucky_user_access`;
-CREATE TABLE `lucky_user_access` (
-  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id 0为未登录用户',
-  `group_id` mediumint(5) NOT NULL COMMENT '权限组id',
-  PRIMARY KEY (`uid`),
-  KEY `uid` (`uid`),
-  KEY `group_id` (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `lucky_user_coupon`;
+CREATE TABLE `lucky_user_coupon` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户拥有的优惠券',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `coupon` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '优惠券id',
+  `active_start_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '有效开始时间',
+  `active_end_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '有效结束时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`) USING BTREE,
+  KEY `coupon` (`coupon`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of lucky_user_access
+-- Records of lucky_user_coupon
 -- ----------------------------
-INSERT INTO `lucky_user_access` VALUES ('0', '1');

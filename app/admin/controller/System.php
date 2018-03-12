@@ -34,19 +34,6 @@ class System extends Base
         return $this->template($fetch);
     }
 
-    /**
-     * 编辑配置内容
-     */
-    public function edit_op(){
-        if(!$this->request->isPost()){
-            return $this->error('请求出错');
-        }
-        $data = input('post.');
-        $_config = model('config');
-        $result = $_config->edit($data);
-        return $this->last_redirect();
-    }
-
     // 编辑短信模板的视图
     public function sms_temp(){
         $scene = input('scene');

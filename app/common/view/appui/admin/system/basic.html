@@ -9,12 +9,56 @@
 
             <div class="block">
                 <!-- Horizontal Form Content -->
-                <form action="{:url('admin/System/edit_op')}" method="post" class="form-horizontal form-bordered">
+                <form action="{:url('admin/System/edit',['action'=>'config'])}" method="post" class="form-horizontal form-bordered">
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="encrypt_key">加密密钥</label>
                         <div class="col-md-6">
                             <input type="text" id="encrypt_key" name="encrypt_key" class="form-control" value="{$config.encrypt_key}" />
                             <span class="help-block">网站的加密密钥（不要随意改动）</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="not_login">登陆页面</label>
+                        <div class="col-md-6">
+                            <select type="text" id="not_login" name="not_login" class="form-control" data-val="{$config.not_login}" >
+                                {foreach name=":get_cache('action.beforeAction')" id="action"}
+                                <option value="{$action.id}">{$action.tree}{$action.title}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">未登录跳转的默认页面</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="default">网站默认页面</label>
+                        <div class="col-md-6">
+                            <select type="text" id="default" name="default" class="form-control" data-val="{$config.default}" >
+                                {foreach name=":get_cache('action.beforeAction')" id="action"}
+                                <option value="{$action.id}">{$action.tree}{$action.title}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">网站默认页面（建议选择一个无任何限制的页面）</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="initial_role">初始角色</label>
+                        <div class="col-md-6">
+                            <select type="text" id="initial_role" name="initial_role" class="form-control" data-val="{$config.initial_role}" >
+                                {foreach name=":get_cache('roles.all_roles')" id="roles"}
+                                <option value="{$roles.id}">{$roles.role_name}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">注册用户初始化角色</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="admin_role">超级管理员角色</label>
+                        <div class="col-md-6">
+                            <select type="text" id="admin_role" name="admin_role" class="form-control" data-val="{$config.admin_role}" >
+                                {foreach name=":get_cache('roles.all_roles')" id="roles"}
+                                <option value="{$roles.id}">{$roles.role_name}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">拥有最高权限的角色</span>
                         </div>
                     </div>
                     <div class="form-group form-actions">
@@ -34,4 +78,9 @@
 {/block}
 {block name="foot_js"}
 {include file="system/system"}
+<script>
+    $(function () {
+        App.selected()
+    });
+</script>
 {/block}

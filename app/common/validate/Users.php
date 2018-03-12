@@ -14,26 +14,30 @@ use think\Validate;
 class Users extends Validate
 {
     protected $rule = [
-        'email' => 'require|email',
+        'email' => 'require|email|unique:users,email',
         'passwd' => 'require|min:6',
-        'phone' => 'require|checkPhone:/^1[2-9]\d{9}$/',
-        'nickname' => 'require|checkNickname:/^[0-9]+$//^[a-zA-Z0-9_\u4e00-\u9fa5]+$/',
+        'phone' => 'require|checkPhone:/^1[2-9]\d{9}$/|unique:users,phone',
+        'nickname' => 'require|checkNickname:/^[0-9]+$//^[a-zA-Z0-9_\u4e00-\u9fa5]+$/|unique:users,nickname',
     ];
     protected $message = [
         'email.require'   => '邮箱必须填写',
         'email.email'   => '邮箱格式不正确',
+        'email.unique'   => '该邮箱已存在',
         'passwd.require' => '密码一定要输入',
         'passwd.min' => '密码长度要大于6',
         'phone.require' => '手机号码必须填写',
         'phone.checkPhone' => '手机号码格式不正确',
-        'nickname.require' => '用户名必须填写',
-        'nickname.checkNickname' => '用户名仅支持中英文、数字和下划线,且不能为纯数字',
-        'nickname.checkChar' => '用户名仅支持中英文、数字和下划线,且不能为纯数字',
+        'phone.unique'   => '该号码已存在',
+        'nickname.require' => '账号必须填写',
+        'nickname.checkNickname' => '账号仅支持中英文、数字和下划线,且不能为纯数字',
+        'nickname.checkChar' => '账号仅支持中英文、数字和下划线,且不能为纯数字',
+        'nickname.unique'   => '该昵称已存在',
     ];
     protected $scene = [
         'email' => ['email','passwd'],
         'phone' => ['phone','passwd'],
         'nickname' => ['nickname','passwd'],
+        'admin' => ['nickname','email','phone'],
     ];
     // 验证手机号码格式
     protected function checkPhone($value,$rule,$data){

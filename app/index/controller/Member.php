@@ -19,6 +19,8 @@ class Member extends Base
     // 个人信息控制器
     public function index(){
         $action = input('action');
+        $personal = $this->_users->personal($this->user);
+        $this->assign($personal);
         return $this->template($action);
     }
     // 添加地址用户地址
@@ -41,15 +43,18 @@ class Member extends Base
     }
     // 获取用户地址
     public function address(){
-        $id = input('id');
-        $where = ['uid'=>$this->user['id']];
-        if (!empty($id)){
-            $where['id']=$id;
+        if($this->request->isAjax()){
+            $id = input('id');
+            $where = ['uid'=>$this->user['id']];
+            if (!empty($id)){
+                $where['id']=$id;
+            }
+            $order = ['is_default'=>'desc'];
+            $_address = model('address');
+            $address = $_address->get_address($where,$order);
+            return $this->type == 'json'?json($address):$address;
         }
-        $order = ['is_default'=>'desc'];
-        $_address = model('address');
-        $address = $_address->get_address($where,$order);
-        return $this->type == 'json'?json($address):$address;
+        return$this->template();
     }
     public function address_edit(){
         $error = ['code'=>0,'info'=>'编辑成功'];
@@ -62,5 +67,134 @@ class Member extends Base
         }
         return $this->type == 'json'?json($error):$error;
 
+    }
+
+    // 个人信息
+    public function information(){
+        return$this->template();
+    }
+    // 安全设置
+    public function safety(){
+        return$this->template();
+    }
+    // 快捷支付
+    public function cardlist(){
+        return$this->template();
+    }
+    // 绑定银行卡
+    public function cardmethod(){
+        return$this->template();
+    }
+    // 订单管理
+    public function order(){
+        return$this->template();
+    }
+    // 订单详情
+    public function orderinfo(){
+        return$this->template();
+    }
+    // 物流详情
+    public function logistics(){
+        return$this->template();
+    }
+    // 售后管理
+    public function change(){
+        return$this->template();
+    }
+    // 退换货
+    public function refund(){
+        return$this->template();
+    }
+    // 退换货钱款去向
+    public function record(){
+        return$this->template();
+    }
+    // 评价商品
+    public function comment(){
+        return$this->template();
+    }
+    // 评价列表商品
+    public function commentlist(){
+        return$this->template();
+    }
+    // 我的积分
+    public function points(){
+        return$this->template();
+    }
+    // 优惠券
+    public function coupon(){
+        return$this->template();
+    }
+    // 红包
+    public function bonus(){
+        return$this->template();
+    }
+    // 用户余额
+    public function walletlist(){
+        return$this->template();
+    }
+    // 账单明细
+    public function bill(){
+        return$this->template();
+    }
+    // 查看支出明细
+    public function billlist(){
+        return$this->template();
+    }
+    // 我的收藏
+    public function collection(){
+        return$this->template();
+    }
+    // 我的足迹
+    public function foot(){
+        return$this->template();
+    }
+    // 产品咨询
+    public function consultation(){
+        return$this->template();
+    }
+    // 意见反馈
+    public function suggest(){
+        return$this->template();
+    }
+    // 我的消息
+    public function news(){
+        return$this->template();
+    }
+    // 我的消息
+    public function blog(){
+        return$this->template();
+    }
+    // 我的余额
+    public function wallet(){
+        return$this->template();
+    }
+    // 我的积分
+    public function pointnew(){
+        return$this->template();
+    }
+    // 修改密码
+    public function password(){
+        return$this->template();
+    }
+    // 设置支付密码
+    public function setpay(){
+        return$this->template();
+    }
+    // 绑定手机号码
+    public function bindphone(){
+        return$this->template();
+    }
+    // 绑定邮箱
+    public function email(){
+        return$this->template();
+    }
+    // 实名认证
+    public function idcard(){
+        return$this->template();
+    }
+    // 安全问题
+    public function question(){
+        return$this->template();
     }
 }

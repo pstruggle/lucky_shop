@@ -5,6 +5,7 @@ use app\common\model\Base;
 use think\Cookie;
 use think\Db;
 use think\Exception;
+use think\exception\HttpException;
 use think\Request;
 
 class Users extends Base
@@ -23,50 +24,105 @@ class Users extends Base
     }
     /**
      * 验证用户登录情况
-     * @param $cookie_id string  记录的id值
-     * @param $cookie_secret string  记录的密码值
      * @return mixed 用户存在就返回用户信息，不存在返回false
      */
     public function check_login(){
-        try{
-            $cookie_id = Cookie::get('token');
-            $cookie_secret = Cookie::get('secret');
-            $key = get_cache('config.basic')['encrypt_key'];
-            $id = authcode($cookie_id,$key,'D');
-            $passwd = authcode($cookie_secret,$key,'D');
-            $user  = $this->where('id',$id)->find();
-            if(empty($user)){
-                throw new Exception('用户不存在！');
-            }
-            if(strcmp($passwd,$user['passwd']) !== 0){
-                throw new Exception('密码被修改,请重新登陆！');
-            }
-            return $user;
-        }catch (Exception $e){
-            $this->error = $e->getMessage();
-            return false;
-        }
-
-        /*后面代码留着可能还会用*/
-        if(empty($cookie_id) || empty($cookie_secret)){
-            return false;
-        }
-        // unread 不可访问
-        // read 可访问
+        $cookie_id = Cookie::get('token');
+        $cookie_secret = Cookie::get('secret');
         $key = get_cache('config.basic')['encrypt_key'];
         $id = authcode($cookie_id,$key,'D');
         $passwd = authcode($cookie_secret,$key,'D');
-        $user = $this->where('id',$id)->find();
-        if(empty($user) || strcmp($passwd,$user['passwd']) !== 0){
-            $this->error = 'unlogin';
+        $user  = $this->where('id',$id)->find();
+        if(empty($user)){
             return false;
+        }
+        if(strcmp($passwd,$user['passwd']) !== 0){
+            throw new Exception('密码被修改,请重新登陆！',100);
+        }
+        $user = $user->toArray();
+        $field = "group_id,role_id,firstdate,overdate,islock,status";
+
+        $admin = model('admin')->where('uid',$id)->field($field)->find();
+        if ($admin){
+            $user = array_merge($user,$admin->toArray());
+        }
+        $field = "user_group_id,user_role_id,uid";
+        $userinfo = model('userinfo')->where('uid',$id)->field($field)->find();
+        if ($userinfo){
+            $user = array_merge($user,$userinfo->toArray());
         }
         return $user;
     }
     /**
-     *
+     * 验证用户权限
      */
+    public function auth($module,$controller,$action,$route=[]){
+        $basic = get_cache('config.basic');
+        try{
+            $user = $this->check_login();
+            $admin_role = $basic['admin_role'];
+            $_action = model('action');
+            $where = [
+                'controller'=>$module,
+                'model'=>$controller,
+                'action'=>$action,
+            ];
+            if (!empty($route)){
+                $where['params'] = key($route).'/'.$route[key($route)];
+            }
+            if(!$user){
+                $actions = $_action->where($where)->find();
+            }else{
+                $action_ids = $_action->where($where)->column('id');
+                if(!$action_ids){
+                    throw new HttpException(404,'页面不存在');
+                }
+                $user_role_id = empty($user['user_role_id'])?$basic['initial_role']:$user['user_role_id'];
+                $admin_role_info = get_cache('roles.role_'.$user['role_id']);
+                $user_role_info = get_cache('roles.role_'.$user_role_id);
+                $admin_roles = explode(',',$admin_role_info['auths']);
+                $user_roles = explode(',',$user_role_info['auths']);
+                $roles = array_merge($admin_roles,$user_roles);
+                $auth_id = array_intersect($action_ids,$roles);
+                $where = $auth_id?array_merge($where,['id'=>['in',$auth_id]]):$where;
+                $actions = $_action->where($where)->find();
+            }
+            //判断功能是否需要登录
+            if(!$actions['is_login']){
+                return $user?$user:true;
+            }
+            // 用户信息为空
+            if(!$user){
+                throw new Exception('请先登录',100);
+            }
+            if(!$user['is_admin'] && !$actions['is_nose']){
+                //  非管理员请求后台功能
+                throw new Exception('请求异常',101);
+            }
+            if($actions['is_nose']&&!in_array($actions['id'],$user_roles)){
+                // 不在权限范围内
+                throw new Exception('您没有权限访问',102);
+            }
+            if ($admin_role!=$user['role_id'] && !in_array($actions['id'],$admin_roles)){
+                // 不在权限范围内
+                throw new Exception('您没有权限访问',102);
+            }
+            return $user;
+        }catch (Exception $e){
+            $code = $e->getCode();
+            $url_id = $code==100?$basic['not_login']:(in_array($code,[101,102])?$basic['default']:null);
+            $acrion = $url_id?get_cache('action.action')[$url_id]:null;
+            $url = $acrion?( (!empty($acrion['controller'])?'/'.$acrion['controller']:'').(!empty($acrion['model'])?'/'.$acrion['model']:'').(!empty($acrion['action'])?'/'.$acrion['action']:'').(!empty($acrion['params'])?'/'.$acrion['params']:'') ):null;
+            $result = [
+                'code'=>$code,
+                'msg'=>$e->getMessage(),
+                'url' =>$url
+            ];
+            $this->error=$result;
+            return false;
+        }
 
+    }
     /**
      * 用户登录操作
      */
@@ -142,6 +198,14 @@ class Users extends Base
                     throw new Exception('服务器繁忙，邮件发送失败，请稍后再试...');
                 }
             }
+            $user_role = get_cache('config.basic')['initial_role'];
+
+            $userinfo_data = [
+                'uid'=>$this->data['id'],
+                'user_group_id'=>model('roles')->where('id',$user_role)->value('group_id'),
+                'user_role_id'=>$user_role
+            ];
+            model('userinfo')->edit($userinfo_data);
             $this->error = '注册成功';
             return true;
         }catch (Exception $e){
@@ -165,9 +229,50 @@ class Users extends Base
         return $result;
     }
     /**
+     * 用户编辑
+     *
+     */
+    public function edit($data){
+        $id = $data['id'];
+        $where = [];
+        if ($id){
+            $where = ['id'=>$id];
+        }else{
+            $data['regip'] = Request::instance()->ip();
+        }
+        if(empty($data['passwd'])){
+            unset($data['passwd']);
+        }
+        $user = $this->validate("users.admin")->save($data,$where);
+        if($user){
+            return $this->data['id'];
+        }
+        return false;
+    }
+
+    /**
      * 自动加密密码
      */
     public function setPasswdAttr($value){
         return md5(md5($value));
     }
+    /**
+     * 个人中心数据获取模型方法
+     *
+     **/
+    public function personal($user){
+        // 优惠券张数
+        $coupon_num = model('userCoupon')->where('uid',$user['id'])->count();
+        // 我的订单
+        $order_where = ['uid'=>$user['id']];
+        $order_order = ['create_time'=>'desc'];
+        $orders = model('orders')->orders($order_where,$order_order,2)->toArray()['data'];
+
+        $assigns = [
+            'coupon_num'=>$coupon_num,
+            'orders'=>$orders
+        ];
+        return $assigns;
+    }
+
 }

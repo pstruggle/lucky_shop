@@ -62,7 +62,8 @@
                         <td class="text-center">{$k}</td>
                         <td>{$after_action.id??''}</td>
                         <td>{$after_action.tree}{$after_action.title}</td>
-                        <td>/{$after_action.controller??''}/{$after_action.model??''}/{$after_action.action??''}/{$after_action.params??''}</td>
+                        <td>{$after_action.controller?'/'.$after_action.controller:''}{$after_action.model?'/'.$after_action.model:''}{$after_action.action?'/'.$after_action.action:''}{$after_action.params?'/'.$after_action.params:''}
+                        </td>
                         <td>{$after_action.weight??'' }</td>
                         <td>
                             <label class="switch switch-info">
@@ -71,7 +72,7 @@
                         </td>
                         <td>
                             <label class="switch switch-info">
-                                <input type="checkbox" id="is_api_{$after_action.id??''}" checked="" class="is_true" name="is_api_{$after_action.id??''}" value="{$good.is_api??''}" ><span></span>
+                                <input type="checkbox" id="is_api_{$after_action.id??''}" checked="" class="is_true" name="is_api_{$after_action.id??''}" value="{$after_action.is_api??''}" ><span></span>
                             </label>
                         </td>
                         <td>
@@ -123,7 +124,8 @@
                         <td class="text-center">{$k}</td>
                         <td>{$before_action.id??''}</td>
                         <td>{$before_action.tree}{$before_action.title}</td>
-                        <td>/{$before_action.controller??''}/{$after_action.model??''}/{$before_action.action??''}/{$before_action.params??''}</td>
+                        <td>{$before_action.controller?'/'.$before_action.controller:''}{$before_action.model?'/'.$before_action.model:''}{$before_action.action?'/'.$before_action.action:''}{$before_action.params?'/'.$before_action.params:''}
+                        </td>
                         <td>{$before_action.weight??'' }</td>
                         <td>
                             <label class="switch switch-info">
@@ -132,12 +134,12 @@
                         </td>
                         <td>
                             <label class="switch switch-info">
-                                <input type="checkbox" id="is_api_{$before_action.id??''}" checked="" class="is_true" name="is_api_{$after_action.id??''}" value="{$good.is_api??''}" ><span></span>
+                                <input type="checkbox" id="is_api_{$before_action.id??''}" checked="" class="is_true" name="is_api_{$before_action.id??''}" value="{$before_action.is_api??''}" ><span></span>
                             </label>
                         </td>
                         <td>
                             <label class="switch switch-info">
-                                <input type="checkbox" id="is_login_{$before_action.id??''}" checked=""  class="is_true" name="is_login_{$after_action.id??''}" value="{$after_action.is_login}" ><span></span>
+                                <input type="checkbox" id="is_login_{$before_action.id??''}" checked=""  class="is_true" name="is_login_{$before_action.id??''}" value="{$before_action.is_login}" ><span></span>
                             </label>
                         </td>
 
@@ -165,6 +167,6 @@
 
 <!-- Load and execute javascript code used only in this page -->
 <script src="__APPUI__js/pages/system/actions.js"></script>
-<script>$(function(){ Actions.init(); });</script>
+<script>$(function(){ App.edit(); });</script>
 
 {/block}

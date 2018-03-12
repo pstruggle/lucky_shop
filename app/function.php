@@ -38,7 +38,8 @@ function get_cache($name,$value = null){
         try{
             model($names[0])->setCache(empty($names[1])?'':$names[1]);
         }catch (Exception $e){
-             throw new Exception($name.'缓存不存在');
+            dump($e->getMessage());
+            throw new Exception($name.'缓存不存在');
         }
         $result = cache($name);
     }

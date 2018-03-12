@@ -85,18 +85,23 @@ var Auth = function () {
         var data = {'group_id':id},
             href = '/admin/auth/roles',
             options = '';
-        $.get(href,data,function (result) {
-            options += "<option>请选择角色</option>";
-            if (result.code == 1) {
-                var data = result.data;
-                for (var i in data) {
-                    options += "<option value='" + data[i].id + "'>" + data[i].role_name + "</option>"
+        $.ajax({
+            async:false,
+            url:href,
+            data:data,
+            success:function (result) {
+                options += "<option value='0'>请选择角色</option>";
+                if (result.code == 1) {
+                    var data = result.data;
+                    for (var i in data) {
+                        options += "<option value='" + data[i].id + "'>" + data[i].role_name + "</option>"
+                    }
+                }else {
+                    layer.msg(result.msg);
                 }
-            }else {
-                layer.msg(result.msg);
-            }
-            $('#role_id').html(options)
+                $('#role_id').html(options)
 
+            }
         });
     };
     // 修改用户组的选项
@@ -106,10 +111,19 @@ var Auth = function () {
         roles_select(id);
         return true;
     };
+    // 初始化用户组角色
+    var groups_init = function () {
+        var group_elem = $('#group_id'),
+            role_elem = $('#role_id'),
+            id = group_elem.data('val');
+        group_elem.val(id);
+        roles_select(id);
+        role_elem.val(role_elem.data('val'));
+        group_elem.on('change',groups_select);
+    };
     // 时间选择
     var jeDate_edit = function () {
-        $.jeDate('#firstdate',{
-        });
+        $.jeDate('#firstdate,#overdate');
     };
     return {
         init:function () {
@@ -117,7 +131,7 @@ var Auth = function () {
         },
         grant_view:grant_view, // 权限选择视图
         admin_edit:function () {
-            $('#group_id').on('change',groups_select);
+            groups_init();
             jeDate_edit()
         }
     }

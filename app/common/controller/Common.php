@@ -1,10 +1,16 @@
 <?php
 namespace app\common\controller;
 
+use think\Config;
 use think\Controller;
 use think\Cookie;
 use think\Db;
 use think\Exception;
+use think\Request;
+use think\Response;
+use think\Url;
+use think\View;
+use think\exception\HttpResponseException;
 
 
 class Common extends Controller
@@ -59,12 +65,16 @@ class Common extends Controller
      * 用户登陆验证码
      */
     protected function gain_user(){
-        try{
-            $user = $this->user = $this->_users->check_login();
-            $this->assign('user',$user);
-        }catch (Exception $e){
-            $this->error($e->getMessage());
+        $module = lcfirst($this->module);
+        $controller = lcfirst($this->controller);
+        $action = lcfirst($this->action);
+        $route = $this->request->route();
+        $user = $this->user = $this->_users->auth($module,$controller,$action,$route);
+        if(!$user){
+            $errors = $this->_users->getError();
+            $this->returnError($errors['msg'],$errors['url'],'',$errors['code']);
         }
+        $this->assign('user',$user);
     }
     /**
      * 权限标识
@@ -114,7 +124,27 @@ class Common extends Controller
      * 跳转到上一页
      */
     protected function last_redirect(){
-        return $this->redirect($this->last_url());
+        $this->redirect($this->last_url());
+    }
+    /**
+     * 操作错误跳转的快捷方法
+     * @access protected
+     * @param mixed     $msg 提示信息
+     * @param string    $url 跳转的URL地址
+     * @param mixed     $data 返回的数据
+     * @param mixed     $code 返回的数据
+     * @param integer   $wait 跳转等待时间
+     * @param array     $header 发送的Header信息
+     * @return void
+     */
+    protected function returnError($msg = '', $url = null, $data = '',$code = 0, $wait = 3, array $header = [])
+    {
+        $type = $this->getResponseType();
+        if ('html' == strtolower($type)) {
+            $this->error($msg, $url, $data, $wait, $header);
+        }else{
+            $this->result($data,$code,$msg,'',$header);
+        }
     }
 
 

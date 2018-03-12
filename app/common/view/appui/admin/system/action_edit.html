@@ -123,7 +123,8 @@
                         <label class="col-md-3 control-label" for="is_api">是否为api</label>
                         <div class="col-md-6">
                             <label class="switch switch-info">
-                                <input type="checkbox" id="is_api" class="is_true"  name="is_api" checked="" value="{$action.is_api??''}" ><span></span>
+                                <input type="checkbox" id="is_api" checked="" ><span></span>
+                                <input type="hidden" class="is_true"  name="is_api" value="{$action.is_api??''}" />
                             </label>
                             <span class="help-block">是否为api</span>
                         </div>
@@ -132,7 +133,8 @@
                         <label class="col-md-3 control-label" for="is_nose">是否前端功能</label>
                         <div class="col-md-6">
                             <label class="switch switch-info">
-                                <input type="checkbox" id="is_nose" class="is_true"  name="is_nose" checked="" value="{$action.is_nose??''}" ><span></span>
+                                <input type="checkbox" id="is_nose" checked="" ><span></span>
+                                <input type="hidden"  class="is_true"  name="is_nose"  value="{$action.is_nose??''}" />
                             </label>
                             <span class="help-block">是否为前端功能</span>
                         </div>
@@ -141,7 +143,8 @@
                         <label class="col-md-3 control-label" for="is_login">是否必须登录</label>
                         <div class="col-md-6">
                             <label class="switch switch-info">
-                                <input type="checkbox" id="is_login" class="is_true"  name="is_login" checked="" value="{$action.is_login??'1'}" ><span></span>
+                                <input type="checkbox" id="is_login" checked="" ><span></span>
+                                <input type="hidden" class="is_true"  name="is_login"  value="{$action.is_login??'1'}" />
                             </label>
                             <span class="help-block">是否必须登录</span>
                         </div>
@@ -150,7 +153,8 @@
                         <label class="col-md-3 control-label" for="is_show">是否菜单显示</label>
                         <div class="col-md-6">
                             <label class="switch switch-info">
-                                <input type="checkbox" id="is_show" class="is_true"  name="is_show" checked="" value="{$action.is_show??''}" ><span></span>
+                                <input type="checkbox" id="is_show" checked="" ><span></span>
+                                <input type="hidden" class="is_true"  name="is_show" value="{$action.is_show??''}" />
                             </label>
                             <span class="help-block">是否菜单隐藏（该选项在后台菜单内有效）</span>
                         </div>

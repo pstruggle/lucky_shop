@@ -35,7 +35,7 @@ class Goods extends Base
     public function ajax_logistics(){
         return json(get_cache('logistics'));
     }
-    // 异步返回商品
+    // 异步返回商品规格
     public function ajax_spec(){
         $goods_id = input('goods_id');
         $_goods = model('goods');
