@@ -11,8 +11,9 @@
 var App = function() {
 
     /* Helper variables - set in uiInit() */
-    var page, pageContent, header, sidebar, sBrand, sExtraInfo, sidebarAlt, sScroll, sScrollAlt;
+    var page, pageContent, header, sidebar, sBrand, sExtraInfo, sidebarAlt, sScroll, sScrollAlt,iframeTitle;
 
+    var iframeH=0;
     /* Initialization UI Code */
     var uiInit = function() {
 
@@ -20,6 +21,8 @@ var App = function() {
         page            = $('#page-container');
         header          = $('header');
         pageContent     = $('#page-content');
+
+        iframeTitle     = $("#iframe-title");
 
         sidebar         = $('#sidebar');
         sBrand          = $('#sidebar-brand');
@@ -36,8 +39,8 @@ var App = function() {
         handleSidebar('init');
 
         // Sidebar navigation functionality
-        handleNav();
-
+        // handleNav();
+        dialog(); // 编辑弹窗事件监听
         // Header glass effect on scrolling
         if ((header.hasClass('navbar-fixed-top') || header.hasClass('navbar-fixed-bottom'))) {
             $(window).on('scroll', function(){
@@ -60,8 +63,8 @@ var App = function() {
         rippleEffect($('.btn-effect-ripple'), 'btn-ripple');
 
         // Initialize Tabs
-        $('[data-toggle="tabs"] a, .enable-tabs a').click(function(e){ e.preventDefault(); $(this).tab('show'); });
-
+        // $('[data-toggle="tabs"] a, .enable-tabs a').click(function(e){ console.log("test"); e.preventDefault(); $(this).tab('show'); });
+        pageContent.on("click",'[data-toggle="tabs"] a, .enable-tabs a',function(e){ console.log("test"); e.preventDefault(); $(this).tab('show'); })
         // Initialize Tooltips
         $('[data-toggle="tooltip"], .enable-tooltip').tooltip({container: 'body', animation: false});
 
@@ -154,6 +157,20 @@ var App = function() {
     var initNav = function () {
 
     };
+    var setIframeHeight = function (iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+            }
+        }
+    };
+
+    window.onload = function () {
+        setIframeHeight(document.getElementById('external-frame'));
+    };
+
+
     /* Sidebar Navigation functionality */
     var handleNav = function() {
         // Get all vital links
@@ -165,23 +182,54 @@ var App = function() {
         submenu = Cookies.get('optionSubmenu') ? Cookies.get('optionSubmenu') : -1;
         a = Cookies.get('optionA') ? Cookies.get('optionA') : 0;
         var menuLi = $('.sidebar-nav > li');
-        if(menu == -1 && submenu == -1){
-            menuLi.eq(a).children('a').addClass('active');
 
-        }else if(submenu == -1){
-            menuLi.eq(menu).addClass('active')
-                .find('li').eq(a).children('a').addClass('active');
+        //  选中函数
+        var menuActive = function () {
+            var link;
+            if(menu == -1 && submenu == -1){
+                link = menuLi.eq(a).children('a').addClass('active');
 
-        }else {
-            menuLi.eq(menu).addClass('active')
-                .children('ul').children('li').eq(submenu).addClass('active')
-                .find('li').eq(a).children('a').addClass('active');
+            }else if(submenu == -1){
+                link = menuLi.eq(menu).addClass('active')
+                    .find('li').eq(a).children('a').addClass('active');
 
-        }
+            }else {
+                link = menuLi.eq(menu).addClass('active')
+                    .children('ul').children('li').eq(submenu).addClass('active')
+                    .find('li').eq(a).children('a').addClass('active');
+
+            }
+            createIframe(link);
+        };
+        // 创建新页面
+        var createIframe = function (link) {
+            var iframeTitle = $("#iframe-title",page);
+            var iframeBox = $("#iframe-box",page);
+            var iframeNav = iframeTitle.children(".nav-tabs");
+
+            var tab = link.text(),href=link.attr("_href"),tabHref=href.replace(/\//g,"-");
+            var tabLi = $('<li class="active"><a href="#'+tabHref+'">'+tab+'</a></li>');
+            var contentIframe = $('<div class="tab-pane active" id="'+tabHref+'"><iframe scrolling="auto" onload="" frameborder="0" src="'+href+'" style="width: 100%;height: '+iframeH+'px;"></iframe></div>');
+
+            iframeNav.find("li").removeClass('active');
+            iframeBox.find(".tab-pane").removeClass('active');
+            var iframeNavItem = iframeNav.find("a[href='#"+tabHref+"']");
+
+            if(iframeNavItem.length>0){
+                iframeNavItem.eq(0).tab("show");
+                console.log($("#"+tabHref+" iframe").eq(0));
+                // $("#"+tabHref+" iframe").eq(0).contentWindow.location.reload(true);
+                $("#"+tabHref+" iframe").attr("src",href);
+            }else {
+                iframeNav.append(tabLi);
+                iframeBox.append(contentIframe);
+            }
+
+        };
+        menuActive();
         // Add ripple effect to all navigation links
         allLinks.on('click', function(e){
-            var link = $(this), ripple, d, x, y;
-
+            var link = $(this), ripple, d, x, y,link_type;
             // Remove .animate class from all ripple elements
             sidebar.find('.sidebar-nav-ripple').removeClass('animate');
 
@@ -207,7 +255,14 @@ var App = function() {
                 Cookies.set('optionA', a, {expires: 7});
                 Cookies.set('optionMenu', menu, {expires: 7});
                 Cookies.set('optionSubmenu', submenu, {expires: 7});
+                //  静态选中(页面不跳转选中)
+                allLinks.removeClass("active") &&
+                menuLi.removeClass("active") &&
+                menuActive()&&
+                link.addClass("active")
+                    .parent('li').siblings("li").children("a").removeClass("active");
             }
+
             // Get the ripple element
             ripple = link.children('.sidebar-nav-ripple');
 
@@ -472,14 +527,38 @@ var App = function() {
         var windowH     = $(window).height();
         var headerH     = header.outerHeight();
         var sidebarH    = sidebar.outerHeight();
-
+        var iframeTitleH    = iframeTitle.outerHeight(true);
+        var pageContentPadding = parseInt(pageContent.css("paddingTop"))+5;
+        // iframeTitle.
+        console.log(windowH,headerH,sidebarH,iframeTitleH,pageContentPadding);
         if (header.hasClass('navbar-fixed-top') || header.hasClass('navbar-fixed-bottom')) {
             pageContent.css('min-height', windowH);
+            if (window.self == window.top) {
+                pageContent.css('max-height', windowH);
+                pageContent.css('height', windowH);
+                iframeH = windowH - pageContentPadding-iframeTitleH;
+            }
         } else if (sidebarH > windowH) {
             pageContent.css('min-height', sidebarH - headerH);
+            if (window.self == window.top) {
+                pageContent.css('max-height', sidebarH - headerH);
+                pageContent.css('height', sidebarH - headerH);
+                iframeH = sidebarH -headerH - pageContentPadding-iframeTitleH;
+            }
+
         } else {
             pageContent.css('min-height', windowH - headerH);
+            if (window.self == window.top) {
+                pageContent.css('max-height', windowH - headerH);
+                pageContent.css('height', windowH - headerH);
+                iframeH = windowH -headerH - pageContentPadding-iframeTitleH;
+            }
         }
+        if (window.self == window.top) {
+            $("iframe").css("height", iframeH);
+        }
+        console.log(windowH,headerH,sidebarH,iframeTitleH,pageContentPadding,iframeH);
+
     };
 
     /* Color Theme preview, preview a color theme on a page */
@@ -641,6 +720,73 @@ var App = function() {
             location.href = edit_url + '?id=' + id;
         });
     };
+    //设置大小的
+    var layer_show = function (title,url,w,h){
+        if (title == null || title == '') {
+            title=false;
+        };
+        if (url == null || url == '') {
+            url="404.html";
+        };
+        if (w == null || w == '') {
+            w=800;
+        };
+        if (h == null || h == '') {
+            h=($(window).height() - 50);
+        };
+        layer.open({
+            type: 2,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade:0.4,
+            title: title,
+            content: url
+        });
+    };
+    //全屏幕打开弹出层
+    var layer_full_show=function (title,url)
+    {
+        var index = layer.open({
+            type: 2,
+            fix: false, //不固定
+            maxmin: true,
+            shade:0.4,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    };
+    // 编辑弹窗跳转
+    var dialog = function () {
+        // 自定义宽度弹窗
+        pageContent.on('click',".layer_show",function () {
+            var id = $(this).data('id') || "";
+            var edit_view = $('.edit_view');
+            var title=edit_view.text();
+            var edit_url = edit_view.attr('_href');
+            var w = edit_view.data("width")||$(this).data("width") || null;
+            var h = edit_view.data("height")||$(this).data("height") || null;
+            // id = id==undefined?"":id;
+            layer_show(title,edit_url + '?id=' + id,w,h)
+        });
+        // 全屏弹窗
+        pageContent.on('click',".layer_full",function () {
+            var id = $(this).data('id') || "";
+            var edit_view = $('.edit_view');
+            var title=edit_view.text();
+            var edit_url = edit_view.attr('_href');
+            layer_full_show(title,edit_url + '?id=' + id)
+        });
+        // 页面跳转
+        pageContent.on('click',".edit",function () {
+            var id = $(this).data('id') || "";
+            var edit_view = $('.edit_view');
+            var edit_url = edit_view.attr('_href');
+            location.href = edit_url + '?id=' + id;
+        });
+    };
+
     // 初始化下拉框
     var selected = function () {
         $('select').each(function () {
@@ -666,7 +812,11 @@ var App = function() {
         pagePrint: function() {
             handlePrint(); // Print functionality
         },
-        edit:edit,//跳转编辑
+        nav:function(){
+            handleNav();
+        },
+        setIframeHeight:setIframeHeight,//iframe自适应高度
+        // edit:edit,//跳转编辑
         selected:selected   // 初始化下拉框
     };
 }();

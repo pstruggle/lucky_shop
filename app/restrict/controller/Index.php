@@ -66,7 +66,7 @@ class Index extends Common {
             $this->user = $user;
             $this->record_user();
             $this->success($_users->getError(),
-                url('index/Index/index'));
+                defaultUrl() );
         }
         $this->error($_users->getError());
     }
@@ -95,7 +95,7 @@ class Index extends Common {
             }
             $this->record_user();
             $this->success('验证成功',
-                url('index/Index/index'));
+                defaultUrl());
         }else{
             $this->error('验证失败,请登录后重新发送验证！',
                 url('restrict/Index/register'));
@@ -114,7 +114,7 @@ class Index extends Common {
         if($result === false){
             $this->error($_users->getError());
         }
-        $url = $data['url']?:url('index/index/index');
+        $url = $data['url']?:defaultUrl();
         $this->user = $result;
         $this->record_user();
         $this->success('登录成功',$url);

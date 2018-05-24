@@ -269,5 +269,24 @@ function buildFrom($url,$params,$method="POST"){
     $html .= '</form><script>document.forms["'.$name.'"].submit();</script>';
     return $html;
 }
+// 根据code 获取默认页面
+function defaultUrl($code=101){
+    $basic = get_cache('config.basic');
+    $url_id = null;
+    switch ($code){
+        case 100:  // 未登录跳转登陆页面
+            $url_id = $basic['not_login'];
+            break;
+        case 101:case 102:  // 跳转默认首页
+            $url_id = $basic['default'];
+            break;
+        default:
+            $url_id = null;
+    }
+    $acrion = $url_id?get_cache('action.action')[$url_id]:null;
+    $url = $acrion?( (!empty($acrion['controller'])?'/'.$acrion['controller']:'').(!empty($acrion['model'])?'/'.$acrion['model']:'').(!empty($acrion['action'])?'/'.$acrion['action']:'').(!empty($acrion['params'])?'/'.$acrion['params']:'') ):null;
+
+    return url($url);
+}
 
 

@@ -42,7 +42,7 @@ class Common extends Controller
     protected function check_login(){
         if(empty($this->user)){
             $this->error('请先登录...',
-                url('restrict/Index/index'));
+                defaultUrl(100));
         }
         if(empty($this->user['nickname']) &&
             empty($this->user['phone']) &&
@@ -75,6 +75,7 @@ class Common extends Controller
             $this->returnError($errors['msg'],$errors['url'],'',$errors['code']);
         }
         $this->assign('user',$user);
+        $this->assign('title',$user['title']);
     }
     /**
      * 权限标识
@@ -118,7 +119,7 @@ class Common extends Controller
      * 获取跳转到当前页的地址
      */
     protected function last_url(){
-        return $_SERVER["HTTP_REFERER"] ?:url('index/Index/index');
+        return $_SERVER["HTTP_REFERER"] ?:defaultUrl(101);
     }
     /**
      * 跳转到上一页

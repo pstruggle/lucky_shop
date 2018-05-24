@@ -1,5 +1,5 @@
 {extend name="../common/after/frame"}
-{block name="page_content"}
+{block name="page_wrapper"}
 <div id="page-content">
     {include file="system/nav"}
     <!-- Form Components Row -->
@@ -29,7 +29,29 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="default">网站默认页面</label>
+                        <label class="col-md-3 control-label" for="register_page">注册页面</label>
+                        <div class="col-md-6">
+                            <select type="text" id="register_page" name="register_page" class="form-control" data-val="{$config.register_page}" >
+                                {foreach name=":get_cache('action.beforeAction')" id="action"}
+                                <option value="{$action.id}">{$action.tree}{$action.title}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">未登录跳转的默认页面</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="admin_index">管理员首页</label>
+                        <div class="col-md-6">
+                            <select type="text" id="admin_index" name="admin_index" class="form-control" data-val="{$config.admin_index}" >
+                                {foreach name=":get_cache('action.afterAction')" id="action"}
+                                <option value="{$action.id}">{$action.tree}{$action.title}</option>
+                                {/foreach}
+                            </select>
+                            <span class="help-block">每个管理员权限中必须拥有的功能</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="default">前端默认页面</label>
                         <div class="col-md-6">
                             <select type="text" id="default" name="default" class="form-control" data-val="{$config.default}" >
                                 {foreach name=":get_cache('action.beforeAction')" id="action"}

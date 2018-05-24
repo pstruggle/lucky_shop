@@ -159,3 +159,11 @@ THEME CLASSY
 .themed-background-dark-classy {
     background-color: #353535 !important;
 }
+
+#iframe-title{
+
+}
+#iframe-title .nav{
+    height: 40px;
+    overflow-y: auto;
+}

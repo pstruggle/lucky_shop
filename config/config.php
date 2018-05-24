@@ -166,7 +166,6 @@ return [
         '__ARTDIALOG__' => '/static/public/artDialog4.1.7/',
         '__PCAS__'      => '/static/public/PCASClass/',
         '__MYDATE__'    => '/static/public/My97DatePicker/',
-
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',

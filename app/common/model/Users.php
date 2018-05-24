@@ -107,12 +107,11 @@ class Users extends Base
                 // 不在权限范围内
                 throw new Exception('您没有权限访问',102);
             }
+            $user['title'] = $actions['title'];
             return $user;
         }catch (Exception $e){
             $code = $e->getCode();
-            $url_id = $code==100?$basic['not_login']:(in_array($code,[101,102])?$basic['default']:null);
-            $acrion = $url_id?get_cache('action.action')[$url_id]:null;
-            $url = $acrion?( (!empty($acrion['controller'])?'/'.$acrion['controller']:'').(!empty($acrion['model'])?'/'.$acrion['model']:'').(!empty($acrion['action'])?'/'.$acrion['action']:'').(!empty($acrion['params'])?'/'.$acrion['params']:'') ):null;
+            $url = defaultUrl($code);
             $result = [
                 'code'=>$code,
                 'msg'=>$e->getMessage(),

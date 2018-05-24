@@ -17,7 +17,14 @@ class Index extends Base
 
     public function index()
     {
-        cache('test',1);
+        $this->assign([
+            'menus'=>get_cache('action.menus_'.$this->user['role_id'])
+        ]);
+        return $this->template();
+    }
+    // 首页
+    public function home()
+    {
         $this->assign([
             'title' => '首页',
         ]);
@@ -48,7 +55,6 @@ class Index extends Base
             $this->success('清除成功，正在返回上一页面！');
         }
         $this->error('清除失败，正在返回上一页面！');
-
     }
     // 测试页面
     public function test(){

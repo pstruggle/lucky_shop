@@ -56,8 +56,22 @@
 
     'page-loading'      enables page preloader
 -->
-{block name="page_wrapper"}
 <div id="page-wrapper" class="page-loading">
+    <!-- Preloader -->
+    <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
+    <!-- Used only if page preloader enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
+    <div class="preloader">
+        <div class="inner">
+            <!-- Animation spinner for all modern browsers -->
+            <div class="preloader-spinner themed-background hidden-lt-ie10"></div>
+
+            <!-- Text for IE9 -->
+            <h3 class="text-primary visible-lt-ie10"><strong>Loading..</strong></h3>
+        </div>
+    </div>
+</div>
+{block name="page_wrapper"}
+<div class="page-loading">
     <!-- Preloader -->
     <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
     <!-- Used only if page preloader enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
@@ -136,6 +150,8 @@
 <script src="__APPUI__js/vendor/jquery-2.2.4.min.js"></script>
 <script src="__APPUI__js/vendor/bootstrap.min.js"></script>
 <script src="__APPUI__js/plugins.js"></script>
+{load file="__PUBLIC__layer/layer.js"}
+
 <script src="__APPUI__js/app.js"></script>
 
 <!-- Load and execute javascript code used only in this page -->

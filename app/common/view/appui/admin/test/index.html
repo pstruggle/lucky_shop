@@ -1,0 +1,38 @@
+{extend name="../common/after/frame"}
+{block name="page_content"}
+<div id="page-content" class="">
+
+    <!-- First Row -->
+    <div class="row">
+        <!-- Simple Stats Widgets -->
+        <div class="col-sm-12 col-lg-12">
+            <div class="block full">
+                <!-- Block Tabs Title -->
+                <div class="block-title" id="iframe-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
+                    </div>
+                    <ul class="nav nav-tabs" data-toggle="tabs">
+
+                    </ul>
+                </div>
+                <!-- END Block Tabs Title -->
+
+                <!-- Tabs Content -->
+                <div class="tab-content" id="iframe-box">
+
+                </div>
+                <!-- END Tabs Content -->
+            </div>
+
+        </div>
+        <!-- END Simple Stats Widgets -->
+    </div>
+    <!-- END First Row -->
+</div>
+{/block}
+{block name="foot_js"}
+<script type="text/javascript">
+    $(function(){ App.nav(); });
+</script>
+{/block}

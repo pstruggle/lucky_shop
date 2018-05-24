@@ -20,14 +20,14 @@
                     <ul>
                         {volist name="menu.children" id="children_menu"}
                         <li>
-                            <a href="{$children_menu.controller?'/'.$children_menu.controller:''}{$children_menu.model?'/'.$children_menu.model:''}{$children_menu.action?'/'.$children_menu.action:''}{$children_menu.params?'/'.$children_menu.params:''}">{$children_menu.title}</a>
+                            <a href="javascript:void(0);" _href="{$children_menu.controller?'/'.$children_menu.controller:''}{$children_menu.model?'/'.$children_menu.model:''}{$children_menu.action?'/'.$children_menu.action:''}{$children_menu.params?'/'.$children_menu.params:''}">{$children_menu.title}</a>
                         </li>
                         {/volist}
                     </ul>
                 </li>
                 {else /}
                 <li>
-                    <a href="{$menu.controller?'/'.$menu.controller:''}{$menu.model?'/'.$menu.model:''}{$menu.action?'/'.$menu.action:''}{$menu.params?'/'.$menu.params:''}"><i class="{$menu.icon} sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">{$menu.title}</span></a>
+                    <a href="javascript:void(0);" _href="{$menu.controller?'/'.$menu.controller:''}{$menu.model?'/'.$menu.model:''}{$menu.action?'/'.$menu.action:''}{$menu.params?'/'.$menu.params:''}"><i class="{$menu.icon} sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">{$menu.title}</span></a>
                 </li>
                 {/if}
                 {/volist}

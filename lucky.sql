@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-04-21 18:29:34
+Date: 2018-05-24 15:41:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,7 +40,7 @@ CREATE TABLE `lucky_action` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of lucky_action
@@ -78,7 +78,7 @@ INSERT INTO `lucky_action` VALUES ('30', '27', 'admin', 'users', 'index', '', '�
 INSERT INTO `lucky_action` VALUES ('31', '0', 'admin', 'index', 'index', '', '权限管理', 'gi gi-airplane', '', '', '', '1', '0', '1', '0', '1', '1519962369', '1517633635');
 INSERT INTO `lucky_action` VALUES ('32', '31', 'admin', 'auth', 'listing', 'action/admin', '管理员管理', '', '', '', '', '1', '0', '1', '0', '0', '1518345724', '1517633691');
 INSERT INTO `lucky_action` VALUES ('33', '31', 'admin', 'auth', 'listing', 'action/roles', '角色管理', '', '', '', '', '1', '0', '1', '0', '0', '1517898057', '1517633747');
-INSERT INTO `lucky_action` VALUES ('34', '0', 'admin', 'index', 'index', '', '概览', 'gi gi-compass', '', '', '', '1', '0', '1', '0', '30', '1517800179', '1517634080');
+INSERT INTO `lucky_action` VALUES ('34', '0', 'admin', 'index', 'home', '', '概览', 'gi gi-compass', '', '', '', '1', '0', '1', '0', '30', '1527044696', '1517634080');
 INSERT INTO `lucky_action` VALUES ('35', '31', 'admin', 'auth', 'listing', 'action/roleGroup', '角色组', '', '', '', '', '1', '0', '1', '0', '0', '1517895153', '1517895153');
 INSERT INTO `lucky_action` VALUES ('36', '43', 'restrict', 'index', 'index', '', '用户登陆', '', '用户登陆的视图', '', '', '0', '0', '0', '1', '0', '1518418447', '1518329027');
 INSERT INTO `lucky_action` VALUES ('37', '43', 'restrict', 'index', 'register', '', '用户注册', '', '用户注册显示视图', '', '', '0', '0', '0', '1', '0', '1518418460', '1518329795');
@@ -156,6 +156,11 @@ INSERT INTO `lucky_action` VALUES ('108', '78', 'index', 'member', 'refund', '',
 INSERT INTO `lucky_action` VALUES ('109', '78', 'index', 'member', 'billlist', '', '查看支出明细', '', '', '', '', '0', '0', '1', '1', '0', '1520239578', '1520239578');
 INSERT INTO `lucky_action` VALUES ('110', '78', 'index', 'member', 'commentlist', '', '评论商品', '', '', '', '', '0', '0', '1', '1', '0', '1520240372', '1520240372');
 INSERT INTO `lucky_action` VALUES ('111', '78', 'index', 'member', 'blog', '', '消息详情', '', '', '', '', '0', '0', '1', '1', '0', '1520477733', '1520477733');
+INSERT INTO `lucky_action` VALUES ('112', '0', 'admin', 'test', 'index', '', '测试首页', '', '测试功能', '', '', '0', '0', '0', '0', '0', '1526957890', '1526957890');
+INSERT INTO `lucky_action` VALUES ('113', '0', '', '', '', '', '上传文件', '', '', '', '', '0', '1', '1', '1', '0', '1527140434', '1527140231');
+INSERT INTO `lucky_action` VALUES ('114', '113', 'api', 'upload', 'index', '', '文件上传操作', '', '', '', '', '0', '1', '1', '1', '0', '1527140550', '1527140550');
+INSERT INTO `lucky_action` VALUES ('115', '57', 'admin', 'system', 'sms_log', '', '短信发送日志', '', '', '', '', '0', '0', '1', '0', '0', '1527146572', '1527146572');
+INSERT INTO `lucky_action` VALUES ('116', '0', 'admin', 'system', 'mail_log', '', '邮件发送日志', '', '', '', '', '0', '0', '1', '0', '0', '1527146664', '1527146664');
 
 -- ----------------------------
 -- Table structure for lucky_ad
@@ -4461,7 +4466,7 @@ CREATE TABLE `lucky_config` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `action` (`action`),
   KEY `group_id` (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lucky_config
@@ -4494,6 +4499,8 @@ INSERT INTO `lucky_config` VALUES ('27', '3', 'not_login', '36', '未登录跳�
 INSERT INTO `lucky_config` VALUES ('28', '3', 'default', '44', '网站首页', '网站默认页面');
 INSERT INTO `lucky_config` VALUES ('29', '3', 'initial_role', '3', '用户初始角色', '注册用户初始角色');
 INSERT INTO `lucky_config` VALUES ('30', '3', 'admin_role', '1', '超级管理员角色', '拥有最高权限的角色');
+INSERT INTO `lucky_config` VALUES ('31', '3', 'admin_index', '34', '管理员首页', '每个管理员权限中必须拥有的功能');
+INSERT INTO `lucky_config` VALUES ('32', '3', 'register_page', '37', '注册页面', '用户注册账号页面');
 
 -- ----------------------------
 -- Table structure for lucky_config_group
@@ -4578,6 +4585,31 @@ INSERT INTO `lucky_favorite` VALUES ('7', '17', '13', '精品蛋糕', '/upload/a
 INSERT INTO `lucky_favorite` VALUES ('8', '17', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508488929');
 INSERT INTO `lucky_favorite` VALUES ('9', '17', '14', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1508555140');
 INSERT INTO `lucky_favorite` VALUES ('10', '18', '13', '精品蛋糕', '/upload/admin/image/20171008/1507452031116697.png', '123.00', '132.00', '1514517759');
+
+-- ----------------------------
+-- Table structure for lucky_files
+-- ----------------------------
+DROP TABLE IF EXISTS `lucky_files`;
+CREATE TABLE `lucky_files` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件序号',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `file_md5` char(32) NOT NULL DEFAULT '' COMMENT '文件MD5 散列',
+  `file_sha1` char(40) NOT NULL DEFAULT '' COMMENT '文件sha1散列',
+  `file_name` varchar(50) NOT NULL DEFAULT '' COMMENT '文件名',
+  `size` int(11) NOT NULL DEFAULT '0' COMMENT '文件字节大小',
+  `file_type` varchar(255) NOT NULL DEFAULT '' COMMENT '文件类型',
+  `link` varchar(255) NOT NULL DEFAULT '' COMMENT '文件服务器路径',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  KEY `size` (`size`),
+  KEY `link` (`link`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lucky_files
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for lucky_goods
@@ -5137,7 +5169,7 @@ CREATE TABLE `lucky_users` (
 -- ----------------------------
 -- Records of lucky_users
 -- ----------------------------
-INSERT INTO `lucky_users` VALUES ('17', 'test', 'test1', '', '15879221654', '1767158841@qq.com', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '1520749582', '', '0', '1', '1', '1', '1520749582', '0');
+INSERT INTO `lucky_users` VALUES ('17', 'test', 'test1', '', '15879221654', '1767158841@qq.com', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '1527147138', '', '0', '1', '1', '1', '1527147138', '0');
 INSERT INTO `lucky_users` VALUES ('19', '', '123a', '', '', '', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '0', '', '0', '1', '0', '0', '0', '0');
 INSERT INTO `lucky_users` VALUES ('26', '任你花', 'test', '', '15879221657', '532170416@qq.com', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '1519970144', '', '0', '0', '0', '1', '1519970363', '1518260856');
 INSERT INTO `lucky_users` VALUES ('27', '测试2', 'name', '', '15879221659', '1737511215@qq.com', '', '14e1b600b1fd579f47433b88e8d85291', '0', '127.0.0.1', '0', '', '0', '0', '0', '1', '1518319839', '1518318931');

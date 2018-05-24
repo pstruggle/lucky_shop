@@ -22,7 +22,7 @@ class Action extends Base
             case 'menus':
                 Cache::tag($name)->set($name.'.menus_'.$pet_names[1],$this->menus($pet_names[1]));
                 break;
-            case 'afterAction': // 获取前端所有功能
+            case 'afterAction': // 获取后端所有功能
                 $where = ['is_nose'=>0];
                 Cache::tag($name)->set($name.'.afterAction',$this->actions_list($where));
                 break;
@@ -72,6 +72,7 @@ class Action extends Base
         if(!$roles){
             return false;
         }
+        $roles .= ",".get_cache('config.basic')['admin_index'];
         $where = ['pid'=>0,'is_show'=>'1','is_nose'=>'0','id'=>['in',$roles]];
         $menus = $this->actions($where);
         return $menus;

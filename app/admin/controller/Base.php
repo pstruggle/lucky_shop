@@ -93,8 +93,6 @@ class Base extends Common
      * */
     private function assigns(){
         $basic= get_cache('config.basic');
-        $this->assign([
-            'menus'=>get_cache('action.menus_'.$this->user['role_id'])
-        ]);
+
     }
 }

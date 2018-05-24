@@ -1,5 +1,5 @@
 {extend name="../common/after/frame"}
-{block name="page_content"}
+{block name="page_wrapper"}
 <div id="page-content">
     <!-- Table Styles Header -->
     <div class="content-header">
@@ -27,7 +27,7 @@
         <!--<h4 class="sub-header">Pills</h4>-->
         <ul class="nav nav-pills">
             <li class="active">
-                <a href="{:url('admin/Auth/edit_view',['action'=>'admin'])}" class="edit_view" >管理员编辑</a>
+                <a href="javascript:void(0);" _href="{:url('admin/Auth/edit_view',['action'=>'admin'])}" class="edit_view layer_show" >管理员编辑</a>
             </li>
 
         </ul>
@@ -79,7 +79,7 @@
                         <td>{$admin.update_time}</td>
                         <td>{$admin.create_time}</td>
                         <td class="text-center">
-                            <a href="javascript:void(0)" title="编辑管理员" data-id="{$admin.id}" class="btn btn-effect-ripple btn-xs btn-success edit">
+                            <a href="javascript:void(0)" title="编辑管理员" data-id="{$admin.id}" class="btn btn-effect-ripple btn-xs btn-success layer_show">
                                 <i class="fa fa-pencil"></i>
                             </a>
 
@@ -109,7 +109,7 @@
 <script src="__APPUI__js/pages/brand.js"></script>
 <script>
     $(function () {
-        App.edit();
+        // App.edit();
     });
 </script>
 {/block}
